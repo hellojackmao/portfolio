@@ -1017,8 +1017,8 @@
 
   </div><!-- /main -->
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    // Cursor — hidden off-screen until mouse enters
+  <script>
+    // ── Cursor ──
     const cursor = document.getElementById('cursor');
     cursor.style.left = '-100px';
     cursor.style.top = '-100px';
@@ -1033,9 +1033,9 @@
       el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
     });
 
-    // Enter button → hide splash, show main
+    // ── Splash enter button ──
     const splash = document.getElementById('splash');
-    const main = document.getElementById('main');
+    const main   = document.getElementById('main');
 
     function showMain() {
       splash.classList.add('hidden');
@@ -1043,7 +1043,6 @@
       document.body.style.overflow = '';
     }
 
-    // Skip splash if arriving from a project page via #work
     if (window.location.hash === '#work') {
       showMain();
       document.getElementById('work').scrollIntoView();
@@ -1051,7 +1050,7 @@
 
     document.getElementById('enterBtn').addEventListener('click', showMain);
 
-    // Intersection observer for subtle entrance animations
+    // ── Intersection observer entrance animations ──
     const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -1061,10 +1060,16 @@
       });
     }, { threshold: 0.12 });
 
-    // JM Monogram — coin spin interaction
+    document.querySelectorAll('.category-card, .project-card, .about-inner, .contact-inner').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      el.style.transition = 'opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1)';
+      observer.observe(el);
+    });
+
+    // ── JM Monogram coin spin ──
     const monogram = document.getElementById('jmMonogram');
     let isDragging = false;
-    let startX = 0;
     let currentRotation = 0;
     let dragRotation = 0;
     let velocity = 0;
@@ -1072,14 +1077,13 @@
     let rafId = null;
 
     function setRotation(deg) {
-      monogram.style.transform = `rotateY(${deg}deg)`;
+      monogram.style.transform = 'rotateY(' + deg + 'deg)';
     }
 
-    // Click — full 360 coin flip
     monogram.addEventListener('click', () => {
-      if (Math.abs(dragRotation) > 5) return; // skip if it was a drag
+      if (Math.abs(dragRotation) > 5) return;
       monogram.classList.remove('spinning');
-      void monogram.offsetWidth; // reflow to restart animation
+      void monogram.offsetWidth;
       monogram.classList.add('spinning');
       monogram.addEventListener('animationend', () => {
         monogram.classList.remove('spinning');
@@ -1088,10 +1092,8 @@
       }, { once: true });
     });
 
-    // Drag — scrub rotation like spinning a coin
-    monogram.addEventListener('mousedown', (e) => {
+    monogram.addEventListener('mousedown', e => {
       isDragging = true;
-      startX = e.clientX;
       lastX = e.clientX;
       dragRotation = 0;
       velocity = 0;
@@ -1101,7 +1103,7 @@
       e.preventDefault();
     });
 
-    document.addEventListener('mousemove', (e) => {
+    document.addEventListener('mousemove', e => {
       if (!isDragging) return;
       const dx = e.clientX - lastX;
       velocity = dx * 2.5;
@@ -1115,7 +1117,6 @@
       if (!isDragging) return;
       isDragging = false;
       monogram.style.transition = '';
-      // Momentum spin on release
       function momentum() {
         if (Math.abs(velocity) < 0.5) return;
         velocity *= 0.94;
@@ -1126,10 +1127,8 @@
       momentum();
     });
 
-    // Touch support
-    monogram.addEventListener('touchstart', (e) => {
+    monogram.addEventListener('touchstart', e => {
       isDragging = true;
-      startX = e.touches[0].clientX;
       lastX = e.touches[0].clientX;
       dragRotation = 0;
       velocity = 0;
@@ -1138,7 +1137,7 @@
       monogram.style.transition = 'none';
     }, { passive: true });
 
-    document.addEventListener('touchmove', (e) => {
+    document.addEventListener('touchmove', e => {
       if (!isDragging) return;
       const dx = e.touches[0].clientX - lastX;
       velocity = dx * 2.5;
@@ -1160,6 +1159,4 @@
       }
       momentum();
     });
-
-    // Intersection observer entrance animations
-    document.querySelectorAll('.category-card, .project-card, .about-inner, .contact-inner').forEach
+  </script>
