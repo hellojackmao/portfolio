@@ -10,6 +10,8 @@
   <style>
     :root { --navy:#0f0e1a; --navy2:#16152b; --purple:#7B6CF6; --purple-light:#a99cf8; --lime:#ccff00; --coral:#ff5533; --white:#ffffff; --green:#2d5a2d; --green-light:#4ade80; }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    img{-webkit-user-drag:none;user-drag:none;user-select:none;-webkit-user-select:none;}
+    iframe{user-select:none;-webkit-user-select:none;}
     html{scroll-behavior:smooth;}
     body{font-family:'Syne',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden;cursor:none;}
     .cursor{position:fixed;width:14px;height:14px;background:var(--lime);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:difference;}
@@ -137,6 +139,8 @@
   </footer>
 
   <script>
+    document.addEventListener("contextmenu", e => { if (e.target.tagName === "IMG" || e.target.tagName === "IFRAME") e.preventDefault(); });
+    document.addEventListener("dragstart", e => { if (e.target.tagName === "IMG") e.preventDefault(); });
     const c = document.getElementById('cursor');
     document.addEventListener('mousemove', e => { c.style.left = e.clientX+'px'; c.style.top = e.clientY+'px'; });
     document.querySelectorAll('a').forEach(el => { el.addEventListener('mouseenter',()=>c.classList.add('hovering')); el.addEventListener('mouseleave',()=>c.classList.remove('hovering')); });
