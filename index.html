@@ -6,7 +6,7 @@
   <title>Jack Mao / Portfolio 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Barlow+Condensed:wght@800&display=swap" rel="stylesheet" />
   <style>
     :root {
       --navy: #0f0e1a;
@@ -200,6 +200,18 @@
       height: clamp(80px, 12vw, 140px);
       margin-bottom: 2rem;
       animation: fadeSlideUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s both;
+      cursor: grab;
+      user-select: none;
+      transform-style: preserve-3d;
+      transition: transform 0.05s linear;
+    }
+    .jm-monogram:active { cursor: grabbing; }
+    .jm-monogram.spinning {
+      animation: coinSpin 0.6s cubic-bezier(0.25,0.46,0.45,0.94) forwards;
+    }
+    @keyframes coinSpin {
+      0%   { transform: rotateY(0deg); }
+      100% { transform: rotateY(360deg); }
     }
       font-weight: 700;
       letter-spacing: 0.2em;
@@ -784,32 +796,49 @@
     <!-- Hero -->
     <section id="hero">
       <div class="hero-bg-text">JM</div>
-      <svg class="jm-monogram" viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Outer ring -->
-        <circle cx="70" cy="70" r="67" stroke="rgba(123,108,246,0.25)" stroke-width="1"/>
-        <circle cx="70" cy="70" r="60" stroke="rgba(123,108,246,0.12)" stroke-width="0.5"/>
-        <!-- Lime accent arc top -->
-        <path d="M 30 70 A 40 40 0 0 1 110 70" stroke="#ccff00" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-        <!-- Lime accent arc bottom -->
-        <path d="M 45 95 A 40 40 0 0 0 95 95" stroke="#ccff00" stroke-width="1" stroke-linecap="round" opacity="0.35"/>
-        <!-- Corner marks -->
-        <line x1="20" y1="20" x2="32" y2="20" stroke="rgba(204,255,0,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="20" y1="20" x2="20" y2="32" stroke="rgba(204,255,0,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="120" y1="20" x2="108" y2="20" stroke="rgba(204,255,0,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="120" y1="20" x2="120" y2="32" stroke="rgba(204,255,0,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="20" y1="120" x2="32" y2="120" stroke="rgba(204,255,0,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="20" y1="120" x2="20" y2="108" stroke="rgba(204,255,0,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="120" y1="120" x2="108" y2="120" stroke="rgba(204,255,0,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="120" y1="120" x2="120" y2="108" stroke="rgba(204,255,0,0.4)" stroke-width="1.5" stroke-linecap="round"/>
-        <!-- J letterform -->
-        <path d="M 38 42 L 52 42 M 45 42 L 45 82 Q 45 96 32 96 Q 26 96 23 90"
-              stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <!-- M letterform -->
-        <path d="M 60 96 L 60 42 L 78 74 L 96 42 L 96 96"
-              stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        <!-- Lime dot accent -->
-        <circle cx="111" cy="70" r="3.5" fill="#ccff00" opacity="0.9"/>
-        <circle cx="29" cy="70" r="2" fill="rgba(204,255,0,0.4)"/>
+      <svg id="jmMonogram" class="jm-monogram" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <style>
+            @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800&display=swap');
+          </style>
+          <linearGradient id="jmGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff"/>
+            <stop offset="100%" stop-color="#c4b5fd"/>
+          </linearGradient>
+          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ccff00" stop-opacity="0.6"/>
+            <stop offset="50%" stop-color="#7B6CF6" stop-opacity="0.3"/>
+            <stop offset="100%" stop-color="#ccff00" stop-opacity="0.15"/>
+          </linearGradient>
+        </defs>
+        <!-- Outer rings -->
+        <circle cx="80" cy="80" r="76" stroke="url(#ringGrad)" stroke-width="1.2"/>
+        <circle cx="80" cy="80" r="68" stroke="rgba(123,108,246,0.1)" stroke-width="0.5"/>
+        <!-- Lime arc top -->
+        <path d="M 20 80 A 60 60 0 0 1 140 80" stroke="#ccff00" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+        <!-- Corner brackets -->
+        <line x1="14" y1="14" x2="30" y2="14" stroke="rgba(204,255,0,0.45)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="14" y1="14" x2="14" y2="30" stroke="rgba(204,255,0,0.45)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="146" y1="14" x2="130" y2="14" stroke="rgba(204,255,0,0.45)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="146" y1="14" x2="146" y2="30" stroke="rgba(204,255,0,0.45)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="14" y1="146" x2="30" y2="146" stroke="rgba(204,255,0,0.45)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="14" y1="146" x2="14" y2="130" stroke="rgba(204,255,0,0.45)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="146" y1="146" x2="130" y2="146" stroke="rgba(204,255,0,0.45)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="146" y1="146" x2="146" y2="130" stroke="rgba(204,255,0,0.45)" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- JM text — bold wide sans-serif -->
+        <text
+          x="80" y="98"
+          text-anchor="middle"
+          font-family="'Barlow Condensed', 'Arial Narrow', 'Impact', sans-serif"
+          font-weight="800"
+          font-size="72"
+          letter-spacing="4"
+          fill="url(#jmGrad)"
+          style="font-stretch: condensed;"
+        >JM</text>
+        <!-- Lime dot accents -->
+        <circle cx="80" cy="138" r="3" fill="#ccff00" opacity="0.7"/>
+        <circle cx="80" cy="22" r="2" fill="rgba(204,255,0,0.4)"/>
       </svg>
       <div class="hero-tag">✦ Design &amp; Illustration — Toronto</div>
       <h1 class="hero-heading">Design thinking<br><em>made</em><br>thoughtfully.</h1>
@@ -956,7 +985,7 @@
         <div class="contact-label">✦ Let's connect</div>
         <h2 class="contact-heading">Got a project<br><em>in mind?</em></h2>
         <p class="contact-sub">I'm always open to new opportunities, collaborations, and interesting ideas. Drop me a line and let's create something together.</p>
-        <a class="contact-email" href="/cdn-cgi/l/email-protection#147e75777f54716c75796478713a777b79"><span class="__cf_email__" data-cfemail="274d46444c67425f464a574b420944484a">[email&#160;protected]</span></a>
+        <a class="contact-email" href="mailto:jack.mao@torontomu.ca">jack.mao@torontomu.ca</a>
         <div class="contact-socials">
           <a class="social-btn" href="https://www.linkedin.com/in/jack-mao-621bb021b/" target="_blank">↗ LinkedIn</a>
           <a class="social-btn" href="#">↗ Instagram</a>
@@ -1018,6 +1047,107 @@
       });
     }, { threshold: 0.12 });
 
+    // JM Monogram — coin spin interaction
+    const monogram = document.getElementById('jmMonogram');
+    let isDragging = false;
+    let startX = 0;
+    let currentRotation = 0;
+    let dragRotation = 0;
+    let velocity = 0;
+    let lastX = 0;
+    let rafId = null;
+
+    function setRotation(deg) {
+      monogram.style.transform = `rotateY(${deg}deg)`;
+    }
+
+    // Click — full 360 coin flip
+    monogram.addEventListener('click', () => {
+      if (Math.abs(dragRotation) > 5) return; // skip if it was a drag
+      monogram.classList.remove('spinning');
+      void monogram.offsetWidth; // reflow to restart animation
+      monogram.classList.add('spinning');
+      monogram.addEventListener('animationend', () => {
+        monogram.classList.remove('spinning');
+        currentRotation = (currentRotation + 360) % 360;
+        setRotation(currentRotation);
+      }, { once: true });
+    });
+
+    // Drag — scrub rotation like spinning a coin
+    monogram.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.clientX;
+      lastX = e.clientX;
+      dragRotation = 0;
+      velocity = 0;
+      cancelAnimationFrame(rafId);
+      monogram.classList.remove('spinning');
+      monogram.style.transition = 'none';
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dx = e.clientX - lastX;
+      velocity = dx * 2.5;
+      dragRotation += dx * 2.5;
+      currentRotation += dx * 2.5;
+      setRotation(currentRotation);
+      lastX = e.clientX;
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      monogram.style.transition = '';
+      // Momentum spin on release
+      function momentum() {
+        if (Math.abs(velocity) < 0.5) return;
+        velocity *= 0.94;
+        currentRotation += velocity;
+        setRotation(currentRotation);
+        rafId = requestAnimationFrame(momentum);
+      }
+      momentum();
+    });
+
+    // Touch support
+    monogram.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      startX = e.touches[0].clientX;
+      lastX = e.touches[0].clientX;
+      dragRotation = 0;
+      velocity = 0;
+      cancelAnimationFrame(rafId);
+      monogram.classList.remove('spinning');
+      monogram.style.transition = 'none';
+    }, { passive: true });
+
+    document.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const dx = e.touches[0].clientX - lastX;
+      velocity = dx * 2.5;
+      currentRotation += dx * 2.5;
+      setRotation(currentRotation);
+      lastX = e.touches[0].clientX;
+    }, { passive: true });
+
+    document.addEventListener('touchend', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      monogram.style.transition = '';
+      function momentum() {
+        if (Math.abs(velocity) < 0.5) return;
+        velocity *= 0.94;
+        currentRotation += velocity;
+        setRotation(currentRotation);
+        rafId = requestAnimationFrame(momentum);
+      }
+      momentum();
+    });
+
+    // Intersection observer entrance animations
     document.querySelectorAll('.category-card, .project-card, .about-inner, .contact-inner').forEach(el => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(24px)';
