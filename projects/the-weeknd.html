@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Special Edition ft. The Weeknd — Jack Mao</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:#0f0e1a; --navy2:#16152b; --purple:#7B6CF6; --purple-light:#a99cf8;
+      --lime:#ccff00; --coral:#ff5533; --red:#cc0000; --red-light:#ff4444;
+      --white:#ffffff; --cream:#f5f0e8;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    img{-webkit-user-drag:none;user-drag:none;user-select:none;-webkit-user-select:none;pointer-events:none;}
+    body{font-family:'Syne',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden;cursor:none;}
+    .cursor{position:fixed;width:14px;height:14px;background:var(--red-light);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:difference;}
+    .cursor.hovering{width:42px;height:42px;background:var(--red);}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;background:rgba(15,14,26,.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.05);}
+    .nav-logo{font-weight:800;font-size:1rem;color:var(--white);text-decoration:none;}
+    .nav-logo span{color:var(--purple-light);}
+    .nav-back{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s;cursor:none;}
+    .nav-back:hover{color:var(--lime);}
+
+    /* Hero */
+    .project-hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:end;padding:10rem 3rem 5rem;position:relative;overflow:hidden;background:radial-gradient(ellipse 100% 80% at 80% 100%,#5c0000 0%,#2a0000 35%,var(--navy) 70%);gap:3rem;}
+    .hero-left{display:flex;flex-direction:column;justify-content:flex-end;}
+    .hero-right{display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-end;text-align:right;}
+    .edition-tag{font-size:.65rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--red-light);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;}
+    .edition-tag::before{content:'';display:block;width:32px;height:1px;background:var(--red-light);}
+    .hero-issue{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(4rem,10vw,9rem);line-height:.88;letter-spacing:-.03em;background:linear-gradient(135deg,#ffffff 0%,#ff9999 50%,#cc0000 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+    .hero-subtitle{margin-top:1.5rem;font-size:clamp(1rem,2vw,1.4rem);font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5);}
+    .hero-meta{margin-top:2.5rem;display:flex;flex-direction:column;gap:.5rem;}
+    .hero-meta-item{font-family:'DM Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.3);letter-spacing:.08em;}
+    .hero-meta-item span{color:var(--red-light);}
+    .hero-pull-quote{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1rem,1.8vw,1.45rem);line-height:1.5;color:rgba(255,255,255,.45);max-width:340px;border-left:2px solid var(--red);padding-left:1.25rem;margin-bottom:2rem;}
+    .cover-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.2rem;background:var(--red);border-radius:100px;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:white;}
+    .cover-badge::before{content:'★';}
+    .mag-rule{width:100%;height:1px;background:linear-gradient(90deg,var(--red) 0%,rgba(204,0,0,.1) 100%);}
+
+    /* Content */
+    .project-content{max-width:860px;margin:0 auto;padding:6rem 3rem;}
+    .mag-intro{font-size:clamp(1.1rem,2.5vw,1.6rem);font-family:'DM Serif Display',serif;font-style:italic;line-height:1.55;color:var(--red-light);margin-bottom:3.5rem;border-left:2px solid var(--red);padding-left:1.5rem;}
+    .section-heading{font-size:.7rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--lime);margin-bottom:1.25rem;margin-top:2.5rem;display:flex;align-items:center;gap:1rem;}
+    .section-heading::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06);max-width:60px;}
+    .body-text{font-size:1rem;line-height:1.9;color:rgba(255,255,255,.55);}
+    .body-text p{margin-bottom:1.5rem;}
+    .body-text strong{color:var(--white);}
+    .body-text em{color:var(--red-light);font-style:italic;font-family:'DM Serif Display',serif;}
+
+    /* Pull quote */
+    .pull-quote{margin:3.5rem 0;padding:2.5rem 3rem;border-top:2px solid var(--red);border-bottom:1px solid rgba(204,0,0,.2);}
+    .pull-quote p{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.3rem,3vw,2rem);line-height:1.4;color:rgba(255,255,255,.8);}
+    .pull-quote cite{display:block;margin-top:1rem;font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--red-light);font-style:normal;font-family:'Syne',sans-serif;}
+
+    /* Ideology cards */
+    .ideology-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:2.5rem 0;}
+    .ideology-card{padding:1.75rem;background:rgba(204,0,0,.06);border:1px solid rgba(204,0,0,.2);border-radius:14px;}
+    .ideology-num{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--red-light);margin-bottom:.5rem;letter-spacing:.1em;}
+    .ideology-title{font-size:1rem;font-weight:800;letter-spacing:-.01em;margin-bottom:.75rem;}
+    .ideology-desc{font-size:.83rem;line-height:1.7;color:rgba(255,255,255,.45);}
+
+    /* Campaign cards */
+    .campaign-card{margin:2.5rem 0;padding:2rem;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.06);border-radius:16px;}
+    .campaign-label{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red-light);margin-bottom:.5rem;font-family:'DM Mono',monospace;}
+    .campaign-title{font-size:1.3rem;font-weight:800;letter-spacing:-.02em;margin-bottom:1.25rem;}
+    .campaign-body{font-size:.9rem;line-height:1.8;color:rgba(255,255,255,.5);}
+    .campaign-body p{margin-bottom:1rem;}
+    .campaign-body strong{color:var(--white);}
+    .campaign-tag{display:inline-block;margin-top:1rem;padding:.3rem .8rem;border-radius:100px;font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(204,0,0,.15);color:var(--red-light);border:1px solid rgba(204,0,0,.3);}
+
+    /* Image grid */
+    .image-grid{display:grid;gap:1.5rem;margin:2.5rem 0;}
+    .two-col{grid-template-columns:1fr 1fr;}
+    .one-col{grid-template-columns:1fr;}
+    .three-col{grid-template-columns:1fr 1fr 1fr;}
+    .image-grid img{width:100%;border-radius:12px;display:block;}
+    .img-caption{font-size:.72rem;color:rgba(255,255,255,.2);font-family:'DM Mono',monospace;text-align:center;margin-top:-.75rem;margin-bottom:1.5rem;}
+
+    /* Stat row */
+    .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:2.5rem 0;}
+    .stat{padding:1.5rem;background:rgba(204,0,0,.05);border:1px solid rgba(204,0,0,.15);border-radius:12px;}
+    .stat-num{font-size:2rem;font-weight:800;letter-spacing:-.04em;color:var(--red-light);}
+    .stat-label{font-size:.72rem;color:rgba(255,255,255,.35);margin-top:.3rem;font-family:'DM Mono',monospace;}
+
+    hr.div{border:none;border-top:1px solid rgba(255,255,255,.06);margin:3rem 0;}
+
+    .next-project{padding:5rem 3rem;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:var(--white);transition:background .3s;cursor:none;}
+    .next-project:hover{background:rgba(204,0,0,.06);}
+    .next-label{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.5rem;}
+    .next-title{font-size:clamp(1.5rem,4vw,2.5rem);font-weight:800;letter-spacing:-.03em;}
+    .next-arrow{font-size:2.5rem;color:var(--red-light);transition:transform .3s;}
+    .next-project:hover .next-arrow{transform:translateX(8px);}
+    footer{padding:2rem 3rem;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;font-size:.75rem;color:rgba(255,255,255,.2);font-family:'DM Mono',monospace;}
+
+    @media(max-width:768px){
+      nav{padding:1.2rem 1.5rem;}
+      .project-hero{grid-template-columns:1fr;min-height:auto;padding:8rem 1.5rem 4rem;gap:2rem;}
+      .hero-right{align-items:flex-start;text-align:left;}
+      .hero-pull-quote{max-width:100%;}
+      .project-content{padding:4rem 1.5rem;}
+      .ideology-grid{grid-template-columns:1fr;}
+      .two-col,.three-col{grid-template-columns:1fr;}
+      .stat-row{grid-template-columns:1fr 1fr;}
+      .pull-quote{padding:1.5rem;}
+      .next-project{padding:3rem 1.5rem;}
+      footer{flex-direction:column;gap:.5rem;text-align:center;padding:1.5rem;}
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+
+  <nav>
+    <a class="nav-logo" href="../index.html">Jack Mao <span>/</span> Portfolio</a>
+    <a class="nav-back" href="../index.html#work">← Back to work</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="project-hero">
+    <div class="hero-left">
+      <div class="edition-tag">Special Edition — Vol. 02</div>
+      <div class="hero-issue">After<br>Hours.</div>
+      <div class="hero-subtitle">The Weeknd · 2020</div>
+      <div class="hero-meta">
+        <div class="hero-meta-item">Category — <span>Advertising &amp; Crowd Culture</span></div>
+        <div class="hero-meta-item">Year — <span>2022</span></div>
+        <div class="hero-meta-item">Course — <span>CRI540: Marketing for Creatives</span></div>
+        <div class="hero-meta-item">Tools — <span>Adobe Photoshop, Illustrator</span></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <p class="hero-pull-quote">Don't just listen — experience it. Three campaigns built around the crowd cultures that make The Weeknd's world turn.</p>
+      <div class="cover-badge">Crowd Culture Plan</div>
+    </div>
+  </div>
+
+  <div class="mag-rule"></div>
+
+  <!-- CONTENT -->
+  <div class="project-content">
+
+    <p class="mag-intro">
+      A full crowd culture marketing plan for <em>After Hours</em> — The Weeknd's landmark 2020 album. Three campaigns, three ideologies, one artist navigating the space between celebrity and self.
+    </p>
+
+    <!-- OVERVIEW -->
+    <div class="section-heading">Overview</div>
+    <div class="body-text">
+      <p>At the basis of crowd culture, branding is an essential aspect of marketing a product or service. The concept of crowd culture is the community of people connecting authentic purposes, ideologies, and services to leverage these ideologies to communicate with the crowd (Holt, 2016). Finding these opportunities for cultural innovation is why the Canadian singer known as <strong>The Weeknd</strong> has found his audience — targeting novel niches not afraid to be expressed compared to the norm in the music environment.</p>
+      <p><em>After Hours</em>, released March 2020, is a fourteen-track long playing record — a reminiscence of Abel Tesfaye's mysterious background from his 2011 underground debut to the highest moments of his career. Throughout his eleven-year career, the Toronto-born artist played novelty through dark, genre-defining themes: trap and soul tunes of a drugged-out album embedded into almost every stance of his playlist.</p>
+    </div>
+
+    <div class="pull-quote">
+      <p>"Take off my disguise. I'm living someone else's life."</p>
+      <cite>— The Weeknd, Alone Again (After Hours, 2020)</cite>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat"><div class="stat-num">14</div><div class="stat-label">Tracks on After Hours</div></div>
+      <div class="stat"><div class="stat-num">3</div><div class="stat-label">Crowd culture campaigns</div></div>
+      <div class="stat"><div class="stat-num">61%</div><div class="stat-label">Millennial favourability</div></div>
+    </div>
+
+    <!-- IDEOLOGIES -->
+    <div class="section-heading">The 3 Ideologies</div>
+    <div class="body-text">
+      <p>Three distinct ideologies run through <em>After Hours</em>, each informing a separate campaign direction. Together, they map the full emotional and cultural terrain of the album.</p>
+    </div>
+
+    <div class="ideology-grid">
+      <div class="ideology-card">
+        <div class="ideology-num">01</div>
+        <div class="ideology-title">Individuality</div>
+        <p class="ideology-desc">The self-realization of his toxicity is at the center helm. The album takes on a return to form — from a voice full of scarring emotion to an award-winning force of nature.</p>
+      </div>
+      <div class="ideology-card">
+        <div class="ideology-num">02</div>
+        <div class="ideology-title">Masculinity &amp; Spirituality</div>
+        <p class="ideology-desc">A spiritual successor to the places he explored before. <em>After Hours</em> takes in the sounds of his early mixtapes while pushing into new territory of self-aware toxicity.</p>
+      </div>
+      <div class="ideology-card">
+        <div class="ideology-num">03</div>
+        <div class="ideology-title">Maturity &amp; Religion</div>
+        <p class="ideology-desc">References to losing his religion, the pain, the praying, and the overall death — combined with his vision of the villain and the self-hatred into a compelling narrative.</p>
+      </div>
+    </div>
+
+    <!-- CAMPAIGN 1 -->
+    <div class="section-heading">Campaign 01 — Going for Gold</div>
+    <div class="campaign-card">
+      <div class="campaign-label">Ideology — Masculinity &amp; Spirituality</div>
+      <div class="campaign-title">Fan-voted track reimagining</div>
+      <div class="campaign-body">
+        <p>Taking advantage of the sentiments of The Weeknd's audience and their listening habits for <em>After Hours</em> — opinions are usually highly underrated. The common goal: build a community formed around the critiques, responses, and opinions of those who want to share the track they experienced as their unique moment.</p>
+        <p>Applying <strong>social media</strong> (Twitter and Instagram) to earn honest opinions about which songs have the most time played and replayed. Polling which songs are the most popular contributes to affective, cognitive, and behavioral engagement. By the end of the first month of release, the top three pieces will receive the "golden treatment" — a repackaged album featuring tracks most voted by fans.</p>
+      </div>
+      <span class="campaign-tag">Social Media · Month 1</span>
+    </div>
+
+    <div class="image-grid two-col">
+      <img src="../images/weeknd-concept-1.png" alt="Campaign 1 — Going for Gold concept" />
+      <img src="../images/weeknd-viz-1.png" alt="Campaign 1 — CD visualization" />
+    </div>
+    <p class="img-caption">Campaign 1 — fan-voted special edition album concept &amp; CD mockup</p>
+
+    <!-- CAMPAIGN 2 -->
+    <div class="section-heading">Campaign 02 — The Man Behind The Mask</div>
+    <div class="campaign-card">
+      <div class="campaign-label">Ideology — Individuality</div>
+      <div class="campaign-title">After Hours Exhibition — Toronto</div>
+      <div class="campaign-body">
+        <p>An exhibition-style, one-stop-shop custom-made experience using <strong>brand activation</strong> to bring <em>After Hours</em> to life. The norm is that music is only heard — but after hearing the music, it is better to contextualize the concepts the artist has made in the messaging in a physical form.</p>
+        <p>The event takes place in Tesfaye's hometown of Toronto at the <strong>Metro Toronto Convention Centre</strong>, displaying in the first month of release. Having the iconic red suit, gloves, and sunglasses of Abel's character from the visualizations in glass casing inside a booth better supports the narrative. The audience can also try on props such as clothing, contributing to merchandise purchasing.</p>
+      </div>
+      <span class="campaign-tag">Brand Activation · MTCC Toronto · Month 1</span>
+    </div>
+
+    <div class="image-grid two-col">
+      <img src="../images/weeknd-concept-2.png" alt="Campaign 2 — Exhibition poster" />
+      <img src="../images/weeknd-viz-2.png" alt="Campaign 2 — Exhibition visualization" />
+    </div>
+    <p class="img-caption">Campaign 2 — After Hours Exhibition poster &amp; 3D environment visualization</p>
+
+    <!-- CAMPAIGN 3 -->
+    <div class="section-heading">Campaign 03 — Making a Decision</div>
+    <div class="campaign-card">
+      <div class="campaign-label">Ideology — Maturity &amp; Religion</div>
+      <div class="campaign-title">Out-of-Home Billboard — Yonge Dundas Square</div>
+      <div class="campaign-body">
+        <p>Utilizing an <strong>out-of-home</strong> approach with billboards around centres across the city — most importantly Yonge Dundas Square, where lives intersect the most. The campaign asks the audience: after listening to the album, is this a changed man, or one that falls more profoundly into the dark messages they hear?</p>
+        <p>A <strong>QR code</strong> in the corner of the advertisement allows followers to scan and vote — a simple "Yes or No" asking if the album showed a side of him not known until now. This alternative approach makes the message more visible for exposure. Timing is after the first month of release, and can be reused with future tours as messages seep into the listener's mind.</p>
+      </div>
+      <span class="campaign-tag">Out-of-Home · Yonge Dundas Square · Month 2+</span>
+    </div>
+
+    <div class="image-grid two-col">
+      <img src="../images/weeknd-concept-3.png" alt="Campaign 3 — Billboard ad" />
+      <img src="../images/weeknd-viz-3.png" alt="Campaign 3 — Billboard visualization" />
+    </div>
+    <p class="img-caption">Campaign 3 — Spotify album ad concept &amp; Yonge Dundas Square billboard visualization</p>
+
+    <hr class="div" />
+
+    <!-- REFLECTION -->
+    <div class="section-heading">Reflection</div>
+    <div class="body-text">
+      <p>This project reinforced how <strong>brand identity is determined through symbols and differences in the marketplace</strong> — the sum of various attributes that define the brand, distinguish it with features, and make it recognizable (Pareek, 2015). The Weeknd's <em>After Hours</em> is more than an album; it is an ideology made visible.</p>
+      <p>Tying it all together, <em>After Hours</em> was the lovechild at his starting line eleven years ago — the days of melancholy with the heightened energy Tesfaye brings today. Marketing toward his audience requires forming a human relationship while offering value to consumers and music as an entirety. The empty pleasure given upon sharing the emotions has built a sense of trust between the crowd and the artist. Infused is the deconstruction and establishment of this Tesfaye that will not be forgotten.</p>
+    </div>
+
+  </div>
+
+  <a class="next-project" href="waves.html">
+    <div><div class="next-label">Back to start</div><div class="next-title">Symmetrically Unorthodox</div></div>
+    <div class="next-arrow">→</div>
+  </a>
+
+  <footer>
+    <span style="color:var(--purple-light)">Jack Mao</span>
+    <span>© 2026 — All rights reserved</span>
+    <span>Built with ♥ + Figma</span>
+  </footer>
+
+  <script>
+    document.addEventListener("contextmenu", e => { if (e.target.tagName === "IMG" || e.target.tagName === "IFRAME") e.preventDefault(); });
+    document.addEventListener("dragstart", e => { if (e.target.tagName === "IMG") e.preventDefault(); });
+    const c = document.getElementById('cursor');
+    c.style.left = '-100px'; c.style.top = '-100px';
+    document.addEventListener('mousemove', e => { c.style.left = e.clientX+'px'; c.style.top = e.clientY+'px'; });
+    document.querySelectorAll('a').forEach(el => {
+      el.addEventListener('mouseenter', () => c.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => c.classList.remove('hovering'));
+    });
+  </script>
+</body>
+</html>
