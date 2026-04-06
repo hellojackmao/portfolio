@@ -12,6 +12,17 @@
       --navy:#0f0e1a; --navy2:#16152b; --purple:#7B6CF6; --purple-light:#a99cf8;
       --lime:#ccff00; --coral:#ff5533; --white:#ffffff;
       --gold:#c9a84c; --gold-light:#e8c97a; --forest:#1a4a2a; --forest-light:#4ade80;
+    
+      /* ── Liquid Glass ── */
+      --glass-bg: transparent;
+      --glass-bg-hover: rgba(255,255,255,0.04);
+      --glass-border: rgba(255,255,255,0.08);
+      --glass-border-top: rgba(255,255,255,0.08);
+      --glass-blur: none;
+      --glass-blur-sm: none;
+      --glass-shine: none;
+      --glass-shadow: none;
+      --glass-shadow-card: none;
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
@@ -20,7 +31,7 @@
     .cursor{position:fixed;width:14px;height:14px;background:var(--gold-light);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:difference;}
     .cursor.hovering{width:42px;height:42px;background:var(--gold);}
 
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;background:rgba(15,14,26,.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.05);}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;background:rgba(15,14,26,0.45);backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);border:1px solid var(--glass-border);border-top-color:var(--glass-border-top);border-radius:12px;box-shadow:var(--glass-shadow);}
     .nav-logo{font-weight:800;font-size:1rem;color:var(--white);text-decoration:none;}
     .nav-logo span{color:var(--purple-light);}
     .nav-back{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s;cursor:none;}
@@ -94,13 +105,13 @@
 
     hr.div{border:none;border-top:1px solid rgba(255,255,255,.06);margin:3rem 0;}
 
-    .next-project{padding:5rem 3rem;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:var(--white);transition:background .3s;cursor:none;}
+    .next-project{padding:5rem 3rem;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:var(--white);transition:background .3s;cursor:none;backdrop-filter:var(--glass-blur-sm);-webkit-backdrop-filter:var(--glass-blur-sm);}
     .next-project:hover{background:rgba(201,168,76,.05);}
     .next-label{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.5rem;}
     .next-title{font-size:clamp(1.5rem,4vw,2.5rem);font-weight:800;letter-spacing:-.03em;}
     .next-arrow{font-size:2.5rem;color:var(--gold-light);transition:transform .3s;}
     .next-project:hover .next-arrow{transform:translateX(8px);}
-    footer{padding:2rem 3rem;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;font-size:.75rem;color:rgba(255,255,255,.2);font-family:'DM Mono',monospace;}
+    footer{padding:2rem 3rem;margin:0 0 1.5rem;border:1px solid var(--glass-border);border-top-color:var(--glass-border-top);border-radius:12px;background:var(--glass-bg);backdrop-filter:var(--glass-blur-sm);-webkit-backdrop-filter:var(--glass-blur-sm);box-shadow:var(--glass-shadow);display:flex;align-items:center;justify-content:space-between;font-size:.75rem;color:rgba(255,255,255,.2);font-family:'DM Mono',monospace;}
 
     @media(max-width:768px){
       nav{padding:1.2rem 1.5rem;}
@@ -124,6 +135,143 @@
     .nav-dropdown-menu a:hover{background:rgba(255,255,255,.05);color:var(--lime);}
     .nav-dropdown-menu .active-page{color:var(--lime);pointer-events:none;}
     .nav-dropdown-divider{border:none;border-top:1px solid rgba(255,255,255,.06);margin:.4rem 0;}
+
+    /* ── Liquid Glass — project page elements ── */
+    .project-intro {
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+    }
+    .mechanic-card,.ideology-card,.act-card,.campaign-card,.stat,.tf-section,.image-grid img,.logo-cell {
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+    }
+    .mechanic-card,.ideology-card,.campaign-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-border-top);
+      box-shadow: var(--glass-shadow-card);
+      position: relative; overflow: hidden;
+    }
+    .mechanic-card::before,.ideology-card::before,.campaign-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--glass-shine);
+      pointer-events: none;
+    }
+    .mechanic-card::after,.ideology-card::after,.campaign-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg,transparent,rgba(255,255,255,0.16),transparent);
+    }
+    .stat {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-border-top);
+      box-shadow: var(--glass-shadow);
+    }
+    .nav-dropdown-menu {
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      background: rgba(15,14,26,0.75);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-border-top);
+      box-shadow: var(--glass-shadow-card);
+    }
+    .nav-dropdown-btn {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-border-top);
+    }
+    .pull-quote {
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+    }
+    .logo-showcase {
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow-card);
+    }
+
+    /* ═══════════════════════════════════════
+       V1 DESKTOP (≥769px) — strip all glass
+    ═══════════════════════════════════════ */
+    @media (min-width: 769px) {
+      nav {
+        top: 0; left: 0; right: 0; transform: none; width: auto;
+        border-radius: 0; padding: 1.4rem 3rem;
+        border: none; border-bottom: 1px solid rgba(255,255,255,0.05);
+        background: rgba(15,14,26,0.85);
+        backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+        box-shadow: none;
+      }
+      nav::before { display: none; }
+      footer {
+        margin: 0; border-radius: 0; padding: 2rem 3rem;
+        border: none; border-top: 1px solid rgba(255,255,255,0.06);
+        background: transparent;
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+        box-shadow: none;
+      }
+      footer::before { display: none; }
+      .mechanic-card, .ideology-card, .campaign-card, .act-card, .stat,
+      .pull-quote, .logo-showcase, .tf-section, .logo-cell {
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+      }
+      .mechanic-card, .ideology-card, .campaign-card {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: none;
+      }
+      .mechanic-card::before, .mechanic-card::after,
+      .ideology-card::before, .ideology-card::after,
+      .campaign-card::before, .campaign-card::after { display: none; }
+      .stat { box-shadow: none; }
+      .next-project { backdrop-filter: none; -webkit-backdrop-filter: none; }
+      .nav-dropdown-menu {
+        background: rgba(15,14,26,0.97);
+        backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: none;
+      }
+      .nav-dropdown-btn {
+        background: transparent;
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+      }
+    }
+
+    /* ═══════════════════════════════════════
+       V2 MOBILE (≤768px) — liquid glass on
+    ═══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      :root {
+        --glass-bg: rgba(255,255,255,0.04);
+        --glass-bg-hover: rgba(255,255,255,0.07);
+        --glass-border: rgba(255,255,255,0.09);
+        --glass-border-top: rgba(255,255,255,0.16);
+        --glass-blur: blur(18px) saturate(160%);
+        --glass-blur-sm: blur(10px) saturate(140%);
+        --glass-shine: linear-gradient(135deg,rgba(255,255,255,0.10) 0%,rgba(255,255,255,0.02) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,0.05) 100%);
+        --glass-shadow: 0 6px 24px rgba(0,0,0,0.28),0 1px 0 rgba(255,255,255,0.06) inset,0 -1px 0 rgba(0,0,0,0.15) inset;
+        --glass-shadow-card: 0 12px 36px rgba(0,0,0,0.32),0 1px 0 rgba(255,255,255,0.07) inset,0 -1px 0 rgba(0,0,0,0.18) inset;
+      }
+      nav {
+        top: 0.75rem; left: 50%; right: auto;
+        transform: translateX(-50%);
+        width: calc(100% - 2rem);
+        border-radius: 100px; padding: 0.85rem 1.25rem;
+        background: rgba(15,14,26,0.45);
+        backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--glass-border);
+        border-top-color: var(--glass-border-top);
+        box-shadow: var(--glass-shadow);
+        border-bottom: none;
+      }
+    }
   </style>
 </head>
 <body>
