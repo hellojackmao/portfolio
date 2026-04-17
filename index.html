@@ -1299,6 +1299,22 @@
 
   </div><!-- /main -->
 
+  <!-- Back to top button -->
+  <div id="back-to-top" aria-label="Back to top">
+    <svg class="btt-ring" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <path id="btt-circle-path" d="M 60,60 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/>
+      </defs>
+      <text class="btt-ring-text">
+        <textPath href="#btt-circle-path" startOffset="0%">BACK TO TOP · BACK TO TOP · </textPath>
+      </text>
+    </svg>
+    <svg class="btt-arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <line x1="12" y1="19" x2="12" y2="5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <polyline points="6,11 12,5 18,11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
   <script>
     // ── Image protection ──
     document.addEventListener('contextmenu', e => {
@@ -1402,21 +1418,6 @@
     btt.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
     btt.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
   </script>
-  <!-- Back to top button -->
-  <div id="back-to-top" aria-label="Back to top">
-    <svg class="btt-ring" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <path id="btt-circle-path" d="M 60,60 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/>
-      </defs>
-      <text class="btt-ring-text">
-        <textPath href="#btt-circle-path" startOffset="0%">BACK TO TOP · BACK TO TOP · </textPath>
-      </text>
-    </svg>
-    <svg class="btt-arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <line x1="12" y1="19" x2="12" y2="5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-      <polyline points="6,11 12,5 18,11" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  </div>
 
 </body>
 </html>
