@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>From Shadow to Serenity — Jack Mao</title>
+  <title>Toronto in Bloom — Jack Mao</title>
+  <meta name="description" content="An upcoming video project capturing Toronto's cherry blossoms — 2026 · Jack Mao"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Toronto in Bloom — Jack Mao"/>
+  <meta property="og:description" content="An upcoming video project capturing Toronto's cherry blossoms — 2026 · Jack Mao"/>
+  <meta property="og:image" content="../icon-512.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Toronto in Bloom — Jack Mao"/>
+  <meta name="twitter:image" content="../icon-512.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
@@ -45,7 +53,7 @@
     .project-title{font-size:clamp(3rem,9vw,7rem);font-weight:800;letter-spacing:-.04em;line-height:.92;}
     .project-title em{font-style:italic;font-family:'DM Serif Display',serif;color:var(--purple-light);}
     .project-cover{width:100%;max-height:70vh;object-fit:cover;display:block;}
-    .cover-placeholder{width:100%;height:60vh;background:linear-gradient(135deg,#2d1040,#7c3aed);display:flex;align-items:center;justify-content:center;font-size:clamp(2rem,8vw,8rem);font-weight:800;color:rgba(255,255,255,.06);letter-spacing:-.03em;text-align:center;padding:0 2rem;word-break:break-word;}
+    .cover-placeholder{width:100%;height:60vh;background:linear-gradient(135deg,#2a0a1a,#c084fc);display:flex;align-items:center;justify-content:center;font-size:clamp(2rem,8vw,8rem);font-weight:800;color:rgba(255,255,255,.06);letter-spacing:-.03em;text-align:center;padding:0 2rem;word-break:break-word;}
     .project-content{max-width:780px;margin:0 auto;padding:6rem 3rem;}
     .project-intro{font-size:clamp(1.1rem,2.5vw,1.5rem);font-family:'DM Serif Display',serif;font-style:italic;line-height:1.55;color:var(--purple-light);margin-bottom:3rem;border-left:2px solid var(--purple);padding-left:1.5rem;}
     [id] { scroll-margin-top: 5rem; }
@@ -222,6 +230,11 @@
       }
       .project-hero { padding-top: 6rem; }
     }
+
+    /* ── Keyboard focus accessibility ── */
+    :focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; border-radius: 4px; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; border-radius: 6px; }
+    :focus:not(:focus-visible) { outline: none; }
   </style>
 </head>
 <body>
@@ -232,9 +245,9 @@
     <div class="nav-dropdown">
       <button class="nav-dropdown-btn">Projects</button>
       <div class="nav-dropdown-menu">
-        <a href="waves.html">Symmetrically Unorthodox</a>
+        <a href="waves.html">Light &amp; Form</a>
         <hr class="nav-dropdown-divider"/>
-        <span class="nav-dropdown-menu active-page" style="display:block;padding:.6rem 1rem;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--lime);">From Shadow to Serenity</span>
+        <span class="nav-dropdown-menu active-page" style="display:block;padding:.6rem 1rem;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--lime);">Toronto in Bloom</span>
         <hr class="nav-dropdown-divider"/>
         <a href="hidesign.html">Chronicles of Elysium</a>
         <a href="logotype.html">Logotype Collection</a>
@@ -246,57 +259,61 @@
 
   <div class="project-hero">
     <div class="project-meta">
-      <div><span class="meta-label">Category</span><span class="meta-value">Photo Editing</span></div>
-      <div><span class="meta-label">Year</span><span class="meta-value">2021</span></div>
-      <div><span class="meta-label">Tools</span><span class="meta-value">Adobe Photoshop</span></div>
+      <div><span class="meta-label">Category</span><span class="meta-value">Video</span></div>
+      <div><span class="meta-label">Year</span><span class="meta-value">2026</span></div>
+      <div><span class="meta-label">Tools</span><span class="meta-value">Coming Soon</span></div>
     </div>
     <h1 class="project-title">From Shadow<br>to <em>Serenity</em></h1>
   </div>
 
   <!-- COVER: swap div for <img class="project-cover" src="../images/selene-cover.jpg" alt="cover" /> -->
-  <div class="cover-placeholder">WELL-BEING</div>
+  <div class="cover-placeholder">BLOOM</div>
 
   <div class="project-content">
-    <p class="project-intro">A photography editing exploration of duality — light and darkness as opposing forces rendered through the lens. Serenity as metaphor for transformation through image.</p>
 
-    <div class="section-heading">Overview</div>
+    <p class="project-intro" style="color:var(--purple-light);border-color:var(--purple);">
+      Something new is coming. Toronto's cherry blossoms — 2026 — captured through video for the first time in this portfolio.
+    </p>
+
+    <!-- Coming soon badge -->
+    <div style="display:inline-flex;align-items:center;gap:.6rem;padding:.4rem 1.1rem;background:rgba(192,132,252,0.08);border:1px solid rgba(192,132,252,0.2);border-radius:100px;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#c084fc;margin-bottom:2.5rem;">
+      <span style="width:7px;height:7px;border-radius:50%;background:#c084fc;animation:pulse-dot 2s ease-in-out infinite;display:inline-block;flex-shrink:0;"></span>
+      In production · 2026
+    </div>
+
+    <div class="section-heading">About This Project</div>
     <div class="body-text">
-      <p><strong>From Shadow to Serenity</strong> is a photo editing project built around a single concept: the journey from darkness toward calm. Each image was carefully retouched and colour-graded to explore contrast, mood, and the interplay of light and shadow.</p>
-      <p>The project spans a series of edited photographs and composite pieces — each image a different expression of the same underlying idea.</p>
+      <p>Every spring, Toronto's High Park transforms for a brief, fleeting window — cherry blossoms that last no more than two weeks before the petals fall. This project is an attempt to hold that moment still; a short video piece documenting the 2026 bloom season in the city I call home.</p>
+      <p>The work will combine slow cinematography, ambient sound, and a quiet editorial sensibility — more meditation than documentary. It is, in part, a response to the impermanence at the heart of all the other work in this portfolio: illustration fades, photographs age, games get patched. <strong>But a blossom is honest about how short it lasts.</strong></p>
     </div>
 
-    <!-- Type specimen block — decorative, no images needed -->
-    <div class="type-specimen">
-      <p><span>S</span>hadow<br><span>to</span><br><span>Serenity</span></p>
-    </div>
-
-    <div class="section-heading">Process</div>
+    <!-- Video placeholder — Dave Krugman credit -->
+    <div class="section-heading">Preview — Cherry Blossom Reference</div>
     <div class="body-text">
-      <p>The work began with sourcing and shooting images that captured raw contrast — harsh shadows, soft highlights, and scenes that felt emotionally charged. The tension between what is visible and what is obscured drove every editing decision.</p>
-      <p>Colour grading was the primary tool — deep shadow tones meeting luminous highlights, desaturated backgrounds against vivid focal points. Every adjustment was intentional: <strong>shadow only exists because of light.</strong></p>
+      <p>While the 2026 project is in production, the following video by photographer and filmmaker Dave Krugman offers a sense of the visual direction — the quality of light, the mood, the pace. All credit for this footage belongs to him.</p>
     </div>
 
-    <!-- Swap img-slot divs for real <img> tags -->
-    <div class="image-grid two-col">
-      <img src="../images/selene-01.png" alt="Blue Haven — revised" style="border-radius:12px;" />
-      <img src="../images/selene-02.png" alt="Blue Haven — original" style="border-radius:12px;" />
+    <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:14px;background:#0a0912;margin:1.5rem 0;">
+      <iframe
+        src="https://www.youtube.com/embed/pMvqTKHLMDo"
+        title="Cherry blossoms reference video by Dave Krugman"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;border-radius:14px;">
+      </iframe>
     </div>
-    <p class="img-caption">Photo series — edited compositions, 2025</p>
+    <p class="img-caption">Video by Dave Krugman — used as visual reference only</p>
 
-    <div class="image-grid one-col">
-      <img src="../images/selene-02.png" alt="Blue Haven — final composition" style="border-radius:12px;" />
-    </div>
-    <p class="img-caption">Final edit — full composition</p>
+    <hr class="div"/>
 
-    <hr class="div" />
-
-    <div class="section-heading">Reflection</div>
+    <div class="section-heading">What to Expect</div>
     <div class="body-text">
-      <p>Photography editing is one of the most nuanced creative disciplines — a subtle shift in tone or exposure can completely change the emotional weight of an image. This project was a reminder that <strong>negative space is never empty</strong>; it's always charged with intention.</p>
+      <p>The final piece will be a short-form video — under three minutes — shot during the 2026 Toronto cherry blossom season. It will live here when it's ready. Until then, this page is a placeholder and a promise.</p>
     </div>
+
   </div>
 
-  <a class="next-project" href="hidesign.html">
+  class="next-project" href="hidesign.html">
     <div><div class="next-label">Next project</div><div class="next-title">Chronicles of Elysium</div></div>
     <div class="next-arrow">→</div>
   </a>
