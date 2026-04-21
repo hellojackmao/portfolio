@@ -4,6 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jack Mao / Portfolio 2026</title>
+  <meta name="description" content="Jack Mao is a Toronto-based designer and illustrator working across illustration, branding, game design, and typeface design."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Jack Mao — Portfolio 2026"/>
+  <meta property="og:description" content="Toronto-based designer and illustrator. Illustration · Branding · Game Design · Typeface."/>
+  <meta property="og:image" content="icon-512.png"/>
+  <meta property="og:url" content="https://jackmao.ca"/>
+  <meta property="og:site_name" content="Jack Mao Portfolio"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Jack Mao — Portfolio 2026"/>
+  <meta name="twitter:description" content="Toronto-based designer and illustrator. Illustration · Branding · Game Design · Typeface."/>
+  <meta name="twitter:image" content="icon-512.png"/>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="icon" type="image/x-icon" href="favicon.ico"/>
   <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
@@ -983,6 +994,33 @@
         pointer-events: none;
       }
     }
+    /* ── Availability pill ── */
+    .avail-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 1rem;
+      background: rgba(204,255,0,0.08);
+      border: 1px solid rgba(204,255,0,0.2);
+      border-radius: 100px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 1.75rem;
+    }
+    .avail-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--lime);
+      animation: pulse-dot 2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.75); }
+    }
     /* ── Back to top ── */
     #back-to-top {
       position: fixed;
@@ -1067,6 +1105,20 @@
     @media (max-width: 768px) {
       #back-to-top { bottom: 5rem; right: 1.25rem; width: 64px; height: 64px; }
     }
+
+    /* ── Keyboard focus accessibility ── */
+    :focus-visible {
+      outline: 2px solid var(--lime);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--lime);
+      outline-offset: 4px;
+      border-radius: 6px;
+    }
+    /* Remove outline for mouse users */
+    :focus:not(:focus-visible) { outline: none; }
   </style>
 </head>
 <body>
@@ -1109,8 +1161,8 @@
     <!-- Marquee -->
     <div class="marquee-wrap">
       <div class="marquee-inner">
-        <span>This is my work. <b>✦</b> This is my work. <b>✦</b> This is my work. <b>✦</b> This is my work. <b>✦</b> This is my work. <b>✦</b> This is my work. <b>✦</b></span>
-        <span>This is my work. <b>✦</b> This is my work. <b>✦</b> This is my work. <b>✦</b> This is my work. <b>✦</b> This is my work. <b>✦</b> This is my work. <b>✦</b></span>
+        <span>Illustration <b>✦</b> Branding <b>✦</b> Game Design <b>✦</b> Typeface Design <b>✦</b> Photo Editing <b>✦</b> Advertising <b>✦</b> Toronto <b>✦</b> 2026 <b>✦</b></span>
+        <span>Illustration <b>✦</b> Branding <b>✦</b> Game Design <b>✦</b> Typeface Design <b>✦</b> Photo Editing <b>✦</b> Advertising <b>✦</b> Toronto <b>✦</b> 2026 <b>✦</b></span>
       </div>
     </div>
 
@@ -1282,6 +1334,24 @@
               <span>Editorial</span>
             </div>
           </a>
+
+          <a class="inspiration-card" href="https://www.pentagram.com" target="_blank" rel="noopener">
+            <div class="inspiration-header">
+              <div class="inspiration-name">Pentagram</div>
+              <div class="inspiration-arrow">↗</div>
+            </div>
+            <div class="inspiration-role">Design Studio — Global</div>
+            <p class="inspiration-desc">The gold standard of what a design practice can be. Pentagram's work across identity, editorial, and environmental design is a masterclass in restraint and intention — proof that the best ideas rarely need decoration.</p>
+          </a>
+
+          <a class="inspiration-card" href="https://www.sagmeister.com" target="_blank" rel="noopener">
+            <div class="inspiration-header">
+              <div class="inspiration-name">Stefan Sagmeister</div>
+              <div class="inspiration-arrow">↗</div>
+            </div>
+            <div class="inspiration-role">Designer — New York</div>
+            <p class="inspiration-desc">Sagmeister's refusal to separate beauty from meaning is something I carry into every project. His willingness to make design that is deeply personal — and deeply risky — is a constant reminder that the best work comes from genuine conviction.</p>
+          </a>
         </div>
       </div>
     </section>
@@ -1289,6 +1359,10 @@
       <div class="contact-bg"></div>
       <div class="contact-inner">
         <div class="contact-label">✦ Let's connect</div>
+        <div class="avail-pill">
+          <span class="avail-dot"></span>
+          Available for work · Toronto · 2026
+        </div>
         <h2 class="contact-heading">Got a project<br><em>in mind?</em></h2>
         <p class="contact-sub">I'm always open to new opportunities, collaborations, and interesting ideas. Drop me a line and let's create something together.</p>
         <a class="contact-email" href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#99;&#107;&#46;&#109;&#97;&#111;&#64;&#116;&#111;&#114;&#111;&#110;&#116;&#111;&#109;&#117;&#46;&#99;&#97;">&#106;&#97;&#99;&#107;&#46;&#109;&#97;&#111;&#64;&#116;&#111;&#114;&#111;&#110;&#116;&#111;&#109;&#117;&#46;&#99;&#97;</a>
