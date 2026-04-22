@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chronicles of Elysium — Jack Mao</title>
+  <meta name="description" content="Video game design project built on the Hero's Journey · 2023 · Jack Mao"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Chronicles of Elysium — Jack Mao"/>
+  <meta property="og:description" content="Video game design project built on the Hero's Journey · 2023 · Jack Mao"/>
+  <meta property="og:image" content="../icon-512.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Chronicles of Elysium — Jack Mao"/>
+  <meta name="twitter:image" content="../icon-512.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png"/>
+  <meta name="theme-color" content="#ccff00"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:#0f0e1a; --navy2:#16152b; --purple:#7B6CF6; --purple-light:#a99cf8;
+      --lime:#ccff00; --coral:#ff5533; --white:#ffffff;
+      --gold:#c9a84c; --gold-light:#e8c97a; --forest:#1a4a2a; --forest-light:#4ade80;
+    
+      /* ── Liquid Glass ── */
+      --glass-bg: transparent;
+      --glass-bg-hover: rgba(255,255,255,0.04);
+      --glass-border: rgba(255,255,255,0.08);
+      --glass-border-top: rgba(255,255,255,0.08);
+      --glass-blur: none;
+      --glass-blur-sm: none;
+      --glass-shine: none;
+      --glass-shadow: none;
+      --glass-shadow-card: none;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    img{-webkit-user-drag:none;user-drag:none;user-select:none;-webkit-user-select:none;pointer-events:none;}
+    body{font-family:'Syne',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden;cursor:none;}
+    .cursor{position:fixed;width:14px;height:14px;background:var(--gold-light);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:difference;will-change:transform;}
+    .cursor.hovering{width:42px;height:42px;background:var(--gold);}
+
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;background:rgba(15,14,26,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.05);}
+    .nav-logo{font-weight:800;font-size:1rem;color:var(--white);text-decoration:none;}
+    .nav-logo span{color:var(--purple-light);}
+    .nav-back{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s;cursor:none;}
+    .nav-back:hover{color:var(--lime);}
+
+    /* Hero */
+    .project-hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:10rem 3rem 5rem;position:relative;overflow:hidden;background:radial-gradient(ellipse 100% 80% at 60% 100%,#1a4a2a 0%,#0a2010 35%,var(--navy) 70%);}
+    .hero-cover{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.35;}
+    .hero-content{position:relative;z-index:1;}
+    .edition-tag{font-size:.65rem;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--gold-light);margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;}
+    .edition-tag::before{content:'';display:block;width:32px;height:1px;background:var(--gold-light);}
+    .hero-title{font-family:'DM Serif Display',serif;font-size:clamp(3rem,8vw,7.5rem);line-height:.9;letter-spacing:-.03em;background:linear-gradient(135deg,#ffffff 0%,#e8c97a 60%,#c9a84c 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.75rem;}
+    .hero-subtitle-text{font-size:clamp(1rem,2vw,1.4rem);font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:2.5rem;}
+    .hero-meta{display:flex;gap:2rem;flex-wrap:wrap;}
+    .hero-meta-item{font-family:'DM Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.3);letter-spacing:.08em;}
+    .hero-meta-item span{color:var(--gold-light);}
+    .mag-rule{width:100%;height:1px;background:linear-gradient(90deg,var(--gold) 0%,rgba(201,168,76,.1) 100%);}
+
+    /* Content */
+    .project-content{max-width:860px;margin:0 auto;padding:6rem 3rem;}
+    .project-intro{font-size:clamp(1.1rem,2.5vw,1.6rem);font-family:'DM Serif Display',serif;font-style:italic;line-height:1.55;color:var(--gold-light);margin-bottom:3.5rem;border-left:2px solid var(--gold);padding-left:1.5rem;}
+    [id] { scroll-margin-top: 5rem; }
+    .section-heading{font-size:.7rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--lime);margin-bottom:1.25rem;margin-top:2.5rem;display:flex;align-items:center;gap:1rem;}
+    .section-heading::after{content:'';flex:1;height:1px;background:rgba(255,255,255,.06);max-width:60px;}
+    .body-text{font-size:1rem;line-height:1.9;color:rgba(255,255,255,.55);}
+    .body-text p{margin-bottom:1.5rem;}
+    .body-text strong{color:var(--white);}
+    .body-text em{color:var(--gold-light);font-style:italic;font-family:'DM Serif Display',serif;}
+
+    /* Pull quote */
+    .pull-quote{margin:3.5rem 0;padding:2.5rem 3rem;border-top:2px solid var(--gold);border-bottom:1px solid rgba(201,168,76,.15);}
+    .pull-quote p{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.3rem,3vw,2rem);line-height:1.4;color:rgba(255,255,255,.8);}
+    .pull-quote cite{display:block;margin-top:1rem;font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold-light);font-style:normal;font-family:'Syne',sans-serif;}
+
+    /* Stat row */
+    .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin:2.5rem 0;}
+    .stat{padding:1.5rem;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.15);border-radius:12px;}
+    .stat-num{font-size:2rem;font-weight:800;letter-spacing:-.04em;color:var(--gold-light);}
+    .stat-label{font-size:.72rem;color:rgba(255,255,255,.35);margin-top:.3rem;font-family:'DM Mono',monospace;}
+
+    /* Mechanics grid */
+    .mechanics-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin:2.5rem 0;}
+    .mechanic-card{padding:1.75rem;background:rgba(255,255,255,.02);border:1px solid rgba(201,168,76,.15);border-radius:14px;}
+    .mechanic-num{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--gold-light);margin-bottom:.5rem;letter-spacing:.1em;}
+    .mechanic-title{font-size:1rem;font-weight:800;letter-spacing:-.01em;margin-bottom:.75rem;}
+    .mechanic-desc{font-size:.85rem;line-height:1.7;color:rgba(255,255,255,.45);}
+
+    /* Aesthetic bars */
+    .aesthetics-list{margin:2rem 0;display:flex;flex-direction:column;gap:.85rem;}
+    .aesthetic-row{display:grid;grid-template-columns:120px 1fr 36px;align-items:center;gap:1rem;}
+    .aesthetic-label{font-size:.75rem;font-weight:700;color:rgba(255,255,255,.5);}
+    .aesthetic-bar-track{height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;}
+    .aesthetic-bar-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gold) 0%,var(--gold-light) 100%);}
+    .aesthetic-score{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--gold-light);}
+
+    /* Act cards */
+    .act-card{margin:1.5rem 0;padding:1.75rem;background:rgba(255,255,255,.02);border-left:2px solid rgba(201,168,76,.3);border-radius:0 12px 12px 0;}
+    .act-label{font-family:'DM Mono',monospace;font-size:.65rem;color:var(--gold-light);letter-spacing:.1em;margin-bottom:.4rem;}
+    .act-title{font-size:1rem;font-weight:800;margin-bottom:.75rem;}
+    .act-body{font-size:.88rem;line-height:1.75;color:rgba(255,255,255,.45);}
+
+    /* Platform pills */
+    .platform-row{display:flex;flex-wrap:wrap;gap:.75rem;margin:2rem 0;}
+    .platform-pill{padding:.5rem 1.1rem;border-radius:100px;border:1px solid rgba(201,168,76,.25);font-size:.72rem;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.5);font-family:'DM Mono',monospace;}
+
+    /* Image grid */
+    .image-grid{display:grid;gap:1.5rem;margin:2.5rem 0;}
+    .two-col{grid-template-columns:1fr 1fr;}
+    .one-col{grid-template-columns:1fr;}
+    .image-grid img{width:100%;border-radius:12px;display:block;}
+    .img-caption{font-size:.72rem;color:rgba(255,255,255,.2);font-family:'DM Mono',monospace;text-align:center;margin-top:-.75rem;margin-bottom:1.5rem;}
+
+    hr.div{border:none;border-top:1px solid rgba(255,255,255,.06);margin:3rem 0;}
+
+    .next-project{padding:5rem 3rem;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:var(--white);transition:background .3s;cursor:none;backdrop-filter:var(--glass-blur-sm);-webkit-backdrop-filter:var(--glass-blur-sm);}
+    .next-project:hover{background:rgba(201,168,76,.05);}
+    .next-label{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.5rem;}
+    .next-title{font-size:clamp(1.5rem,4vw,2.5rem);font-weight:800;letter-spacing:-.03em;}
+    .next-arrow{font-size:2.5rem;color:var(--gold-light);transition:transform .3s;}
+    .next-project:hover .next-arrow{transform:translateX(8px);}
+    footer{padding:2rem 3rem;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;font-size:.75rem;color:rgba(255,255,255,.2);font-family:'DM Mono',monospace;}
+
+    @media(max-width:768px){
+      nav{padding:1.2rem 1.5rem;}
+      .project-hero{padding:8rem 1.5rem 4rem;}
+      .project-content{padding:4rem 1.5rem;}
+      .mechanics-grid{grid-template-columns:1fr;}
+      .two-col{grid-template-columns:1fr;}
+      .stat-row{grid-template-columns:1fr 1fr;}
+      .aesthetic-row{grid-template-columns:90px 1fr 30px;}
+      .pull-quote{padding:1.5rem;}
+      .next-project{padding:3rem 1.5rem;}
+      footer{flex-direction:column;gap:.5rem;text-align:center;padding:1.5rem;}
+    }
+      .nav-dropdown{position:relative;}
+    .nav-dropdown-btn{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);background:none;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.45rem 1rem;cursor:none;display:flex;align-items:center;gap:.5rem;transition:color .2s,border-color .2s;}
+    .nav-dropdown-btn:hover{color:var(--lime);border-color:var(--lime);}
+    .nav-dropdown-btn::after{content:"▾";font-size:.6rem;}
+    .nav-dropdown-menu{position:absolute;top:calc(100% + 10px);right:0;background:rgba(15,14,26,.97);border:1px solid rgba(255,255,255,.08);border-radius:12px;min-width:220px;padding:.5rem;backdrop-filter:blur(20px);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s,transform .2s,visibility .2s;z-index:300;}
+    .nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown-menu:hover{opacity:1;visibility:visible;transform:translateY(0);}
+    .nav-dropdown-menu a{display:block;padding:.6rem 1rem;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.45);text-decoration:none;border-radius:8px;transition:background .15s,color .15s;}
+    .nav-dropdown-menu a:hover{background:rgba(255,255,255,.05);color:var(--lime);}
+    .nav-dropdown-menu .active-page{color:var(--lime);pointer-events:none;}
+    .nav-dropdown-divider{border:none;border-top:1px solid rgba(255,255,255,.06);margin:.4rem 0;}
+
+    /* ── Liquid Glass — project page elements ── */
+    .project-intro {
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+    }
+    .mechanic-card,.ideology-card,.act-card,.campaign-card,.stat,.tf-section,.image-grid img,.logo-cell {
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+    }
+    .mechanic-card,.ideology-card,.campaign-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-border-top);
+      box-shadow: var(--glass-shadow-card);
+      position: relative; overflow: hidden;
+    }
+    .mechanic-card::before,.ideology-card::before,.campaign-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--glass-shine);
+      pointer-events: none;
+    }
+    .mechanic-card::after,.ideology-card::after,.campaign-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg,transparent,rgba(255,255,255,0.16),transparent);
+    }
+    .stat {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-border-top);
+      box-shadow: var(--glass-shadow);
+    }
+    .nav-dropdown-menu {
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      background: rgba(15,14,26,0.75);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-border-top);
+      box-shadow: var(--glass-shadow-card);
+    }
+    .nav-dropdown-btn {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-border-top);
+    }
+    .pull-quote {
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+    }
+    .logo-showcase {
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow-card);
+    }
+
+    /* ═══════════════════════════════════════
+       V1 DESKTOP (≥769px) — strip all glass
+    ═══════════════════════════════════════ */
+    @media (min-width: 769px) {
+      nav {
+        top: 0; left: 0; right: 0; transform: none; width: auto;
+        border-radius: 0; padding: 1.4rem 3rem;
+        border: none; border-bottom: 1px solid rgba(255,255,255,0.05);
+        background: rgba(15,14,26,0.85);
+        backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+        box-shadow: none;
+      }
+      nav::before { display: none; }
+      footer {
+        margin: 0; border-radius: 0; padding: 2rem 3rem;
+        border: none; border-top: 1px solid rgba(255,255,255,0.06);
+        background: transparent;
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+        box-shadow: none;
+      }
+      footer::before { display: none; }
+      .mechanic-card, .ideology-card, .campaign-card, .act-card, .stat,
+      .pull-quote, .logo-showcase, .tf-section, .logo-cell {
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+      }
+      .mechanic-card, .ideology-card, .campaign-card {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: none;
+      }
+      .mechanic-card::before, .mechanic-card::after,
+      .ideology-card::before, .ideology-card::after,
+      .campaign-card::before, .campaign-card::after { display: none; }
+      .stat { box-shadow: none; }
+      .next-project { backdrop-filter: none; -webkit-backdrop-filter: none; }
+      .nav-dropdown-menu {
+        background: rgba(15,14,26,0.97);
+        backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: none;
+      }
+      .nav-dropdown-btn {
+        background: transparent;
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+      }
+    }
+
+    /* ═══════════════════════════════════════
+       V2 MOBILE (≤768px) — liquid glass on
+    ═══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      :root {
+        --glass-bg: rgba(255,255,255,0.04);
+        --glass-bg-hover: rgba(255,255,255,0.07);
+        --glass-border: rgba(255,255,255,0.09);
+        --glass-border-top: rgba(255,255,255,0.16);
+        --glass-blur: blur(18px) saturate(160%);
+        --glass-blur-sm: blur(10px) saturate(140%);
+        --glass-shine: linear-gradient(135deg,rgba(255,255,255,0.10) 0%,rgba(255,255,255,0.02) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,0.05) 100%);
+        --glass-shadow: 0 6px 24px rgba(0,0,0,0.28),0 1px 0 rgba(255,255,255,0.06) inset,0 -1px 0 rgba(0,0,0,0.15) inset;
+        --glass-shadow-card: 0 12px 36px rgba(0,0,0,0.32),0 1px 0 rgba(255,255,255,0.07) inset,0 -1px 0 rgba(0,0,0,0.18) inset;
+      }
+      nav {
+        top: 0.75rem; left: 50%; right: auto;
+        transform: translateX(-50%);
+        width: calc(100% - 2rem);
+        border-radius: 100px; padding: 0.85rem 1.25rem;
+        background: rgba(15,14,26,0.45);
+        backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--glass-border);
+        border-top-color: var(--glass-border-top);
+        box-shadow: var(--glass-shadow);
+        border-bottom: none;
+      }
+      .project-hero { padding-top: 6rem; }
+    }
+
+    /* ── Keyboard focus accessibility ── */
+    :focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; border-radius: 4px; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; border-radius: 6px; }
+    :focus:not(:focus-visible) { outline: none; }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+
+  <nav>
+    <a class="nav-logo" href="../index.html">Jack Mao <span>/</span> Portfolio</a>
+    <a class="nav-back" href="../index.html#work">← Back to work</a>
+    <div class="nav-dropdown">
+      <button class="nav-dropdown-btn">Projects</button>
+      <div class="nav-dropdown-menu">
+        <a href="light-and-form.html">Light &amp; Form</a>
+        <a href="toronto-in-bloom.html">Toronto in Bloom</a>
+        <hr class="nav-dropdown-divider"/>
+        <span class="nav-dropdown-menu active-page" style="display:block;padding:.6rem 1rem;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--lime);">Chronicles of Elysium</span>
+        <hr class="nav-dropdown-divider"/>
+        <a href="logotype-collection.html">Logotype Collection</a>
+        <a href="so-good.html">Special Edition ft. Zara Larsson</a>
+        <a href="after-hours.html">Special Edition ft. The Weeknd</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="project-hero">
+    <img class="hero-cover" src="../images/kassandra-cover.png" alt="Kassandra: The Harmony of Elysium" />
+    <div class="hero-content">
+      <div class="edition-tag">Game Design · RTA928</div>
+      <div class="hero-title">Chronicles of<br>Elysium</div>
+      <div class="hero-subtitle-text">The Quest for Harmony</div>
+      <div class="hero-meta">
+        <div class="hero-meta-item">Category — <span>Video Game Design</span></div>
+        <div class="hero-meta-item">Year — <span>2023</span></div>
+        <div class="hero-meta-item">Course — <span>RTA928: Intro to Game Design</span></div>
+        <div class="hero-meta-item">Role — <span>Creator, Designer, Producer</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mag-rule"></div>
+
+  <!-- CONTENT -->
+  <div class="project-content">
+
+    <p class="project-intro">
+      A third-person action-adventure game built on Aristotle's Poetics and Joseph Campbell's Hero's Journey — following Kassandra, a humble musician, as she transforms into a legendary hero across the shattered world of Elysium.
+    </p>
+
+    <!-- KEY ART -->
+    <div class="image-grid one-col">
+      <img src="../images/kassandra-keyart.png" alt="Kassandra key art" />
+    </div>
+    <p class="img-caption">Key art — Kassandra: The Harmony of Elysium</p>
+
+    <!-- OVERVIEW -->
+    <div class="section-heading">Overview</div>
+    <div class="body-text">
+      <p>The player assumes the role of <strong>Kassandra</strong> — a tale of a young heroine who embarks on a quest to restore harmony to the shattered world of Elysium. The player makes critical decisions and witnesses the transformation of a humble musician into a legendary hero. The game provides players with a rich and emotionally engaging experience that explores the mature theme of <em>personal growth</em>.</p>
+      <p>Built on a <strong>one-time purchase</strong> monetization model, Chronicles of Elysium is designed for PC (Steam, Epic Games), PS5, and Xbox Series X — targeting players who value narrative depth, character customization, and emotionally resonant storytelling.</p>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">Story acts</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">Platforms</div></div>
+      <div class="stat"><div class="stat-num">35%</div><div class="stat-label">Artistic resources</div></div>
+    </div>
+
+    <!-- PLATFORMS -->
+    <div class="section-heading">Platforms &amp; Release</div>
+    <div class="platform-row">
+      <span class="platform-pill">PC — Steam</span>
+      <span class="platform-pill">PC — Epic Games</span>
+      <span class="platform-pill">PlayStation 5</span>
+      <span class="platform-pill">Xbox Series X</span>
+    </div>
+
+    <!-- CORE MECHANICS -->
+    <div class="section-heading">Core Mechanics</div>
+    <div class="mechanics-grid">
+      <div class="mechanic-card">
+        <div class="mechanic-num">01 — PRIMARY</div>
+        <div class="mechanic-title">Level-Based Progression</div>
+        <p class="mechanic-desc">Determining the degree of character customization in-game and how well it works in narrative-driven games indicates the immersion level. This structure allows players to create their own autonomy when articulating commands and getting the outcome they desire the more they play — shaping how each character approaches the environment, implements their skill sets, and defeats various enemy types.</p>
+      </div>
+      <div class="mechanic-card">
+        <div class="mechanic-num">02 — SECONDARY</div>
+        <div class="mechanic-title">Dynamic Movement System</div>
+        <p class="mechanic-desc">A fluid and connected combat system to achieve leveling progression flows into movement. A fast-paced action mechanism to maneuver, dodge, or attack should be efficient — making real-time responsiveness give players the accessibility to learn and master their controllability. Pressing once swings the weapon, twice fires a projectile, holding charges for a strike — each contributing to the character's overall advancement.</p>
+      </div>
+    </div>
+
+    <!-- AESTHETIC PLEASURE -->
+    <div class="section-heading">Pleasure Aesthetics</div>
+    <div class="body-text">
+      <p>Using the MDA framework, eight aesthetic categories were evaluated to define the core experience of Chronicles of Elysium.</p>
+    </div>
+    <div class="aesthetics-list">
+      <div class="aesthetic-row"><span class="aesthetic-label">Fantasy</span><div class="aesthetic-bar-track"><div class="aesthetic-bar-fill" style="width:100%"></div></div><span class="aesthetic-score">4/4</span></div>
+      <div class="aesthetic-row"><span class="aesthetic-label">Narrative</span><div class="aesthetic-bar-track"><div class="aesthetic-bar-fill" style="width:100%"></div></div><span class="aesthetic-score">4/4</span></div>
+      <div class="aesthetic-row"><span class="aesthetic-label">Discovery</span><div class="aesthetic-bar-track"><div class="aesthetic-bar-fill" style="width:100%"></div></div><span class="aesthetic-score">4/4</span></div>
+      <div class="aesthetic-row"><span class="aesthetic-label">Challenge</span><div class="aesthetic-bar-track"><div class="aesthetic-bar-fill" style="width:75%"></div></div><span class="aesthetic-score">3/4</span></div>
+      <div class="aesthetic-row"><span class="aesthetic-label">Expression</span><div class="aesthetic-bar-track"><div class="aesthetic-bar-fill" style="width:75%"></div></div><span class="aesthetic-score">3/4</span></div>
+      <div class="aesthetic-row"><span class="aesthetic-label">Sensation</span><div class="aesthetic-bar-track"><div class="aesthetic-bar-fill" style="width:50%"></div></div><span class="aesthetic-score">2/4</span></div>
+      <div class="aesthetic-row"><span class="aesthetic-label">Fellowship</span><div class="aesthetic-bar-track"><div class="aesthetic-bar-fill" style="width:25%"></div></div><span class="aesthetic-score">1/4</span></div>
+      <div class="aesthetic-row"><span class="aesthetic-label">Submission</span><div class="aesthetic-bar-track"><div class="aesthetic-bar-fill" style="width:25%"></div></div><span class="aesthetic-score">1/4</span></div>
+    </div>
+
+    <div class="pull-quote">
+      <p>"The progression in the narrative defines the mantle of the hero — because anyone could be hailed as one, but not everyone can become one."</p>
+      <cite>— Jennings, 2022 · Cited in Chronicles of Elysium narrative design</cite>
+    </div>
+
+    <!-- NARRATIVE -->
+    <div class="section-heading">Narrative Structure — The Hero's Journey</div>
+    <div class="body-text">
+      <p>The narrative is built on two interlocking frameworks: <strong>Aristotle's Poetics</strong> (beginning-middle-end, tragedy, catharsis) and <strong>Joseph Campbell's Hero's Journey</strong> (call to adventure, crossing the threshold, ordeal, return). Together they create a six-act structure that drives both character transformation and player investment.</p>
+    </div>
+
+    <div class="act-card">
+      <div class="act-label">ACT 1</div>
+      <div class="act-title">The Call to Adventure</div>
+      <p class="act-body">Elysium's idyllic land, where harmony once reigned, has been disrupted by dark forces beyond its borders. Kassandra, a travelling musician, receives a mystical invitation from an ancient sage dwelling under the World Tree. A prophecy is revealed — only a true hero can retrieve the lost Harmonia Flute and restore balance to Elysium.</p>
+    </div>
+    <div class="act-card">
+      <div class="act-label">ACT 2</div>
+      <div class="act-title">Crossing the Threshold</div>
+      <p class="act-body">With the support of her companion Cloud, the white cat, Kassandra accepts the call. She meets trusted allies: <strong>Jax, The Hardened Warrior</strong>, and <strong>Eleanor, The Keen Oracle</strong>. These individuals provide guidance and set challenges that test and strengthen her for the dark forces ahead.</p>
+    </div>
+    <div class="act-card">
+      <div class="act-label">ACT 3</div>
+      <div class="act-title">Tests, Allies, and Enemies</div>
+      <p class="act-body">Kassandra faces moral dilemmas and difficult choices — a heart-wrenching betrayal of a team member and the capturing of another. The evil antagonist, <strong>Cain</strong>, a power-hungry sorcerer controlling dark forces, has caught wind of her and is determined to remove her at all costs.</p>
+    </div>
+    <div class="act-card">
+      <div class="act-label">ACT 4</div>
+      <div class="act-title">The Ordeal</div>
+      <p class="act-body">Ambushed by Cain on the windy white grasslands, the climactic confrontation erupts. With her weapon of choice — the ukulele — and her three companions, Kassandra must use everything she has learned. Cain destroys her ukulele. Brought to her knees, overwhelmed, our heroine faces complete defeat.</p>
+    </div>
+    <div class="act-card">
+      <div class="act-label">ACT 5</div>
+      <div class="act-title">The Revelation</div>
+      <p class="act-body">Reaching the Harmonia Flute, it reveals her hidden past — she is <strong>Princess Kassandra of Celestis</strong>, sent to Elysium without her memories after her royal family was massacred. She realizes true harmony can only be restored by reconciling her inner demons and forgiving herself for her powerlessness. This inner transformation unlocks the Flute's power.</p>
+    </div>
+    <div class="act-card">
+      <div class="act-label">ACT 6</div>
+      <div class="act-title">The Return</div>
+      <p class="act-body">Kassandra defeats Cain with the power of the Harmonia Flute, restoring harmony to Elysium and bringing justice to Celestis. She must return to close that lost chapter — leaving behind the magical realm and those she has come to love. But as a changed hero, she carries the wisdom of a completed journey — and the potential for a sequel.</p>
+    </div>
+
+    <hr class="div" />
+
+    <!-- REFLECTION -->
+    <div class="section-heading">Reflection</div>
+    <div class="body-text">
+      <p>This project reinforced how <strong>narrative and gameplay must be fused rather than layered</strong>. Traditional linear narratives like Aristotle's Poetics and Campbell's Hero's Journey can interrupt a player-driven game that requires interaction — the challenge is finding the balance where story compels without constraining freedom.</p>
+      <p>Designing Kassandra's arc — a female protagonist undergoing heightened personal growth — was an intentional exploration of the "Heroine's Journey" as an alternative monomythic framework. Playing a game that leaves players thinking about somebody else's story through their own eyes is, ultimately, the goal of any narrative-driven design.</p>
+    </div>
+
+  </div>
+
+  <a class="next-project" href="logotype-collection.html">
+    <div><div class="next-label">Next project</div><div class="next-title">Logotype Collection</div></div>
+    <div class="next-arrow">→</div>
+  </a>
+
+  <footer>
+    <span style="color:var(--purple-light)">Jack Mao</span>
+    <span>© 2026 — All rights reserved</span>
+    <span>Built with ♥ + Figma</span>
+  </footer>
+
+  <script>
+    document.addEventListener("contextmenu", e => { if (e.target.tagName === "IMG" || e.target.tagName === "IFRAME") e.preventDefault(); });
+    document.addEventListener("dragstart", e => { if (e.target.tagName === "IMG") e.preventDefault(); });
+    const c = document.getElementById('cursor');
+    c.style.left = '-100px'; c.style.top = '-100px';
+    document.addEventListener('mousemove', e => { c.style.left = e.clientX+'px'; c.style.top = e.clientY+'px'; });
+    document.querySelectorAll('a').forEach(el => {
+      el.addEventListener('mouseenter', () => c.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => c.classList.remove('hovering'));
+    });
+    // ── Easter egg ──
+    (function() {
+      let clicks = parseInt(localStorage.getItem('jm_clicks') || '0');
+      const overlay = document.createElement('div');
+      overlay.style.cssText = 'position:fixed;inset:0;z-index:99998;display:flex;align-items:center;justify-content:center;background:rgba(15,14,26,0);pointer-events:none;transition:background .5s;';
+      overlay.innerHTML = '<div id="egg-star" style="opacity:0;transform:scale(0.4) rotate(-30deg);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1);pointer-events:none;"><svg width="120" height="120" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 30px rgba(123,108,246,0.9));"><path d="M 88.24,41.32 Q 100.00,15.00 111.76,41.32 Q 123.51,67.64 152.18,70.69 Q 180.84,73.73 159.44,93.05 Q 138.04,112.36 144.00,140.56 Q 149.96,168.77 124.98,154.38 Q 100.00,140.00 75.02,154.38 Q 50.04,168.77 56.00,140.56 Q 61.96,112.36 40.56,93.05 Q 19.16,73.73 47.82,70.69 Q 76.49,67.64 88.24,41.32 Z" fill="#7B6CF6" stroke="#ff5533" stroke-width="4"/><text x="100" y="118" text-anchor="middle" font-family="Playfair Display,serif" font-style="italic" font-size="38" fill="#f5f0e8" letter-spacing="-1">JM</text></svg></div>';
+      document.body.appendChild(overlay);
+      const pip = document.createElement('div');
+      pip.style.cssText = 'position:fixed;bottom:1.5rem;left:1.5rem;z-index:99997;font-family:monospace;font-size:.6rem;letter-spacing:.15em;color:rgba(123,108,246,0);transition:color .4s;pointer-events:none;';
+      pip.textContent = '✦ 0 / 10';
+      document.body.appendChild(pip);
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('a') || e.target.closest('button')) return;
+        clicks = Math.min(clicks + 1, 10);
+        localStorage.setItem('jm_clicks', clicks);
+        pip.style.color = 'rgba(123,108,246,0.5)';
+        pip.textContent = '✦ ' + clicks + ' / 10';
+        if (clicks >= 10) {
+          overlay.style.background = 'rgba(15,14,26,0.85)';
+          overlay.style.pointerEvents = 'all';
+          const star = document.getElementById('egg-star');
+          star.style.opacity = '1';
+          star.style.transform = 'scale(1) rotate(0deg)';
+          setTimeout(() => { window.location.href = '../secret.html'; }, 900);
+        }
+      });
+    })();
+
+    // ── Dropdown mobile touch support ──
+    const dropBtn = document.querySelector('.nav-dropdown-btn');
+    const dropMenu = document.querySelector('.nav-dropdown-menu');
+    if (dropBtn && dropMenu) {
+      dropBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const open = dropMenu.style.opacity === '1';
+        dropMenu.style.opacity = open ? '0' : '1';
+        dropMenu.style.visibility = open ? 'hidden' : 'visible';
+        dropMenu.style.transform = open ? 'translateY(-6px)' : 'translateY(0)';
+      });
+      document.addEventListener('click', () => {
+        dropMenu.style.opacity = '0';
+        dropMenu.style.visibility = 'hidden';
+        dropMenu.style.transform = 'translateY(-6px)';
+      });
+    }
+  </script>
+</body>
+</html>

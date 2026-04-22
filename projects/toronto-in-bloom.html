@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cherry Blossoms, High Park · 2026 — Jack Mao</title>
+  <meta name="description" content="An upcoming video project capturing Toronto's cherry blossoms — 2026 · Jack Mao"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="Cherry Blossoms, High Park · 2026 — Jack Mao"/>
+  <meta property="og:description" content="An upcoming video project capturing Toronto's cherry blossoms — 2026 · Jack Mao"/>
+  <meta property="og:image" content="../icon-512.png"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Cherry Blossoms, High Park · 2026 — Jack Mao"/>
+  <meta name="twitter:image" content="../icon-512.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png"/>
+  <meta name="theme-color" content="#ccff00"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root { --navy:#0f0e1a; --navy2:#16152b; --purple:#7B6CF6; --purple-light:#a99cf8; --lime:#ccff00; --coral:#ff5533; --white:#ffffff; 
+      /* ── Liquid Glass ── */
+      --glass-bg: transparent;
+      --glass-bg-hover: rgba(255,255,255,0.04);
+      --glass-border: rgba(255,255,255,0.08);
+      --glass-border-top: rgba(255,255,255,0.08);
+      --glass-blur: none;
+      --glass-blur-sm: none;
+      --glass-shine: none;
+      --glass-shadow: none;
+      --glass-shadow-card: none;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    img{-webkit-user-drag:none;user-drag:none;user-select:none;-webkit-user-select:none;pointer-events:none;}
+    iframe{user-select:none;-webkit-user-select:none;}
+    html{scroll-behavior:smooth;}
+    body{font-family:'Syne',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden;cursor:none;}
+    .cursor{position:fixed;width:14px;height:14px;background:var(--lime);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:difference;will-change:transform;}
+    .cursor.hovering{width:42px;height:42px;background:var(--purple);}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 3rem;background:rgba(15,14,26,.85);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.05);}
+    .nav-logo{font-weight:800;font-size:1rem;color:var(--white);text-decoration:none;}
+    .nav-logo span{color:var(--purple-light);}
+    .nav-back{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s;cursor:none;}
+    .nav-back:hover{color:var(--lime);}
+    .project-hero{min-height:75vh;display:flex;flex-direction:column;justify-content:flex-end;padding:10rem 3rem 4rem;background:radial-gradient(ellipse 80% 60% at 70% 100%,#5b1fa6 0%,#2d1060 40%,var(--navy) 70%);}
+    .project-meta{display:flex;gap:2rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+    .meta-label{font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--lime);display:block;margin-bottom:.3rem;}
+    .meta-value{font-size:.85rem;color:rgba(255,255,255,.6);font-family:'DM Mono',monospace;}
+    .project-title{font-size:clamp(3rem,9vw,7rem);font-weight:800;letter-spacing:-.04em;line-height:.92;}
+    .project-title em{font-style:italic;font-family:'DM Serif Display',serif;color:var(--purple-light);}
+    .project-cover{width:100%;max-height:70vh;object-fit:cover;display:block;}
+    .cover-placeholder{width:100%;height:60vh;background:linear-gradient(135deg,#2a0a1a,#c084fc);display:flex;align-items:center;justify-content:center;font-size:clamp(2rem,8vw,8rem);font-weight:800;color:rgba(255,255,255,.06);letter-spacing:-.03em;text-align:center;padding:0 2rem;word-break:break-word;}
+    .project-content{max-width:780px;margin:0 auto;padding:6rem 3rem;}
+    .project-intro{font-size:clamp(1.1rem,2.5vw,1.5rem);font-family:'DM Serif Display',serif;font-style:italic;line-height:1.55;color:var(--purple-light);margin-bottom:3rem;border-left:2px solid var(--purple);padding-left:1.5rem;}
+    [id] { scroll-margin-top: 5rem; }
+    .section-heading{font-size:.7rem;font-weight:700;letter-spacing:.25em;text-transform:uppercase;color:var(--lime);margin-bottom:1.25rem;margin-top:2.5rem;}
+    .body-text{font-size:1rem;line-height:1.85;color:rgba(255,255,255,.55);}
+    .body-text p{margin-bottom:1.5rem;}
+    .body-text strong{color:var(--white);}
+    .image-grid{display:grid;gap:1.5rem;margin:2.5rem 0;}
+    .two-col{grid-template-columns:1fr 1fr;}
+    .one-col{grid-template-columns:1fr;}
+    .image-grid img{width:100%;border-radius:12px;display:block;}
+    .img-slot{border-radius:12px;background:var(--navy2);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.12);font-family:'DM Mono',monospace;}
+    .img-slot.r43{aspect-ratio:4/3;}
+    .img-slot.r169{aspect-ratio:16/9;}
+    .img-slot.r11{aspect-ratio:1/1;}
+    .img-caption{font-size:.72rem;color:rgba(255,255,255,.2);font-family:'DM Mono',monospace;text-align:center;margin-top:-.75rem;margin-bottom:1.5rem;}
+    hr.div{border:none;border-top:1px solid rgba(255,255,255,.06);margin:3rem 0;}
+    .type-specimen{margin:3rem 0;padding:2.5rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:16px;}
+    .type-specimen p{font-family:'DM Serif Display',serif;font-style:italic;font-size:clamp(1.5rem,4vw,3rem);line-height:1.2;color:rgba(255,255,255,.15);letter-spacing:-.02em;}
+    .type-specimen p span{color:var(--purple-light);}
+    .next-project{padding:5rem 3rem;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;text-decoration:none;color:var(--white);transition:background .3s;cursor:none;backdrop-filter:var(--glass-blur-sm);-webkit-backdrop-filter:var(--glass-blur-sm);}
+    .next-project:hover{background:rgba(123,108,246,.06);}
+    .next-label{font-size:.7rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.5rem;}
+    .next-title{font-size:clamp(1.5rem,4vw,2.5rem);font-weight:800;letter-spacing:-.03em;}
+    .next-arrow{font-size:2.5rem;color:var(--purple-light);transition:transform .3s;}
+    .next-project:hover .next-arrow{transform:translateX(8px);}
+    footer{padding:2rem 3rem;border-top:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:space-between;font-size:.75rem;color:rgba(255,255,255,.2);font-family:'DM Mono',monospace;}
+    @media(max-width:768px){nav{padding:1.2rem 1.5rem;}.nav-logo{font-size:.85rem;}.project-hero{padding:8rem 1.5rem 3rem;}.project-title{font-size:clamp(2.2rem,10vw,4rem);}.project-meta{gap:1rem;}.project-content{padding:4rem 1.5rem;}.two-col{grid-template-columns:1fr;}.three-col{grid-template-columns:1fr 1fr;}.next-project{padding:3rem 1.5rem;}.next-title{font-size:clamp(1.2rem,6vw,2rem);}footer{flex-direction:column;gap:.5rem;text-align:center;padding:1.5rem;}}@media(max-width:400px){.project-title{font-size:9vw;}.three-col{grid-template-columns:1fr;}}
+      .nav-dropdown{position:relative;}
+    .nav-dropdown-btn{font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);background:none;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.45rem 1rem;cursor:none;display:flex;align-items:center;gap:.5rem;transition:color .2s,border-color .2s;}
+    .nav-dropdown-btn:hover{color:var(--lime);border-color:var(--lime);}
+    .nav-dropdown-btn::after{content:"▾";font-size:.6rem;}
+    .nav-dropdown-menu{position:absolute;top:calc(100% + 10px);right:0;background:rgba(15,14,26,.97);border:1px solid rgba(255,255,255,.08);border-radius:12px;min-width:220px;padding:.5rem;backdrop-filter:blur(20px);opacity:0;visibility:hidden;transform:translateY(-6px);transition:opacity .2s,transform .2s,visibility .2s;z-index:300;}
+    .nav-dropdown:hover .nav-dropdown-menu,.nav-dropdown-menu:hover{opacity:1;visibility:visible;transform:translateY(0);}
+    .nav-dropdown-menu a{display:block;padding:.6rem 1rem;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.45);text-decoration:none;border-radius:8px;transition:background .15s,color .15s;}
+    .nav-dropdown-menu a:hover{background:rgba(255,255,255,.05);color:var(--lime);}
+    .nav-dropdown-menu .active-page{color:var(--lime);pointer-events:none;}
+    .nav-dropdown-divider{border:none;border-top:1px solid rgba(255,255,255,.06);margin:.4rem 0;}
+
+    /* ── Liquid Glass — project page elements ── */
+    .project-intro {
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+    }
+    .mechanic-card,.ideology-card,.act-card,.campaign-card,.stat,.tf-section,.image-grid img,.logo-cell {
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+    }
+    .mechanic-card,.ideology-card,.campaign-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-border-top);
+      box-shadow: var(--glass-shadow-card);
+      position: relative; overflow: hidden;
+    }
+    .mechanic-card::before,.ideology-card::before,.campaign-card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: var(--glass-shine);
+      pointer-events: none;
+    }
+    .mechanic-card::after,.ideology-card::after,.campaign-card::after {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg,transparent,rgba(255,255,255,0.16),transparent);
+    }
+    .stat {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-border-top);
+      box-shadow: var(--glass-shadow);
+    }
+    .nav-dropdown-menu {
+      backdrop-filter: var(--glass-blur);
+      -webkit-backdrop-filter: var(--glass-blur);
+      background: rgba(15,14,26,0.75);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-border-top);
+      box-shadow: var(--glass-shadow-card);
+    }
+    .nav-dropdown-btn {
+      background: var(--glass-bg);
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-border-top);
+    }
+    .pull-quote {
+      background: rgba(255,255,255,0.02);
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+    }
+    .logo-showcase {
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: var(--glass-blur-sm);
+      -webkit-backdrop-filter: var(--glass-blur-sm);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow-card);
+    }
+
+    /* ═══════════════════════════════════════
+       V1 DESKTOP (≥769px) — strip all glass
+    ═══════════════════════════════════════ */
+    @media (min-width: 769px) {
+      nav {
+        top: 0; left: 0; right: 0; transform: none; width: auto;
+        border-radius: 0; padding: 1.4rem 3rem;
+        border: none; border-bottom: 1px solid rgba(255,255,255,0.05);
+        background: rgba(15,14,26,0.85);
+        backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+        box-shadow: none;
+      }
+      nav::before { display: none; }
+      footer {
+        margin: 0; border-radius: 0; padding: 2rem 3rem;
+        border: none; border-top: 1px solid rgba(255,255,255,0.06);
+        background: transparent;
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+        box-shadow: none;
+      }
+      footer::before { display: none; }
+      .mechanic-card, .ideology-card, .campaign-card, .act-card, .stat,
+      .pull-quote, .logo-showcase, .tf-section, .logo-cell {
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+      }
+      .mechanic-card, .ideology-card, .campaign-card {
+        background: rgba(255,255,255,0.02);
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: none;
+      }
+      .mechanic-card::before, .mechanic-card::after,
+      .ideology-card::before, .ideology-card::after,
+      .campaign-card::before, .campaign-card::after { display: none; }
+      .stat { box-shadow: none; }
+      .next-project { backdrop-filter: none; -webkit-backdrop-filter: none; }
+      .nav-dropdown-menu {
+        background: rgba(15,14,26,0.97);
+        backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255,255,255,0.08);
+        box-shadow: none;
+      }
+      .nav-dropdown-btn {
+        background: transparent;
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+      }
+    }
+
+    /* ═══════════════════════════════════════
+       V2 MOBILE (≤768px) — liquid glass on
+    ═══════════════════════════════════════ */
+    @media (max-width: 768px) {
+      :root {
+        --glass-bg: rgba(255,255,255,0.04);
+        --glass-bg-hover: rgba(255,255,255,0.07);
+        --glass-border: rgba(255,255,255,0.09);
+        --glass-border-top: rgba(255,255,255,0.16);
+        --glass-blur: blur(18px) saturate(160%);
+        --glass-blur-sm: blur(10px) saturate(140%);
+        --glass-shine: linear-gradient(135deg,rgba(255,255,255,0.10) 0%,rgba(255,255,255,0.02) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,0.05) 100%);
+        --glass-shadow: 0 6px 24px rgba(0,0,0,0.28),0 1px 0 rgba(255,255,255,0.06) inset,0 -1px 0 rgba(0,0,0,0.15) inset;
+        --glass-shadow-card: 0 12px 36px rgba(0,0,0,0.32),0 1px 0 rgba(255,255,255,0.07) inset,0 -1px 0 rgba(0,0,0,0.18) inset;
+      }
+      nav {
+        top: 0.75rem; left: 50%; right: auto;
+        transform: translateX(-50%);
+        width: calc(100% - 2rem);
+        border-radius: 100px; padding: 0.85rem 1.25rem;
+        background: rgba(15,14,26,0.45);
+        backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--glass-border);
+        border-top-color: var(--glass-border-top);
+        box-shadow: var(--glass-shadow);
+        border-bottom: none;
+      }
+      .project-hero { padding-top: 6rem; }
+    }
+
+    /* ── Keyboard focus accessibility ── */
+    :focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; border-radius: 4px; }
+    a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; border-radius: 6px; }
+    :focus:not(:focus-visible) { outline: none; }
+
+    /* ── Video player ── */
+    .video-wrap {
+      margin: 1.5rem 0 0.25rem;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #0a0912;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+    .video-wrap video {
+      display: block;
+      width: 100%;
+      max-height: 70vh;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <nav>
+    <a class="nav-logo" href="../index.html">Jack Mao <span>/</span> Portfolio</a>
+    <a class="nav-back" href="../index.html#work">← Back to work</a>
+    <div class="nav-dropdown">
+      <button class="nav-dropdown-btn">Projects</button>
+      <div class="nav-dropdown-menu">
+        <a href="light-and-form.html">Light &amp; Form</a>
+        <hr class="nav-dropdown-divider"/>
+        <span class="nav-dropdown-menu active-page" style="display:block;padding:.6rem 1rem;font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--lime);">Toronto in Bloom</span>
+        <hr class="nav-dropdown-divider"/>
+        <a href="chronicles-of-elysium.html">Chronicles of Elysium</a>
+        <a href="logotype-collection.html">Logotype Collection</a>
+        <a href="so-good.html">Special Edition ft. Zara Larsson</a>
+        <a href="after-hours.html">Special Edition ft. The Weeknd</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="project-hero">
+    <div class="project-meta">
+      <div><span class="meta-label">Category</span><span class="meta-value">Video</span></div>
+      <div><span class="meta-label">Year</span><span class="meta-value">2026</span></div>
+      <div><span class="meta-label">Tools</span><span class="meta-value">Coming Soon</span></div>
+    </div>
+    <h1 class="project-title">Cherry Blossoms,<br><em>High Park</em></h1>
+  </div>
+
+  <!-- COVER: swap div for <img class="project-cover" src="../images/selene-cover.jpg" alt="cover" /> -->
+  <div class="cover-placeholder">BLOOM</div>
+
+  <div class="project-content">
+
+    <p class="project-intro" style="color:var(--purple-light);border-color:var(--purple);">
+      Something new is coming. Toronto's cherry blossoms — 2026 — captured through video for the first time in this portfolio.
+    </p>
+
+    <!-- Coming soon badge -->
+    <div style="display:inline-flex;align-items:center;gap:.6rem;padding:.4rem 1.1rem;background:rgba(192,132,252,0.08);border:1px solid rgba(192,132,252,0.2);border-radius:100px;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#c084fc;margin-bottom:2.5rem;">
+      <span style="width:7px;height:7px;border-radius:50%;background:#c084fc;animation:pulse-dot 2s ease-in-out infinite;display:inline-block;flex-shrink:0;"></span>
+      In production · 2026
+    </div>
+
+    <div class="section-heading">About This Project</div>
+    <div class="body-text">
+      <p>Every spring, Toronto's High Park transforms for a brief, fleeting window — cherry blossoms that last no more than two weeks before the petals fall. This project is an attempt to hold that moment still; a short video piece documenting the 2026 bloom season in the city I call home.</p>
+      <p>The work will combine slow cinematography, ambient sound, and a quiet editorial sensibility — more meditation than documentary. It is, in part, a response to the impermanence at the heart of all the other work in this portfolio: illustration fades, photographs age, games get patched. <strong>But a blossom is honest about how short it lasts.</strong></p>
+    </div>
+
+    <!-- Video placeholder — Dave Krugman credit -->
+    <div class="section-heading">Footage — Toronto Cherry Blossoms 2026</div>
+    <div class="body-text">
+      <p>The following clips were filmed during the 2026 cherry blossom season in Toronto. Each is a raw capture — ungraded, unscored — from the ongoing edit. The final piece is still in production.</p>
+    </div>
+
+    <!-- Video 1 -->
+    <div class="video-wrap">
+      <video controls playsinline preload="metadata"
+        style="width:100%;border-radius:14px;display:block;background:#0a0912;">
+        <source src="../images/blossom-1.mp4" type="video/mp4"/>
+        Your browser does not support video playback.
+      </video>
+    </div>
+    <p class="img-caption">Cherry Blossoms, High Park · Clip 01 · Video by Dave Krugman</p>
+
+    <!-- Video 2 -->
+    <div class="video-wrap">
+      <video controls playsinline preload="metadata"
+        style="width:100%;border-radius:14px;display:block;background:#0a0912;">
+        <source src="../images/blossom-2.mp4" type="video/mp4"/>
+        Your browser does not support video playback.
+      </video>
+    </div>
+    <p class="img-caption">Cherry Blossoms, High Park · Clip 02 · Video by Dave Krugman</p>
+
+    <!-- Video 3 -->
+    <div class="video-wrap">
+      <video controls playsinline preload="metadata"
+        style="width:100%;border-radius:14px;display:block;background:#0a0912;">
+        <source src="../images/blossom-3.mp4" type="video/mp4"/>
+        Your browser does not support video playback.
+      </video>
+    </div>
+    <p class="img-caption">Cherry Blossoms, High Park · Clip 03 · Video by Dave Krugman</p>
+
+    <hr class="div"/>
+
+    <div class="section-heading">What to Expect</div>
+    <div class="body-text">
+      <p>The final piece will be a short-form video — under three minutes — shot during the 2026 Toronto cherry blossom season. It will live here when it's ready. Until then, this page is a placeholder and a promise.</p>
+    </div>
+
+  </div>
+
+  class="next-project" href="chronicles-of-elysium.html">
+    <div><div class="next-label">Next project</div><div class="next-title">Chronicles of Elysium</div></div>
+    <div class="next-arrow">→</div>
+  </a>
+
+  <footer>
+    <span style="color:var(--purple-light)">Jack Mao</span>
+    <span>© 2026 — All rights reserved</span>
+    <span>Built with ♥ + Figma</span>
+  </footer>
+
+  <script>
+    document.addEventListener("contextmenu", e => { if (e.target.tagName === "IMG" || e.target.tagName === "IFRAME") e.preventDefault(); });
+    document.addEventListener("dragstart", e => { if (e.target.tagName === "IMG") e.preventDefault(); });
+    const c = document.getElementById('cursor');
+    c.style.left = '-100px'; c.style.top = '-100px';
+    document.addEventListener('mousemove', e => { c.style.left = e.clientX+'px'; c.style.top = e.clientY+'px'; });
+    document.querySelectorAll('a').forEach(el => { el.addEventListener('mouseenter',()=>c.classList.add('hovering')); el.addEventListener('mouseleave',()=>c.classList.remove('hovering')); });
+    // ── Easter egg ──
+    (function() {
+      let clicks = parseInt(localStorage.getItem('jm_clicks') || '0');
+      const overlay = document.createElement('div');
+      overlay.style.cssText = 'position:fixed;inset:0;z-index:99998;display:flex;align-items:center;justify-content:center;background:rgba(15,14,26,0);pointer-events:none;transition:background .5s;';
+      overlay.innerHTML = '<div id="egg-star" style="opacity:0;transform:scale(0.4) rotate(-30deg);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1);pointer-events:none;"><svg width="120" height="120" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 30px rgba(123,108,246,0.9));"><path d="M 88.24,41.32 Q 100.00,15.00 111.76,41.32 Q 123.51,67.64 152.18,70.69 Q 180.84,73.73 159.44,93.05 Q 138.04,112.36 144.00,140.56 Q 149.96,168.77 124.98,154.38 Q 100.00,140.00 75.02,154.38 Q 50.04,168.77 56.00,140.56 Q 61.96,112.36 40.56,93.05 Q 19.16,73.73 47.82,70.69 Q 76.49,67.64 88.24,41.32 Z" fill="#7B6CF6" stroke="#ff5533" stroke-width="4"/><text x="100" y="118" text-anchor="middle" font-family="Playfair Display,serif" font-style="italic" font-size="38" fill="#f5f0e8" letter-spacing="-1">JM</text></svg></div>';
+      document.body.appendChild(overlay);
+      const pip = document.createElement('div');
+      pip.style.cssText = 'position:fixed;bottom:1.5rem;left:1.5rem;z-index:99997;font-family:monospace;font-size:.6rem;letter-spacing:.15em;color:rgba(123,108,246,0);transition:color .4s;pointer-events:none;';
+      pip.textContent = '✦ 0 / 10';
+      document.body.appendChild(pip);
+      document.addEventListener('click', function(e) {
+        if (e.target.closest('a') || e.target.closest('button')) return;
+        clicks = Math.min(clicks + 1, 10);
+        localStorage.setItem('jm_clicks', clicks);
+        pip.style.color = 'rgba(123,108,246,0.5)';
+        pip.textContent = '✦ ' + clicks + ' / 10';
+        if (clicks >= 10) {
+          overlay.style.background = 'rgba(15,14,26,0.85)';
+          overlay.style.pointerEvents = 'all';
+          const star = document.getElementById('egg-star');
+          star.style.opacity = '1';
+          star.style.transform = 'scale(1) rotate(0deg)';
+          setTimeout(() => { window.location.href = '../secret.html'; }, 900);
+        }
+      });
+    })();
+
+    // ── Dropdown mobile touch support ──
+    const dropBtn = document.querySelector('.nav-dropdown-btn');
+    const dropMenu = document.querySelector('.nav-dropdown-menu');
+    if (dropBtn && dropMenu) {
+      dropBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const open = dropMenu.style.opacity === '1';
+        dropMenu.style.opacity = open ? '0' : '1';
+        dropMenu.style.visibility = open ? 'hidden' : 'visible';
+        dropMenu.style.transform = open ? 'translateY(-6px)' : 'translateY(0)';
+      });
+      document.addEventListener('click', () => {
+        dropMenu.style.opacity = '0';
+        dropMenu.style.visibility = 'hidden';
+        dropMenu.style.transform = 'translateY(-6px)';
+      });
+    }
+  </script>
+</body>
+</html>
