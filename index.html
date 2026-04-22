@@ -285,16 +285,20 @@
       padding: 1.2rem 0;
     }
     .marquee-inner {
-      display: flex;
-      gap: 0;
-      width: max-content;
+      display: inline-flex;
+      flex-wrap: nowrap;
       animation: marquee 30s linear infinite;
-      white-space: nowrap;
       will-change: transform;
     }
     .marquee-span {
-      display: inline-block;
+      display: inline-flex;
+      flex-shrink: 0;
+      align-items: center;
       white-space: nowrap;
+      /* Each span fills at least the viewport so 2 spans = seamless loop */
+      min-width: 100vw;
+      justify-content: space-around;
+      padding: 0 2rem;
     }
     .marquee-inner span {
       font-family: 'DM Serif Display', serif;
@@ -833,8 +837,8 @@
       .hero-sub { font-size: 0.85rem; max-width: 100%; }
       .hero-scroll { font-size: 0.65rem; letter-spacing: 0.1em; }
 
-      /* Marquee */
-      .marquee-inner span { font-size: 0.95rem; padding: 0 1.5rem; }
+      /Marquee */
+      .marquee-span { font-size: 0.95rem; }
 
       /* Work */
       #work { padding: 5rem 1.5rem; }
