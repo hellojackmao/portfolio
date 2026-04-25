@@ -294,6 +294,9 @@
       animation: marquee 30s linear infinite;
       will-change: transform;
     }
+    .marquee-wrap:hover .marquee-inner {
+      animation-play-state: paused;
+    }
     .marquee-span {
       display: inline-flex;
       flex-shrink: 0;
@@ -1051,6 +1054,14 @@
     .reveal:nth-child(2) { transition-delay: 0.08s; }
     .reveal:nth-child(3) { transition-delay: 0.16s; }
     .reveal:nth-child(4) { transition-delay: 0.24s; }
+
+    .project-thumb-wrap img {
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+      will-change: transform;
+    }
+    .project-card:hover .project-thumb-wrap img {
+      transform: scale(1.04);
+    }
     /* ── Back to top ── */
     #back-to-top {
       position: fixed;
@@ -1262,7 +1273,7 @@
   <div id="splash">
     <div class="splash-year">2026</div>
     <div class="splash-title">Portfolio</div>
-    <button class="enter-btn" id="enterBtn">
+    <button class="enter-btn" id="enterBtn" aria-label="Enter portfolio">
       enter <span class="dot"></span>
     </button>
     <p class="splash-footer">made proudly with ✦ figma<br><span style="font-size:0.7rem; opacity:0.5;">with support from Claude AI</span></p>
@@ -1530,7 +1541,7 @@
         <p class="contact-sub">I'm always open to new opportunities, collaborations, and interesting ideas. Drop me a line and let's create something together.</p>
         <a class="contact-email" href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#99;&#107;&#46;&#109;&#97;&#111;&#64;&#116;&#111;&#114;&#111;&#110;&#116;&#111;&#109;&#117;&#46;&#99;&#97;">&#106;&#97;&#99;&#107;&#46;&#109;&#97;&#111;&#64;&#116;&#111;&#114;&#111;&#110;&#116;&#111;&#109;&#117;&#46;&#99;&#97;</a>
         <div class="contact-socials">
-          <a class="social-btn" href="https://www.linkedin.com/in/jack-mao-621bb021b/" target="_blank">↗ LinkedIn</a>
+          <a class="social-btn" href="https://www.linkedin.com/in/jack-mao-621bb021b/" target="_blank" rel="noopener noreferrer">↗ LinkedIn</a>
           <a class="social-btn" href="https://www.instagram.com/jjjackmao" target="_blank" rel="noopener noreferrer">↗ Instagram</a>
           <a class="social-btn" href="https://www.behance.net/jackmao11" target="_blank" rel="noopener noreferrer">↗ Behance</a>
         </div>
