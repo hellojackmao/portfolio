@@ -115,7 +115,7 @@
     .image-grid{display:grid;gap:1.5rem;margin:2.5rem 0;}
     .two-col{grid-template-columns:1fr 1fr;}
     .one-col{grid-template-columns:1fr;}
-    .image-grid img{width:100%;border-radius:12px;display:block;}
+    .image-grid img{width:100%;height:auto;border-radius:12px;display:block;}
     .img-caption{font-size:.72rem;color:rgba(255,255,255,.2);font-family:'DM Mono',monospace;text-align:center;margin-top:-.75rem;margin-bottom:1.5rem;}
 
     hr.div{border:none;border-top:1px solid rgba(255,255,255,.06);margin:3rem 0;}
@@ -333,10 +333,18 @@
 
     /* ── Img lazy load fade ── */
     img {
+      height: auto;
       opacity: 0;
       transition: opacity 0.5s ease;
     }
     img.loaded { opacity: 1; }
+
+    /* kassandra keyart — portrait image, constrain width */
+    .image-grid img[src*="kassandra-keyart"] {
+      max-width: 480px;
+      margin: 0 auto;
+      display: block;
+    }
   </style>
 </head>
 <body>

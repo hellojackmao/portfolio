@@ -64,7 +64,7 @@
     .image-grid{display:grid;gap:1.5rem;margin:2.5rem 0;}
     .two-col{grid-template-columns:1fr 1fr;}
     .one-col{grid-template-columns:1fr;}
-    .image-grid img{width:100%;border-radius:12px;display:block;}
+    .image-grid img{width:100%;height:auto;border-radius:12px;display:block;}
     .img-slot{border-radius:12px;background:var(--navy2);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.12);font-family:'DM Mono',monospace;}
     .img-slot.r43{aspect-ratio:4/3;}
     .img-slot.r169{aspect-ratio:16/9;}
@@ -297,6 +297,7 @@
 
     /* ── Img lazy load fade ── */
     img {
+      height: auto;
       opacity: 0;
       transition: opacity 0.5s ease;
     }
