@@ -175,13 +175,9 @@
     /* ── MAIN SITE ── */
     #main {
       opacity: 0;
-      transform: scale(0.985);
-      transform-origin: center top;
-      will-change: transform, opacity;
-      transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1) 0.08s,
-                  transform 0.55s cubic-bezier(0.4,0,0.2,1) 0.08s;
+      transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1) 0.08s;
     }
-    #main.visible { opacity: 1; transform: scale(1); }
+    #main.visible { opacity: 1; }
 
     /* ── NAV ── */
     nav {
@@ -1271,6 +1267,15 @@
     @media (prefers-reduced-motion: reduce) {
       .section-rule::after, .dt-dot,
       .gradient-divider { animation: none; }
+      /* Disable micro-scale transitions */
+      #splash, #splash.hidden {
+        transition: opacity 0.3s ease !important;
+        transform: none !important;
+      }
+      #main, #main.visible {
+        transition: opacity 0.3s ease !important;
+        transform: none !important;
+      }
     }
   </style>
 </head>
@@ -1613,23 +1618,49 @@
     const main   = document.getElementById('main');
 
     function showMain() {
+      // ── Micro-scale dissolve ──
+      // Apply scale via inline style for the transition duration only —
+      // this avoids creating a persistent stacking context that would
+      // break position:fixed children (nav, cursor).
+
+      // 1. Set initial scale with no transition so it registers instantly
+      main.style.transition     = 'none';
+      main.style.transform      = 'scale(0.985)';
+      main.style.transformOrigin = 'center top';
+
+      // 2. Force reflow — browser commits the starting state
+      void main.offsetHeight;
+
+      // 3. Arm transitions then trigger both animations
+      main.style.transition = [
+        'opacity 0.55s cubic-bezier(0.4,0,0.2,1) 0.08s',
+        'transform 0.55s cubic-bezier(0.4,0,0.2,1) 0.08s'
+      ].join(',');
+
       splash.classList.add('hidden');
       document.body.style.overflow = '';
-      // Slight delay before revealing main matches the 80ms transition-delay
-      // so both animations feel choreographed, not simultaneous
+
       requestAnimationFrame(() => {
-        main.classList.add('visible');
+        main.classList.add('visible');    // opacity: 0 → 1
+        main.style.transform = 'scale(1)'; // scale: 0.985 → 1
       });
-      // Clean up will-change after transition completes
+
+      // 4. After transition: strip inline styles so fixed children
+      //    (nav) resume normal fixed positioning with no stacking context
       setTimeout(() => {
-        splash.style.display = 'none';
-        main.style.willChange = 'auto';
+        splash.style.display     = 'none';
+        main.style.transform     = '';
+        main.style.transition    = '';
+        main.style.transformOrigin = '';
+        startRevealObserver();
       }, 700);
     }
 
     if (window.location.hash === '#work') {
       showMain();
       document.getElementById('work').scrollIntoView();
+      // No splash shown — start reveal observer immediately
+      setTimeout(startRevealObserver, 100);
     }
 
     document.getElementById('enterBtn').addEventListener('click', showMain);
@@ -1644,12 +1675,16 @@
       });
     }, { threshold: 0.12 });
 
-    document.querySelectorAll('.category-card, .project-card, .about-inner, .contact-inner, .section-label, .hero-tag, .work-footer-line').forEach(el => {
+    // Collect elements but don't observe yet — wait for splash to finish
+    const revealEls = document.querySelectorAll('.category-card, .project-card, .about-inner, .contact-inner, .section-label, .hero-tag, .work-footer-line');
+    revealEls.forEach(el => {
       el.style.opacity = '0';
       el.style.transform = 'translateY(24px)';
       el.style.transition = 'opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1)';
-      observer.observe(el);
     });
+    function startRevealObserver() {
+      revealEls.forEach(el => observer.observe(el));
+    }
     // ── Easter egg: 10 clicks anywhere → secret page ──
     (function() {
       let clicks = parseInt(localStorage.getItem('jm_clicks') || '0');
