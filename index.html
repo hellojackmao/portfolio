@@ -52,7 +52,7 @@
     html { scroll-behavior: smooth; overflow-x: hidden; }
 
     /* ── Image protection ── */
-    img { -webkit-user-drag: none; user-drag: none; user-select: none; -webkit-user-select: none; pointer-events: none; }
+    img { -webkit-user-drag: none; user-drag: none; user-select: none; -webkit-user-select: none; pointer-events: none; height: auto; image-rendering: auto; }
     iframe { pointer-events: auto; user-select: none; -webkit-user-select: none; }
 
     body {
@@ -1062,6 +1062,11 @@
     .reveal:nth-child(4) { transition-delay: 0.24s; }
 
     .project-thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
       transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
       will-change: transform;
     }
@@ -1318,7 +1323,14 @@
 
       /* Thumb taller in wall mode for more visual presence */
       .cardwall-item .project-thumb-wrap {
-        aspect-ratio: 21/9;
+        aspect-ratio: 7/3;
+      }
+    .cardwall-item .project-thumb-wrap img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
       }
     }
 
@@ -1435,7 +1447,7 @@
           <a href="projects/light-and-form.html" style="text-decoration:none; color:inherit; display:block;">
           <div class="project-card">
             <div class="project-thumb-wrap">
-              <img src="images/thumb-light-form.png" alt="Light &amp; Form — symmetry illustration study" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+              <img src="images/thumb-light-form.png" alt="Light &amp; Form — symmetry illustration study" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/>
             </div>
             <div class="project-info">
               <div>
@@ -1451,7 +1463,7 @@
           <a href="projects/toronto-in-bloom.html" style="text-decoration:none; color:inherit; display:block;">
           <div class="project-card">
             <div class="project-thumb-wrap">
-              <img src="images/thumb-toronto-bloom.png" alt="Toronto in Bloom — cherry blossoms at High Park" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+              <img src="images/thumb-toronto-bloom.png" alt="Toronto in Bloom — cherry blossoms at High Park" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/>
             </div>
             <div class="project-info">
               <div>
@@ -1467,7 +1479,7 @@
           <a href="projects/chronicles-of-elysium.html" style="text-decoration:none; color:inherit; display:block;">
           <div class="project-card">
             <div class="project-thumb-wrap">
-              <img src="images/thumb-chronicles.png" alt="Chronicles of Elysium — game design hex map" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+              <img src="images/thumb-chronicles.png" alt="Chronicles of Elysium — game design hex map" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/>
             </div>
             <div class="project-info">
               <div>
@@ -1483,7 +1495,7 @@
           <a href="projects/so-good.html" style="text-decoration:none; color:inherit; display:block;">
           <div class="project-card">
             <div class="project-thumb-wrap">
-              <img src="images/thumb-so-good.png" alt="Special Edition ft. Zara Larsson — editorial magazine spread" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+              <img src="images/thumb-so-good.png" alt="Special Edition ft. Zara Larsson — editorial magazine spread" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/>
             </div>
             <div class="project-info">
               <div>
@@ -1499,7 +1511,7 @@
           <a href="projects/after-hours.html" style="text-decoration:none; color:inherit; display:block;">
           <div class="project-card">
             <div class="project-thumb-wrap">
-              <img src="images/thumb-after-hours.png" alt="Special Edition ft. The Weeknd — After Hours campaign" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+              <img src="images/thumb-after-hours.png" alt="Special Edition ft. The Weeknd — After Hours campaign" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/>
             </div>
             <div class="project-info">
               <div>
@@ -1833,7 +1845,7 @@
             const belowRect = items[j].getBoundingClientRect();
             const belowTop  = parseInt(items[j].style.top) || 88;
             // If the card below has hit its sticky point, it's sitting on top of this one
-            if (belowRect.top <= belowTop + 2) {
+            if (belowRect.top <= belowTop + 4) {
               cardsAbove++;
             }
           }
