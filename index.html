@@ -21,6 +21,18 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"/>
   <meta name="theme-color" content="#ccff00"/>
+  <script>
+    // Hide splash immediately if navigating back from a project page
+    // Runs synchronously in <head> before first paint — no flash
+    if (window.location.hash === '#work') {
+      document.documentElement.classList.add('skip-splash');
+    }
+  </script>
+  <style>
+    /* Applied synchronously — splash never renders when navigating back */
+    .skip-splash #splash { display: none !important; }
+    .skip-splash #main   { opacity: 1 !important; }
+  </style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
@@ -1283,83 +1295,7 @@
       }
     }
 
-    /* ══════════════════════════════════════
-       CARDWALL — sticky stacking project cards
-    ══════════════════════════════════════ */
-
-    /* Outer rail: tall enough for all sticky cards to play through */
-    .cardwall-rail {
-      position: relative;
-    }
-
-    /* Each sticky wrapper */
-    .cardwall-item {
-      position: sticky;
-      /* top is set per-card via inline style in HTML */
-      z-index: 1;
-      padding-bottom: 1.5rem;
-      will-change: transform;
-      transform-origin: center top;
-      transition: transform 0.08s linear, opacity 0.08s linear;
-    }
-
-    /* Override the old 2-col grid for desktop */
-    @media (min-width: 769px) {
-      .projects-grid {
-        display: block;
-      }
-      /* Each cardwall-item gets z-index based on order so later cards sit on top */
-      .cardwall-item:nth-child(1) { z-index: 1; }
-      .cardwall-item:nth-child(2) { z-index: 2; }
-      .cardwall-item:nth-child(3) { z-index: 3; }
-      .cardwall-item:nth-child(4) { z-index: 4; }
-      .cardwall-item:nth-child(5) { z-index: 5; }
-
-      /* Card itself fills full width on desktop in cardwall mode */
-      .cardwall-item .project-card {
-        border-radius: 20px;
-        box-shadow: 0 8px 40px rgba(0,0,0,0.4);
-      }
-
-      /* Thumb taller in wall mode for more visual presence */
-      .cardwall-item .project-thumb-wrap {
-        aspect-ratio: 7/3;
-      }
-    .cardwall-item .project-thumb-wrap img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-        display: block;
-      }
-    }
-
-    /* Mobile: disable sticky, restore grid */
-    @media (max-width: 768px) {
-      .cardwall-item {
-        position: relative !important;
-        top: 0 !important;
-        transform: none !important;
-        opacity: 1 !important;
-        padding-bottom: 1rem;
-        will-change: auto;
-      }
-      .projects-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-    }
-
-    /* Reduce motion — disable scale */
-    @media (prefers-reduced-motion: reduce) {
-      .cardwall-item {
-        position: relative !important;
-        top: 0 !important;
-        transform: none !important;
-      }
-    }
-  </style>
+</style>
 </head>
 <body>
 
@@ -1429,12 +1365,7 @@
           <a class="cat-link" href="projects/chronicles-of-elysium.html">View work →</a>
         </div>
 
-        <div class="category-card">
-          <div class="cat-num">03</div>
-          <div class="cat-title">Video</div>
-          <p class="cat-desc">A short-form video project documenting Toronto's cherry blossom season at <a href="projects/toronto-in-bloom.html">High Park</a> — slow cinematography and ambient sound capturing the two-week bloom. <a href="projects/toronto-in-bloom.html">In production · 2026.</a></p>
-          <a class="cat-link" href="projects/toronto-in-bloom.html">View work →</a>
-        </div>
+
 
       </div>
 
@@ -1442,87 +1373,63 @@
       <div class="projects-heading">
         <h2>Featured <em>Projects</em></h2>
       </div>
-      <div class="projects-grid" id="cardwall">
-        <div class="cardwall-item" style="top:88px;" data-card-index="0">
-          <a href="projects/light-and-form.html" style="text-decoration:none; color:inherit; display:block;">
-          <div class="project-card">
-            <div class="project-thumb-wrap">
-              <img src="images/thumb-light-form.png" alt="Light &amp; Form — symmetry illustration study" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/>
-            </div>
-            <div class="project-info">
-              <div>
-                <h3>Light &amp; Form</h3>
-                <p>Illustration + Photo Editing · 2021</p>
-              </div>
-              <div class="project-arrow">→</div>
-            </div>
+            <div class="projects-grid">
+        <a href="projects/light-and-form.html" style="text-decoration:none; color:inherit; display:block;">
+        <div class="project-card">
+          <div class="project-thumb-wrap">
+            <img src="images/thumb-light-form.png" alt="Light &amp; Form — symmetry illustration study" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover;display:block;"/>
           </div>
-          </a>
-        </div>
-        <div class="cardwall-item" style="top:106px;" data-card-index="1">
-          <a href="projects/toronto-in-bloom.html" style="text-decoration:none; color:inherit; display:block;">
-          <div class="project-card">
-            <div class="project-thumb-wrap">
-              <img src="images/thumb-toronto-bloom.png" alt="Toronto in Bloom — cherry blossoms at High Park" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/>
+          <div class="project-info">
+            <div>
+              <h3>Light &amp; Form</h3>
+              <p>Illustration + Photo Editing · 2021</p>
             </div>
-            <div class="project-info">
-              <div>
-                <h3>Toronto in Bloom</h3>
-                <p>Video · 2026 · Coming Soon</p>
-              </div>
-              <div class="project-arrow">→</div>
-            </div>
+            <div class="project-arrow">→</div>
           </div>
-          </a>
         </div>
-        <div class="cardwall-item" style="top:124px;" data-card-index="2">
-          <a href="projects/chronicles-of-elysium.html" style="text-decoration:none; color:inherit; display:block;">
-          <div class="project-card">
-            <div class="project-thumb-wrap">
-              <img src="images/thumb-chronicles.png" alt="Chronicles of Elysium — game design hex map" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/>
-            </div>
-            <div class="project-info">
-              <div>
-                <h3>Chronicles of Elysium</h3>
-                <p>Game Design · 2023</p>
-              </div>
-              <div class="project-arrow">→</div>
-            </div>
+        </a>
+        <a href="projects/chronicles-of-elysium.html" style="text-decoration:none; color:inherit; display:block;">
+        <div class="project-card">
+          <div class="project-thumb-wrap">
+            <img src="images/thumb-chronicles.png" alt="Chronicles of Elysium — game design hex map" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover;display:block;"/>
           </div>
-          </a>
-        </div>
-        <div class="cardwall-item" style="top:142px;" data-card-index="3">
-          <a href="projects/so-good.html" style="text-decoration:none; color:inherit; display:block;">
-          <div class="project-card">
-            <div class="project-thumb-wrap">
-              <img src="images/thumb-so-good.png" alt="Special Edition ft. Zara Larsson — editorial magazine spread" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/>
+          <div class="project-info">
+            <div>
+              <h3>Chronicles of Elysium</h3>
+              <p>Game Design · 2023</p>
             </div>
-            <div class="project-info">
-              <div>
-                <h3>Special Edition ft. Zara Larsson</h3>
-                <p>Editorial Design · 2017</p>
-              </div>
-              <div class="project-arrow">→</div>
-            </div>
+            <div class="project-arrow">→</div>
           </div>
-          </a>
         </div>
-        <div class="cardwall-item" style="top:160px;" data-card-index="4">
-          <a href="projects/after-hours.html" style="text-decoration:none; color:inherit; display:block;">
-          <div class="project-card">
-            <div class="project-thumb-wrap">
-              <img src="images/thumb-after-hours.png" alt="Special Edition ft. The Weeknd — After Hours campaign" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center;"/>
-            </div>
-            <div class="project-info">
-              <div>
-                <h3>Special Edition ft. The Weeknd</h3>
-                <p>Advertising · 2022</p>
-              </div>
-              <div class="project-arrow">→</div>
-            </div>
+        </a>
+        <a href="projects/so-good.html" style="text-decoration:none; color:inherit; display:block;">
+        <div class="project-card">
+          <div class="project-thumb-wrap">
+            <img src="images/thumb-so-good.png" alt="Special Edition ft. Zara Larsson — editorial magazine spread" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover;display:block;"/>
           </div>
-          </a>
+          <div class="project-info">
+            <div>
+              <h3>Special Edition ft. Zara Larsson</h3>
+              <p>Editorial Design · 2017</p>
+            </div>
+            <div class="project-arrow">→</div>
+          </div>
         </div>
+        </a>
+        <a href="projects/after-hours.html" style="text-decoration:none; color:inherit; display:block;">
+        <div class="project-card">
+          <div class="project-thumb-wrap">
+            <img src="images/thumb-after-hours.png" alt="Special Edition ft. The Weeknd — After Hours campaign" loading="lazy" decoding="async" style="width:100%;height:auto;object-fit:cover;display:block;"/>
+          </div>
+          <div class="project-info">
+            <div>
+              <h3>Special Edition ft. The Weeknd</h3>
+              <p>Advertising · 2022</p>
+            </div>
+            <div class="project-arrow">→</div>
+          </div>
+        </div>
+        </a>
       </div>
 
       <p class="work-footer-line" style="margin-top:3rem;">Design thinking made thoughtfully.</p>
@@ -1748,9 +1655,10 @@
     }
 
     if (window.location.hash === '#work') {
-      showMain();
-      document.getElementById('work').scrollIntoView();
-      // No splash shown — start reveal observer immediately
+      // Splash already hidden by head script — just ensure main is visible
+      // and scroll to work section
+      main.classList.add('visible');
+      document.getElementById('work').scrollIntoView({ behavior: 'instant' });
       setTimeout(startRevealObserver, 100);
     }
 
@@ -1820,83 +1728,7 @@
     btt.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
     btt.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
 
-    // ── Cardwall scroll-linked animation ──
-    (function() {
-      // Only run on desktop — mobile uses normal scroll
-      if (window.innerWidth <= 768) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-      const items = document.querySelectorAll('.cardwall-item');
-      const CARD_COUNT = items.length;
-      // How much each card behind the active one scales down
-      const SCALE_DECREMENT = 0.03;
-      // How much opacity drops per card behind
-      const OPACITY_DECREMENT = 0.08;
-
-      function updateCardwall() {
-        items.forEach((item, i) => {
-          const rect = item.getBoundingClientRect();
-          const stickyTop = parseInt(item.style.top) || 88;
-
-          // How many cards have scrolled over this one?
-          // Count cards below this one that are at or above their sticky top
-          let cardsAbove = 0;
-          for (let j = i + 1; j < CARD_COUNT; j++) {
-            const belowRect = items[j].getBoundingClientRect();
-            const belowTop  = parseInt(items[j].style.top) || 88;
-            // If the card below has hit its sticky point, it's sitting on top of this one
-            if (belowRect.top <= belowTop + 4) {
-              cardsAbove++;
-            }
-          }
-
-          if (cardsAbove === 0) {
-            // This card is the frontmost — full size
-            item.style.transform = 'scale(1)';
-            item.style.opacity   = '1';
-          } else {
-            // Scale and fade proportionally to how deep in the stack
-            const scale   = Math.max(0.88, 1 - (cardsAbove * SCALE_DECREMENT));
-            const opacity = Math.max(0.55, 1 - (cardsAbove * OPACITY_DECREMENT));
-            item.style.transform = `scale(${scale.toFixed(4)})`;
-            item.style.opacity   = opacity.toFixed(4);
-          }
-        });
-      }
-
-      // Throttle to rAF for performance
-      let rafId = null;
-      function onScroll() {
-        if (rafId) return;
-        rafId = requestAnimationFrame(() => {
-          updateCardwall();
-          rafId = null;
-        });
-      }
-
-      window.addEventListener('scroll', onScroll, { passive: true });
-      // Initial call
-      updateCardwall();
-
-      // Re-evaluate on resize (debounced)
-      let resizeTimer;
-      window.addEventListener('resize', () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-          if (window.innerWidth <= 768) {
-            // Disable — strip inline styles
-            items.forEach(item => {
-              item.style.transform = '';
-              item.style.opacity   = '';
-            });
-            window.removeEventListener('scroll', onScroll);
-          } else {
-            updateCardwall();
-          }
-        }, 150);
-      });
-    })();
-  </script>
+      </script>
 
 </body>
 </html>
