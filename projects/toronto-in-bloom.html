@@ -92,7 +92,7 @@
       padding: .5rem;
       box-shadow: 0 16px 48px rgba(0,0,0,.5), 0 1px 0 rgba(255,255,255,.08) inset;
     }
-    .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dropdown.open .nav-dropdown-menu {opacity:1;visibility:visible;transform:translateY(0);}
     .nav-dropdown-menu a {
       display: block; font-family: 'Syne', sans-serif;
       font-size: .75rem; font-weight: 700; letter-spacing: .08em;
@@ -106,7 +106,12 @@
       display: block; font-family: 'Syne', sans-serif;
       font-size: .75rem; font-weight: 700; letter-spacing: .08em;
       text-transform: uppercase; color: var(--lime);
-      padding: .65rem 1rem; pointer-events: none;
+      padding: .5rem 1rem;
+      margin: .25rem .25rem .1rem;
+      background: rgba(204,255,0,0.07);
+      border: 1px solid rgba(204,255,0,0.2);
+      border-radius: 8px;
+      pointer-events: none;
     }
     .nav-dropdown-divider { border: none; border-top: 1px solid rgba(255,255,255,.08); margin: .3rem .75rem; }
 
@@ -298,7 +303,7 @@
     <div class="nav-dropdown">
       <button class="nav-dropdown-btn">Projects</button>
       <div class="nav-dropdown-menu">
-        <span class="nav-dropdown-menu active-page">Toronto in Bloom</span>
+        <span class="active-page">Toronto in Bloom</span>
         <hr class="nav-dropdown-divider"/>
         <a href="light-and-form.html">Light &amp; Form</a>
         <a href="chronicles-of-elysium.html">Chronicles of Elysium</a>
@@ -317,7 +322,6 @@
     <h1 class="project-title">Toronto<br><em>in Bloom</em></h1>
   </div>
 
-  <img class="project-cover" src="../images/toronto-bloom-canopy.jpeg" alt="Toronto cherry blossoms at High Park" loading="eager"/>
 
   <div class="project-content">
 
