@@ -26,7 +26,8 @@
       --glass-shadow: none;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth;       background: #120010;
+    }
     body {
       font-family: 'Syne', sans-serif;
       background: var(--navy); color: var(--white);
@@ -110,7 +111,7 @@
     .nav-dropdown-divider { border: none; border-top: 1px solid rgba(255,255,255,.08); margin: .3rem .75rem; }
 
     .project-hero {
-      min-height: 75vh; display: flex; flex-direction: column;
+      min-height: 100vh; display: flex; flex-direction: column;
       justify-content: flex-end; padding: 10rem 3rem 4rem;
       background: radial-gradient(ellipse 80% 60% at 70% 100%,
         #9d174d 0%, #4a044e 40%, var(--navy) 70%);
