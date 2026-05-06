@@ -580,21 +580,6 @@
           setTimeout(function() { window.location.href = href; }, 370);
         });
       });
-    })();
-    // ── Blossom video — play once, show replay button ──
-    (function() {
-      var vid    = document.getElementById('blossom-video');
-      var btn    = document.getElementById('replay-btn');
-      if (!vid || !btn) return;
-      vid.addEventListener('ended', function() {
-        btn.classList.add('visible');
-      });
-      btn.addEventListener('click', function(e) {
-        e.stopPropagation();
-        btn.classList.remove('visible');
-        vid.currentTime = 0;
-        vid.play();
-      });
     })();</script>
 </body>
 </html>
