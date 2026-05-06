@@ -9,6 +9,19 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
   <link rel="apple-touch-icon" href="../apple-touch-icon.png"/>
+
+  <meta property="og:type" content="article"/>
+  <meta property="og:url" content="https://hellojackmao.com/projects/toronto-in-bloom.html"/>
+  <meta property="og:title" content="Toronto in Bloom — Jack Mao"/>
+  <meta property="og:description" content="Social media — cherry blossom season at High Park, 2026."/>
+  <meta property="og:image" content="https://hellojackmao.com/images/toronto-bloom-canopy.jpeg"/>
+  <meta property="og:image:width" content="1400"/>
+  <meta property="og:image:height" content="788"/>
+  <meta property="og:site_name" content="Jack Mao Portfolio"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Toronto in Bloom — Jack Mao"/>
+  <meta name="twitter:description" content="Social media — cherry blossom season at High Park, 2026."/>
+  <meta name="twitter:image" content="https://hellojackmao.com/images/toronto-bloom-canopy.jpeg"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -194,7 +207,7 @@
       display: flex; align-items: center; justify-content: center;
       font-size: clamp(2rem,6vw,4rem);
     }
-    .social-footer { padding: .75rem 1rem; font-family: 'DM Mono', monospace; font-size: .65rem; color: rgba(255,255,255,.25); }
+    .social-footer { padding: 2rem 3rem; border-top: 1px solid rgba(255,255,255,.06); display: flex; align-items: center; justify-content: space-between; font-size: .75rem; color: var(--purple-light); font-family: 'DM Mono', monospace; }
     .social-likes { color: var(--bloom); font-weight: 700; font-size: .72rem; margin-bottom: .25rem; }
 
     .pull-quote {
@@ -292,7 +305,32 @@
       .next-project { padding: 2rem 1.5rem; }
       footer { padding: 1.5rem; flex-direction: column; gap: .4rem; text-align: center; align-items: center; }
     }
-  </style>
+  
+    /* ── Comments block ── */
+    .comments-block {
+      display: flex;
+      flex-direction: column;
+      gap: .6rem;
+      margin: 1.5rem 0 1rem;
+      padding: 1rem 1.25rem;
+      background: rgba(192,132,252,.04);
+      border-left: 2px solid rgba(192,132,252,.2);
+      border-radius: 0 8px 8px 0;
+    }
+    .comment {
+      font-family: 'DM Mono', monospace;
+      font-size: .75rem;
+      line-height: 1.5;
+      color: rgba(255,255,255,.45);
+    }
+    .comment-handle {
+      color: var(--bloom);
+      font-weight: 700;
+      margin-right: .4rem;
+    }
+    /* ── Page transition ── */
+    body { transition: opacity 0.25s ease; }
+    body.is-leaving { opacity: 0; }</style>
 </head>
 <body>
   <div class="cursor" id="cursor"></div>
@@ -326,7 +364,7 @@
   <div class="project-content">
 
     <p class="project-intro">
-      Every spring, High Park holds its breath for two weeks. The cherry blossoms come fast and leave faster — and in 2026, the goal was to capture that window before it closed, and turn it into content designed to stop a scroll.
+      Every spring, High Park holds its breath for two weeks. The cherry blossoms come fast and leave faster — and in 2026, the goal was to capture that window before it closed, and turn it into content designed to stop a scroll. Video on iPhone. Stills on Fujifilm.
     </p>
 
     <div class="section-heading">The Concept</div>
@@ -339,7 +377,7 @@
 
     <div class="section-heading">Footage</div>
     <div class="body-text">
-      <p>Three clips from the 2026 season — each captured during peak bloom. Edited for loop, colour-graded to push the pinks hotter and the shadows cooler.</p>
+      <p>Three clips from the 2026 season — each captured during peak bloom on iPhone. Shot in Cinematic mode with a shallow depth of field, the footage leans on the camera's natural colour science rather than heavy post — letting the blossoms hold their own against the flat spring sky.</p>
     </div>
 
     <div class="blossom-videos">
@@ -360,9 +398,57 @@
       </div>
     </div>
 
+    <hr class="div"/>
+
+    <div class="section-heading">Inspiration</div>
+    <div class="body-text">
+      <p><strong>Dave Krugman</strong> — NYC street photographer, founder of ALLSHIPS — documents bloom season in Central Park the same way we approached High Park: finding the human moment inside the spectacle.</p>
+    </div>
+
+    <div class="pull-quote">"Everyone comes to the same place, at the same time, every year. That's the shot."</div>
+
+    <div class="blossom-videos">
+      <div class="video-wrap">
+        <video autoplay loop muted playsinline preload="auto">
+          <source src="../images/dave-krugman-1.mp4" type="video/mp4"/>
+        </video>
+      </div>
+      <div class="video-wrap">
+        <video autoplay loop muted playsinline preload="auto">
+          <source src="../images/dave-krugman-2.mp4" type="video/mp4"/>
+        </video>
+      </div>
+      <div class="video-wrap">
+        <video autoplay loop muted playsinline preload="auto">
+          <source src="../images/dave-krugman-3.mp4" type="video/mp4"/>
+        </video>
+      </div>
+    </div>
+
+    <div class="comments-block">
+      <div class="comment">
+        <span class="comment-handle">@stephaniecrown</span>
+        <span class="comment-text">These are so, so nice</span>
+      </div>
+      <div class="comment">
+        <span class="comment-handle">@ola_wilk</span>
+        <span class="comment-text">Loving these 🌸🍃</span>
+      </div>
+      <div class="comment">
+        <span class="comment-handle">@kariroy_</span>
+        <span class="comment-text">Love the longer cuts / it's also a surprise to swipe and see the longer cuts instead of what you typically expect in that format (still images etc)</span>
+      </div>
+    </div>
+
+    <div class="body-text">
+      <p style="font-family:'DM Mono',monospace; font-size:.68rem; color:rgba(255,255,255,.25); margin-top:.5rem;">
+        Via <a href="https://www.instagram.com/p/DXXRf3aEbhZ/" target="_blank" rel="noopener" style="color:rgba(255,255,255,.35);">@dave.krugman on Instagram</a>. All rights belong to Dave Krugman.
+      </p>
+    </div>
+
     <div class="section-heading">Social Posts</div>
     <div class="body-text">
-      <p>Four posts designed for the grid — each a standalone image, each part of a coherent visual series. The palette stays tight: deep plum shadows, hot pink blooms, and the flat blue of an overcast Toronto afternoon.</p>
+      <p>Four posts designed for the grid — each shot on a Fujifilm X-series camera with the Classic Negative film simulation. The lifted shadows, muted highlights, and slightly desaturated midtones give the stills a restrained, filmic quality that reads differently in a feed full of phone-saturated spring content.</p>
     </div>
 
     <div class="social-post-grid">
@@ -424,8 +510,8 @@
 
     <div class="section-heading">On Making It</div>
     <div class="body-text">
-      <p>The discipline here was platform-first thinking without platform-first compromise. Every shot was composed to work at 1:1 and 9:16, but none of them feel like they were composed for a grid. <strong>The photography came first. The crop came second.</strong></p>
-      <p>The colour grading pulls the pinks hotter and the shadows cooler — a deliberate move to give the content a signature look that stands out in a feed full of over-saturated spring content. The goal was to feel real and considered at the same time.</p>
+      <p>The discipline was platform-first thinking without platform-first compromise — every frame composed to work at 1:1 and 9:16, but none of them feeling like they were made for a grid. <strong>The photography came first. The crop came second.</strong></p>
+      <p>The video was shot on iPhone in Cinematic mode, leaning on the camera's natural colour science rather than heavy post. The stills came from a Fujifilm X-series with Classic Negative — lifted shadows, restrained highlights, warm tones pulled back just enough that the blossoms feel like a memory rather than a spectacle. That restraint was the reference point. Dave Krugman's Central Park work showed what it looks like when a photographer treats bloom season as a human story rather than a backdrop — <strong>the same instinct, applied two weeks a year at High Park.</strong></p>
     </div>
 
   </div>
@@ -438,7 +524,7 @@
   <footer>
     <span>Jack Mao</span>
     <span>© 2026 — All rights reserved</span>
-    <span>Built with ♥ + Figma</span>
+    <span>Built with <span style="color:#ff3333;">♥</span> + Figma</span>
   </footer>
 
   <script>
@@ -449,6 +535,8 @@
 
     const cursor = document.getElementById('cursor');
     if (cursor) {
+      cursor.style.left = '-100px';
+      cursor.style.top  = '-100px';
       document.addEventListener('mousemove', e => {
         cursor.style.left = e.clientX + 'px';
         cursor.style.top  = e.clientY + 'px';
@@ -484,6 +572,19 @@
       el.style.transition = 'opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1)';
       obs.observe(el);
     });
-  </script>
+  
+    // ── Page transition ──
+    (function() {
+      document.querySelectorAll('a[href]').forEach(function(a) {
+        var href = a.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto')
+            || href.startsWith('http') || a.getAttribute('target') === '_blank') return;
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.body.classList.add('is-leaving');
+          setTimeout(function() { window.location.href = href; }, 260);
+        });
+      });
+    })();</script>
 </body>
 </html>

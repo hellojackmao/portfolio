@@ -6,9 +6,10 @@
   <title>Special Edition ft. Zara Larsson — Jack Mao</title>
   <meta name="description" content="Editorial design project — So Good album · 2017 · Jack Mao"/>
   <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://hellojackmao.com/projects/so-good.html"/>
   <meta property="og:title" content="Special Edition ft. Zara Larsson — Jack Mao"/>
   <meta property="og:description" content="Editorial design project — So Good album · 2017 · Jack Mao"/>
-  <meta property="og:image" content="../icon-512.png"/>
+  <meta property="og:image" content="https://hellojackmao.com/images/thumb-so-good.png"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="Special Edition ft. Zara Larsson — Jack Mao"/>
   <meta name="twitter:image" content="../icon-512.png"/>
@@ -371,7 +372,10 @@ img {
     }
 
 img.loaded { opacity: 1; }
-  </style>
+  
+    /* ── Page transition ── */
+    body { transition: opacity 0.25s ease; }
+    body.is-leaving { opacity: 0; }</style>
 </head>
 <body style="touch-action: pan-y;">
   <div class="cursor" id="cursor"></div>
@@ -555,7 +559,7 @@ img.loaded { opacity: 1; }
   <footer>
     <span style="color:var(--purple-light)">Jack Mao</span>
     <span>© 2026 — All rights reserved</span>
-    <span>Built with ♥ + Figma</span>
+    <span>Built with <span style="color:#ff3333;">♥</span> + Figma</span>
   </footer>
 
   <script>
@@ -642,6 +646,19 @@ img.loaded { opacity: 1; }
         img.addEventListener('load', () => img.classList.add('loaded'));
       }
     });
-  </script>
+  
+    // ── Page transition ──
+    (function() {
+      document.querySelectorAll('a[href]').forEach(function(a) {
+        var href = a.getAttribute('href');
+        if (!href || href.startsWith('#') || href.startsWith('mailto')
+            || href.startsWith('http') || a.getAttribute('target') === '_blank') return;
+        a.addEventListener('click', function(e) {
+          e.preventDefault();
+          document.body.classList.add('is-leaving');
+          setTimeout(function() { window.location.href = href; }, 260);
+        });
+      });
+    })();</script>
 </body>
 </html>
