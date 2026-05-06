@@ -1282,12 +1282,28 @@
     .form-submit:active { transform: scale(.98); }
     .form-submit-arrow { font-size: 1rem; transition: transform .2s; }
     .form-submit:hover .form-submit-arrow { transform: translateX(3px); }
-    .form-status {
-      margin-top: .75rem; font-family: 'DM Mono', monospace;
-      font-size: .72rem; min-height: 1.2em;
+    .form-success {
+      display: none; margin-bottom: 1.25rem;
+      font-family: 'DM Mono', monospace; font-size: .8rem;
+      color: var(--lime); padding: .75rem 1rem;
+      background: rgba(204,255,0,.06);
+      border: 1px solid rgba(204,255,0,.2);
+      border-radius: 10px;
     }
-    .form-status.success { color: var(--lime); }
-    .form-status.error   { color: var(--coral); }
+    [data-fs-success][data-visible] { display: block; }
+    .form-error {
+      display: none; margin-bottom: 1rem;
+      font-family: 'DM Mono', monospace; font-size: .75rem;
+      color: var(--coral);
+    }
+    [data-fs-error][data-visible] { display: block; }
+    .form-field-error {
+      font-family: 'DM Mono', monospace; font-size: .68rem;
+      color: var(--coral); margin-top: .2rem; display: block; min-height: .9rem;
+    }
+    .form-input[aria-invalid="true"] {
+      border-color: rgba(255,85,51,.5);
+    }
     @media (max-width: 768px) {
       .form-row { grid-template-columns: 1fr; }
     }</style>
@@ -1600,28 +1616,37 @@
         <a class="contact-email" href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#99;&#107;&#46;&#109;&#97;&#111;&#64;&#116;&#111;&#114;&#111;&#110;&#116;&#111;&#109;&#117;&#46;&#99;&#97;">&#106;&#97;&#99;&#107;&#46;&#109;&#97;&#111;&#64;&#116;&#111;&#114;&#111;&#110;&#116;&#111;&#109;&#117;&#46;&#99;&#97;</a>
 
         <div class="contact-form-wrap">
-          <div class="contact-form" id="contactForm">
+          <div data-fs-success class="form-success">Message sent — I'll be in touch.</div>
+          <div data-fs-error class="form-error"></div>
+          <form id="contactForm">
             <div class="form-row">
               <div class="form-field">
                 <label class="form-label" for="cf-name">Name</label>
-                <input class="form-input" type="text" id="cf-name" name="name" placeholder="Your name" autocomplete="name" required/>
+                <input class="form-input" type="text" id="cf-name" name="name" placeholder="Your name" autocomplete="name" required data-fs-field/>
+                <span class="form-field-error" data-fs-error="name"></span>
               </div>
               <div class="form-field">
                 <label class="form-label" for="cf-email">Email</label>
-                <input class="form-input" type="email" id="cf-email" name="email" placeholder="your@email.com" autocomplete="email" required/>
+                <input class="form-input" type="email" id="cf-email" name="email" placeholder="your@email.com" autocomplete="email" required data-fs-field/>
+                <span class="form-field-error" data-fs-error="email"></span>
               </div>
             </div>
             <div class="form-field">
               <label class="form-label" for="cf-message">Message</label>
-              <textarea class="form-input form-textarea" id="cf-message" name="message" placeholder="Tell me about your project…" rows="4" required></textarea>
+              <textarea class="form-input form-textarea" id="cf-message" name="message" placeholder="Tell me about your project…" rows="4" required data-fs-field></textarea>
+              <span class="form-field-error" data-fs-error="message"></span>
             </div>
-            <button class="form-submit" type="button" id="cf-submit">
+            <button class="form-submit" type="submit" data-fs-submit-btn>
               <span class="form-submit-label">Send message</span>
               <span class="form-submit-arrow">→</span>
             </button>
-            <div class="form-status" id="cf-status" aria-live="polite"></div>
-          </div>
+          </form>
         </div>
+        <script>
+          window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+          formspree('initForm', { formElement: '#contactForm', formId: 'mkoyznoe' });
+        </script>
+        <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
         <div class="contact-socials">
           <a class="social-btn" href="https://www.linkedin.com/in/jack-mao-621bb021b/" target="_blank" rel="noopener noreferrer">↗ LinkedIn</a>
           <a class="social-btn" href="https://www.instagram.com/jjjackmao" target="_blank" rel="noopener noreferrer">↗ Instagram</a>
@@ -1883,52 +1908,6 @@
           veil.classList.add('visible');
           setTimeout(function() { window.location.href = href; }, 370);
         });
-      });
-    })();
-    // ── Contact form ──
-    (function() {
-      var btn    = document.getElementById('cf-submit');
-      var status = document.getElementById('cf-status');
-      if (!btn) return;
-      btn.addEventListener('click', function() {
-        var name    = document.getElementById('cf-name').value.trim();
-        var email   = document.getElementById('cf-email').value.trim();
-        var message = document.getElementById('cf-message').value.trim();
-        if (!name || !email || !message) {
-          status.textContent = 'Please fill in all fields.';
-          status.className   = 'form-status error';
-          return;
-        }
-        if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
-          status.textContent = 'Please enter a valid email.';
-          status.className   = 'form-status error';
-          return;
-        }
-        btn.disabled = true;
-        status.textContent = 'Sending…';
-        status.className   = 'form-status';
-        // Formspree endpoint — replace YOUR_FORM_ID with your actual Formspree ID
-        fetch('https://formspree.io/f/YOUR_FORM_ID', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify({ name: name, email: email, message: message })
-        })
-        .then(function(r) {
-          if (r.ok) {
-            status.textContent = 'Message sent \u2014 I\'ll be in touch.';
-            status.className   = 'form-status success';
-            document.getElementById('cf-name').value    = '';
-            document.getElementById('cf-email').value   = '';
-            document.getElementById('cf-message').value = '';
-          } else {
-            throw new Error('Server error');
-          }
-        })
-        .catch(function() {
-          status.textContent = 'Something went wrong — try emailing directly.';
-          status.className   = 'form-status error';
-        })
-        .finally(function() { btn.disabled = false; });
       });
     })();</script>
 
