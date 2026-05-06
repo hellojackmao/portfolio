@@ -4,6 +4,8 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>404 — Jack Mao</title>
+  <meta name="description" content="Page not found — Jack Mao Portfolio"/>
+  <meta name="robots" content="noindex"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -189,7 +191,9 @@ body {
 a:focus-visible { outline: 2px solid #ccff00; outline-offset: 4px; border-radius: 6px; }
 
 :focus:not(:focus-visible) { outline: none; }
-  </style>
+  
+    body { transition: opacity 0.25s ease; }
+    body.is-leaving { opacity: 0; }</style>
 </head>
 <body style="touch-action: pan-y;">
   <div class="cursor" id="cursor"></div>
@@ -222,6 +226,15 @@ a:focus-visible { outline: 2px solid #ccff00; outline-offset: 4px; border-radius
       el.addEventListener('mouseenter', () => cur.style.width = cur.style.height = '36px');
       el.addEventListener('mouseleave', () => cur.style.width = cur.style.height = '14px');
     });
-  </script>
+  
+    document.querySelectorAll('a[href]').forEach(function(a) {
+      var href = a.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('http') || a.getAttribute('target') === '_blank') return;
+      a.addEventListener('click', function(e) {
+        e.preventDefault();
+        document.body.classList.add('is-leaving');
+        setTimeout(function() { window.location.href = href; }, 260);
+      });
+    });</script>
 </body>
 </html>
