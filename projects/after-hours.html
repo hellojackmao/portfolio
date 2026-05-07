@@ -66,7 +66,6 @@
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
       overflow-wrap: break-word;
-      hyphens: auto;
       -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
     }
 *,*::before,*::after {box-sizing:border-box;margin:0;padding:0;}
@@ -219,24 +218,7 @@ footer {padding:2rem 3rem;border-top:1px solid rgba(255,255,255,.06);display:fle
       body { cursor: none; }
       a, button, [role="button"] { cursor: none; }
     }
-    @media(max-width:768px){
-  
-      .project-hero{grid-template-columns:1fr;min-height:auto;padding:8rem 1.5rem 4rem;gap:2rem;}
-      .hero-right{align-items:flex-start;text-align:left;}
-      .hero-pull-quote{max-width:100%;}
-      .project-content{padding:4rem 1.5rem;}
-      .ideology-grid{grid-template-columns:1fr;}
-      .two-col,.three-col{grid-template-columns:1fr;}
-      .stat-row{grid-template-columns:1fr 1fr;}
-      .pull-quote{padding:1.5rem;}
-      .next-project{padding:3rem 1.5rem;}
-      footer {
-      flex-direction: column;
-      gap: .4rem;
-      text-align: center;
-      padding: 1.5rem;
-      color: var(--purple-light);
-    }
+    
     }
 
 
@@ -294,33 +276,7 @@ footer {padding:2rem 3rem;border-top:1px solid rgba(255,255,255,.06);display:fle
        V2 MOBILE (≤768px) — liquid glass on
     ═══════════════════════════════════════ */
 
-@media (max-width: 768px) {
-      :root {
-        --glass-bg: rgba(255,255,255,0.04);
-        --glass-bg-hover: rgba(255,255,255,0.07);
-        --glass-border: rgba(255,255,255,0.09);
-        --glass-border-top: rgba(255,255,255,0.16);
-        --glass-blur: blur(18px) saturate(160%);
-        --glass-blur-sm: blur(10px) saturate(140%);
-        --glass-shine: linear-gradient(135deg,rgba(255,255,255,0.10) 0%,rgba(255,255,255,0.02) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,0.05) 100%);
-        --glass-shadow: 0 6px 24px rgba(0,0,0,0.28),0 1px 0 rgba(255,255,255,0.06) inset,0 -1px 0 rgba(0,0,0,0.15) inset;
-        --glass-shadow-card: 0 12px 36px rgba(0,0,0,0.32),0 1px 0 rgba(255,255,255,0.07) inset,0 -1px 0 rgba(0,0,0,0.18) inset;
-      }
-      nav {
-        top: 0.75rem; left: 50%; right: auto;
-        transform: translateX(-50%);
-        width: calc(100% - 2rem);
-        border-radius: 100px; padding: 0.85rem 1.25rem;
-        background: rgba(15,14,26,0.45);
-        backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-        border: 1px solid var(--glass-border);
-        border-top-color: var(--glass-border-top);
-        box-shadow: var(--glass-shadow);
-        border-bottom: none;
-              max-width: 560px;
-      }
-      .project-hero { padding-top: 6rem; }
-    }
+
 
 /* ── Keyboard focus accessibility ── */
 
@@ -428,6 +384,50 @@ img.loaded { opacity: 1; }
       .nav-dropdown-btn { min-height: 44px; }
       .nav-dropdown-menu a { min-height: 44px; display: flex; align-items: center; }
       .next-project { min-height: 44px; }
+    }
+    @media (max-width: 768px) {
+  
+      .project-hero{grid-template-columns:1fr;min-height:auto;padding:8rem 1.5rem 4rem;gap:2rem;}
+      .hero-right{align-items:flex-start;text-align:left;}
+      .hero-pull-quote{max-width:100%;}
+      .project-content{padding:4rem 1.5rem;}
+      .ideology-grid{grid-template-columns:1fr;}
+      .two-col,.three-col{grid-template-columns:1fr;}
+      .stat-row{grid-template-columns:1fr 1fr;}
+      .pull-quote{padding:1.5rem;}
+      .next-project{padding:3rem 1.5rem;}
+      footer {
+      flex-direction: column;
+      gap: .4rem;
+      text-align: center;
+      padding: 1.5rem;
+      color: var(--purple-light);
+
+      :root {
+        --glass-bg: rgba(255,255,255,0.04);
+        --glass-bg-hover: rgba(255,255,255,0.07);
+        --glass-border: rgba(255,255,255,0.09);
+        --glass-border-top: rgba(255,255,255,0.16);
+        --glass-blur: blur(18px) saturate(160%);
+        --glass-blur-sm: blur(10px) saturate(140%);
+        --glass-shine: linear-gradient(135deg,rgba(255,255,255,0.10) 0%,rgba(255,255,255,0.02) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,0.05) 100%);
+        --glass-shadow: 0 6px 24px rgba(0,0,0,0.28),0 1px 0 rgba(255,255,255,0.06) inset,0 -1px 0 rgba(0,0,0,0.15) inset;
+        --glass-shadow-card: 0 12px 36px rgba(0,0,0,0.32),0 1px 0 rgba(255,255,255,0.07) inset,0 -1px 0 rgba(0,0,0,0.18) inset;
+      }
+      nav {
+        top: 0.75rem; left: 50%; right: auto;
+        transform: translateX(-50%);
+        width: calc(100% - 2rem);
+        border-radius: 100px; padding: 0.85rem 1.25rem;
+        background: rgba(15,14,26,0.45);
+        backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+        border: 1px solid var(--glass-border);
+        border-top-color: var(--glass-border-top);
+        box-shadow: var(--glass-shadow);
+        border-bottom: none;
+              max-width: 560px;
+      }
+      .project-hero { padding-top: 6rem; }
     }</style>
   <link rel="canonical" href="https://hellojackmao.com/projects/after-hours.html"/>
 
@@ -448,7 +448,7 @@ img.loaded { opacity: 1; }
   <div class="cursor" id="cursor"></div>
   <div id="page-veil"></div>
 
-  <nav>
+  <nav aria-label="Main navigation" aria-label="Main navigation">
     <a class="nav-logo" href="../index.html#work">Jack Mao <span>/</span> Portfolio</a>
     <a class="nav-back" href="../index.html#work">← Back to work</a>
     <div class="nav-dropdown">

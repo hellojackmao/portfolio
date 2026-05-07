@@ -57,7 +57,6 @@
       -webkit-font-smoothing: antialiased;
       line-height: 1.6; touch-action: pan-y;
       overflow-wrap: break-word;
-      hyphens: auto;
       -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
     }
     img {
@@ -178,7 +177,8 @@
     .section-heading::after {
       content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.08);
     }
-    .body-text { font-size: 1rem; line-height: 1.85; color: rgba(255,255,255,.55); }
+    .body-text { font-size: 1rem; line-height: 1.85; color: rgba(255,255,255,.55);       hyphens: auto;
+    }
     .body-text p { margin-bottom: 1.5rem; }
     .body-text strong { color: var(--white); }
 
@@ -401,7 +401,7 @@
   <div class="cursor" id="cursor"></div>
   <div id="page-veil"></div>
 
-  <nav>
+  <nav aria-label="Main navigation" aria-label="Main navigation">
     <a class="nav-logo" href="../index.html#work">Jack Mao <span>/</span> Portfolio</a>
     <a class="nav-back" href="../index.html#work">← Back to work</a>
     <div class="nav-dropdown">
