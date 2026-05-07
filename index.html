@@ -52,7 +52,11 @@
   
     /* ── Print styles ── */
     @media print {
-      body { background: #fff !important; color: #000 !important; cursor: auto !important; }
+      body { background: #fff !important; color: #000 !important; cursor: auto !important;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+    }
       nav, .cursor, #page-veil, #scroll-progress, #back-to-top,
       .next-project, .splash-screen, #splash { display: none !important; }
       a { color: #000 !important; text-decoration: underline; }
