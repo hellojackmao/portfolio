@@ -6,6 +6,7 @@
   <title>Jack Mao | Portfolio 2026</title>
   <meta name="description" content="Jack Mao is a Toronto-based designer and illustrator working across illustration, branding, game design, and editorial design."/>
   <meta property="og:url" content="https://hellojackmao.com/"/>
+    <meta property="og:locale" content="en_CA"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://hellojackmao.com/"/>
   <meta property="og:type" content="website"/>
@@ -41,7 +42,8 @@
       document.documentElement.classList.add('skip-splash');
     }
   </script>
-  <style>
+  <style>    * { -webkit-tap-highlight-color: transparent; }
+
 /* Applied synchronously — splash never renders when navigating back */
 
 .skip-splash #splash { display: none !important; }
@@ -50,7 +52,11 @@
   
     /* ── Print styles ── */
     @media print {
-      body { background: #fff !important; color: #000 !important; cursor: auto !important; }
+      body { background: #fff !important; color: #000 !important; cursor: auto !important;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+    }
       nav, .cursor, #page-veil, #scroll-progress, #back-to-top,
       .next-project, .splash-screen, #splash { display: none !important; }
       a { color: #000 !important; text-decoration: underline; }
@@ -63,7 +69,8 @@
     }</style>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
+  <style>    * { -webkit-tap-highlight-color: transparent; }
+
 
 
 
@@ -106,6 +113,9 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
     }
 
     img {
@@ -1056,9 +1066,6 @@
       animation: float-idle 1.2s ease-in-out infinite;
     }
 
-    /* ── Focus ── */
-    :focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; border-radius: 4px; }
-    :focus:not(:focus-visible) { outline: none; }
 
     /* ══════════════════════════════════════
        KEYFRAMES
@@ -1351,13 +1358,15 @@
       transition: width 0.1s linear;
       pointer-events: none;
     }
+   
     /* ── Focus ring ── */
     :focus-visible {
       outline: 2px solid var(--lime);
       outline-offset: 3px;
       border-radius: 4px;
     }
-    :focus:not(:focus-visible) { outline: none; }</style>
+    :focus:not(:focus-visible) { outline: none; }
+     </style>
   <link rel="canonical" href="https://hellojackmao.com/"/>
 
   <script type="application/ld+json">
@@ -1387,7 +1396,7 @@
   <div id="splash">
     <div class="splash-year">2026</div>
     <div class="splash-title">Portfolio</div>
-    <button class="enter-btn" id="enterBtn" aria-label="Enter portfolio">
+    <button type="button" class="enter-btn" id="enterBtn" aria-label="Enter portfolio">
       enter <span class="dot"></span>
     </button>
     <p class="splash-footer">made proudly with ✦ Figma<br><span style="font-size:0.7rem; opacity:0.5;">with support from Claude AI</span></p>
@@ -1685,9 +1694,9 @@
         <a class="contact-email" href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#106;&#97;&#99;&#107;&#46;&#109;&#97;&#111;&#64;&#116;&#111;&#114;&#111;&#110;&#116;&#111;&#109;&#117;&#46;&#99;&#97;">&#106;&#97;&#99;&#107;&#46;&#109;&#97;&#111;&#64;&#116;&#111;&#114;&#111;&#110;&#116;&#111;&#109;&#117;&#46;&#99;&#97;</a>
 
         <div class="contact-form-wrap">
-          <div data-fs-success class="form-success">Message sent — I'll be in touch.</div>
-          <div data-fs-error class="form-error"></div>
-          <form id="contactForm">
+          <div data-fs-success class="form-success" aria-live="polite" role="status">Message sent — I'll be in touch.</div>
+          <div data-fs-error class="form-error" aria-live="assertive" role="alert"></div>
+          <form id="contactForm" autocomplete="on">
             <div class="form-row">
               <div class="form-field">
                 <label class="form-label" for="cf-name">Name</label>
@@ -1703,7 +1712,7 @@
             <div class="form-field">
               <label class="form-label" for="cf-message">Message</label>
               <textarea class="form-input form-textarea" id="cf-message" name="message" placeholder="Tell me about your project…" rows="4" maxlength="600" required data-fs-field></textarea>
-            <div class="form-char-count"><span id="cf-char-count">0</span> / 600</div>
+            <div class="form-char-count" aria-live="polite" aria-atomic="true"><span id="cf-char-count">0</span> / 600</div>
               <span class="form-field-error" data-fs-error="message"></span>
             </div>
             <button class="form-submit" type="submit" data-fs-submit-btn aria-label="Send message">
@@ -1724,6 +1733,8 @@
         </div>
       </div>
     </section>
+
+  </main>
 
     <!-- Footer -->
     <footer>
