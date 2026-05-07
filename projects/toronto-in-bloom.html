@@ -14,6 +14,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
   <link rel="apple-touch-icon" href="../apple-touch-icon.png"/>
 
+    <meta property="og:locale" content="en_CA"/>
   <meta property="og:type" content="article"/>
   <meta property="og:url" content="https://hellojackmao.com/projects/toronto-in-bloom.html"/>
   <meta property="og:title" content="Toronto in Bloom | Jack Mao"/>
@@ -32,7 +33,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-  <style>
+  <style>    * { -webkit-tap-highlight-color: transparent; }
+
     :root {
       --navy:#0f0e1a; --navy2:#16152b; --purple:#7B6CF6; --purple-light:#a99cf8;
       --lime:#ccff00; --coral:#ff5533; --white:#ffffff;
@@ -54,6 +56,9 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
       line-height: 1.6; touch-action: pan-y;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
     }
     img {
       -webkit-user-drag: none; user-drag: none;
@@ -393,7 +398,7 @@
     <a class="nav-logo" href="../index.html#work">Jack Mao <span>/</span> Portfolio</a>
     <a class="nav-back" href="../index.html#work">← Back to work</a>
     <div class="nav-dropdown">
-      <button class="nav-dropdown-btn" aria-label="Open project navigation" aria-expanded="false">Projects</button>
+      <button type="button" class="nav-dropdown-btn" aria-label="Open project navigation" aria-expanded="false">Projects</button>
       <div class="nav-dropdown-menu">
         <span class="active-page">Toronto in Bloom</span>
         <hr class="nav-dropdown-divider"/>

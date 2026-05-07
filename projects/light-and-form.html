@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Light &amp; Form | Jack Mao</title>
   <meta name="description" content="Illustration and photo editing — two practices united by the same instinct for light. 2021 · Jack Mao"/>
+    <meta property="og:locale" content="en_CA"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://hellojackmao.com/projects/light-and-form.html"/>
   <meta property="og:title" content="Light &amp; Form | Jack Mao"/>
@@ -28,7 +29,8 @@
   <meta name="theme-color" content="#ccff00"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>    html {
+  <style>    * { -webkit-tap-highlight-color: transparent; }
+    html {
       background: #1a1540;
       scroll-behavior: smooth;
     }
@@ -55,6 +57,9 @@
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: optimizeLegibility;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
     }
 *,*::before,*::after {box-sizing:border-box;margin:0;padding:0;}
 
@@ -347,6 +352,7 @@ img.loaded { opacity: 1; }
       "url": "https://hellojackmao.com/projects/light-and-form.html"
     }
   </script>
+  <meta name="referrer" content="strict-origin-when-cross-origin"/>
 </head>
 <body style="touch-action: pan-y;">
   <div class="cursor" id="cursor"></div>
@@ -355,7 +361,7 @@ img.loaded { opacity: 1; }
     <a class="nav-logo" href="../index.html#work">Jack Mao <span>/</span> Portfolio</a>
     <a class="nav-back" href="../index.html#work">← Back to work</a>
     <div class="nav-dropdown">
-      <button class="nav-dropdown-btn" aria-label="Open project navigation" aria-expanded="false">Projects</button>
+      <button type="button" class="nav-dropdown-btn" aria-label="Open project navigation" aria-expanded="false">Projects</button>
       <div class="nav-dropdown-menu">
         <span class="active-page">Light &amp; Form</span>
         <hr class="nav-dropdown-divider"/>
