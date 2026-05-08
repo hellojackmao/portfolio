@@ -5,11 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jack Mao | Portfolio 2026</title>
   <meta name="description" content="Jack Mao — Toronto-based designer and illustrator. Editorial design, illustration, game design, and advertising. Portfolio 2026."/>
-  <meta property="og:url" content="https://hellojackmao.com/"/>
     <meta property="og:locale" content="en_CA"/>
   <meta property="og:type" content="website"/>
   <meta property="og:url" content="https://hellojackmao.com/"/>
-  <meta property="og:type" content="website"/>
   <meta property="og:title" content="Jack Mao | Portfolio 2026"/>
   <meta property="og:description" content="Toronto-based designer and illustrator. Illustration · Branding · Game Design · Editorial."/>
   <meta property="og:image" content="https://hellojackmao.com/images/thumb-light-form.png"/>
@@ -21,24 +19,21 @@
   <meta name="twitter:title" content="Jack Mao | Portfolio 2026"/>
   <meta name="twitter:description" content="Toronto-based designer and illustrator. Illustration · Branding · Game Design · Editorial."/>
   <meta name="twitter:image" content="https://hellojackmao.com/images/thumb-light-form.png"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Jack Mao | Portfolio 2026"/>
-  <meta name="twitter:description" content="Toronto-based designer and illustrator. Illustration · Branding · Game Design · Editorial."/>
-  <meta name="twitter:image" content="https://hellojackmao.com/images/thumb-light-form.png"/>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="icon" type="image/x-icon" href="favicon.ico"/>
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
+      <link rel="icon" href="favicon.ico" sizes="any"/>
   <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
   <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png"/>
+  <link rel="manifest" href="site.webmanifest"/>  <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="apple-mobile-web-app-title" content="Jack Mao"/>
   <meta name="theme-color" content="#ccff00"/>
   <script>
     // Synchronous: hide splash before first paint when navigating back
-    if (window.location.hash === '#work' ||
-        (document.referrer && document.referrer.includes('/projects/'))) {
+    if (window.location.search !== '?splash=1') {
       document.documentElement.classList.add('skip-splash');
     }
   </script>
@@ -50,7 +45,7 @@
 
 .skip-splash #main { opacity: 1 !important; }
   
-    /* ── Print styles ── */
+    /* -- Print styles -- */
     @media print {
       body { background: #fff !important; color: #000 !important; cursor: auto !important; }
       nav, .cursor, #page-veil, #scroll-progress, #back-to-top,
@@ -70,10 +65,10 @@
 
 
 
-    /* ══════════════════════════════════════════════════════════
+    /* ==========================================================
        JACK MAO — PORTFOLIO INDEX
        Original design system — V1 desktop / V2 mobile glass
-    ══════════════════════════════════════════════════════════ */
+    ========================================================== */
 
     :root {
       --navy: #0f0e1a;
@@ -86,7 +81,7 @@
       --cream2: #e8e0d0;
       --white: #ffffff;
       --muted: #6b6880;
-      /* ── Glass tokens: transparent in V1, activated in V2 ── */
+      /* -- Glass tokens: transparent in V1, activated in V2 -- */
       --glass-bg: transparent;
       --glass-bg-hover: rgba(255,255,255,0.04);
       --glass-border: rgba(255,255,255,0.08);
@@ -121,7 +116,7 @@
       height: auto;
     }
 
-    /* ── Cursor ── */
+    /* -- Cursor -- */
     .cursor {
       position: fixed; left: -100px; top: -100px;
       width: 14px; height: 14px;
@@ -136,7 +131,7 @@
     }
     .cursor.hovering { width: 42px; height: 42px; }
 
-    /* ── Scroll reveal ── */
+    /* -- Scroll reveal -- */
     .fade-up {
       opacity: 0;
       transform: translateY(24px);
@@ -156,11 +151,11 @@
     .word-reveal.is-visible .word,
     .hero-sub.is-visible .word { opacity: 1; transform: translateY(0); }
 
-    /* ── Skip-splash synchronous overrides (set via head script) ── */
+    /* -- Skip-splash synchronous overrides (set via head script) -- */
     .skip-splash #splash { display: none !important; }
-    .skip-splash #main   { opacity: 0; transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1) 0.08s; }
+    .skip-splash #main   { opacity: 1 !important; transition: none !important; }
 
-    /* ── Splash ── */
+    /* -- Splash -- */
     #splash {
       position: fixed;
       inset: 0;
@@ -224,7 +219,7 @@
       font-weight: 700;
       font-size: 1.3rem;
       color: #111;
-      cursor: none;
+      cursor: auto;
       animation: fadeSlideUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.4s both;
       transition: transform 0.2s, box-shadow 0.2s;
     }
@@ -249,14 +244,14 @@
       letter-spacing: 0.05em;
     }
 
-    /* ── Main ── */
+    /* -- Main -- */
     #main {
       opacity: 0;
       transition: opacity 0.55s cubic-bezier(0.4,0,0.2,1) 0.08s;
     }
     #main.visible { opacity: 1; }
 
-    /* ── Nav (base = V2 mobile pill; V1 overrides below) ── */
+    /* -- Nav (base = V2 mobile pill; V1 overrides below) -- */
     nav {
       position: fixed;
       top: 0.75rem; left: 50%; right: auto;
@@ -288,7 +283,7 @@
       letter-spacing: 0.04em;
       color: var(--white);
       text-decoration: none;
-      cursor: none;
+      cursor: auto;
     }
     .nav-logo span { color: var(--purple-light); }
     .nav-links { list-style: none; display: flex; gap: 1.5rem; }
@@ -301,7 +296,7 @@
       color: rgba(255,255,255,0.5);
       text-decoration: none;
       transition: color 0.2s;
-      cursor: none;
+      cursor: auto;
     }
     .nav-links a::after {
       content: '';
@@ -314,7 +309,7 @@
     .nav-links a:hover { color: var(--white); }
     .nav-links a:hover::after { width: 100%; }
 
-    /* ── Hero ── */
+    /* -- Hero -- */
     #hero {
       min-height: 100vh;
       display: flex;
@@ -348,7 +343,7 @@
       position: relative; z-index: 1;
     }
     .hero-heading {
-      font-size: clamp(3.5rem, 10vw, 7.5rem);
+      font-size: clamp(3.2rem, 8.4vw, 6.4rem);
       font-weight: 800;
       letter-spacing: -0.04em;
       line-height: 1.06;
@@ -381,7 +376,7 @@
       will-change: transform;
     }
 
-    /* ── Marquee ── */
+    /* -- Marquee -- */
     .marquee-wrap {
       overflow: hidden;
       background: rgba(123,108,246,0.06);
@@ -412,7 +407,7 @@
     }
     .marquee-span b { color: var(--purple-light); }
 
-    /* ── Dividers ── */
+    /* -- Dividers -- */
     .gradient-divider {
       width: 100%; height: 2px; border: none; margin: 0;
       background: linear-gradient(90deg, transparent, rgba(123,108,246,0.4),
@@ -431,7 +426,7 @@
     .dt-dot:nth-child(3n) { animation-delay: -2.7s; }
     .dt-dot:nth-child(4n) { animation-delay: -0.6s; fill: rgba(255,85,51,0.10); }
 
-    /* ── Work ── */
+    /* -- Work -- */
     #work { padding: 7rem 3rem; background: var(--navy); }
 
     .section-label {
@@ -455,7 +450,7 @@
       border-radius: 16px;
       padding: 2rem;
       transition: border-color 0.3s, background 0.3s, transform 0.3s, box-shadow 0.3s;
-      cursor: none;
+      cursor: auto;
       position: relative; overflow: hidden;
     }
     .category-card:hover {
@@ -495,7 +490,7 @@
       text-decoration: none;
     }
 
-    /* ── Projects grid ── */
+    /* -- Projects grid -- */
     .projects-heading {
       margin-bottom: 1.5rem;
     }
@@ -529,7 +524,7 @@
       border-top-color: var(--glass-border-top);
       border-radius: 16px;
       overflow: hidden;
-      cursor: none;
+      cursor: auto;
       transition: transform 0.35s cubic-bezier(0.16,1,0.3,1),
                   box-shadow 0.35s cubic-bezier(0.16,1,0.3,1),
                   border-color 0.25s;
@@ -599,14 +594,14 @@
       text-align: center;
     }
 
-    /* ── Special Editions Hub ── */
+    /* -- Special Editions Hub -- */
     .special-hub {
       border-radius: 20px;
       overflow: hidden;
       background: var(--glass-bg);
       border: 1px solid var(--glass-border);
       border-top-color: var(--glass-border-top);
-      cursor: none;
+      cursor: auto;
       position: relative;
       transition: border-color 0.35s ease, box-shadow 0.35s ease;
     }
@@ -688,7 +683,7 @@
       box-shadow: 0 0 20px rgba(180,20,20,0.3), 0 4px 16px rgba(0,0,0,0.3);
     }
 
-    /* ── About ── */
+    /* -- About -- */
     #about {
       padding: 7rem 3rem;
       background: var(--cream);
@@ -749,7 +744,7 @@
       text-decoration: none;
       border: 2px solid var(--navy);
       transition: background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
-      cursor: none;
+      cursor: auto;
     }
     .about-link:hover { transform: translateY(-2px); }
     .about-link.primary { background: var(--navy); color: var(--lime); }
@@ -834,7 +829,7 @@
       border-radius: 16px;
       transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
       color: inherit;
-      cursor: none;
+      cursor: auto;
     }
     .inspiration-card:hover {
       transform: translateY(-3px);
@@ -897,7 +892,7 @@
       flex-shrink: 0;
     }
 
-    /* ── Contact ── */
+    /* -- Contact -- */
     #contact {
       padding: 8rem 3rem;
       background: var(--navy);
@@ -958,7 +953,7 @@
       padding-bottom: 0.25rem;
       margin-bottom: 2.5rem;
       transition: border-color 0.2s, color 0.2s;
-      cursor: none;
+      cursor: auto;
       margin-bottom: 2rem;
     }
     .contact-email:hover { border-color: var(--lime); color: var(--lime); }
@@ -977,7 +972,7 @@
       font-weight: 700;
       letter-spacing: 0.06em;
       transition: color 0.22s, border-color 0.22s, box-shadow 0.25s, transform 0.2s;
-      cursor: none;
+      cursor: auto;
       position: relative; overflow: hidden;
     }
     .social-btn:hover {
@@ -987,7 +982,7 @@
       transform: translateY(-2px);
     }
 
-    /* ── Footer ── */
+    /* -- Footer -- */
     footer {
       padding: 2rem 3rem;
       border-top: 1px solid rgba(255,255,255,0.06);
@@ -1000,13 +995,13 @@
       background: transparent;
     }
 
-    /* ── Back to top ── */
+    /* -- Back to top -- */
     #back-to-top {
       position: fixed;
       bottom: 2rem; right: 2rem;
       width: 72px; height: 72px;
       z-index: 500;
-      cursor: none;
+      cursor: auto;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1062,9 +1057,9 @@
     }
 
 
-    /* ══════════════════════════════════════
+    /* ======================================
        KEYFRAMES
-    ══════════════════════════════════════ */
+    ====================================== */
     @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     @keyframes gradient-slide { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
     @keyframes dt-pulse { 0%,100% { opacity: 0.2; } 50% { opacity: 0.8; } }
@@ -1083,9 +1078,9 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ══════════════════════════════════════
+    /* ======================================
        V1 DESKTOP (≥769px) — strip glass, flush nav
-    ══════════════════════════════════════ */
+    ====================================== */
     @media (min-width: 769px) {
       nav {
         top: 0; left: 0; right: 0; transform: none; width: 100%; max-width: none;
@@ -1130,13 +1125,13 @@
       .work-categories { grid-template-columns: repeat(3, 1fr); }
     }
 
-    /* ══════════════════════════════════════
+    /* ======================================
        V2 MOBILE (≤768px) — liquid glass on
-    ══════════════════════════════════════ */
+    ====================================== */
     
     @media (pointer: fine) {
-      body { cursor: none; }
-      a, button, [role="button"] { cursor: none; }
+      body { cursor: auto; }
+      a, button, [role="button"] { cursor: auto; }
     }
     
     @media (max-width: 400px) {
@@ -1157,7 +1152,7 @@
   
   
   
-    /* ── Page transition ── */
+    /* -- Page transition -- */
     #page-veil {
       position: fixed; inset: 0; z-index: 99999;
       background: #0f0e1a;
@@ -1165,7 +1160,7 @@
       transition: opacity 0.35s cubic-bezier(0.4,0,0.2,1);
     }
     #page-veil.visible { opacity: 1; pointer-events: all; }
-    /* ── Contact form ── */
+    /* -- Contact form -- */
     .contact-form-wrap {
       width: 100%; max-width: 560px;
       margin: 0 auto 2.5rem;
@@ -1202,7 +1197,7 @@
       font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
       color: #111; background: var(--lime);
       border: none; border-radius: 100px;
-      cursor: none; transition: opacity .2s, transform .2s;
+      cursor: auto; transition: opacity .2s, transform .2s;
     }
     .form-submit:hover { opacity: .85; transform: scale(1.03); }
     .form-submit:active { transform: scale(.98); }
@@ -1231,7 +1226,7 @@
       border-color: rgba(255,85,51,.5);
     }
     
-    /* ── Skip to content ── */
+    /* -- Skip to content -- */
     .skip-to-content {
       position: absolute; top: -100px; left: 1rem; z-index: 99999;
       padding: .5rem 1rem; background: var(--lime); color: #111;
@@ -1247,7 +1242,7 @@
       margin-top: .2rem; transition: color .2s;
     }
     .form-char-count.near-limit { color: var(--coral); }
-    /* ── Scroll progress bar ── */
+    /* -- Scroll progress bar -- */
     #scroll-progress {
       position: fixed; top: 0; left: 0; z-index: 99998;
       height: 2px; width: 0%; background: var(--lime);
@@ -1255,7 +1250,7 @@
       pointer-events: none;
     }
    
-    /* ── Focus ring ── */
+    /* -- Focus ring -- */
     :focus-visible {
       outline: 2px solid var(--lime);
       outline-offset: 3px;
@@ -1393,7 +1388,7 @@
   <div class="cursor" id="cursor"></div>
   <div id="page-veil"></div>
 
-  <!-- ── SPLASH ── -->
+  <!-- -- SPLASH -- -->
   <div id="splash">
     <div class="splash-year"><time datetime="2026">2026</time></div>
     <div class="splash-title">Portfolio</div>
@@ -1403,7 +1398,7 @@
     <p class="splash-footer">made proudly with ✦ Figma<br><span style="font-size:0.7rem; opacity:0.5;">with support from Claude AI</span></p>
   </div>
 
-  <!-- ── MAIN ── -->
+  <!-- -- MAIN -- -->
   <main id="main">
 
     <!-- Nav -->
@@ -1421,34 +1416,33 @@
       <!-- Parallax background layer — JS drives translateY via scroll -->
       <div id="parallax-bg" aria-hidden="true" style="position:absolute;inset:0;background:inherit;will-change:transform;pointer-events:none;z-index:0;"></div>
       <div class="hero-bg-text">JM</div>
-      <div class="hero-tag">✦ Design &amp; Illustration — Toronto</div>
+      <div class="hero-tag">Design, illustration, and visual storytelling - Toronto</div>
       <h1 class="hero-heading">
           <span class="word-reveal">
-            <span class="word" style="transition-delay:0.05s">Design</span>
-            <span class="word" style="transition-delay:0.13s"> thinking</span>
+            <span class="word" style="transition-delay:0.05s">Visual&nbsp;</span><span class="word" style="transition-delay:0.13s">stories</span>
           </span><br>
           <em class="word-reveal">
-            <span class="word" style="transition-delay:0.22s">made</span>
+            <span class="word" style="transition-delay:0.22s">built</span>
           </em><br>
           <span class="word-reveal">
-            <span class="word" style="transition-delay:0.32s">thoughtfully.</span>
+            <span class="word" style="transition-delay:0.32s">with intent.</span>
           </span>
         </h1>
-      <p class="hero-sub word-reveal">
-          <span class="word" style="transition-delay:0.45s">Illustrator,</span>
-          <span class="word" style="transition-delay:0.52s"> designer,</span>
+            <p class="hero-sub word-reveal">
+          <span class="word" style="transition-delay:0.45s">Toronto-based</span>
+          <span class="word" style="transition-delay:0.52s"> designer</span>
           <span class="word" style="transition-delay:0.59s"> and</span>
-          <span class="word" style="transition-delay:0.66s"> visual</span>
-          <span class="word" style="transition-delay:0.73s"> storyteller</span>
-          <span class="word" style="transition-delay:0.80s"> from</span>
-          <span class="word" style="transition-delay:0.87s"> Toronto</span>
-          <span class="word" style="transition-delay:0.94s"> —</span>
-          <span class="word" style="transition-delay:1.01s"> making</span>
-          <span class="word" style="transition-delay:1.08s"> work</span>
-          <span class="word" style="transition-delay:1.15s"> that</span>
-          <span class="word" style="transition-delay:1.22s"> takes</span>
-          <span class="word" style="transition-delay:1.29s"> a</span>
-          <span class="word" style="transition-delay:1.36s"> position.</span>
+          <span class="word" style="transition-delay:0.66s"> illustrator</span>
+          <span class="word" style="transition-delay:0.73s"> creating</span>
+          <span class="word" style="transition-delay:0.80s"> editorial,</span>
+          <span class="word" style="transition-delay:0.87s"> campaign,</span>
+          <span class="word" style="transition-delay:0.94s"> and</span>
+          <span class="word" style="transition-delay:1.01s"> visual</span>
+          <span class="word" style="transition-delay:1.08s"> identity</span>
+          <span class="word" style="transition-delay:1.15s"> work</span>
+          <span class="word" style="transition-delay:1.22s"> for</span>
+          <span class="word" style="transition-delay:1.29s"> culture-led</span>
+          <span class="word" style="transition-delay:1.36s"> stories.</span>
         </p>
       <div class="hero-scroll">scroll to explore</div>
     </section>
@@ -1526,7 +1520,7 @@
         </div>
         </a>
         <!-- Special Editions Hub -->
-        <a href="projects/special-editions.html" style="text-decoration:none;color:inherit;display:block;cursor:none;grid-column:1/-1;">
+        <a href="projects/special-editions.html" style="text-decoration:none;color:inherit;display:block;cursor: auto;grid-column:1/-1;">
         <div class="special-hub fade-up project-card" data-delay="3">
           <div class="hub-banner">
             <div class="hub-half hub-half-zara">
@@ -1573,7 +1567,7 @@
         </a>
       </div>
 
-      <p class="work-footer-line" style="margin-top:3rem;">Design thinking made thoughtfully.</p>
+      <p class="work-footer-line" style="margin-top:3rem;">Visual stories built with intent.</p>
     </section>
 
     <!-- About -->
@@ -1593,8 +1587,8 @@
         <div class="about-left">
           <div class="about-label">About me</div>
           <h2 class="about-name">Jack<br><em>Mao</em></h2>
-          <p class="about-bio fade-up">I'm a designer and illustrator based in Toronto, working across illustration, editorial design, and advertising. I hold a BA in Creative Industries from Toronto Metropolitan University — a degree that sits at the intersection of business, law, and creative practice.</p>
-          <p class="about-bio fade-up" style="margin-top:0.9rem;transition-delay:0.12s">Right now I'm looking for my first full-time role in a creative studio or in-house team. I'm drawn to work that takes a position — design that has a reason for every decision.</p>
+          <p class="about-bio fade-up">I am a Toronto-based designer and illustrator working across editorial design, campaign concepts, illustration, and visual storytelling. My Creative Industries background at Toronto Metropolitan University gives me a mix of design craft, business context, and cultural strategy.</p>
+          <p class="about-bio fade-up" style="margin-top:0.9rem;transition-delay:0.12s">I am open to junior designer, visual designer, and editorial design roles in studio or in-house teams, especially where concept, image-making, and clear design rationale matter.</p>
           <div class="skills-grid">
             <div class="skill-pill fade-up" data-delay="1">Illustration</div>
             <div class="skill-pill fade-up" data-delay="2">Editorial Design</div>
@@ -1605,7 +1599,7 @@
           </div>
           <div class="about-links">
             <a class="about-link primary" href="#contact">Get in touch</a>
-            <a class="about-link secondary" href="https://canva.link/hpvbnpc9260urd8" target="_blank" rel="noopener" target="_blank" rel="noopener noreferrer" aria-label="View résumé (opens in new tab)">View résumé ↗</a>
+            <a class="about-link secondary" href="https://canva.link/hpvbnpc9260urd8" target="_blank" rel="noopener noreferrer" aria-label="View resume (opens in new tab)">View resume ↗</a>
           </div>
         </div>
         <div class="about-right">
@@ -1621,15 +1615,15 @@
 
       <!-- Inspirations -->
       <div class="inspirations-section">
-        <div class="inspirations-label">✦ Designers I Admire</div>
+        <div class="inspirations-label">✦ Influences</div>
         <div class="inspirations-grid">
-          <a class="inspiration-card fade-up" data-delay="1" href="https://sophii.co/" target="_blank" rel= noopener noreferrer">
+          <a class="inspiration-card fade-up" data-delay="1" href="https://sophii.co/" target="_blank" rel="noopener noreferrer">
             <div class="inspiration-header">
               <div class="inspiration-name">Sophie Zhao</div>
               <div class="inspiration-arrow">↗</div>
             </div>
             <div class="inspiration-role">Product Designer — Toronto</div>
-            <p class="inspiration-desc">Sophie's work sits at the intersection of product design and personality — her portfolio exudes a rare sense of play that makes functional design feel genuinely joyful. Her belief that great design must touch both the heart and the mind is something I carry into my own practice.</p>
+            <p class="inspiration-desc">A reference for bringing personality into functional design without losing clarity.</p>
             <div class="inspiration-tags">
               <span>Product Design</span>
               <span>Branding</span>
@@ -1637,26 +1631,26 @@
             </div>
           </a>
 
-          <a class="inspiration-card fade-up" data-delay="2" href="https://joycejiang.art" target="_blank" rel= noopener noreferrer">
+          <a class="inspiration-card fade-up" data-delay="2" href="https://joycejiang.art" target="_blank" rel="noopener noreferrer">
             <div class="inspiration-header">
               <div class="inspiration-name">Joyce Jiang</div>
               <div class="inspiration-arrow">↗</div>
             </div>
             <div class="inspiration-role">Designer &amp; Illustrator — Toronto</div>
-            <p class="inspiration-desc">Joyce's work has a quiet precision to it — editorial illustration and graphic design that never overexplains itself. Her sense of colour and composition feels unhurried and considered, which is a harder thing to achieve than it looks. A reminder that confidence in design often means leaving more out.</p>
+            <p class="inspiration-desc">A reference for restraint, editorial clarity, and confident use of space.</p>
             <div class="inspiration-tags">
               <span>Illustration</span>
               <span>Editorial</span>
             </div>
           </a>
 
-          <a class="inspiration-card fade-up" data-delay="3" href="https://www.behance.net/ellayangdesign" target="_blank" rel= noopener noreferrer">
+          <a class="inspiration-card fade-up" data-delay="3" href="https://www.behance.net/ellayangdesign" target="_blank" rel="noopener noreferrer">
             <div class="inspiration-header">
               <div class="inspiration-name">Ella Yang</div>
               <div class="inspiration-arrow">↗</div>
             </div>
             <div class="inspiration-role">Graphic Designer — Toronto</div>
-            <p class="inspiration-desc">Ella's branding and editorial work is full of tension in the best sense — between warmth and sharpness, organic and geometric, quiet and bold. Her ability to build a cohesive visual system from a single strong idea is something I come back to whenever a project starts to lose its thread.</p>
+            <p class="inspiration-desc">A reference for building cohesive visual systems from one strong idea.</p>
             <div class="inspiration-tags">
               <span>Branding</span>
               <span>Editorial</span>
@@ -1670,7 +1664,7 @@
               <div class="inspiration-arrow">↗</div>
             </div>
             <div class="inspiration-role">Designer &amp; Illustrator — Toronto</div>
-            <p class="inspiration-desc">Isie's work carries a distinctly personal visual voice — illustration and design that feel handmade without being precious. There's a warmth and directness to it that I find genuinely hard to replicate. A reminder that the most memorable work often comes from committing fully to a point of view.</p>
+            <p class="inspiration-desc">A reference for warmth, directness, and committing fully to a personal visual voice.</p>
             <div class="inspiration-tags">
               <span>Illustration</span>
               <span>Design</span>
@@ -1728,7 +1722,7 @@
         </script>
         <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
         <div class="contact-socials">
-          <a class="social-btn" href="https://www.linkedin.com/in/jack-mao" target="_blank" rel="noopener" target="_blank" rel="noopener noreferrer">↗ LinkedIn</a>
+          <a class="social-btn" href="https://www.linkedin.com/in/jack-mao" target="_blank" rel="noopener noreferrer">↗ LinkedIn</a>
           <a class="social-btn" href="https://www.instagram.com/jjjackmao" target="_blank" rel="noopener noreferrer">↗ Instagram</a>
           <a class="social-btn" href="https://www.behance.net/jackmao11" target="_blank" rel="noopener noreferrer">↗ Behance</a>
         </div>
@@ -1763,7 +1757,7 @@
   </div>
 
   <script>
-    // ── Image protection ──
+    // -- Image protection --
     document.addEventListener('contextmenu', e => {
       if (e.target.tagName === 'IMG' || e.target.tagName === 'IFRAME') {
         e.preventDefault();
@@ -1796,7 +1790,7 @@
         }, { passive: true });
       }
     }
-    // ── Cursor ──
+    // -- Cursor --
     const cursor = document.getElementById('cursor');
     cursor.style.left = '-100px';
     cursor.style.top = '-100px';
@@ -1811,12 +1805,12 @@
       el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
     });
 
-    // ── Splash enter button ──
+    // -- Splash enter button --
     const splash = document.getElementById('splash');
     const main   = document.getElementById('main');
 
     function showMain() {
-      // ── Micro-scale dissolve ──
+      // -- Micro-scale dissolve --
       // Apply scale via inline style for the transition duration only —
       // this avoids creating a persistent stacking context that would
       // break position:fixed children (nav, cursor).
@@ -1858,26 +1852,11 @@
       }, 700);
     }
 
-
-
-
-    if (window.location.hash === '#work') {
-      // Splash already hidden by head script — ensure main visible
-      main.classList.add('visible');
-      document.getElementById('work').scrollIntoView({ behavior: 'instant' });
-      // Reveal all animated elements immediately — no entrance animation on back-nav
-      document.querySelectorAll('.word-reveal').forEach(el => el.classList.add('is-visible'));
-      document.querySelectorAll('.fade-up').forEach(el => {
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-      });
-      // Start scroll observers for elements below the fold
-      startRevealObserver();
-    }
+    const shouldScrollToWork = window.location.hash === '#work';
 
     document.getElementById('enterBtn').addEventListener('click', showMain);
 
-    // ── Animation observers — all five systems ──
+    // -- Animation observers — all five systems --
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     // 2. Fade-up elements — observed after splash exits
@@ -1917,9 +1896,21 @@
         }
       });
     }, { threshold: 0.2 });
+    if (document.documentElement.classList.contains('skip-splash')) {
+      main.classList.add('visible');
+      document.querySelectorAll('.word-reveal').forEach(el => el.classList.add('is-visible'));
+      if (shouldScrollToWork) {
+        document.getElementById('work').scrollIntoView({ behavior: 'instant' });
+        document.querySelectorAll('.fade-up').forEach(el => {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        });
+      }
+      startRevealObserver();
+    }
 
 
-    // ── Easter egg: 10 clicks anywhere → secret page ──
+    // -- Easter egg: 10 clicks anywhere → secret page --
     (function() {
       let clicks = parseInt(localStorage.getItem('jm_clicks') || '0');
       const overlay = document.createElement('div');
@@ -1946,7 +1937,7 @@
         }
       });
     })();
-    // ── Back to top ──
+    // -- Back to top --
     const btt = document.getElementById('back-to-top');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 400) {
@@ -1965,7 +1956,7 @@
 
       
 
-    // ── Page transition ──
+    // -- Page transition --
     (function() {
       var veil = document.getElementById('page-veil');
       // Fade in on arrival
@@ -1992,7 +1983,7 @@
         });
       });
     })();
-    // ── Textarea character counter ──
+    // -- Textarea character counter --
     (function() {
       var ta  = document.getElementById('cf-message');
       var cnt = document.getElementById('cf-char-count');
@@ -2004,7 +1995,7 @@
         if (wrap) wrap.classList.toggle('near-limit', len > 540);
       });
     })();
-    // ── Scroll progress ──
+    // -- Scroll progress --
     (function() {
       var bar = document.getElementById('scroll-progress');
       if (!bar) return;
