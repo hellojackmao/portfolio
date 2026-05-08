@@ -4,7 +4,13 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#0f0e1a"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="../favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png"/>
+  <link rel="icon" type="image/png" sizes="512x512" href="../icon-512.png"/>
+  <link rel="manifest" href="../site.webmanifest"/>  <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="apple-mobile-web-app-title" content="Jack Mao"/>
   <meta name="referrer" content="strict-origin-when-cross-origin"/>
@@ -24,10 +30,6 @@
   <meta name="twitter:title" content="Toronto in Bloom — Jack Mao"/>
   <meta name="twitter:description" content="Toronto in Bloom — social media content by Jack Mao. Cherry blossom season at High Park, 2026. Shot on Fujifilm Classic Negative and iPhone. Instagram · Threads."/>
   <meta name="twitter:image" content="https://hellojackmao.com/images/toronto-bloom-canopy.jpeg"/>
-  <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
-  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
-  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
-  <link rel="apple-touch-icon" href="../apple-touch-icon.png"/>
   <link rel="preload" href="https://fonts.gstatic.com/s/syne/v22/8vIS7w4qzmVxsWxjBZRjr0FKM_04uQ.ttf" as="font" type="font/ttf" crossorigin/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -35,7 +37,8 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CreativeWork","name":"Toronto in Bloom","creator":{"@type":"Person","name":"Jack Mao","url":"https://hellojackmao.com"},"description":"Social media content documenting the 2026 cherry blossom season at High Park, Toronto.","dateCreated":"2026","url":"https://hellojackmao.com/projects/toronto-in-bloom.html"}
   </script>
-  <style>#scroll-progress {
+  <style>
+    :root { --case-accent:#f9a8d4; --lime:#f9a8d4; }#scroll-progress {
       position: fixed; top: 0; left: 0; z-index: 99998;
       height: 2px; width: 0%; background: var(--lime);
       transition: width 0.1s linear;
@@ -63,7 +66,7 @@
       background: var(--navy);
       color: var(--white);
       overflow-x: hidden;
-      cursor: none;
+      cursor: auto;
       -webkit-font-smoothing: antialiased;
       line-height: 1.6;
       touch-action: pan-y;
@@ -96,12 +99,12 @@
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255,255,255,.05);
     }
-    .nav-logo { font-weight: 800; font-size: 1rem; color: var(--white); text-decoration: none; cursor: none; }
+    .nav-logo { font-weight: 800; font-size: 1rem; color: var(--white); text-decoration: none; cursor: auto; }
     .nav-logo span { color: var(--purple-light); }
     .nav-back {
       font-size: .78rem; font-weight: 700; letter-spacing: .1em;
       text-transform: uppercase; color: rgba(255,255,255,.5);
-      text-decoration: none; transition: color .2s; cursor: none;
+      text-decoration: none; transition: color .2s; cursor: auto;
     }
     .nav-back:hover { color: var(--lime); }
     .nav-dropdown { position: relative; }
@@ -111,7 +114,7 @@
       text-transform: uppercase; color: rgba(255,255,255,.5);
       background: transparent; border: 1px solid rgba(255,255,255,.12);
       border-radius: 100px; padding: .45rem 1rem;
-      cursor: none; transition: color .2s, border-color .2s;
+      cursor: auto; transition: color .2s, border-color .2s;
     }
     .nav-dropdown-btn:hover { color: var(--lime); border-color: var(--lime); }
     .nav-dropdown-btn::after { content: "▾"; font-size: .6rem; }
@@ -288,7 +291,7 @@
       padding: 3rem; background: var(--navy2);
       border-top: 1px solid rgba(255,255,255,.06);
       text-decoration: none; color: var(--white);
-      transition: background .3s; cursor: none;
+      transition: background .3s; cursor: auto;
     }
     .next-project:hover { background: rgba(22,21,43,.8); }
     .next-label {
@@ -347,7 +350,7 @@
       bottom: 2rem; right: 2rem;
       width: 72px; height: 72px;
       z-index: 500;
-      cursor: none;
+      cursor: auto;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -408,6 +411,39 @@
       .next-project { padding: 2rem 1.5rem; }
     }
 
+    
+    .case-snapshot {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      margin: -1rem 0 3rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+    }
+    .case-snapshot div {
+      padding: 1rem 1.1rem;
+      background: rgba(255,255,255,0.045);
+    }
+    .case-snapshot span {
+      display: block;
+      margin-bottom: .35rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--lime);
+    }
+    .case-snapshot p {
+      margin: 0;
+      font-size: .84rem;
+      line-height: 1.55;
+      color: rgba(255,255,255,.68);
+    }
+    @media (max-width: 768px) {
+      .case-snapshot { grid-template-columns: 1fr; margin-top: 0; }
+    }
     @media print {
       body { background: #fff !important; color: #000 !important; cursor: auto !important; }
       nav, .cursor, #scroll-progress, #back-to-top, #page-veil { display: none !important; }
@@ -417,7 +453,12 @@
       a { color: #000 !important; }
       img { max-width: 100% !important; }
       @page { margin: 2cm; }
-    }</style>
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .001ms !important; }
+      .cursor { display: none !important; }
+    }
+  </style>
 </head>
 <body>
   <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
@@ -459,6 +500,12 @@
     <p class="project-intro">
       Every spring, High Park holds its breath for two weeks. The cherry blossoms come fast and leave faster — and in 2026, the goal was to capture that window before it closed, and turn it into content designed to stop a scroll. Video on iPhone. Stills on Fujifilm.
     </p>
+    <div class="case-snapshot">
+      <div><span>Role</span><p>Photographer, video creator, editor, and platform designer for a self-initiated content series.</p></div>
+      <div><span>Brief</span><p>Capture High Park's short cherry blossom window as scroll-stopping social content.</p></div>
+      <div><span>Deliverables</span><p>Four grid posts, three video clips, captions, social framing, and performance summary.</p></div>
+      <div><span>Design Focus</span><p>Compose for 1:1 and 9:16 while keeping the photography intentional, human, and atmospheric.</p></div>
+    </div>
 
     <div class="section-heading">The Concept</div>
     <div class="body-text">
@@ -562,7 +609,7 @@
 
     <div class="body-text">
       <p style="font-family:'DM Mono',monospace; font-size:.68rem; color:rgba(255,255,255,.25); margin-top:.5rem;">
-        Via <a href="https://www.instagram.com/p/DXXRf3aEbhZ/" target="_blank" rel= noopener noreferrer" style="color:rgba(255,255,255,.35);" aria-label="View Dave Krugman on Instagram (opens in new tab)">@dave.krugman on Instagram ↗</a>. All rights belong to Dave Krugman.
+        Via <a href="https://www.instagram.com/p/DXXRf3aEbhZ/" target="_blank" rel="noopener noreferrer" style="color:rgba(255,255,255,.35);" aria-label="View Dave Krugman on Instagram (opens in new tab)">@dave.krugman on Instagram ↗</a>. All rights belong to Dave Krugman.
       </p>
     </div>
 

@@ -4,7 +4,13 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#0f0e1a"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="../favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png"/>
+  <link rel="icon" type="image/png" sizes="512x512" href="../icon-512.png"/>
+  <link rel="manifest" href="../site.webmanifest"/>  <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="apple-mobile-web-app-title" content="Jack Mao"/>
   <meta name="referrer" content="strict-origin-when-cross-origin"/>
@@ -24,10 +30,6 @@
   <meta name="twitter:title" content="Special Editions — Jack Mao"/>
   <meta name="twitter:description" content="Special Editions by Jack Mao — Vol. 01: Zara Larsson So Good editorial design (2017). Vol. 02: The Weeknd After Hours crowd culture advertising (2022)."/>
   <meta name="twitter:image" content="https://hellojackmao.com/images/thumb-so-good.png"/>
-  <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
-  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
-  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
-  <link rel="apple-touch-icon" href="../apple-touch-icon.png"/>
   <link rel="preload" href="https://fonts.gstatic.com/s/syne/v22/8vIS7w4qzmVxsWxjBZRjr0FKM_04uQ.ttf" as="font" type="font/ttf" crossorigin/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -76,8 +78,8 @@
     /* ── Cursor ── */
     * { -webkit-tap-highlight-color: transparent; }
     @media (pointer: fine) {
-      body { cursor: none; }
-      a, button { cursor: none; }
+      body { cursor: auto; }
+      a, button { cursor: auto; }
     }
     .cursor {
       position: fixed; left: -100px; top: -100px; width: 14px; height: 14px;
@@ -110,12 +112,12 @@
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255,255,255,.05);
     }
-    .nav-logo { font-weight: 800; font-size: 1rem; color: var(--white); text-decoration: none; cursor: none; }
+    .nav-logo { font-weight: 800; font-size: 1rem; color: var(--white); text-decoration: none; cursor: auto; }
     .nav-logo span { color: var(--purple-light); }
     .nav-back {
       font-size: .78rem; font-weight: 700; letter-spacing: .1em;
       text-transform: uppercase; color: rgba(255,255,255,.5);
-      text-decoration: none; transition: color .2s; cursor: none;
+      text-decoration: none; transition: color .2s; cursor: auto;
     }
     .nav-back:hover { color: var(--lime); }
     .nav-dropdown { position: relative; }
@@ -125,7 +127,7 @@
       text-transform: uppercase; color: rgba(255,255,255,.5);
       background: transparent; border: 1px solid rgba(255,255,255,.12);
       border-radius: 100px; padding: .45rem 1rem;
-      cursor: none; transition: color .2s, border-color .2s;
+      cursor: auto; transition: color .2s, border-color .2s;
     }
     .nav-dropdown-btn:hover { color: var(--lime); border-color: var(--lime); }
     .nav-dropdown-btn::after { content: "▾"; font-size: .6rem; }
@@ -384,7 +386,7 @@
       bottom: 2rem; right: 2rem;
       width: 72px; height: 72px;
       z-index: 500;
-      cursor: none;
+      cursor: auto;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -432,6 +434,39 @@
       .editions { grid-template-columns: 1fr !important; padding: 2rem 1.5rem; gap: 1.5rem; }
     }
 
+    
+    .case-snapshot {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      margin: 1.75rem 0 3.25rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+    }
+    .case-snapshot div {
+      padding: 1rem 1.1rem;
+      background: rgba(255,255,255,0.045);
+    }
+    .case-snapshot span {
+      display: block;
+      margin-bottom: .35rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--lime);
+    }
+    .case-snapshot p {
+      margin: 0;
+      font-size: .84rem;
+      line-height: 1.55;
+      color: rgba(255,255,255,.68);
+    }
+    @media (max-width: 768px) {
+      .case-snapshot { grid-template-columns: 1fr; margin-top: 1.25rem; }
+    }
     @media print {
       body { background: #fff !important; color: #000 !important; cursor: auto !important; }
       nav, .cursor, #page-veil, .next-project { display: none !important; }
@@ -441,6 +476,11 @@
       .body-text, .project-intro, p { color: #333 !important; }
       img { max-width: 100% !important; }
       @page { margin: 2cm; }
+    }
+  
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .001ms !important; }
+      .cursor { display: none !important; }
     }
   </style>
 </head>
@@ -474,6 +514,14 @@
   </div>
 
   <div class="mag-rule"></div>
+
+  
+  <div class="case-snapshot">
+    <div><span>Series</span><p>Two music-led projects grouped by a shared editorial and campaign instinct.</p></div>
+    <div><span>Volume 01</span><p>Zara Larsson as a magazine and package design system.</p></div>
+    <div><span>Volume 02</span><p>The Weeknd as a crowd culture campaign and activation plan.</p></div>
+    <div><span>Throughline</span><p>Design from the artist's existing world instead of placing a style on top of it.</p></div>
+  </div>
 
   <div class="editions">
     <a href="so-good.html" class="edition-card vol-01">

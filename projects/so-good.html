@@ -4,7 +4,13 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="theme-color" content="#0f0e1a"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link rel="icon" href="../favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png"/>
+  <link rel="icon" type="image/png" sizes="512x512" href="../icon-512.png"/>
+  <link rel="manifest" href="../site.webmanifest"/>  <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="apple-mobile-web-app-title" content="Jack Mao"/>
   <meta name="referrer" content="strict-origin-when-cross-origin"/>
@@ -24,10 +30,6 @@
   <meta name="twitter:title" content="Special Edition ft. Zara Larsson — Jack Mao"/>
   <meta name="twitter:description" content="So Good — editorial design by Jack Mao. Zara Larsson's album reimagined as a six-deliverable NME magazine feature: typography, layout, poster, and CD packaging. 2017."/>
   <meta name="twitter:image" content="https://hellojackmao.com/images/thumb-so-good.png"/>
-  <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
-  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
-  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
-  <link rel="apple-touch-icon" href="../apple-touch-icon.png"/>
   <link rel="preload" href="https://fonts.gstatic.com/s/syne/v22/8vIS7w4qzmVxsWxjBZRjr0FKM_04uQ.ttf" as="font" type="font/ttf" crossorigin/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -35,7 +37,8 @@
   <script type="application/ld+json">
   {"@context":"https://schema.org","@type":"CreativeWork","name":"Special Edition ft. Zara Larsson — So Good","creator":{"@type":"Person","name":"Jack Mao","url":"https://hellojackmao.com"},"description":"Editorial design — Zara Larsson's So Good reimagined as a full NME magazine feature.","dateCreated":"2017","url":"https://hellojackmao.com/projects/so-good.html"}
   </script>
-  <style>/* ── Nav ── */
+  <style>
+    :root { --case-accent:#ff4fa3; --lime:#ff4fa3; }/* ── Nav ── */
 
     #scroll-progress {
       position: fixed; top: 0; left: 0; z-index: 99998;
@@ -50,7 +53,7 @@
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
-    body{font-family:'Syne',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden;cursor:none;}
+    body{font-family:'Syne',sans-serif;background:var(--navy);color:var(--white);overflow-x:hidden;cursor: auto;}
     .cursor{position:fixed;left:-100px;top:-100px;width:14px;height:14px;background:var(--lime);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;mix-blend-mode:difference;}
     .cursor.hovering{width:42px;height:42px;background:var(--pink);}
 
@@ -130,12 +133,12 @@
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255,255,255,.05);
     }
-    .nav-logo { font-weight: 800; font-size: 1rem; color: var(--white); text-decoration: none; cursor: none; }
+    .nav-logo { font-weight: 800; font-size: 1rem; color: var(--white); text-decoration: none; cursor: auto; }
     .nav-logo span { color: var(--purple-light); }
     .nav-back {
       font-size: .78rem; font-weight: 700; letter-spacing: .1em;
       text-transform: uppercase; color: rgba(255,255,255,.5);
-      text-decoration: none; transition: color .2s; cursor: none;
+      text-decoration: none; transition: color .2s; cursor: auto;
     }
     .nav-back:hover { color: var(--lime); }
     .nav-dropdown { position: relative; }
@@ -145,7 +148,7 @@
       text-transform: uppercase; color: rgba(255,255,255,.5);
       background: transparent; border: 1px solid rgba(255,255,255,.12);
       border-radius: 100px; padding: .45rem 1rem;
-      cursor: none; transition: color .2s, border-color .2s;
+      cursor: auto; transition: color .2s, border-color .2s;
     }
     .nav-dropdown-btn:hover { color: var(--lime); border-color: var(--lime); }
     .nav-dropdown-btn::after { content: "▾"; font-size: .6rem; }
@@ -184,7 +187,7 @@
       padding: 3rem; background: var(--navy2);
       border-top: 1px solid rgba(255,255,255,.06);
       text-decoration: none; color: var(--white);
-      transition: background .3s; cursor: none;
+      transition: background .3s; cursor: auto;
     }
     .next-project:hover { background: rgba(22,21,43,.8); }
     .next-label {
@@ -208,7 +211,7 @@
       bottom: 2rem; right: 2rem;
       width: 72px; height: 72px;
       z-index: 500;
-      cursor: none;
+      cursor: auto;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -268,6 +271,39 @@
     }
   
 
+    
+    .case-snapshot {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px;
+      margin: -1rem 0 3rem;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.08);
+    }
+    .case-snapshot div {
+      padding: 1rem 1.1rem;
+      background: rgba(255,255,255,0.045);
+    }
+    .case-snapshot span {
+      display: block;
+      margin-bottom: .35rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--lime);
+    }
+    .case-snapshot p {
+      margin: 0;
+      font-size: .84rem;
+      line-height: 1.55;
+      color: rgba(255,255,255,.68);
+    }
+    @media (max-width: 768px) {
+      .case-snapshot { grid-template-columns: 1fr; margin-top: 0; }
+    }
     @media print {
       body { background: #fff !important; color: #000 !important; cursor: auto !important; }
       nav, .cursor, #scroll-progress, #back-to-top, #page-veil { display: none !important; }
@@ -277,7 +313,12 @@
       a { color: #000 !important; }
       img { max-width: 100% !important; }
       @page { margin: 2cm; }
-    }</style>
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .001ms !important; }
+      .cursor { display: none !important; }
+    }
+  </style>
 </head>
 <body>
   <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
@@ -327,6 +368,12 @@
     <p class="mag-intro">
       Reimagining Zara Larsson's <em>So Good</em> not as a tracklist — but as a full editorial experience. Every page a spread. Every lyric a headline. Every photograph a mood board.
     </p>
+    <div class="case-snapshot">
+      <div><span>Role</span><p>Editorial designer building the layout system, typographic hierarchy, and final package direction.</p></div>
+      <div><span>Brief</span><p>Reimagine Zara Larsson's album as a magazine-led editorial world.</p></div>
+      <div><span>Deliverables</span><p>Roughs, headline studies, body layouts, photo spreads, DPS, poster, and CD package.</p></div>
+      <div><span>Design Focus</span><p>Translate pop confidence into scale, rhythm, colour, and a cohesive print system.</p></div>
+    </div>
 
     <!-- OVERVIEW -->
     <div class="section-heading">The Brief</div>
