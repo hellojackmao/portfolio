@@ -2,61 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#0f0e1a"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
   <meta name="apple-mobile-web-app-title" content="Jack Mao"/>
-  <meta name="theme-color" content="#0f0e1a"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="referrer" content="strict-origin-when-cross-origin"/>
   <title>Toronto in Bloom | Jack Mao</title>
-  <meta name="description" content="Toronto in Bloom — social media content by Jack Mao. Cherry blossom season at High Park, 2026. Shot on Fujifilm Classic Negative and iPhone. Instagram."/>
+  <meta name="description" content="Toronto in Bloom — social media content by Jack Mao. Cherry blossom season at High Park, 2026. Shot on Fujifilm Classic Negative and iPhone. Instagram · Threads."/>
+  <link rel="canonical" href="https://hellojackmao.com/projects/toronto-in-bloom.html"/>
+  <meta property="og:locale" content="en_CA"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://hellojackmao.com/projects/toronto-in-bloom.html"/>
+  <meta property="og:title" content="Toronto in Bloom — Jack Mao"/>
+  <meta property="og:description" content="Toronto in Bloom — social media content by Jack Mao. Cherry blossom season at High Park, 2026. Shot on Fujifilm Classic Negative and iPhone. Instagram · Threads."/>
+  <meta property="og:image" content="https://hellojackmao.com/images/toronto-bloom-canopy.jpeg"/>
+  <meta property="og:image:width" content="1400"/>
+  <meta property="og:image:height" content="788"/>
+  <meta property="og:image:alt" content="Toronto in Bloom — Jack Mao"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Toronto in Bloom — Jack Mao"/>
+  <meta name="twitter:description" content="Toronto in Bloom — social media content by Jack Mao. Cherry blossom season at High Park, 2026. Shot on Fujifilm Classic Negative and iPhone. Instagram · Threads."/>
+  <meta name="twitter:image" content="https://hellojackmao.com/images/toronto-bloom-canopy.jpeg"/>
   <link rel="icon" type="image/x-icon" href="../favicon.ico"/>
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
   <link rel="apple-touch-icon" href="../apple-touch-icon.png"/>
-
-    <meta property="og:locale" content="en_CA"/>
-  <meta property="og:type" content="article"/>
-  <meta property="og:url" content="https://hellojackmao.com/projects/toronto-in-bloom.html"/>
-  <meta property="og:title" content="Toronto in Bloom | Jack Mao"/>
-  <meta property="og:description" content="Social media — cherry blossom season at High Park, 2026."/>
-  <meta property="og:image" content="https://hellojackmao.com/images/toronto-bloom-canopy.jpeg"/>
-  <meta property="og:image:alt" content="Toronto in Bloom — Cherry blossom social media project by Jack Mao"/>
-  <meta property="og:image:width" content="1400"/>
-  <meta property="og:image:height" content="788"/>
-  <meta property="og:site_name" content="Jack Mao Portfolio"/>
-  <meta name="twitter:card" content="summary_large_image"/>
-  <meta name="twitter:title" content="Toronto in Bloom | Jack Mao"/>
-  <meta name="twitter:description" content="Social media — cherry blossom season at High Park, 2026."/>
-  <meta name="twitter:image" content="https://hellojackmao.com/images/toronto-bloom-canopy.jpeg"/>
   <link rel="preload" href="https://fonts.gstatic.com/s/syne/v22/8vIS7w4qzmVxsWxjBZRjr0FKM_04uQ.ttf" as="font" type="font/ttf" crossorigin/>
-  <link rel="preload" href="https://fonts.gstatic.com/s/dmmono/v14/aFTU7PB1QTsUX8KYvrumztJS.ttf" as="font" type="font/ttf" crossorigin/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
-  <style>    * { -webkit-tap-highlight-color: transparent; }
-
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"CreativeWork","name":"Toronto in Bloom","creator":{"@type":"Person","name":"Jack Mao","url":"https://hellojackmao.com"},"description":"Social media content documenting the 2026 cherry blossom season at High Park, Toronto.","dateCreated":"2026","url":"https://hellojackmao.com/projects/toronto-in-bloom.html"}
+  </script>
+  <style>#scroll-progress {
+      position: fixed; top: 0; left: 0; z-index: 99998;
+      height: 2px; width: 0%; background: var(--lime);
+      transition: width 0.1s linear;
+      pointer-events: none;
+    }
+    
     :root {
       --navy:#0f0e1a; --navy2:#16152b; --purple:#7B6CF6; --purple-light:#a99cf8;
-      --lime:#ccff00; --coral:#ff5533; --white:#ffffff;
-      --bloom:#c084fc; --bloom-dark:#7e22ce;
+      --lime:#ccff00; --coral:#ff5533; --pink:#e91e8c; --pink-light:#f472b6;
+      --bloom:#c084fc; --bloom-dark:#7e22ce; --white:#ffffff;
       --glass-bg: transparent;
       --glass-bg-hover: rgba(255,255,255,0.04);
       --glass-border: rgba(255,255,255,0.08);
       --glass-border-top: rgba(255,255,255,0.08);
       --glass-blur: none;
       --glass-blur-sm: none;
+      --glass-shine: none;
       --glass-shadow: none;
+      --glass-shadow-card: none;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth;       background: #120010;
-    }
+    html { scroll-behavior: smooth; }
     body {
       font-family: 'Syne', sans-serif;
-      background: var(--navy); color: var(--white);
+      background: var(--navy);
+      color: var(--white);
       overflow-x: hidden;
+      cursor: none;
       -webkit-font-smoothing: antialiased;
-      line-height: 1.6; touch-action: pan-y;
-      -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+      line-height: 1.6;
+      touch-action: pan-y;
     }
     img {
       -webkit-user-drag: none; user-drag: none;
@@ -65,6 +75,7 @@
     }
     iframe { user-select: none; -webkit-user-select: none; }
 
+    /* ── Cursor ── */
     .cursor {
       position: fixed; width: 14px; height: 14px;
       background: var(--lime); border-radius: 50%;
@@ -75,6 +86,7 @@
     }
     .cursor.hovering { width: 42px; height: 42px; background: var(--purple); }
 
+    /* ── Nav ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -90,8 +102,9 @@
       text-transform: uppercase; color: rgba(255,255,255,.5);
       text-decoration: none; transition: color .2s; cursor: none;
     }
-    .nav-back:hover { color: var(--lime);       transition: color 0.2s, background 0.2s, opacity 0.2s, border-color 0.2s;
-    }
+    .nav-back:hover { color: var(--lime); }
+
+    /* ── Dropdown ── */
     .nav-dropdown { position: relative; }
     .nav-dropdown-btn {
       font-family: 'Syne', sans-serif;
@@ -99,12 +112,12 @@
       text-transform: uppercase; color: rgba(255,255,255,.5);
       background: var(--glass-bg);
       backdrop-filter: var(--glass-blur-sm); -webkit-backdrop-filter: var(--glass-blur-sm);
-      border: 1px solid var(--glass-border); border-top-color: var(--glass-border-top);
+      border: 1px solid var(--glass-border);
+      border-top-color: var(--glass-border-top);
       border-radius: 100px; padding: .45rem 1rem;
       cursor: none; transition: color .2s, border-color .2s;
     }
-    .nav-dropdown-btn:hover { color: var(--lime); border-color: var(--lime);       transition: color 0.2s, background 0.2s, opacity 0.2s, border-color 0.2s;
-    }
+    .nav-dropdown-btn:hover { color: var(--lime); border-color: var(--lime); }
     .nav-dropdown-btn::after { content: "▾"; font-size: .6rem; }
     .nav-dropdown-menu {
       position: absolute; top: calc(100% + .5rem); right: 0; min-width: 240px;
@@ -113,36 +126,34 @@
       z-index: 200;
       backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%);
       background: rgba(15,14,26,.9);
-      border: 1px solid rgba(255,255,255,.1); border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px;
       padding: .5rem;
       box-shadow: 0 16px 48px rgba(0,0,0,.5), 0 1px 0 rgba(255,255,255,.08) inset;
     }
-    .nav-dropdown.open .nav-dropdown-menu {opacity:1;visibility:visible;transform:translateY(0);}
+    .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
     .nav-dropdown-menu a {
-      display: block; font-family: 'Syne', sans-serif;
+      display: block;
+      font-family: 'Syne', sans-serif;
       font-size: .75rem; font-weight: 700; letter-spacing: .08em;
       text-transform: uppercase; color: rgba(255,255,255,.6);
       text-decoration: none; padding: .65rem 1rem;
       border-radius: 8px; white-space: nowrap;
       transition: background .15s, color .15s;
     }
-    .nav-dropdown-menu a:hover { background: rgba(255,255,255,.06); color: var(--lime);       transition: color 0.2s, background 0.2s, opacity 0.2s, border-color 0.2s;
-    }
+    .nav-dropdown-menu a:hover { background: rgba(255,255,255,.06); color: var(--lime); }
     .nav-dropdown-menu .active-page {
-      display: block; font-family: 'Syne', sans-serif;
+      display: block;
+      font-family: 'Syne', sans-serif;
       font-size: .75rem; font-weight: 700; letter-spacing: .08em;
       text-transform: uppercase; color: var(--lime);
-      padding: .5rem 1rem;
-      margin: .25rem .25rem .1rem;
-      background: rgba(204,255,0,0.07);
-      border: 1px solid rgba(204,255,0,0.2);
-      border-radius: 8px;
-      pointer-events: none;
+      padding: .65rem 1rem; pointer-events: none;
     }
     .nav-dropdown-divider { border: none; border-top: 1px solid rgba(255,255,255,.08); margin: .3rem .75rem; }
 
+    /* ── Hero ── */
     .project-hero {
-      min-height: 100vh; display: flex; flex-direction: column;
+      min-height: 75vh; display: flex; flex-direction: column;
       justify-content: flex-end; padding: 10rem 3rem 4rem;
       background: radial-gradient(ellipse 80% 60% at 70% 100%,
         #9d174d 0%, #4a044e 40%, var(--navy) 70%);
@@ -159,9 +170,13 @@
     }
     .project-title em { font-style: italic; font-family: 'DM Serif Display', serif; color: var(--bloom); }
 
+    /* ── Cover ── */
     .project-cover { width: 100%; max-height: 70vh; object-fit: cover; display: block; }
 
-    .project-content { max-width: 780px; margin: 0 auto; padding: 5rem 3rem 4rem; }
+    /* ── Content ── */
+    .project-content { max-width: 780px; margin: 0 auto; padding: 5rem 3rem 4rem;
+      content-visibility: auto; contain-intrinsic-size: 0 2000px;
+    }
     .project-intro {
       font-size: clamp(1.05rem,2vw,1.3rem); font-weight: 700;
       line-height: 1.6; color: var(--white); margin-bottom: 3rem;
@@ -172,32 +187,52 @@
       text-transform: uppercase; color: var(--lime);
       margin-bottom: 1.25rem; margin-top: 3rem;
       display: flex; align-items: center; gap: 1rem;
+      transition: color .2s;
     }
     .section-heading::after {
-      content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.08);
+      content: ''; flex: 1; height: 1px;
+      background: rgba(255,255,255,.08);
     }
-    .body-text { font-size: 1rem; line-height: 1.85; color: rgba(255,255,255,.55);       hyphens: auto;
-    }
+    .body-text { font-size: 1rem; line-height: 1.85; color: rgba(255,255,255,.55); }
     .body-text p { margin-bottom: 1.5rem; }
     .body-text strong { color: var(--white); }
 
+    /* ── Image / video grid ── */
+    .image-grid { display: grid; gap: 1rem; margin: 2rem 0; }
+    .image-grid img { width: 100%; height: auto; display: block; border-radius: 10px; }
+    .two-col { grid-template-columns: 1fr 1fr; }
+    .one-col { grid-template-columns: 1fr; }
+    .img-caption {
+      font-family: 'DM Mono', monospace; font-size: .68rem;
+      letter-spacing: .08em; color: rgba(255,255,255,.25);
+      margin-top: -.25rem; margin-bottom: 1.5rem;
+    }
+
+    /* ── Video ── */
     .blossom-videos { display: flex; flex-direction: column; gap: 1rem; margin: 2rem 0; }
     .video-wrap {
-      border-radius: 12px; overflow: hidden; background: #0a0912;
-      box-shadow: 0 4px 20px rgba(0,0,0,.35); line-height: 0;
+      border-radius: 12px; overflow: hidden;
+      background: #0a0912; box-shadow: 0 4px 20px rgba(0,0,0,.35);
+      line-height: 0; flex-shrink: 0;
     }
     .video-wrap video { display: block; width: 100%; height: auto; }
 
-    .social-post-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
+    /* ── Social media mock ── */
+    .social-post-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+      margin: 2rem 0;
+    }
     .social-post {
       background: rgba(22,21,43,.8);
       border: 1px solid rgba(192,132,252,.15);
       border-radius: 14px; overflow: hidden;
       transition: transform .3s, border-color .3s;
     }
-    .social-post:hover { transform: translateY(-3px); border-color: rgba(192,132,252,.4);       transition: color 0.2s, background 0.2s, opacity 0.2s, border-color 0.2s;
+    .social-post:hover { transform: translateY(-3px); border-color: rgba(192,132,252,.4); }
+    .social-post-header {
+      display: flex; align-items: center; gap: .65rem;
+      padding: .75rem 1rem;
     }
-    .social-post-header { display: flex; align-items: center; gap: .65rem; padding: .75rem 1rem; }
     .social-avatar {
       width: 30px; height: 30px; border-radius: 50%;
       background: linear-gradient(135deg, #9d174d, #4a044e);
@@ -206,25 +241,21 @@
     }
     .social-handle { font-size: .72rem; font-weight: 700; color: rgba(255,255,255,.7); }
     .social-handle span { display: block; font-weight: 400; font-family: 'DM Mono', monospace; font-size: .6rem; color: rgba(255,255,255,.3); }
-    .social-img {
-      width: 100%;
-      aspect-ratio: 1/1;
-      object-fit: cover;
-      object-position: center;
-      display: block;
-      pointer-events: none;
-      user-select: none;
-      -webkit-user-select: none;
-    }
+    .social-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; display: block; }
     .social-img-placeholder {
       width: 100%; aspect-ratio: 1/1;
       background: linear-gradient(135deg, #9d174d 0%, #c084fc 50%, #4a044e 100%);
       display: flex; align-items: center; justify-content: center;
       font-size: clamp(2rem,6vw,4rem);
     }
-    .social-footer { padding: .75rem 1rem; font-family: 'DM Mono', monospace; font-size: .65rem; color: rgba(255,255,255,.4); }
-    .social-likes { color: var(--bloom); font-weight: 700; font-size: .72rem; margin-bottom: .25rem; }
+    .social-footer {
+      padding: .75rem 1rem;
+      font-family: 'DM Mono', monospace; font-size: .65rem;
+      color: rgba(255,255,255,.25);
+    }
+    .social-likes { color: var(--bloom); font-weight: 700; font-size: .72rem; }
 
+    /* ── Pull quote ── */
     .pull-quote {
       font-family: 'DM Serif Display', serif; font-style: italic;
       font-size: clamp(1.3rem,3vw,2rem); line-height: 1.4;
@@ -232,6 +263,7 @@
       padding-left: 1.5rem; margin: 2.5rem 0;
     }
 
+    /* ── Stat cards ── */
     .stat-row { display: flex; gap: 1rem; margin: 2rem 0; flex-wrap: wrap; }
     .stat {
       flex: 1; min-width: 120px;
@@ -239,26 +271,32 @@
       border: 1px solid rgba(192,132,252,.15);
       border-radius: 12px; padding: 1.25rem 1.5rem;
     }
-    .stat-num { font-size: 2rem; font-weight: 800; letter-spacing: -.04em; color: var(--bloom); line-height: 1; }
+    .stat-num {
+      font-size: 2rem; font-weight: 800; letter-spacing: -.04em;
+      color: var(--bloom); line-height: 1;
+    }
     .stat-label {
       font-family: 'DM Mono', monospace; font-size: .65rem;
       letter-spacing: .12em; text-transform: uppercase;
       color: rgba(255,255,255,.35); margin-top: .3rem;
     }
 
-    hr.div { border: none; border-top: 1px solid rgba(255,255,255,.07); margin: 3rem 0; }
+    /* ── Divider ── */
+    hr.div {
+      border: none; border-top: 1px solid rgba(255,255,255,.07);
+      margin: 3rem 0;
+    }
 
+    /* ── Footer ── */
+    /* ── Next project ── */
     .next-project {
-      padding: 5rem 3rem;
-      border-top: 1px solid rgba(255,255,255,.06);
       display: flex; align-items: center; justify-content: space-between;
+      padding: 3rem; background: var(--navy2);
+      border-top: 1px solid rgba(255,255,255,.06);
       text-decoration: none; color: var(--white);
       transition: background .3s; cursor: none;
-      backdrop-filter: var(--glass-blur-sm); -webkit-backdrop-filter: var(--glass-blur-sm);
-      will-change: transform;
     }
-    .next-project:hover { background: rgba(22,21,43,.8);       transition: color 0.2s, background 0.2s, opacity 0.2s, border-color 0.2s;
-    }
+    .next-project:hover { background: rgba(22,21,43,.8); }
     .next-label {
       font-family: 'DM Mono', monospace; font-size: .68rem;
       letter-spacing: .2em; text-transform: uppercase;
@@ -271,13 +309,23 @@
     footer {
       padding: 2rem 3rem; border-top: 1px solid rgba(255,255,255,.06);
       display: flex; align-items: center; justify-content: space-between;
-      font-size: .75rem; color: var(--purple-light); font-family: 'DM Mono', monospace;
+      font-size: .75rem; color: var(--purple-light);
+      font-family: 'DM Mono', monospace;
     }
 
-    a:focus-visible, button:focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; border-radius: 6px; }
+    /* ── Focus ── */
+    a:focus-visible, button:focus-visible {
+      outline: 2px solid var(--lime); outline-offset: 4px; border-radius: 6px;
+    }
     :focus:not(:focus-visible) { outline: none; }
 
-    /* ══ V1 DESKTOP (≥769px) ══ */
+    /* ── Keyframes ── */
+    @keyframes bounce-soft { 0%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} 60%{transform:translateY(-2px)} }
+    @keyframes pulse-dot { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:.7} }
+
+    /* ══════════════════════════════════════════════
+       V1 DESKTOP (≥769px) — strip glass
+    ══════════════════════════════════════════════ */
     @media (min-width: 769px) {
       nav {
         top: 0; left: 0; right: 0; transform: none; width: auto; max-width: none;
@@ -287,15 +335,50 @@
         backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
         box-shadow: none;
       }
+      nav::before { display: none; }
       .nav-dropdown-btn { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
     }
 
-    /* ══ V2 MOBILE (≤768px) ══ */
-    
-    @media (pointer: fine) {
-      body { cursor: none; }
-      a, button, [role="button"] { cursor: none; }
+    /* ── Instagram comments ── */
+    .comments-block {
+      margin: 1.5rem 0 2rem;
+      display: flex; flex-direction: column; gap: .6rem;
     }
+    .comment {
+      display: flex; align-items: baseline; gap: .6rem;
+      font-size: .88rem; line-height: 1.55; color: rgba(255,255,255,.55);
+      padding: .6rem 1rem;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(255,255,255,.06);
+      border-radius: 10px;
+    }
+    .comment-handle {
+      font-family: 'DM Mono', monospace; font-size: .72rem; font-weight: 700;
+      color: var(--purple-light); white-space: nowrap; flex-shrink: 0;
+    }
+    .comment-text { color: rgba(255,255,255,.6); }
+
+    /* ══════════════════════════════════════════════
+       V2 MOBILE (≤768px) — liquid glass
+    ══════════════════════════════════════════════ */
+    #back-to-top {
+      position: fixed;
+      bottom: 2rem; right: 2rem;
+      width: 72px; height: 72px;
+      z-index: 500;
+      cursor: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.4s cubic-bezier(0.16,1,0.3,1);
+      pointer-events: none;
+      will-change: opacity, transform;
+    }
+    #back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+    #back-to-top { bottom: 5rem; right: 1.25rem; width: 64px; height: 64px; }
     @media (max-width: 768px) {
       :root {
         --glass-bg: rgba(255,255,255,.04);
@@ -306,12 +389,14 @@
         --glass-shadow: 0 6px 24px rgba(0,0,0,.28), 0 1px 0 rgba(255,255,255,.06) inset;
       }
       nav {
-        top: .75rem; left: 50%; right: auto; transform: translateX(-50%);
+        top: .75rem; left: 50%; right: auto;
+        transform: translateX(-50%);
         width: calc(100% - 2rem); max-width: 560px;
         border-radius: 100px; padding: .85rem 1.25rem;
         background: rgba(15,14,26,.45);
         backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
-        border: 1px solid var(--glass-border); border-top-color: var(--glass-border-top);
+        border: 1px solid var(--glass-border);
+        border-top-color: var(--glass-border-top);
         box-shadow: var(--glass-shadow); border-bottom: none;
       }
       nav::before {
@@ -320,87 +405,32 @@
         border-radius: inherit; pointer-events: none;
       }
       .project-hero { padding-top: 7rem; padding-left: 1.5rem; padding-right: 1.5rem; }
-      .project-content { padding: 3rem 1.5rem 3rem; }
+      .project-content { padding: 3rem 1.5rem 3rem;
+      content-visibility: auto; contain-intrinsic-size: 0 2000px;
+    }
       .social-post-grid { grid-template-columns: 1fr; }
       .stat-row { flex-direction: column; }
-      .next-project { padding: 2rem 1.5rem; }
       footer { padding: 1.5rem; flex-direction: column; gap: .4rem; text-align: center; align-items: center; }
     }
   
-    /* ── Comments block ── */
-    .comments-block {
-      display: flex;
-      flex-direction: column;
-      gap: .6rem;
-      margin: 1.5rem 0 1rem;
-      padding: 1rem 1.25rem;
-      background: rgba(192,132,252,.04);
-      border-left: 2px solid rgba(192,132,252,.2);
-      border-radius: 0 8px 8px 0;
-    }
-    .comment {
-      font-family: 'DM Mono', monospace;
-      font-size: .75rem;
-      line-height: 1.5;
-      color: rgba(255,255,255,.45);
-    }
-    .comment-handle {
-      color: var(--bloom);
-      font-weight: 700;
-      margin-right: .4rem;
-    }
-    /* ── Page transition ── */
-    #page-veil {
-      position: fixed; inset: 0; z-index: 99999;
-      background: #0f0e1a;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.35s cubic-bezier(0.4,0,0.2,1);
-    }
-    #page-veil.visible { opacity: 1; pointer-events: all; }
-    @media (prefers-reduced-motion: reduce) {
-      #page-veil { transition: none; }
-    }
-    /* ── Print styles ── */
+
     @media print {
       body { background: #fff !important; color: #000 !important; cursor: auto !important; }
-      nav, .cursor, #page-veil, #scroll-progress, #back-to-top,
-      .next-project, .splash-screen, #splash { display: none !important; }
-      a { color: #000 !important; text-decoration: underline; }
-      h1, h2, h3 { color: #000 !important; }
-      .project-hero { min-height: auto !important; padding: 2rem 0 !important;
-        background: #fff !important; }
+      nav, .cursor, #scroll-progress, #back-to-top, #page-veil { display: none !important; }
+      .project-hero { min-height: auto; padding: 2rem 0; background: #fff !important; }
+      .hub-hero { min-height: auto; padding: 2rem 0; background: #fff !important; }
       .body-text, .project-intro, p { color: #333 !important; }
+      a { color: #000 !important; }
       img { max-width: 100% !important; }
       @page { margin: 2cm; }
-    }
-    /* ── Content visibility optimisation ── */
-    .project-content { content-visibility: auto; contain-intrinsic-size: 0 2000px; }
-    /* ── Mobile tap targets ── */
-    @media (max-width: 768px) and (pointer: coarse) {
-      .nav-back, .nav-logo { min-height: 44px; display: inline-flex; align-items: center; }
-      .nav-dropdown-btn { min-height: 44px; }
-      .nav-dropdown-menu a { min-height: 44px; display: flex; align-items: center; }
-      .next-project { min-height: 44px; }
     }</style>
-  <link rel="canonical" href="https://hellojackmao.com/projects/toronto-in-bloom.html"/>
-
-  <script type="application/ld+json">
-  {
-      "@context": "https://schema.org",
-      "@type": "CreativeWork",
-      "name": "Toronto in Bloom",
-      "creator": { "@type": "Person", "name": "Jack Mao", "url": "https://hellojackmao.com" },
-      "description": "Social media content documenting the 2026 cherry blossom season at High Park, Toronto.",
-      "dateCreated": "2026",
-      "url": "https://hellojackmao.com/projects/toronto-in-bloom.html"
-    }
-  </script>
 </head>
 <body>
+  <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
   <div class="cursor" id="cursor"></div>
   <div id="page-veil"></div>
 
-  <nav aria-label="Main navigation">
+    <nav aria-label="Main navigation">
     <a class="nav-logo" href="../index.html#work">Jack Mao <span>|</span> Portfolio</a>
     <a class="nav-back" href="../index.html#work">← Back to work</a>
     <div class="nav-dropdown">
@@ -415,6 +445,8 @@
       </div>
     </div>
   </nav>
+
+
 
   <main>
   <div class="project-hero">
@@ -560,18 +592,22 @@
   </div>
 
   </main>
-  <a class="next-project" href="light-and-form.html" rel="next">
-    <div><div class="next-label">Next project</div><div class="next-title">Light &amp; Form</div></div>
+    <a class="next-project" href="light-and-form.html" rel="next">
+    <div>
+      <div class="next-label">Next project</div>
+      <div class="next-title">Light &amp; Form</div>
+    </div>
     <div class="next-arrow">→</div>
   </a>
 
-  <footer>
-    <span>Jack Mao</span>
+    <footer>
+    <span style="color:var(--purple-light)">Jack Mao</span>
     <span>© <time datetime="2026">2026</time> — All rights reserved</span>
     <span>Built with <span style="color:#ff3333;">♥</span> + Figma</span>
   </footer>
 
   <script>
+
     const jm_clicks = (() => {
       let n = parseInt(sessionStorage.getItem('jm_clicks') || '0');
       return { inc() { n++; sessionStorage.setItem('jm_clicks', n); return n; }, get() { return n; } };
@@ -641,6 +677,8 @@
           setTimeout(function() { window.location.href = href; }, 370);
         });
       });
-    })();</script>
+    })();
+  </script>
+  <button id="back-to-top" aria-label="Back to top">↑</button>
 </body>
 </html>
