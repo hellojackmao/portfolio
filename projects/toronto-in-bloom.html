@@ -86,7 +86,8 @@
     }
     .cursor.hovering { width: 42px; height: 42px; background: var(--purple); }
 
-    /* ── Nav ── */
+    /* ── Dropdown ── */
+        /* ── Nav ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -103,17 +104,12 @@
       text-decoration: none; transition: color .2s; cursor: none;
     }
     .nav-back:hover { color: var(--lime); }
-
-    /* ── Dropdown ── */
     .nav-dropdown { position: relative; }
     .nav-dropdown-btn {
       font-family: 'Syne', sans-serif;
       font-size: .78rem; font-weight: 700; letter-spacing: .1em;
       text-transform: uppercase; color: rgba(255,255,255,.5);
-      background: var(--glass-bg);
-      backdrop-filter: var(--glass-blur-sm); -webkit-backdrop-filter: var(--glass-blur-sm);
-      border: 1px solid var(--glass-border);
-      border-top-color: var(--glass-border-top);
+      background: transparent; border: 1px solid rgba(255,255,255,.12);
       border-radius: 100px; padding: .45rem 1rem;
       cursor: none; transition: color .2s, border-color .2s;
     }
@@ -126,15 +122,12 @@
       z-index: 200;
       backdrop-filter: blur(18px) saturate(160%); -webkit-backdrop-filter: blur(18px) saturate(160%);
       background: rgba(15,14,26,.9);
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 14px;
-      padding: .5rem;
+      border: 1px solid rgba(255,255,255,.1); border-radius: 14px; padding: .5rem;
       box-shadow: 0 16px 48px rgba(0,0,0,.5), 0 1px 0 rgba(255,255,255,.08) inset;
     }
     .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
     .nav-dropdown-menu a {
-      display: block;
-      font-family: 'Syne', sans-serif;
+      display: block; font-family: 'Syne', sans-serif;
       font-size: .75rem; font-weight: 700; letter-spacing: .08em;
       text-transform: uppercase; color: rgba(255,255,255,.6);
       text-decoration: none; padding: .65rem 1rem;
@@ -142,12 +135,13 @@
       transition: background .15s, color .15s;
     }
     .nav-dropdown-menu a:hover { background: rgba(255,255,255,.06); color: var(--lime); }
-    .nav-dropdown-menu .active-page {
-      display: block;
-      font-family: 'Syne', sans-serif;
+    .active-page {
+      display: block; font-family: 'Syne', sans-serif;
       font-size: .75rem; font-weight: 700; letter-spacing: .08em;
       text-transform: uppercase; color: var(--lime);
-      padding: .65rem 1rem; pointer-events: none;
+      padding: .5rem 1rem; margin: .25rem .25rem .1rem;
+      background: rgba(204,255,0,.07); border: 1px solid rgba(204,255,0,.2);
+      border-radius: 8px; pointer-events: none;
     }
     .nav-dropdown-divider { border: none; border-top: 1px solid rgba(255,255,255,.08); margin: .3rem .75rem; }
 
@@ -323,21 +317,7 @@
     @keyframes bounce-soft { 0%,100%{transform:translateY(0)} 30%{transform:translateY(-5px)} 60%{transform:translateY(-2px)} }
     @keyframes pulse-dot { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.4);opacity:.7} }
 
-    /* ══════════════════════════════════════════════
-       V1 DESKTOP (≥769px) — strip glass
-    ══════════════════════════════════════════════ */
-    @media (min-width: 769px) {
-      nav {
-        top: 0; left: 0; right: 0; transform: none; width: auto; max-width: none;
-        border-radius: 0; padding: 1.4rem 3rem;
-        border: none; border-bottom: 1px solid rgba(255,255,255,.05);
-        background: rgba(15,14,26,.85);
-        backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-        box-shadow: none;
-      }
-      nav::before { display: none; }
-      .nav-dropdown-btn { background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
-    }
+    
 
     /* ── Instagram comments ── */
     .comments-block {
@@ -380,6 +360,7 @@
     }
     #back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
     #back-to-top { bottom: 5rem; right: 1.25rem; width: 64px; height: 64px; }
+
     @media (max-width: 768px) {
       :root {
         --glass-bg: rgba(255,255,255,.04);
@@ -405,15 +386,28 @@
         background: linear-gradient(180deg,rgba(255,255,255,.05) 0%,rgba(255,255,255,0) 70%);
         border-radius: inherit; pointer-events: none;
       }
-      .project-hero { padding-top: 7rem; padding-left: 1.5rem; padding-right: 1.5rem; }
-      .project-content { padding: 3rem 1.5rem 3rem;
+      .project-hero { min-height: 100vh; padding: 8rem 1.5rem 4rem; }
+      .project-content { padding: 3rem 1.5rem;
       content-visibility: auto; contain-intrinsic-size: 0 2000px;
     }
+      
+      
+      
+      footer { padding: 1.5rem; flex-direction: column; gap: .4rem; text-align: center; align-items: center; }
+      .project-hero { min-height: 100vh; padding: 8rem 1.5rem 4rem; }
+      .project-content { padding: 3rem 1.5rem; }
+      .two-col, .three-col, .image-grid.two-col { grid-template-columns: 1fr; }
+      .next-project { padding: 2rem 1.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: .4rem; text-align: center; align-items: center; }
+      .project-hero { padding-top: 7rem; padding-left: 1.5rem; padding-right: 1.5rem; }
+      .project-content { padding: 3rem 1.5rem; content-visibility: auto; contain-intrinsic-size: 0 2000px; }
       .social-post-grid { grid-template-columns: 1fr; }
-      .stat-row { flex-direction: column; }
+      .dave-videos { grid-template-columns: 1fr; }
+      .stat-row { flex-direction: column; gap: .75rem; }
+      .stat { min-width: 0; width: 100%; }
+      .next-project { padding: 2rem 1.5rem; }
       footer { padding: 1.5rem; flex-direction: column; gap: .4rem; text-align: center; align-items: center; }
     }
-  
 
     @media print {
       body { background: #fff !important; color: #000 !important; cursor: auto !important; }
@@ -610,6 +604,7 @@
 
   <script>
 
+
     const jm_clicks = (() => {
       let n = parseInt(sessionStorage.getItem('jm_clicks') || '0');
       return { inc() { n++; sessionStorage.setItem('jm_clicks', n); return n; }, get() { return n; } };
@@ -688,6 +683,7 @@
         if (veil) { veil.classList.remove('visible'); veil.style.opacity = '0'; }
       }
     });
+  
   </script>
   <button id="back-to-top" aria-label="Back to top">↑</button>
 </body>

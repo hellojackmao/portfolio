@@ -98,7 +98,10 @@
     #page-veil.visible { opacity: 1; pointer-events: all; }
     @media (prefers-reduced-motion: reduce) { #page-veil { transition: none; } }
 
-    /* ── Nav (base = desktop full-width bar) ── */
+
+
+
+    /* ── Nav ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
@@ -107,29 +110,24 @@
       backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid rgba(255,255,255,.05);
     }
-    .nav-logo {
-      font-weight: 800; font-size: 1rem; color: var(--white);
-      text-decoration: none; letter-spacing: .02em;
-    }
+    .nav-logo { font-weight: 800; font-size: 1rem; color: var(--white); text-decoration: none; cursor: none; }
     .nav-logo span { color: var(--purple-light); }
     .nav-back {
       font-size: .78rem; font-weight: 700; letter-spacing: .1em;
       text-transform: uppercase; color: rgba(255,255,255,.5);
-      text-decoration: none; transition: color .2s;
+      text-decoration: none; transition: color .2s; cursor: none;
     }
-    .nav-back:hover { color: var(--lime); transition: color 0.2s, background 0.2s, opacity 0.2s, border-color 0.2s; }
+    .nav-back:hover { color: var(--lime); }
     .nav-dropdown { position: relative; }
     .nav-dropdown-btn {
       font-family: 'Syne', sans-serif;
       font-size: .78rem; font-weight: 700; letter-spacing: .1em;
       text-transform: uppercase; color: rgba(255,255,255,.5);
-      background: var(--glass-bg);
-      backdrop-filter: var(--glass-blur-sm); -webkit-backdrop-filter: var(--glass-blur-sm);
-      border: 1px solid var(--glass-border); border-top-color: var(--glass-border-top);
+      background: transparent; border: 1px solid rgba(255,255,255,.12);
       border-radius: 100px; padding: .45rem 1rem;
-      transition: color .2s, border-color .2s;
+      cursor: none; transition: color .2s, border-color .2s;
     }
-    .nav-dropdown-btn:hover { color: var(--lime); border-color: var(--lime); transition: color 0.2s, background 0.2s, opacity 0.2s, border-color 0.2s; }
+    .nav-dropdown-btn:hover { color: var(--lime); border-color: var(--lime); }
     .nav-dropdown-btn::after { content: "▾"; font-size: .6rem; }
     .nav-dropdown-menu {
       position: absolute; top: calc(100% + .5rem); right: 0; min-width: 240px;
@@ -150,13 +148,13 @@
       border-radius: 8px; white-space: nowrap;
       transition: background .15s, color .15s;
     }
-    .nav-dropdown-menu a:hover { background: rgba(255,255,255,.06); color: var(--lime); transition: color 0.2s, background 0.2s, opacity 0.2s, border-color 0.2s; }
+    .nav-dropdown-menu a:hover { background: rgba(255,255,255,.06); color: var(--lime); }
     .active-page {
       display: block; font-family: 'Syne', sans-serif;
       font-size: .75rem; font-weight: 700; letter-spacing: .08em;
       text-transform: uppercase; color: var(--lime);
       padding: .5rem 1rem; margin: .25rem .25rem .1rem;
-      background: rgba(204,255,0,0.07); border: 1px solid rgba(204,255,0,0.2);
+      background: rgba(204,255,0,.07); border: 1px solid rgba(204,255,0,.2);
       border-radius: 8px; pointer-events: none;
     }
     .nav-dropdown-divider { border: none; border-top: 1px solid rgba(255,255,255,.08); margin: .3rem .75rem; }
@@ -263,10 +261,11 @@
 
     /* ── Mobile tap targets ── */
     @media (max-width: 768px) and (pointer: coarse) {
-      .nav-back, .nav-logo { min-height: 44px; display: inline-flex; align-items: center; }
-      .nav-dropdown-btn { min-height: 44px; }
-      .nav-dropdown-menu a { min-height: 44px; display: flex; align-items: center; }
+      .nav-back,
+
     }
+
+    .mag-rule{width:100%;height:3px;background:linear-gradient(90deg,#a855f7 0%,rgba(168,85,247,.1) 100%);}
 
     /* ── Hub hero ── */
     .hub-hero {
@@ -319,35 +318,48 @@
       letter-spacing: -.02em; margin-bottom: .6rem;
     }
     .edition-meta { font-family: 'DM Mono', monospace; font-size: .65rem; color: rgba(255,255,255,.35); letter-spacing: .05em; }
-    .edition-cta { font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--lime); display: flex; align-items: center; gap: .4rem; }
     .edition-cta::after { content: '→'; transition: transform .2s; }
-    .edition-card:hover .edition-cta::after { transform: translateX(4px); }
+
+    .edition-arrow {
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .75rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--lime);
+      margin-top: 1rem;
+    }
+    .edition-arrow::after { content: '→'; transition: transform .2s; display: inline-block; }
+    .edition-card:hover .edition-arrow::after { transform: translateX(4px); }
+    .vol-01 .edition-name { color: var(--pink-light) !important; }
+    .vol-02 .edition-name { color: var(--red-light) !important; }
 
     /* ── Concept section ── */
     .hub-concept { max-width: 780px; margin: 0 auto; padding: 0 3rem 4rem; }
 
     .heart { color: #ff3333; }
 
-    @media (max-width: 768px) {
-      .editions {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
-      padding: 4rem 3rem; max-width: 1100px; margin: 0 auto;
-    }
-      .hub-hero { padding: 7rem 1.5rem 3rem; }
-      .edition-arrow {
-      font-size: 1.5rem; color: rgba(255,255,255,.2);
-      flex-shrink: 0; margin-left: 1rem;
-      transition: color .2s, transform .2s;
-    }
-    .vol-01 .edition-name { color: var(--pink-light); }
-    .vol-02 .edition-name { color: var(--red-light); }
-        .edition-card:hover .edition-arrow { color: var(--lime); transform: translate(3px,-3px); }
-        .hub-concept { padding: 0 1.5rem 3rem; }
-    }
+    
 
-    /* ══════════════════════════════════════════
-       V2 MOBILE (≤768px) — liquid glass pill
-    ══════════════════════════════════════════ */
+    
+
+    /* ── Print ── */
+    #back-to-top {
+      position: fixed;
+      bottom: 2rem; right: 2rem;
+      width: 72px; height: 72px;
+      z-index: 500;
+      cursor: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.4s cubic-bezier(0.16,1,0.3,1);
+      pointer-events: none;
+      will-change: opacity, transform;
+    }
+    #back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+    #back-to-top { bottom: 5rem; right: 1.25rem; width: 64px; height: 64px; }
+
     @media (max-width: 768px) {
       :root {
         --glass-bg: rgba(255,255,255,.04);
@@ -376,31 +388,12 @@
       .nav-logo { font-size: .85rem; }
       .nav-back { font-size: .7rem; }
       .nav-dropdown-btn { padding: .35rem .8rem; font-size: .72rem; }
-      .project-hero { padding: 7rem 1.5rem 3rem; min-height: 80vh; }
-      .project-content { padding: 3rem 1.5rem; }
-      .next-project { padding: 2rem 1.5rem; }
+      .hub-hero { padding: 7rem 1.5rem 3rem; min-height: 60vh; }
+      .editions { grid-template-columns: 1fr !important; padding: 2rem 1.5rem; gap: 1.5rem; }
+      .hub-concept { padding: 0 1.5rem 3rem; }
       footer { padding: 1.5rem; flex-direction: column; gap: .4rem; text-align: center; align-items: center; }
     }
 
-    /* ── Print ── */
-    #back-to-top {
-      position: fixed;
-      bottom: 2rem; right: 2rem;
-      width: 72px; height: 72px;
-      z-index: 500;
-      cursor: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.4s cubic-bezier(0.16,1,0.3,1),
-                  transform 0.4s cubic-bezier(0.16,1,0.3,1);
-      pointer-events: none;
-      will-change: opacity, transform;
-    }
-    #back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
-    #back-to-top { bottom: 5rem; right: 1.25rem; width: 64px; height: 64px; }
     @media print {
       body { background: #fff !important; color: #000 !important; cursor: auto !important; }
       nav, .cursor, #page-veil, .next-project { display: none !important; }
@@ -442,32 +435,28 @@
     <p class="hub-intro">Two projects. One design instinct — built around an artist's identity, not imposed on it.</p>
   </div>
 
+  <div class="mag-rule"></div>
+
   <div class="editions">
     <a href="so-good.html" class="edition-card vol-01">
-      <img class="edition-thumb" src="../images/thumb-so-good.png" alt="Special Edition ft. Zara Larsson" loading="lazy" width="1400" height="788"/>
+      <img class="edition-thumb" src="../images/thumb-so-good.png" alt="Special Edition ft. Zara Larsson — So Good" loading="lazy"/>
       <div class="edition-info">
-        <div>
-          <div class="edition-vol">Vol. 01 · Editorial Design · <time datetime="2017">2017</time></div>
-          <div class="edition-name">Zara Larsson<br>So Good.</div>
-          <div class="edition-meta">Adobe InDesign · Photoshop · Illustrator</div>
-        </div>
-        <div class="edition-arrow">↗</div>
-        <div class="edition-arrow">↗</div>
+        <div class="edition-vol">Vol. 01 · Editorial Design · <time datetime="2017">2017</time></div>
+        <div class="edition-name">Zara Larsson<br>So Good.</div>
+        <div class="edition-meta">Adobe InDesign · Photoshop · Illustrator</div>
+        <div class="edition-arrow">View project</div>
       </div>
     </a>
     <a href="after-hours.html" class="edition-card vol-02">
-      <img class="edition-thumb" src="../images/thumb-after-hours.png" alt="Special Edition ft. The Weeknd" loading="lazy" width="1400" height="788"/>
+      <img class="edition-thumb" src="../images/thumb-after-hours.png" alt="Special Edition ft. The Weeknd — After Hours" loading="lazy"/>
       <div class="edition-info">
-        <div>
-          <div class="edition-vol">Vol. 02 · Advertising · <time datetime="2022">2022</time></div>
-          <div class="edition-name">The Weeknd<br>After Hours.</div>
-          <div class="edition-meta">Adobe Photoshop · Illustrator</div>
-        </div>
-        <div class="edition-arrow">↗</div>
-        <div class="edition-arrow">↗</div>
+        <div class="edition-vol">Vol. 02 · Advertising · <time datetime="2022">2022</time></div>
+        <div class="edition-name">The Weeknd<br>After Hours.</div>
+        <div class="edition-meta">Adobe Photoshop · Illustrator</div>
+        <div class="edition-arrow">View project</div>
       </div>
     </a>
-  </div>
+  </div>  </div>
 
   <div class="hub-concept">
     <div class="section-heading">The Concept</div>
@@ -486,6 +475,7 @@
   </footer>
 
   <script>
+
 
     const jm_clicks = (() => {
       let n = parseInt(sessionStorage.getItem('jm_clicks') || '0');
@@ -565,6 +555,7 @@
         if (veil) { veil.classList.remove('visible'); veil.style.opacity = '0'; }
       }
     });
+  
   </script>
   <button id="back-to-top" aria-label="Back to top">↑</button>
 </body>

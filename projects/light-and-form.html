@@ -317,6 +317,11 @@
       
       
       footer { padding: 1.5rem; flex-direction: column; gap: .4rem; text-align: center; align-items: center; }
+      .project-hero { min-height: 100vh; padding: 8rem 1.5rem 4rem; }
+      .project-content { padding: 3rem 1.5rem; }
+      .two-col, .three-col, .image-grid.two-col { grid-template-columns: 1fr; }
+      .next-project { padding: 2rem 1.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: .4rem; text-align: center; align-items: center; }
     }
 
 
@@ -426,6 +431,7 @@
 
   <script>
 
+
     const jm_clicks = (() => {
       let n = parseInt(sessionStorage.getItem('jm_clicks') || '0');
       return { inc() { n++; sessionStorage.setItem('jm_clicks', n); return n; }, get() { return n; } };
@@ -504,6 +510,7 @@
         if (veil) { veil.classList.remove('visible'); veil.style.opacity = '0'; }
       }
     });
+  
   </script>
   <button id="back-to-top" aria-label="Back to top">↑</button>
 </body>
