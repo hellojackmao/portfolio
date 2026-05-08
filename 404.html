@@ -42,7 +42,7 @@ body {
     }
 
 .cursor {
-      position: fixed;
+      position: fixed; left: -100px; top: -100px;
       width: 14px; height: 14px;
       background: #ccff00;
       border-radius: 50%;
@@ -339,6 +339,14 @@ a:focus-visible { outline: 2px solid #ccff00; outline-offset: 4px; border-radius
         });
       });
     })();
-</script>
+
+    // Fix bfcache restore — remove veil on back navigation
+    window.addEventListener('pageshow', e => {
+      if (e.persisted) {
+        const veil = document.getElementById('page-veil');
+        if (veil) { veil.classList.remove('visible'); veil.style.opacity = '0'; }
+      }
+    });
+  </script>
 </body>
 </html>
