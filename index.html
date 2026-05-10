@@ -565,8 +565,9 @@
       justify-content: center;
     }
     .project-thumb-wrap.tend-thumb img {
-      width: min(62%, 260px) !important;
-      height: auto !important;
+      width: auto !important;
+      height: min(68%, 240px) !important;
+      max-width: 62%;
       aspect-ratio: 1 / 1;
       object-fit: contain !important;
       border-radius: 30%;
@@ -1335,6 +1336,11 @@
         backdrop-filter: var(--glass-blur-sm);
         -webkit-backdrop-filter: var(--glass-blur-sm);
         box-shadow: var(--glass-shadow-card);
+      }
+      .project-thumb-wrap.tend-thumb img {
+        height: min(62%, 190px) !important;
+        max-height: calc(100% - 2rem);
+        max-width: 54%;
       }
       .special-hub {
         background: rgba(22,21,43,0.7);
