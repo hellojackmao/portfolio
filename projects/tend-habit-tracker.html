@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#f1ece7"/>
+  <link rel="icon" href="../favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
+  <link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png"/>
+  <link rel="icon" type="image/png" sizes="512x512" href="../icon-512.png"/>
+  <link rel="manifest" href="../site.webmanifest"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Jack Mao"/>
+  <meta name="referrer" content="strict-origin-when-cross-origin"/>
+  <title>Tend Habit Tracker | Jack Mao</title>
+  <meta name="description" content="Tend — a calm habit tracker app case study by Jack Mao. Product direction, UI/UX design, SwiftUI implementation, SwiftData persistence, reminders, themes, and App Store preparation."/>
+  <link rel="canonical" href="https://hellojackmao.com/projects/tend-habit-tracker.html"/>
+  <meta property="og:locale" content="en_CA"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://hellojackmao.com/projects/tend-habit-tracker.html"/>
+  <meta property="og:title" content="Tend Habit Tracker — Jack Mao"/>
+  <meta property="og:description" content="A product and UI/UX case study for a calm SwiftUI habit tracker focused on small daily rituals, themes, reminders, journaling, and sustainable progress."/>
+  <meta property="og:image" content="https://hellojackmao.com/images/tend-app-store-icon.png"/>
+  <meta property="og:image:width" content="1024"/>
+  <meta property="og:image:height" content="1024"/>
+  <meta property="og:image:alt" content="Tend app icon with lavender leaf above pond ripples"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Tend Habit Tracker — Jack Mao"/>
+  <meta name="twitter:description" content="A product and UI/UX case study for a calm SwiftUI habit tracker focused on small daily rituals, themes, reminders, journaling, and sustainable progress."/>
+  <meta name="twitter:image" content="https://hellojackmao.com/images/tend-app-store-icon.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"CreativeWork","name":"Tend Habit Tracker","creator":{"@type":"Person","name":"Jack Mao","url":"https://hellojackmao.com"},"description":"Product and UI/UX case study for a calm SwiftUI habit tracker focused on small rituals, persistence, reminders, themes, and App Store preparation.","url":"https://hellojackmao.com/projects/tend-habit-tracker.html"}
+  </script>
+  <style>
+    :root {
+      --navy:#111018; --navy2:#fbfaf6; --purple:#8067df; --purple-light:#a994f2;
+      --lime:#8067df; --coral:#8067df; --white:#111018; --leaf:#4f8654;
+      --cream:#f1ece7; --sage:#e6ddf8; --mint:#ebe5df;
+      --glass-bg:#fbfaf6;
+      --glass-border:#e2dce8;
+      --glass-border-top:#eee8f1;
+      --case-accent:#8067df;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--cream);
+      color: var(--white);
+      overflow-x: hidden;
+      cursor: auto;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+      touch-action: pan-y;
+    }
+    img { max-width: 100%; height: auto; -webkit-user-drag: none; user-select: none; pointer-events: none; }
+    a { color: inherit; }
+
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; z-index: 99998;
+      height: 2px; width: 0%; background: var(--lime);
+      transition: width 0.1s linear; pointer-events: none;
+    }
+    .cursor {
+      position: fixed; left: -100px; top: -100px; width: 14px; height: 14px;
+      background: var(--lime); border-radius: 50%;
+      pointer-events: none; z-index: 9999; transform: translate(-50%,-50%);
+      transition: width .2s, height .2s, background .2s; mix-blend-mode: difference;
+    }
+    .cursor.hovering { width: 42px; height: 42px; background: var(--purple); }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: rgba(241,236,231,.92);
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+    .nav-logo { font-weight: 800; font-size: 1rem; color: var(--white); text-decoration: none; cursor: auto; }
+    .nav-logo span { color: var(--purple-light); }
+    .nav-back {
+      font-size: .78rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: #747383;
+      text-decoration: none; transition: color .2s; cursor: auto;
+    }
+    .nav-back:hover { color: var(--lime); }
+    .nav-dropdown { position: relative; }
+    .nav-dropdown-btn {
+      font-family: 'Syne', sans-serif; font-size: .78rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: #747383;
+      background: #fbfaf6; border: 1px solid var(--glass-border);
+      border-radius: 100px; padding: .45rem 1rem; cursor: auto;
+      transition: color .2s, border-color .2s;
+    }
+    .nav-dropdown-btn:hover { color: var(--lime); border-color: var(--lime); }
+    .nav-dropdown-btn::after { content: "▾"; font-size: .6rem; }
+    .nav-dropdown-menu {
+      position: absolute; top: calc(100% + .5rem); right: 0; min-width: 260px;
+      opacity: 0; visibility: hidden; transform: translateY(-8px);
+      transition: opacity .2s ease, visibility .2s ease, transform .2s ease;
+      z-index: 200; backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+      background: rgba(251,250,246,.96);
+      border: 1px solid var(--glass-border); border-radius: 14px; padding: .5rem;
+      box-shadow: 0 16px 48px rgba(54,45,71,.14), 0 1px 0 rgba(255,255,255,.8) inset;
+    }
+    .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dropdown-menu a {
+      display: block; font-size: .75rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: #747383;
+      text-decoration: none; padding: .65rem 1rem;
+      border-radius: 8px; white-space: nowrap;
+      transition: background .15s, color .15s;
+    }
+    .nav-dropdown-menu a:hover { background: rgba(128,103,223,.08); color: var(--lime); }
+    .active-page {
+      display: block; font-size: .75rem; font-weight: 700; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--lime);
+      padding: .5rem 1rem; margin: .25rem .25rem .1rem;
+      background: rgba(128,103,223,.08); border: 1px solid rgba(128,103,223,.22);
+      border-radius: 8px; pointer-events: none;
+    }
+    .nav-dropdown-divider { border: none; border-top: 1px solid var(--glass-border); margin: .3rem .75rem; }
+
+    .project-hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 380px);
+      gap: 4rem;
+      align-items: end;
+      padding: 10rem 3rem 5rem;
+      background:
+        radial-gradient(ellipse 68% 52% at 82% 18%, rgba(128,103,223,.12), transparent 62%),
+        radial-gradient(ellipse 70% 50% at 15% 95%, rgba(230,221,248,.75), transparent 68%),
+        var(--cream);
+      overflow: hidden;
+    }
+    .edition-tag {
+      font-family: 'DM Mono', monospace; font-size: .72rem; font-weight: 700;
+      letter-spacing: .18em; text-transform: uppercase; color: var(--lime);
+      margin-bottom: 1.4rem;
+    }
+    .project-title {
+      font-size: clamp(4.5rem, 11vw, 9rem);
+      font-weight: 800; letter-spacing: -.05em; line-height: .9;
+      margin-bottom: 1.4rem;
+    }
+    .project-title em {
+      font-family: 'DM Serif Display', serif; font-style: italic;
+      color: var(--lime); font-weight: 400;
+    }
+    .hero-subtitle {
+      font-family: 'DM Mono', monospace; color: #747383;
+      letter-spacing: .14em; text-transform: uppercase;
+    }
+    .hero-meta {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .7rem 1.5rem; margin-top: 2rem; max-width: 620px;
+      font-family: 'DM Mono', monospace; font-size: .72rem; color: #747383;
+    }
+    .hero-meta span { color: var(--lime); }
+    .hero-panel {
+      border: 1px solid var(--glass-border);
+      border-radius: 34px;
+      padding: clamp(.7rem, 1.8vw, 1.15rem);
+      background:
+        radial-gradient(circle at 50% 30%, rgba(128,103,223,.16), transparent 55%),
+        rgba(251,250,246,.68);
+      box-shadow: 0 30px 90px rgba(54,45,71,.16);
+      overflow: hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width: min(100%, 360px);
+      aspect-ratio: 1 / 1;
+      justify-self: center;
+    }
+    .hero-icon {
+      display:block;
+      width:min(100%, 300px);
+      aspect-ratio:1/1;
+      object-fit:contain;
+      border-radius:30%;
+      box-shadow: 0 22px 64px rgba(128,103,223,.2);
+      background:transparent;
+    }
+    .phone-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: end; }
+    .phone-row .phone:nth-child(1) { transform: translateY(2rem) rotate(-4deg); }
+    .phone-row .phone:nth-child(2) { transform: rotate(4deg); }
+    .phone {
+      min-height: 420px; border-radius: 34px; padding: .85rem;
+      background: #101820; box-shadow: 0 18px 50px rgba(0,0,0,.35);
+    }
+    .phone-screen {
+      height: 100%; min-height: 392px; border-radius: 26px; padding: 1.2rem;
+      background: var(--cream); color: var(--navy); overflow: hidden;
+    }
+    .phone-top { display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; }
+    .phone-title { font-size:1.1rem; font-weight:800; }
+    .pill { display:inline-flex; align-items:center; justify-content:center; border-radius:999px; padding:.35rem .7rem; background:#dff7b2; font-size:.68rem; font-weight:800; color:#183018; }
+    .habit-card {
+      display:flex; gap:.85rem; align-items:center; padding:.85rem;
+      background:#fff; border-radius:18px; margin-top:.75rem;
+      box-shadow:0 8px 24px rgba(15,14,26,.06);
+    }
+    .habit-dot { width:24px; height:24px; border-radius:50%; background:var(--lime); flex:none; }
+    .habit-card:nth-child(4) .habit-dot { background:var(--purple); }
+    .habit-card:nth-child(5) .habit-dot { background:var(--coral); }
+    .habit-name { font-weight:800; font-size:.86rem; }
+    .habit-note { color:#6f766f; font-size:.72rem; margin-top:.1rem; }
+    .ring {
+      width:150px; height:150px; border-radius:50%; margin:2.4rem auto 1.6rem;
+      background: conic-gradient(var(--lime) 0 68%, #dfe9d9 68% 100%);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .ring::before {
+      content:"68%"; width:104px; height:104px; border-radius:50%;
+      background:var(--cream); display:flex; align-items:center; justify-content:center;
+      font-size:1.8rem; font-weight:800;
+    }
+    .bar-card { background:#fff; border-radius:20px; padding:1rem; margin-top:1rem; }
+    .bars { height:92px; display:flex; align-items:end; gap:.55rem; margin-top:1rem; }
+    .bars span { flex:1; border-radius:999px; background:var(--lime); min-height:18px; }
+    .bars span:nth-child(1){height:44%}.bars span:nth-child(2){height:68%}.bars span:nth-child(3){height:56%}.bars span:nth-child(4){height:82%}.bars span:nth-child(5){height:48%}.bars span:nth-child(6){height:90%}
+
+    .mag-rule{width:100%;height:3px;background:linear-gradient(90deg,var(--purple) 0%,rgba(128,103,223,.08) 100%);}
+    .project-content { max-width: 1120px; margin: 0 auto; padding: 5rem 3rem 4rem; }
+    .project-intro {
+      font-size: clamp(1.1rem, 2.4vw, 1.55rem); font-weight: 700;
+      line-height: 1.58; color: var(--navy); margin-bottom: 3rem;
+      padding-left: 1.5rem; border-left: 3px solid var(--lime);
+    }
+    .case-snapshot {
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1px; margin: -1rem 0 3.5rem; overflow: hidden;
+      border: 1px solid var(--glass-border); border-radius: 18px;
+      background: var(--glass-border);
+    }
+    .case-snapshot div { padding: 1rem 1.1rem; background: rgba(251,250,246,.86); }
+    .case-snapshot span {
+      display:block; margin-bottom:.35rem; font-family:'DM Mono', monospace;
+      font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:var(--lime);
+    }
+    .case-snapshot p { margin:0; font-size:.84rem; line-height:1.55; color:#747383; }
+    .section-heading {
+      font-family:'DM Mono', monospace; font-size:.75rem; font-weight:700;
+      letter-spacing:.22em; text-transform:uppercase; color:var(--lime);
+      margin:3.25rem 0 1.2rem;
+    }
+    .body-text { color:#747383; font-size:.98rem; line-height:1.85; }
+    .body-text p + p { margin-top:1rem; }
+    .body-text strong { color:var(--navy); }
+    .snapshot-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin:2rem 0 1rem; }
+    .snapshot-card {
+      background:rgba(251,250,246,.78); border:1px solid var(--glass-border);
+      border-radius:22px; padding:.8rem; min-height:0; overflow:hidden;
+      box-shadow:0 16px 44px rgba(54,45,71,.09);
+    }
+    .snapshot-label {
+      font-family:'DM Mono', monospace; font-size:.64rem; letter-spacing:.16em;
+      text-transform:uppercase; color:var(--lime); margin-bottom:.75rem;
+    }
+    .mini-screen {
+      border-radius:22px; background:var(--cream); color:var(--navy);
+      min-height:230px; padding:1rem; box-shadow:0 14px 34px rgba(0,0,0,.22);
+    }
+    .mini-heading { font-size:1rem; font-weight:800; margin-bottom:.25rem; }
+    .mini-sub { font-family:'DM Mono', monospace; font-size:.62rem; color:#6f766f; margin-bottom:1rem; }
+    .mini-line { height:12px; border-radius:999px; background:#dfe9d9; margin:.65rem 0; overflow:hidden; }
+    .mini-line span { display:block; height:100%; border-radius:inherit; background:var(--lime); }
+    .progress-shot {
+      display:block;
+      width:100%;
+      aspect-ratio:16/10;
+      object-fit:contain;
+      object-position:center;
+      border-radius:16px;
+      border:1px solid var(--glass-border);
+      background:var(--cream);
+    }
+    .final-design-grid {
+      display:grid;
+      gap:1rem;
+      margin:2rem 0 1rem;
+    }
+    .final-design-card {
+      background:rgba(251,250,246,.64);
+      border:1px solid var(--glass-border);
+      border-radius:24px;
+      padding:clamp(.45rem, 1.2vw, .7rem);
+      box-shadow:0 18px 52px rgba(54,45,71,.1);
+      overflow:hidden;
+    }
+    .final-design-card img {
+      display:block;
+      width:100%;
+      height:auto;
+      border-radius:18px;
+      background:transparent;
+    }
+    .flow-map {
+      display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:.75rem;
+      margin:2rem 0; counter-reset: flow;
+    }
+    .flow-node {
+      background:rgba(251,250,246,.82); border:1px solid var(--glass-border);
+      border-radius:16px; padding:1rem; min-height:120px; position:relative;
+    }
+    .flow-node::before {
+      counter-increment:flow; content:"0" counter(flow);
+      display:block; font-family:'DM Mono', monospace; font-size:.65rem;
+      color:var(--lime); margin-bottom:.6rem;
+    }
+    .flow-title { font-weight:800; margin-bottom:.35rem; }
+    .flow-desc { font-size:.8rem; color:#747383; line-height:1.55; }
+    .system-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:1rem; margin:2rem 0; }
+    .system-panel {
+      background:rgba(251,250,246,.82); border:1px solid var(--glass-border);
+      border-radius:18px; padding:1.25rem;
+    }
+    .swatches { display:flex; gap:.75rem; flex-wrap:wrap; margin-top:1rem; }
+    .swatch { width:70px; height:70px; border-radius:18px; border:1px solid var(--glass-border); }
+    .type-sample { font-size:clamp(2rem,5vw,4rem); font-weight:800; line-height:.95; letter-spacing:-.04em; }
+    .pull-quote {
+      margin:3.5rem 0; padding:2rem 0 2rem 2rem; border-left:3px solid var(--lime);
+      color:var(--navy); font-family:'DM Serif Display', serif; font-size:clamp(1.6rem,4vw,2.6rem);
+      font-style:italic; line-height:1.22;
+    }
+    .next-project {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:3rem; background:#fbfaf6; border-top:1px solid var(--glass-border);
+      text-decoration:none; color:var(--white); transition:background .3s; cursor:auto;
+    }
+    .next-project:hover { background:#f7f3ee; }
+    .next-label { font-family:'DM Mono', monospace; font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:#747383; margin-bottom:.4rem; }
+    .next-title { font-size:1.5rem; font-weight:800; letter-spacing:-.02em; }
+    .next-arrow { font-size:2rem; color:#b6a8c9; transition:color .2s; }
+    .next-project:hover .next-arrow { color:var(--lime); }
+    footer {
+      padding:2rem 3rem; border-top:1px solid var(--glass-border);
+      display:flex; align-items:center; justify-content:space-between;
+      font-size:.75rem; color:var(--purple-light); font-family:'DM Mono', monospace;
+    }
+    #back-to-top {
+      position:fixed; right:1.5rem; bottom:1.5rem; z-index:80; width:44px; height:44px;
+      border-radius:50%; border:1px solid var(--glass-border); background:rgba(251,250,246,.86);
+      color:var(--lime); opacity:0; pointer-events:none; transition:opacity .2s, transform .2s;
+      cursor:auto;
+    }
+    #back-to-top.visible { opacity:1; pointer-events:auto; }
+    #back-to-top:hover { transform:translateY(-2px); }
+    @media (max-width: 900px) {
+      .project-hero { grid-template-columns:1fr; padding:8rem 1.5rem 4rem; }
+      .hero-panel { max-width:520px; }
+      .project-content { padding:4rem 1.5rem; }
+      .snapshot-grid, .flow-map, .system-grid, .case-snapshot { grid-template-columns:1fr; }
+      .phone-row { grid-template-columns:1fr 1fr; }
+      footer { padding:1.5rem; flex-direction:column; gap:.4rem; text-align:center; }
+      nav { padding:1rem 1.5rem; }
+    }
+    @media (max-width: 620px) {
+      .nav-back { display:none; }
+      .project-title { font-size:clamp(3.2rem,16vw,5rem); }
+      .phone-row { grid-template-columns:1fr; }
+      .phone-row .phone { transform:none !important; min-height:360px; }
+      .phone-screen { min-height:332px; }
+      .hero-meta { grid-template-columns:1fr; }
+      .next-project { padding:2rem 1.5rem; }
+    }
+    @media print {
+      body { background:#fff !important; color:#000 !important; cursor:auto !important; }
+      nav, .cursor, #scroll-progress, #back-to-top, .next-project { display:none !important; }
+      .project-hero { min-height:auto; padding:2rem 0; background:#fff !important; }
+      .body-text, .project-intro, p { color:#333 !important; }
+      a { color:#000 !important; }
+      @page { margin:2cm; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration:.001ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.001ms !important; }
+      .cursor { display:none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
+  <div class="cursor" id="cursor"></div>
+  <nav aria-label="Main navigation">
+    <a class="nav-logo" href="../index.html#work">Jack Mao <span>|</span> Portfolio</a>
+    <a class="nav-back" href="../index.html#work">← Back to work</a>
+    <div class="nav-dropdown">
+      <button type="button" class="nav-dropdown-btn" aria-label="Open project navigation" aria-expanded="false">Projects</button>
+      <div class="nav-dropdown-menu">
+        <a href="light-and-form.html">Light &amp; Form</a>
+        <a href="chronicles-of-elysium.html">Chronicles of Elysium</a>
+        <a href="so-good.html">Special Edition ft. Zara Larsson</a>
+        <a href="after-hours.html">Special Edition ft. The Weeknd</a>
+        <a href="toronto-in-bloom.html">Toronto in Bloom</a>
+        <span class="active-page">Tend</span>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="project-hero" aria-label="Tend introduction">
+      <div>
+        <div class="edition-tag">UI/UX Design · SwiftUI Habit Tracker</div>
+        <h1 class="project-title">Tend<br><em>Habit Tracker</em></h1>
+        <div class="hero-subtitle">Product design · Native iOS build · App Store prep</div>
+        <div class="hero-meta">
+          <div>Category — <span>UI/UX Design</span></div>
+          <div>Year — <span><time datetime="2026">2026</time></span></div>
+          <div>Platform — <span>Native iOS App</span></div>
+          <div>Tools — <span>Browser Prototype, SwiftUI, SwiftData</span></div>
+        </div>
+      </div>
+      <div class="hero-panel" aria-label="Tend app progress snapshot">
+        <img class="hero-icon" src="../images/tend-app-store-icon.png" alt="Tend app icon with lavender leaf above pond ripples" width="1024" height="1024"/>
+      </div>
+    </section>
+
+    <div class="mag-rule"></div>
+
+    <section class="project-content">
+      <p class="project-intro">Tend is a calm iOS habit tracker for small daily rituals. The work began as a browser prototype to define the product tone and flow, then moved into a native SwiftUI build with persistence, reminders, onboarding, themes, and App Store preparation.</p>
+
+      <div class="case-snapshot">
+        <div><span>Role</span><p>Led product direction, UI/UX design, interaction decisions, visual identity, SwiftUI structure, and launch material planning.</p></div>
+        <div><span>Brief</span><p>Create a minimalist habit tracker that supports sustainable routines without turning self-improvement into pressure.</p></div>
+        <div><span>Deliverables</span><p>Browser prototype, SwiftUI source structure, SwiftData models, app icon assets, notification copy, Pro unlock planning, and App Store drafts.</p></div>
+        <div><span>Status</span><p>Native build succeeds in Xcode, runs in simulator, retains user data after relaunch, and includes onboarding plus local reminder scheduling.</p></div>
+      </div>
+
+      <div class="section-heading">Snapshots</div>
+      <div class="body-text">
+        <p>The visual direction centers on an off-white surface, lavender accent system, and a gentle leaf-on-water identity. The interface keeps the tracker quiet and tactile: weekly rhythm, progress rings, habit check-ins, journaling, calendar history, themes, and reminder settings all support the same promise of steady return.</p>
+      </div>
+      <div class="snapshot-grid">
+        <div class="snapshot-card">
+          <div class="snapshot-label">Minimal Habit Home</div>
+          <img class="progress-shot" src="../images/tend-01-minimal-habit-home.png" alt="Minimal habit home snapshot for Tend" width="1600" height="1000"/>
+        </div>
+        <div class="snapshot-card">
+          <div class="snapshot-label">Zen Launch Animation</div>
+          <img class="progress-shot" src="../images/tend-02-zen-launch-animation.png" alt="Lavender leaf and pond ripple launch animation snapshot" width="1600" height="1000"/>
+        </div>
+        <div class="snapshot-card">
+          <div class="snapshot-label">Calendar + Journal</div>
+          <img class="progress-shot" src="../images/tend-03-calendar-and-journal.png" alt="Tend calendar and journal snapshot" width="1600" height="1000"/>
+        </div>
+        <div class="snapshot-card">
+          <div class="snapshot-label">Themes + Pro</div>
+          <img class="progress-shot" src="../images/tend-04-themes-and-pro-direction.png" alt="Tend theme studio and Pro direction snapshot" width="1600" height="1000"/>
+        </div>
+        <div class="snapshot-card">
+          <div class="snapshot-label">Product Flows</div>
+          <img class="progress-shot" src="../images/tend-05-product-flows.png" alt="Tend onboarding templates reminders and Pro unlock product flow snapshot" width="1600" height="1000"/>
+        </div>
+        <div class="snapshot-card">
+          <div class="snapshot-label">SwiftUI Foundation</div>
+          <img class="progress-shot" src="../images/tend-06-native-swiftui-foundation.png" alt="Tend native SwiftUI foundation snapshot" width="1600" height="1000"/>
+        </div>
+      </div>
+
+      <div class="section-heading">Final Design</div>
+      <div class="body-text">
+        <p>The final design settles into three primary pages: Home for the daily ritual, Calendar for date-aware progress, and Journal for quieter reflection. Together they keep Tend focused on the smallest useful loop: check in, understand the rhythm of the month, and write down what made the day feel calm.</p>
+      </div>
+      <div class="final-design-grid">
+        <div class="final-design-card">
+          <div class="snapshot-label">Home Page</div>
+          <img src="../images/tend-final-home.png" alt="Final Tend Home page design with habit list, progress ring, weekly strip, and theme preview" width="2508" height="1304"/>
+        </div>
+        <div class="final-design-card">
+          <div class="snapshot-label">Calendar Page</div>
+          <img src="../images/tend-final-calendar.png" alt="Final Tend Calendar page design with month view, daily summary, and theme preview" width="2508" height="1303"/>
+        </div>
+        <div class="final-design-card">
+          <div class="snapshot-label">Journal Page</div>
+          <img src="../images/tend-final-journal.png" alt="Final Tend Journal page design with reflection prompts and theme preview" width="2508" height="1305"/>
+        </div>
+      </div>
+
+      <div class="section-heading">Problem</div>
+      <div class="body-text">
+        <p>Most habit apps make progress visible, but many make failure louder than recovery. Tend was shaped around a softer product question: how can a tracker preserve accountability while making missed days feel recoverable?</p>
+        <p>The answer became a calm ritual system rather than a productivity dashboard. Tend focuses on small routines, quiet reminders, simple check-ins, and reflection, with progress framed as rhythm instead of perfection.</p>
+      </div>
+
+      <div class="section-heading">Product Flow</div>
+      <div class="flow-map">
+        <div class="flow-node"><div class="flow-title">Prototype</div><div class="flow-desc">A browser build tested the dashboard, date strip, calendar, journal, themes, reminders, Pro screen, and startup ripple animation.</div></div>
+        <div class="flow-node"><div class="flow-title">Translate</div><div class="flow-desc">The experience moved into SwiftUI with Home, Calendar, Journal, and Theme Studio views built as native screens.</div></div>
+        <div class="flow-node"><div class="flow-title">Persist</div><div class="flow-desc">Habit, completion, and journal data moved from snapshot storage to SwiftData so user progress survives relaunch.</div></div>
+        <div class="flow-node"><div class="flow-title">Prepare</div><div class="flow-desc">The project added onboarding, local notifications, StoreKit product planning, icon exports, and App Store material drafts.</div></div>
+      </div>
+
+      <div class="section-heading">Core Features</div>
+      <div class="system-grid">
+        <div class="system-panel">
+          <div class="snapshot-label">Implemented</div>
+          <p class="body-text">Home habit tracker, weekly date strip, progress ring, add habit flow, habit completion toggles, calendar view, journal view, per-date habit and journal state, habit templates, habit detail editing, reminder settings, first-launch onboarding, and local notification scheduling.</p>
+        </div>
+        <div class="system-panel">
+          <div class="snapshot-label">Pro Direction</div>
+          <p class="body-text">Tend Pro is planned as a one-time unlock instead of a subscription. The unlock expands the product with unlimited habits, full history, premium themes, widgets, export, and advanced reflections.</p>
+        </div>
+      </div>
+
+      <div class="section-heading">Visual System</div>
+      <div class="system-grid">
+        <div class="system-panel">
+          <div class="snapshot-label">Colour</div>
+          <p class="body-text">The base direction is gentle and minimal: off-white surfaces, lavender accents, and a leaf landing on water ripples for the app icon. Theme explorations extended the system into Matcha and Moon, while a Waves direction was tested and removed.</p>
+          <div class="swatches">
+            <div class="swatch" style="background:#0f0e1a"></div>
+            <div class="swatch" style="background:#f7f5ee"></div>
+            <div class="swatch" style="background:#7B6CF6"></div>
+            <div class="swatch" style="background:#dce8d8"></div>
+            <div class="swatch" style="background:#f7d96b"></div>
+          </div>
+        </div>
+        <div class="system-panel">
+          <div class="snapshot-label">Type</div>
+          <div class="type-sample">Small wins compound.</div>
+        </div>
+      </div>
+
+      <div class="section-heading">Native Build</div>
+      <div class="body-text">
+        <p>The SwiftUI project was organized into App, Models, Views, Components, Design, Services, Assets, and Configuration folders. Reusable pieces include ProgressRing, WeekStrip, HabitRow, TendCard, TendChip, TendPrimaryButton, LaunchRippleView, sheet components, section headers, and empty states.</p>
+        <p>SwiftData models cover habits, habit completions, and journal entries. AppState now keeps only lightweight UI preferences such as selected date, active page, theme, reminder time, Pro unlock state, onboarding completion, and reminder enablement.</p>
+        <p>Build issues were resolved along the way: old model conflicts were removed, HabitFrequency was renamed to TendHabitFrequency, iOS-only modifiers were wrapped with platform checks, Combine imports were added where needed, and newer onChange syntax was adopted. The simulator build now runs and retains data after relaunch.</p>
+      </div>
+
+      <div class="section-heading">UX Writing</div>
+      <div class="body-text">
+        <p>The notification language was written to feel like a gentle invitation rather than a demand. Example lines include “A small moment for Tend,” “Pause, breathe, check in,” “A little progress counts,” and “Come back to your rhythm.”</p>
+      </div>
+
+      <div class="pull-quote">A habit app should make returning easier than quitting.</div>
+
+      <div class="section-heading">Launch Prep</div>
+      <div class="body-text">
+        <p>App Store materials were drafted alongside the build, including app-store copy, a privacy policy draft, an icon install guide, and StoreKit local testing notes. The current product ID for the one-time unlock is <strong>tend.pro.unlock</strong>.</p>
+        <p>The next steps are to add the final AppIcon.appiconset into Xcode, test onboarding from a clean install, verify notification scheduling on simulator or device, add local StoreKit configuration, continue polishing Calendar, Journal, and sheet views, then prepare for TestFlight.</p>
+      </div>
+
+      <div class="section-heading">Reflection</div>
+      <div class="body-text">
+        <p>Tend became more than a visual concept. It moved through product definition, prototype testing, native implementation, data persistence, notification design, monetization planning, and store-readiness tasks.</p>
+        <p>The strongest lesson was that calm design is not just a palette. It shows up in the data model, the reminder copy, the recovery states, and the way the product behaves when someone misses a day. Tend is structured, but not severe; motivating, but not loud; designed to help a user keep going without making the app the centre of their day.</p>
+      </div>
+    </section>
+  </main>
+
+  <a class="next-project" href="light-and-form.html" rel="next">
+    <div>
+      <div class="next-label">Next project</div>
+      <div class="next-title">Light &amp; Form</div>
+    </div>
+    <div class="next-arrow">→</div>
+  </a>
+
+  <footer>
+    <span>Jack Mao</span>
+    <span>© <time datetime="2026">2026</time> — All rights reserved</span>
+    <span>Built with <span style="color:#ff3333;">♥</span> + Figma</span>
+  </footer>
+  <button id="back-to-top" aria-label="Back to top">↑</button>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    if (cursor) {
+      cursor.style.left = '-100px';
+      cursor.style.top = '-100px';
+      document.addEventListener('mousemove', e => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+      });
+    }
+    const ddBtn = document.querySelector('.nav-dropdown-btn');
+    const dd = document.querySelector('.nav-dropdown');
+    if (ddBtn && dd) {
+      ddBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = dd.classList.toggle('open');
+        ddBtn.setAttribute('aria-expanded', String(isOpen));
+      });
+      document.addEventListener('click', () => {
+        dd.classList.remove('open');
+        ddBtn.setAttribute('aria-expanded', 'false');
+      });
+    }
+    const progress = document.getElementById('scroll-progress');
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight);
+      if (progress) progress.style.width = (scrolled * 100) + '%';
+    }, { passive: true });
+    const btt = document.getElementById('back-to-top');
+    window.addEventListener('scroll', () => {
+      if (!btt) return;
+      btt.classList.toggle('visible', window.scrollY > 400);
+    }, { passive: true });
+    if (btt) btt.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    window.addEventListener('pageshow', e => {
+      if (e.persisted) {
+        const veil = document.getElementById('page-veil');
+        if (veil) { veil.classList.remove('visible'); veil.style.opacity = '0'; }
+      }
+    });
+  </script>
+</body>
+</html>
