@@ -356,6 +356,177 @@
     }
     #back-to-top.visible { opacity:1; pointer-events:auto; }
     #back-to-top:hover { transform:translateY(-2px); }
+    @media (max-width: 768px) {
+      :root {
+        --glass-bg: rgba(251,250,246,.58);
+        --glass-border: rgba(128,103,223,.18);
+        --glass-border-top: rgba(255,255,255,.75);
+        --glass-blur: blur(18px) saturate(160%);
+        --glass-blur-sm: blur(10px) saturate(140%);
+        --glass-shadow: 0 10px 34px rgba(54,45,71,.14), 0 1px 0 rgba(255,255,255,.72) inset;
+      }
+      body {
+        background:
+          radial-gradient(circle at 50% -8%, rgba(128,103,223,.16), transparent 34rem),
+          var(--cream);
+      }
+      nav {
+        top:.75rem; left:50%; right:auto;
+        width:calc(100% - 1.5rem);
+        max-width:560px;
+        transform:translateX(-50%);
+        padding:.72rem .85rem;
+        border-radius:22px;
+        background:var(--glass-bg);
+        backdrop-filter:var(--glass-blur);
+        -webkit-backdrop-filter:var(--glass-blur);
+        border:1px solid var(--glass-border);
+        border-top-color:var(--glass-border-top);
+        border-bottom:1px solid var(--glass-border);
+        box-shadow:var(--glass-shadow);
+        overflow:visible;
+      }
+      nav::before {
+        content:'';
+        position:absolute;
+        inset:0;
+        border-radius:inherit;
+        pointer-events:none;
+        background:linear-gradient(135deg, rgba(255,255,255,.42), transparent 46%);
+      }
+      .nav-logo { font-size:.86rem; position:relative; z-index:1; }
+      .nav-back { display:none; }
+      .nav-dropdown { position:relative; z-index:2; }
+      .nav-dropdown-btn {
+        padding:.42rem .72rem;
+        border-color:rgba(128,103,223,.2);
+        background:rgba(251,250,246,.46);
+        color:#6e6878;
+      }
+      .nav-dropdown-menu {
+        right:0;
+        left:auto;
+        min-width:min(78vw, 320px);
+        max-height:70vh;
+        overflow:auto;
+        background:rgba(251,250,246,.76);
+        backdrop-filter:var(--glass-blur);
+        -webkit-backdrop-filter:var(--glass-blur);
+        border-color:var(--glass-border);
+        border-top-color:var(--glass-border-top);
+        box-shadow:var(--glass-shadow);
+      }
+      .project-hero {
+        min-height:auto;
+        padding:7.4rem 1rem 3rem;
+        gap:2rem;
+        align-items:start;
+      }
+      .project-title {
+        font-size:clamp(3.4rem, 17vw, 5.8rem);
+        margin-bottom:1rem;
+      }
+      .hero-subtitle {
+        font-size:.74rem;
+        line-height:1.8;
+      }
+      .hero-meta {
+        grid-template-columns:1fr;
+        gap:.55rem;
+        margin-top:1.25rem;
+        padding:1rem;
+        border-radius:18px;
+        background:var(--glass-bg);
+        backdrop-filter:var(--glass-blur-sm);
+        -webkit-backdrop-filter:var(--glass-blur-sm);
+        border:1px solid var(--glass-border);
+        box-shadow:0 8px 26px rgba(54,45,71,.08);
+      }
+      .hero-panel {
+        width:min(78vw, 300px);
+        padding:.62rem;
+        border-radius:30px;
+        background:var(--glass-bg);
+        backdrop-filter:var(--glass-blur-sm);
+        -webkit-backdrop-filter:var(--glass-blur-sm);
+        border-color:var(--glass-border);
+        border-top-color:var(--glass-border-top);
+        box-shadow:var(--glass-shadow);
+      }
+      .hero-icon { width:min(100%, 258px); }
+      .project-content { padding:3.5rem 1rem; }
+      .project-intro,
+      .case-snapshot,
+      .snapshot-card,
+      .final-design-card,
+      .flow-node,
+      .system-panel {
+        background:var(--glass-bg);
+        backdrop-filter:var(--glass-blur-sm);
+        -webkit-backdrop-filter:var(--glass-blur-sm);
+        border:1px solid var(--glass-border);
+        border-top-color:var(--glass-border-top);
+        box-shadow:0 10px 30px rgba(54,45,71,.08);
+      }
+      .project-intro {
+        padding:1.2rem;
+        border-left:0;
+        border-radius:20px;
+        font-size:1.05rem;
+      }
+      .case-snapshot {
+        gap:.65rem;
+        border:0;
+        background:transparent;
+        box-shadow:none;
+      }
+      .case-snapshot div {
+        border:1px solid var(--glass-border);
+        border-top-color:var(--glass-border-top);
+        border-radius:18px;
+        background:var(--glass-bg);
+        backdrop-filter:var(--glass-blur-sm);
+        -webkit-backdrop-filter:var(--glass-blur-sm);
+      }
+      .snapshot-card,
+      .final-design-card,
+      .system-panel,
+      .flow-node {
+        border-radius:20px;
+      }
+      .progress-shot,
+      .final-design-card img {
+        border-radius:14px;
+      }
+      .flow-map { gap:.8rem; }
+      .pull-quote {
+        margin:2.5rem 0;
+        padding:1.35rem;
+        border-left:0;
+        border-radius:20px;
+        background:rgba(251,250,246,.7);
+        border:1px solid var(--glass-border);
+        box-shadow:0 10px 30px rgba(54,45,71,.08);
+      }
+      .next-project {
+        margin:0 1rem 1rem;
+        padding:1.4rem;
+        border-radius:22px;
+        background:var(--glass-bg);
+        backdrop-filter:var(--glass-blur-sm);
+        -webkit-backdrop-filter:var(--glass-blur-sm);
+        border:1px solid var(--glass-border);
+        box-shadow:var(--glass-shadow);
+      }
+      #back-to-top {
+        right:1rem;
+        bottom:1rem;
+        background:var(--glass-bg);
+        backdrop-filter:var(--glass-blur-sm);
+        -webkit-backdrop-filter:var(--glass-blur-sm);
+        box-shadow:var(--glass-shadow);
+      }
+    }
     @media (max-width: 900px) {
       .project-hero { grid-template-columns:1fr; padding:8rem 1.5rem 4rem; }
       .hero-panel { max-width:520px; }
@@ -364,6 +535,12 @@
       .phone-row { grid-template-columns:1fr 1fr; }
       footer { padding:1.5rem; flex-direction:column; gap:.4rem; text-align:center; }
       nav { padding:1rem 1.5rem; }
+    }
+    @media (max-width: 768px) {
+      nav { padding:.72rem .85rem; }
+      .project-hero { padding:7.4rem 1rem 3rem; }
+      .hero-panel { max-width:none; }
+      .project-content { padding:3.5rem 1rem; }
     }
     @media (max-width: 620px) {
       .nav-back { display:none; }
