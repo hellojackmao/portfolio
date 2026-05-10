@@ -308,7 +308,29 @@
     @media (max-width: 768px) {
       .case-snapshot { grid-template-columns: 1fr; margin-top: 0; }
     }
-    @media print {
+    
+    /* Standard project page transition */
+    #page-veil {
+      position: fixed;
+      inset: 0;
+      z-index: 100000;
+      background: var(--navy, #0f0e1a);
+      opacity: 1;
+      pointer-events: auto;
+      transition: opacity .42s cubic-bezier(.16,1,.3,1);
+    }
+    html.page-ready #page-veil {
+      opacity: 0;
+      pointer-events: none;
+    }
+    html.page-leaving #page-veil {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #page-veil { display: none !important; transition: none !important; }
+    }
+@media print {
       body { background: #fff !important; color: #000 !important; cursor: auto !important; }
       nav, .cursor, #scroll-progress, #back-to-top, #page-veil { display: none !important; }
       .project-hero { min-height: auto; padding: 2rem 0; background: #fff !important; }
@@ -327,7 +349,7 @@
 <body>
   <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
   <div class="cursor" id="cursor"></div>
-  <div id="page-veil"></div>
+  <div id="page-veil" aria-hidden="true"></div>
 
     <nav aria-label="Main navigation">
     <a class="nav-logo" href="../index.html#work">Jack Mao <span>|</span> Portfolio</a>
@@ -548,41 +570,39 @@
       el.style.transition = 'opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1)';
       obs.observe(el);
     });
-  
-    // ── Page transition ──
+
+    // Standard project page transition
     (function() {
-      var veil = document.getElementById('page-veil');
-      if (veil) {
-        veil.style.transition = 'none';
-        veil.classList.add('visible');
-        requestAnimationFrame(function() {
-          requestAnimationFrame(function() {
-            veil.style.transition = '';
-            veil.classList.remove('visible');
-          });
-        });
+      const root = document.documentElement;
+      const veil = document.getElementById('page-veil');
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const ready = () => {
+        root.classList.remove('page-leaving');
+        root.classList.add('page-ready');
+      };
+      if (veil && !reduceMotion) {
+        requestAnimationFrame(() => requestAnimationFrame(ready));
+      } else {
+        ready();
       }
-      document.querySelectorAll('a[href]').forEach(function(a) {
-        var href = a.getAttribute('href');
-        if (!href || href.startsWith('#') || href.startsWith('mailto')
-            || href.startsWith('http') || a.getAttribute('target') === '_blank') return;
-        a.addEventListener('click', function(e) {
-          e.preventDefault();
-          if (!veil) { window.location.href = href; return; }
-          veil.classList.add('visible');
-          setTimeout(function() { window.location.href = href; }, 370);
-        });
+      window.addEventListener('pageshow', ready);
+      document.addEventListener('click', event => {
+        const link = event.target.closest('a[href]');
+        if (!link || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        if (link.target === '_blank' || link.hasAttribute('download')) return;
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:')) return;
+        const url = new URL(href, window.location.href);
+        if (url.origin !== window.location.origin) return;
+        if (url.pathname === window.location.pathname && url.hash) return;
+        if (!veil || reduceMotion) return;
+        event.preventDefault();
+        root.classList.remove('page-ready');
+        root.classList.add('page-leaving');
+        setTimeout(() => { window.location.href = url.href; }, 360);
       });
     })();
-  
-    // Fix bfcache restore — remove veil on back navigation
-    window.addEventListener('pageshow', e => {
-      if (e.persisted) {
-        const veil = document.getElementById('page-veil');
-        if (veil) { veil.classList.remove('visible'); veil.style.opacity = '0'; }
-      }
-    });
-  
+
   </script>
   <button id="back-to-top" aria-label="Back to top">↑</button>
 </body>
