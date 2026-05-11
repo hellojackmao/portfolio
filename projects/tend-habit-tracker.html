@@ -260,12 +260,15 @@
     .snapshot-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin:2rem 0 1rem; }
     .snapshot-card {
       background:rgba(251,250,246,.78); border:1px solid var(--glass-border);
-      border-radius:22px; padding:.8rem; min-height:0; overflow:hidden;
+      border-radius:22px; padding:clamp(.9rem, 1.4vw, 1rem); min-height:0; overflow:hidden;
       box-shadow:0 16px 44px rgba(54,45,71,.09);
+      text-align:left;
     }
     .snapshot-label {
+      display:block;
       font-family:'DM Mono', monospace; font-size:.64rem; letter-spacing:.16em;
       text-transform:uppercase; color:var(--lime); margin-bottom:.75rem;
+      text-align:left;
     }
     .mini-screen {
       border-radius:22px; background:var(--cream); color:var(--navy);
@@ -294,9 +297,10 @@
       background:rgba(251,250,246,.64);
       border:1px solid var(--glass-border);
       border-radius:24px;
-      padding:clamp(.45rem, 1.2vw, .7rem);
+      padding:clamp(.9rem, 1.4vw, 1rem);
       box-shadow:0 18px 52px rgba(54,45,71,.1);
       overflow:hidden;
+      text-align:left;
     }
     .final-design-card img {
       display:block;
