@@ -335,13 +335,16 @@
     }
     .next-project {
       display:flex; align-items:center; justify-content:space-between;
-      padding:3rem; background:#fbfaf6; border-top:1px solid var(--glass-border);
+      gap:1.25rem;
+      padding:3.25rem 3rem; background:#fbfaf6; border-top:1px solid var(--glass-border);
       text-decoration:none; color:var(--navy); transition:background .3s; cursor:auto;
+      overflow:visible;
     }
     .next-project:hover { background:#f7f3ee; }
+    .next-project > div { min-width:0; overflow:visible; }
     .next-label { font-family:'DM Mono', monospace; font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:#747383; margin-bottom:.4rem; }
-    .next-title { font-size:1.5rem; font-weight:800; letter-spacing:-.02em; line-height:1.15; }
-    .next-arrow { font-size:2rem; color:#b6a8c9; transition:color .2s; }
+    .next-title { display:block; font-size:1.5rem; font-weight:800; letter-spacing:-.02em; line-height:1.35; padding-bottom:.06em; overflow:visible; }
+    .next-arrow { flex:0 0 auto; font-size:2rem; line-height:1; color:#b6a8c9; transition:color .2s; }
     .next-project:hover .next-arrow { color:var(--lime); }
     footer {
       padding:2rem 3rem; border-top:1px solid var(--glass-border);
@@ -636,7 +639,7 @@
       }
       .next-project {
         margin:0;
-        padding:2rem 1.5rem;
+        padding:2.25rem 1.5rem;
         gap:1rem;
         border-radius:0;
         background:#fbfaf6;
@@ -647,7 +650,7 @@
         box-shadow:none;
       }
       .next-project > div { min-width:0; }
-      .next-title { line-height:1.2; overflow-wrap:anywhere; }
+      .next-title { line-height:1.35; padding-bottom:.06em; overflow-wrap:anywhere; }
       .next-arrow { flex:0 0 auto; line-height:1; }
     }
     @media (max-width: 620px) {
@@ -690,10 +693,7 @@
       .nav-back { display: none !important; }
       nav { gap: .7rem; }
       .nav-logo {
-        display: inline-flex;
-        align-items: center;
-        gap: .24rem;
-        width: auto;
+        display: inline-block; width: auto;
         max-width: calc(100% - 5.6rem);
         min-width: 0;
         padding: 0;
@@ -762,7 +762,7 @@
   <div id="page-veil" aria-hidden="true"></div>
   <nav aria-label="Main navigation">
     <a class="nav-logo" href="../index.html">Jack Mao <span>|</span> Portfolio</a>
-    <a class="nav-back" href="../index.html">&larr; Index</a>
+    <a class="nav-back" href="../index.html">Home</a>
     <div class="nav-dropdown">
       <button type="button" class="nav-dropdown-btn" aria-label="Open project navigation" aria-expanded="false">Projects</button>
       <div class="nav-dropdown-menu">
