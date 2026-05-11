@@ -343,7 +343,7 @@
     .swatches { display:flex; gap:.75rem; flex-wrap:wrap; margin-top:1rem; }
     .swatch {
       width:70px; height:70px; border-radius:18px;
-      border:2px solid rgba(128,103,223,.24);
+      border:2px solid var(--swatch-border, rgba(128,103,223,.24));
       box-shadow:0 0 0 1px rgba(255,255,255,.72) inset, 0 10px 24px rgba(54,45,71,.08);
     }
     .type-sample { font-size:clamp(2rem,5vw,4rem); font-weight:800; line-height:.95; letter-spacing:-.04em; }
@@ -1069,11 +1069,11 @@
           <div class="snapshot-label">Colour</div>
           <p class="body-text">The base direction is gentle and minimal: off-white surfaces, lavender accents, and a leaf landing on water ripples for the app icon. Theme explorations extended the system into Matcha and Moon, while a Waves direction was tested and removed.</p>
           <div class="swatches">
-            <div class="swatch" style="background:#0f0e1a"></div>
-            <div class="swatch" style="background:#f7f5ee"></div>
-            <div class="swatch" style="background:#7B6CF6"></div>
-            <div class="swatch" style="background:#dce8d8"></div>
-            <div class="swatch" style="background:#f7d96b"></div>
+            <div class="swatch" style="background:#0f0e1a; --swatch-border:#2d2a3a"></div>
+            <div class="swatch" style="background:#f7f5ee; --swatch-border:#ded7cc"></div>
+            <div class="swatch" style="background:#7B6CF6; --swatch-border:#5f4edc"></div>
+            <div class="swatch" style="background:#dce8d8; --swatch-border:#adc7a6"></div>
+            <div class="swatch" style="background:#f7d96b; --swatch-border:#d0a934"></div>
           </div>
         </div>
         <div class="system-panel">
