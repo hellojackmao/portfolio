@@ -1386,8 +1386,20 @@
         gap: 1.5rem;
         padding: 0 1.5rem;
       }
-      .nav-links { gap: 1rem; }
-      .nav-links a { font-size: 0.7rem; }
+      nav { gap: .55rem; padding: .85rem 1rem; }
+      .nav-logo {
+        display: inline-flex;
+        width: auto;
+        max-width: 10.4rem;
+        min-width: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        line-height: 1;
+        font-size: clamp(.56rem, 2.45vw, .72rem);
+        letter-spacing: .02em;
+      }
+      .nav-links { gap: .32rem; margin-left: auto; flex: 0 0 auto; }
+      .nav-links a { font-size: clamp(.5rem, 2.05vw, .58rem); letter-spacing: .07em; padding: 0 .04rem; }
 
       .form-row { grid-template-columns: 1fr; }
     }</style>
