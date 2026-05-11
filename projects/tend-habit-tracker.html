@@ -336,11 +336,11 @@
     .next-project {
       display:flex; align-items:center; justify-content:space-between;
       padding:3rem; background:#fbfaf6; border-top:1px solid var(--glass-border);
-      text-decoration:none; color:var(--white); transition:background .3s; cursor:auto;
+      text-decoration:none; color:var(--navy); transition:background .3s; cursor:auto;
     }
     .next-project:hover { background:#f7f3ee; }
     .next-label { font-family:'DM Mono', monospace; font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:#747383; margin-bottom:.4rem; }
-    .next-title { font-size:1.5rem; font-weight:800; letter-spacing:-.02em; }
+    .next-title { font-size:1.5rem; font-weight:800; letter-spacing:-.02em; line-height:1.15; }
     .next-arrow { font-size:2rem; color:#b6a8c9; transition:color .2s; }
     .next-project:hover .next-arrow { color:var(--lime); }
     footer {
@@ -637,6 +637,7 @@
       .next-project {
         margin:0;
         padding:2rem 1.5rem;
+        gap:1rem;
         border-radius:0;
         background:#fbfaf6;
         backdrop-filter:none;
@@ -645,6 +646,9 @@
         border-top:1px solid #e2dce8;
         box-shadow:none;
       }
+      .next-project > div { min-width:0; }
+      .next-title { line-height:1.2; overflow-wrap:anywhere; }
+      .next-arrow { flex:0 0 auto; line-height:1; }
     }
     @media (max-width: 620px) {
       .nav-back { display:none; }
@@ -688,17 +692,33 @@
       .nav-logo {
         display: inline-flex;
         align-items: center;
+        gap: .24rem;
         width: auto;
-        max-width: calc(100% - 6rem);
+        max-width: calc(100% - 5.6rem);
         min-width: 0;
         padding: 0;
         overflow: hidden;
         white-space: nowrap;
         line-height: 1;
-        font-size: clamp(.62rem, 2.55vw, .86rem);
+        font-size: clamp(.74rem, 3.05vw, .9rem);
       }
+      .nav-logo span { margin: 0 .08rem; }
       .nav-dropdown { margin-left: auto; flex: 0 0 auto; }
-      .nav-dropdown-btn { font-size: clamp(.62rem, 2.45vw, .72rem); padding: .4rem .7rem; }
+      .nav-dropdown-btn { font-size: clamp(.62rem, 2.35vw, .7rem); padding: .4rem .62rem; }
+      .project-hero { grid-template-columns:1fr; }
+      .hero-panel {
+        display:flex;
+        width:min(62vw, 220px);
+        max-width:220px;
+        margin:0 auto;
+        padding:.5rem;
+        border-radius:26px;
+      }
+      .hero-icon {
+        width:100%;
+        max-width:190px;
+        border-radius:28%;
+      }
     }
     
     /* Standard project page transition */
@@ -741,8 +761,8 @@
   <div class="cursor" id="cursor"></div>
   <div id="page-veil" aria-hidden="true"></div>
   <nav aria-label="Main navigation">
-    <a class="nav-logo" href="../index.html#work">Jack Mao <span>|</span> Portfolio</a>
-    <a class="nav-back" href="../index.html#work">← Back to work</a>
+    <a class="nav-logo" href="../index.html">Jack Mao <span>|</span> Portfolio</a>
+    <a class="nav-back" href="../index.html">&larr; Index</a>
     <div class="nav-dropdown">
       <button type="button" class="nav-dropdown-btn" aria-label="Open project navigation" aria-expanded="false">Projects</button>
       <div class="nav-dropdown-menu">
