@@ -463,8 +463,21 @@
         padding: .45rem 1rem;
       }
       .nav-back { display: none !important; }
-      .nav-logo { white-space: nowrap; flex: 0 1 auto; min-width: 0; }
-      .nav-dropdown { margin-left: auto; flex-shrink: 0; }
+      nav { gap: .7rem; }
+      .nav-logo {
+        display: inline-flex;
+        align-items: center;
+        width: auto;
+        max-width: calc(100% - 7rem);
+        min-width: 0;
+        padding: 0;
+        overflow: hidden;
+        white-space: nowrap;
+        line-height: 1;
+        font-size: clamp(.72rem, 3.05vw, 1rem);
+      }
+      .nav-dropdown { margin-left: auto; flex: 0 0 auto; }
+      .nav-dropdown-btn { font-size: clamp(.68rem, 2.7vw, .78rem); padding: .42rem .78rem; }
     }
     
     /* Standard project page transition */
