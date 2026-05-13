@@ -1336,6 +1336,11 @@
   </nav>
 
   <script>
+    const jm_clicks = (() => {
+      let n = parseInt(sessionStorage.getItem('jm_clicks') || '0');
+      return { inc() { n++; sessionStorage.setItem('jm_clicks', n); return n; }, get() { return n; } };
+    })();
+
     const cursor = document.getElementById('cursor');
     if (cursor) {
       cursor.style.left = '-100px';
