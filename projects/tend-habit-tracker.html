@@ -1049,6 +1049,62 @@
         color: var(--lime, #ccff00);
       }
     }
+
+    /* Tend light navigation treatment */
+    nav {
+      background: rgba(251,250,246,.84);
+      border-bottom: 1px solid rgba(128,103,223,.18);
+      box-shadow: 0 12px 36px rgba(54,45,71,.1), 0 1px 0 rgba(255,255,255,.76) inset;
+    }
+    .nav-logo { color: var(--navy); }
+    .nav-logo span { color: var(--lime); }
+    .nav-back,
+    .nav-dropdown-btn { color: #686272; }
+    .nav-dropdown-btn {
+      background: rgba(251,250,246,.76);
+      border-color: rgba(128,103,223,.22);
+    }
+    .nav-dropdown-menu {
+      background: #fbfaf6;
+      border-color: rgba(128,103,223,.18);
+      box-shadow: 0 18px 48px rgba(54,45,71,.14), 0 1px 0 rgba(255,255,255,.82) inset;
+    }
+
+    @media (max-width: 768px) {
+      .mobile-tabbar {
+        border-color: rgba(128,103,223,.18);
+        border-top-color: rgba(255,255,255,.78);
+        background: rgba(251,250,246,.82);
+        box-shadow: 0 18px 46px rgba(54,45,71,.16), 0 1px 0 rgba(255,255,255,.74) inset;
+      }
+      .mobile-tabbar::before {
+        background: linear-gradient(135deg, rgba(255,255,255,.46), transparent 48%);
+      }
+      .mobile-tab-link {
+        color: #6f6878;
+      }
+      .mobile-tab-link:hover,
+      .mobile-tab-link:focus-visible,
+      .mobile-tab-link[aria-expanded="true"] {
+        color: var(--lime);
+        background: rgba(128,103,223,.08);
+      }
+      .mobile-home-btn {
+        color: #fff;
+        background: var(--lime);
+        box-shadow: 0 14px 30px rgba(128,103,223,.28), 0 1px 0 rgba(255,255,255,.55) inset;
+      }
+      .mobile-action-menu a {
+        border-color: rgba(128,103,223,.18);
+        border-top-color: rgba(255,255,255,.78);
+        background: rgba(251,250,246,.94);
+        box-shadow: 0 14px 34px rgba(54,45,71,.15), 0 1px 0 rgba(255,255,255,.72) inset;
+        color: var(--navy);
+      }
+      .mobile-action-menu a span {
+        color: var(--lime);
+      }
+    }
 </style>
 </head>
 <body>
