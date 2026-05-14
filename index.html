@@ -301,7 +301,8 @@
     .marquee-inner {
       display: inline-flex;
       flex-wrap: nowrap;
-      animation: marquee 30s linear infinite;
+      width: max-content;
+      animation: marquee 34s linear infinite;
       will-change: transform;
     }
     .marquee-span {
@@ -309,9 +310,10 @@
       flex-shrink: 0;
       align-items: center;
       white-space: nowrap;
-      min-width: 100vw;
-      justify-content: space-around;
-      padding: 0 2rem;
+      min-width: max-content;
+      justify-content: flex-start;
+      gap: clamp(1.35rem, 3vw, 3rem);
+      padding-right: clamp(1.35rem, 3vw, 3rem);
       font-family: 'DM Mono', monospace;
       font-size: 0.72rem;
       letter-spacing: 0.15em;
@@ -990,7 +992,7 @@
     /* ======================================
        KEYFRAMES
     ====================================== */
-    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-33.3333%); } }
     @keyframes gradient-slide { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
     @keyframes dt-pulse { 0%,100% { opacity: 0.2; } 50% { opacity: 0.8; } }
     @keyframes heartbeat {
@@ -1285,7 +1287,7 @@
         letter-spacing: 0.1em;
         justify-content: flex-start;
         gap: 1.5rem;
-        padding: 0 1.5rem;
+        padding: 0 1.5rem 0 0;
       }
       nav { gap: .5rem; padding: .85rem .9rem; }
       .nav-logo {
@@ -1383,6 +1385,7 @@
     <div class="marquee-wrap">
       <div class="marquee-inner" aria-hidden="true">
         <span class="marquee-span">Illustration <b>✦</b> Branding <b>✦</b> Game Design <b>✦</b> Photo Editing <b>✦</b> Advertising <b>✦</b> Social Media <b>✦</b> UI/UX <b>✦</b></span>
+        <span class="marquee-span" aria-hidden="true">Illustration <b>✦</b> Branding <b>✦</b> Game Design <b>✦</b> Photo Editing <b>✦</b> Advertising <b>✦</b> Social Media <b>✦</b> UI/UX <b>✦</b></span>
         <span class="marquee-span" aria-hidden="true">Illustration <b>✦</b> Branding <b>✦</b> Game Design <b>✦</b> Photo Editing <b>✦</b> Advertising <b>✦</b> Social Media <b>✦</b> UI/UX <b>✦</b></span>
       </div>
     </div>
