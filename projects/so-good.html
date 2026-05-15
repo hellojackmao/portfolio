@@ -866,6 +866,19 @@
       return { inc() { n++; sessionStorage.setItem('jm_clicks', n); return n; }, get() { return n; } };
     })();
 
+    const secretTrigger = document.querySelector('.active-page');
+    if (secretTrigger) {
+      secretTrigger.setAttribute('title', 'Current project');
+      secretTrigger.addEventListener('click', () => {
+        const count = jm_clicks.inc();
+        if (count >= 10) {
+          sessionStorage.setItem('jm_clicks', '0');
+          window.location.href = '../secret.html';
+        }
+      });
+    }
+
+
     const cursor = document.getElementById('cursor');
     if (cursor) {
       cursor.style.left = '-100px';
