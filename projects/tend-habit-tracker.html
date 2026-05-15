@@ -125,7 +125,7 @@
       text-transform: uppercase; color: var(--lime);
       padding: .75rem 1.1rem; margin: .35rem .35rem .2rem;
       background: rgba(128,103,223,.08); border: 1px solid rgba(128,103,223,.22);
-      border-radius: 12px; pointer-events: none;
+      border-radius: 12px; cursor: pointer; user-select: none;
     }
     .nav-dropdown-divider { border: none; border-top: 1px solid var(--glass-border); margin: .45rem .9rem; }
 
@@ -1344,7 +1344,8 @@
     const secretTrigger = document.querySelector('.active-page');
     if (secretTrigger) {
       secretTrigger.setAttribute('title', 'Current project');
-      secretTrigger.addEventListener('click', () => {
+      secretTrigger.addEventListener('click', event => {
+        event.stopPropagation();
         const count = jm_clicks.inc();
         if (count >= 10) {
           sessionStorage.setItem('jm_clicks', '0');

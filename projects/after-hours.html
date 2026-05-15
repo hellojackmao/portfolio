@@ -179,7 +179,7 @@
       text-transform: uppercase; color: var(--lime);
       padding: .75rem 1.1rem; margin: .35rem .35rem .2rem;
       background: rgba(204,255,0,.07); border: 1px solid rgba(204,255,0,.2);
-      border-radius: 12px; pointer-events: none;
+      border-radius: 12px; cursor: pointer; user-select: none;
     }
     .nav-dropdown-divider { border: none; border-top: 1px solid rgba(255,255,255,.08); margin: .45rem .9rem; }
     /* ── Next project ── */
@@ -743,8 +743,8 @@
     </div>
 
     <div class="image-grid two-col">
-      <img src="../images/weeknd-concept-1.png" alt="Campaign 1 — Going for Gold concept"  loading="lazy" decoding="async"/>
-      <img src="../images/weeknd-viz-1.png" alt="Campaign 1 — CD visualization"  loading="lazy" decoding="async"/>
+      <img src="../images/weeknd-concept-1.png" alt="Campaign 1 — Going for Gold concept" width="2400" height="2400" loading="lazy" decoding="async"/>
+      <img src="../images/weeknd-viz-1.png" alt="Campaign 1 — CD visualization" width="2400" height="1350" loading="lazy" decoding="async"/>
     </div>
     <p class="img-caption">Campaign 1 — fan-voted special edition album concept &amp; CD mockup</p>
 
@@ -761,8 +761,8 @@
     </div>
 
     <div class="image-grid two-col">
-      <img src="../images/weeknd-concept-2.png" alt="Campaign 2 — Exhibition poster"  loading="lazy" decoding="async"/>
-      <img src="../images/weeknd-viz-2.png" alt="Campaign 2 — Exhibition visualization"  loading="lazy" decoding="async"/>
+      <img src="../images/weeknd-concept-2.png" alt="Campaign 2 — Exhibition poster" width="1012" height="1800" loading="lazy" decoding="async"/>
+      <img src="../images/weeknd-viz-2.png" alt="Campaign 2 — Exhibition visualization" width="2400" height="1350" loading="lazy" decoding="async"/>
     </div>
     <p class="img-caption">Campaign 2 — After Hours Exhibition poster &amp; 3D environment visualization</p>
 
@@ -779,8 +779,8 @@
     </div>
 
     <div class="image-grid two-col">
-      <img src="../images/weeknd-concept-3.png" alt="Campaign 3 — Billboard ad"  loading="lazy" decoding="async"/>
-      <img src="../images/weeknd-viz-3.png" alt="Campaign 3 — Billboard visualization"  loading="lazy" decoding="async"/>
+      <img src="../images/weeknd-concept-3.png" alt="Campaign 3 — Billboard ad" width="2400" height="1350" loading="lazy" decoding="async"/>
+      <img src="../images/weeknd-viz-3.png" alt="Campaign 3 — Billboard visualization" width="1600" height="1600" loading="lazy" decoding="async"/>
     </div>
     <p class="img-caption">Campaign 3 — Spotify album ad concept &amp; Yonge Dundas Square billboard visualization</p>
 
@@ -849,7 +849,8 @@
     const secretTrigger = document.querySelector('.active-page');
     if (secretTrigger) {
       secretTrigger.setAttribute('title', 'Current project');
-      secretTrigger.addEventListener('click', () => {
+      secretTrigger.addEventListener('click', event => {
+        event.stopPropagation();
         const count = jm_clicks.inc();
         if (count >= 10) {
           sessionStorage.setItem('jm_clicks', '0');

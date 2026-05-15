@@ -147,7 +147,7 @@
       text-transform: uppercase; color: var(--lime);
       padding: .75rem 1.1rem; margin: .35rem .35rem .2rem;
       background: rgba(204,255,0,.07); border: 1px solid rgba(204,255,0,.2);
-      border-radius: 12px; pointer-events: none;
+      border-radius: 12px; cursor: pointer; user-select: none;
     }
     .nav-dropdown-divider { border: none; border-top: 1px solid rgba(255,255,255,.08); margin: .45rem .9rem; }
 
@@ -842,7 +842,7 @@
 
   <div class="editions">
     <a href="so-good.html" class="edition-card vol-01">
-      <img class="edition-thumb" src="../images/thumb-so-good.png" alt="Special Edition ft. Zara Larsson — So Good" loading="lazy"/>
+      <img class="edition-thumb" src="../images/thumb-so-good.png" alt="Special Edition ft. Zara Larsson — So Good" width="1400" height="788" loading="lazy" decoding="async"/>
       <div class="edition-body">
         <div class="edition-top">
           <div class="edition-vol">Vol. 01 · Editorial Design</div>
@@ -858,7 +858,7 @@
       </div>
     </a>
     <a href="after-hours.html" class="edition-card vol-02">
-      <img class="edition-thumb" src="../images/thumb-after-hours.png" alt="Special Edition ft. The Weeknd — After Hours" loading="lazy"/>
+      <img class="edition-thumb" src="../images/thumb-after-hours.png" alt="Special Edition ft. The Weeknd — After Hours" width="1400" height="788" loading="lazy" decoding="async"/>
       <div class="edition-body">
         <div class="edition-top">
           <div class="edition-vol">Vol. 02 · Advertising</div>
@@ -931,7 +931,8 @@
     const secretTrigger = document.querySelector('.active-page');
     if (secretTrigger) {
       secretTrigger.setAttribute('title', 'Current project');
-      secretTrigger.addEventListener('click', () => {
+      secretTrigger.addEventListener('click', event => {
+        event.stopPropagation();
         const count = jm_clicks.inc();
         if (count >= 10) {
           sessionStorage.setItem('jm_clicks', '0');
