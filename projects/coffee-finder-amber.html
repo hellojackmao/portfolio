@@ -684,10 +684,6 @@
     margin-right: 4px;
   }
 
-  .site-nav,
-  .site-cursor,
-  #page-veil { display: none; }
-
   html.standalone,
   html.standalone body {
     width: 100%;
@@ -700,88 +696,15 @@
     overflow: hidden;
     display: grid;
     place-items: center;
-    padding-top: 72px;
+    padding: 0;
   }
-  html.standalone .site-nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 220;
-    min-height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1.1rem 3rem;
-    background: rgba(7, 4, 1, 0.9);
-    border-bottom: 1px solid rgba(255, 176, 0, 0.22);
-    box-shadow: 0 12px 36px rgba(0,0,0,.32), 0 1px 0 rgba(255,208,96,.12) inset;
-    backdrop-filter: blur(18px) saturate(160%);
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
-    text-shadow: none;
-  }
-  .site-logo,
-  .site-home {
-    font-family: var(--font-mono);
-    color: rgba(255, 242, 210, 0.68);
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 12px;
-    font-weight: 700;
-  }
-  .site-logo {
-    color: var(--amber-bright);
-    letter-spacing: 0.08em;
-  }
-  .site-logo span { color: var(--amber); }
-  .site-home:hover { color: var(--amber-bright); }
   html.standalone .screen {
     position: fixed;
     left: 50%;
-    top: calc(50% + 32px);
+    top: 50%;
     transform: translate(-50%, -50%) scale(var(--standalone-scale));
     transform-origin: center center;
     box-shadow: 0 24px 80px rgba(0,0,0,.58), 0 0 0 1px rgba(255,176,0,.18);
-  }
-  html.standalone .site-cursor {
-    position: fixed;
-    left: -100px;
-    top: -100px;
-    width: 14px;
-    height: 14px;
-    display: block;
-    border-radius: 50%;
-    background: var(--amber);
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    transition: width .2s, height .2s, background .2s;
-    mix-blend-mode: difference;
-  }
-  html.standalone .site-cursor.hovering {
-    width: 42px;
-    height: 42px;
-    background: var(--amber-bright);
-  }
-  html.standalone #page-veil {
-    position: fixed;
-    inset: 0;
-    z-index: 100000;
-    display: block;
-    background: var(--bg);
-    opacity: 1;
-    pointer-events: auto;
-    transition: opacity .42s cubic-bezier(.16,1,.3,1);
-  }
-  html.standalone.page-ready #page-veil {
-    opacity: 0;
-    pointer-events: none;
-  }
-  html.standalone.page-leaving #page-veil {
-    opacity: 1;
-    pointer-events: auto;
   }
 
   /* Respect reduced-motion: kill anims, keep static states readable */
@@ -791,34 +714,16 @@
       transition: none !important;
     }
     body::before { display: none; }
-    #page-veil { display: none !important; }
   }
 
   @media (max-width: 700px) {
     html.standalone body {
       overflow-x: hidden;
     }
-    html.standalone .site-nav {
-      padding: 1rem 1.1rem;
-      min-height: 58px;
-    }
-    .site-home { display: none; }
-    .site-logo {
-      max-width: 100%;
-      overflow: hidden;
-      white-space: nowrap;
-      font-size: 11px;
-    }
   }
 </style>
 </head>
 <body>
-<div id="page-veil" aria-hidden="true"></div>
-<div class="site-cursor" id="siteCursor" aria-hidden="true"></div>
-<nav class="site-nav" aria-label="Demo navigation">
-  <a class="site-logo" href="../index.html">Jack Mao <span>|</span> Portfolio</a>
-  <a class="site-home" href="coffee-nearby.html">Back to Coffee Nearby</a>
-</nav>
 
 <!-- WELCOME -->
 <div class="screen active" id="screen-welcome">
@@ -1065,52 +970,6 @@
 </div>
 
 <script>
-(function () {
-  if (window.top !== window.self) return;
-  const root = document.documentElement;
-  const veil = document.getElementById('page-veil');
-  const cursor = document.getElementById('siteCursor');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  const ready = () => {
-    root.classList.remove('page-leaving');
-    root.classList.add('page-ready');
-  };
-
-  if (veil && !reduceMotion) {
-    requestAnimationFrame(() => requestAnimationFrame(ready));
-  } else {
-    ready();
-  }
-
-  if (cursor) {
-    document.addEventListener('mousemove', event => {
-      cursor.style.left = event.clientX + 'px';
-      cursor.style.top = event.clientY + 'px';
-    });
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
-    });
-  }
-
-  window.addEventListener('pageshow', ready);
-  document.addEventListener('click', event => {
-    const link = event.target.closest('a[href]');
-    if (!link || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-    if (link.target === '_blank' || link.hasAttribute('download')) return;
-    const href = link.getAttribute('href');
-    if (!href || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:')) return;
-    const url = new URL(href, window.location.href);
-    if (url.origin !== window.location.origin) return;
-    if (!veil || reduceMotion) return;
-    event.preventDefault();
-    root.classList.remove('page-ready');
-    root.classList.add('page-leaving');
-    setTimeout(() => { window.location.href = url.href; }, 360);
-  });
-})();
-
 'use strict';
 
 const IS_EMBEDDED_PREVIEW = window.top !== window.self;
@@ -1118,9 +977,8 @@ const IS_EMBEDDED_PREVIEW = window.top !== window.self;
 function fitStandaloneDemo() {
   if (IS_EMBEDDED_PREVIEW) return;
   const inlinePadding = 28;
-  const navOffset = window.innerWidth <= 700 ? 86 : 0;
   const availableWidth = Math.max(280, window.innerWidth - inlinePadding);
-  const availableHeight = Math.max(320, window.innerHeight - navOffset - inlinePadding);
+  const availableHeight = Math.max(320, window.innerHeight - inlinePadding);
   const scale = Math.min(1, availableWidth / 600, availableHeight / 600);
   document.documentElement.style.setProperty('--standalone-scale', scale.toFixed(4));
 }
