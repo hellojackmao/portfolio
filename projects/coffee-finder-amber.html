@@ -1106,6 +1106,8 @@
 
 'use strict';
 
+const IS_EMBEDDED_PREVIEW = window.top !== window.self;
+
 // ─── State ──────────────────────────────────────────────────────────────────
 const state = {
   screen: 'welcome',
@@ -2242,7 +2244,9 @@ document.getElementById('filter-apply').addEventListener('click', applyAndClose)
 
 window.addEventListener('load', () => {
   loadPersisted();
-  document.getElementById('btn-start').focus();
+  if (!IS_EMBEDDED_PREVIEW) {
+    document.getElementById('btn-start').focus();
+  }
 });
 </script>
 </body>
