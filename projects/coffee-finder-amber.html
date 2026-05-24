@@ -1,0 +1,2249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=600, height=600, initial-scale=1.0, user-scalable=no">
+<title>Coffee Nearby Demo | Jack Mao</title>
+<meta name="description" content="A fixed-format Coffee Nearby demo for Meta wearable-style navigation, built around D-pad input, amber terminal visuals, and nearby coffee discovery.">
+<link rel="canonical" href="https://hellojackmao.com/projects/coffee-finder-amber.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://hellojackmao.com/projects/coffee-finder-amber.html">
+<meta property="og:title" content="Coffee Nearby Demo | Jack Mao">
+<meta property="og:description" content="A fixed-format Coffee Nearby demo for Meta wearable-style navigation, D-pad input, amber terminal visuals, and nearby coffee discovery.">
+<meta property="og:image" content="https://hellojackmao.com/images/coffee-nearby-cover.png">
+<meta property="og:image:alt" content="Coffee Nearby amber terminal interface">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Coffee Nearby Demo | Jack Mao">
+<meta name="twitter:description" content="A fixed-format Coffee Nearby demo for Meta wearable-style navigation, D-pad input, amber terminal visuals, and nearby coffee discovery.">
+<meta name="twitter:image" content="https://hellojackmao.com/images/coffee-nearby-cover.png">
+<link rel="icon" href="../favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<script>
+  if (window.top === window.self) document.documentElement.classList.add('standalone');
+</script>
+<style>
+  /* ─── Amber Terminal Theme ────────────────────────────────────────────
+     Single phosphor color (#FFB000 amber, with #FFD060 bright accent).
+     Pure black background = transparent on the additive waveguide.
+     Monospace everywhere. Scanlines, blinking cursors, CRT vibes.
+  ──────────────────────────────────────────────────────────────────── */
+
+  :root {
+    --amber:        #FFB000;
+    --amber-bright: #FFD060;
+    --amber-dim:    #8C6000;
+    --amber-faint:  rgba(255, 176, 0, 0.15);
+    --bg:           #000000;
+    --font-mono:    "SF Mono", "Menlo", "Consolas", "Courier New", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 600px;
+    height: 600px;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--amber);
+    font-family: var(--font-mono);
+    -webkit-font-smoothing: antialiased;
+    /* Single global glow — child elements DO NOT redeclare text-shadow
+       unless they want the brighter accent glow */
+    text-shadow: 0 0 4px rgba(255, 176, 0, 0.5);
+  }
+
+  /* Scanline overlay — pure aesthetic, very low intensity so it
+     doesn't fight readability on the waveguide */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 2px,
+      rgba(255, 176, 0, 0.03) 2px,
+      rgba(255, 176, 0, 0.03) 3px
+    );
+    z-index: 100;
+  }
+
+  /* Screens */
+  .screen {
+    position: absolute;
+    inset: 0;
+    width: 600px;
+    height: 600px;
+    padding: 24px 32px 48px;
+    display: none;
+    flex-direction: column;
+  }
+  .screen.active { display: flex; }
+
+  /* Status bar */
+  .statusbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    color: var(--amber-dim);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--amber-faint);
+    margin-bottom: 14px;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+  }
+  .statusbar .dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: var(--amber);
+    border-radius: 50%;
+    margin-right: 8px;
+    box-shadow: 0 0 8px var(--amber);
+    animation: pulse 2s ease-in-out infinite;
+    vertical-align: middle;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  /* Blinking cursor block */
+  .cursor {
+    display: inline-block;
+    width: 10px;
+    height: 18px;
+    background: var(--amber-bright);
+    vertical-align: middle;
+    margin-left: 4px;
+    animation: blink 1s steps(2) infinite;
+    box-shadow: 0 0 6px var(--amber-bright);
+  }
+  @keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+
+  /* Typography */
+  h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--amber-bright);
+    margin-bottom: 4px;
+    letter-spacing: 2px;
+  }
+  .subtitle {
+    font-size: 16px;
+    color: var(--amber);
+    margin-bottom: 24px;
+    letter-spacing: 1px;
+  }
+
+  /* Welcome */
+  .welcome-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    text-align: left;
+    overflow: hidden;
+  }
+  .ascii-logo {
+    font-size: 13px;
+    line-height: 1.15;
+    color: var(--amber);
+    margin-bottom: 20px;
+    white-space: pre;
+    text-align: center;
+  }
+  .boot-line {
+    font-size: 16px;
+    color: var(--amber-dim);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .boot-line .ok { color: var(--amber-bright); }
+
+  /* Buttons — terminal-framed */
+  .focusable {
+    transition: border-color 120ms ease, background 120ms ease, color 120ms ease, box-shadow 120ms ease;
+    border: 2px solid var(--amber-dim);
+    background: transparent;
+    color: var(--amber);
+    font-size: 20px;
+    font-weight: 700;
+    padding: 22px 24px;
+    min-height: 88px;
+    width: 100%;
+    border-radius: 0;
+    cursor: pointer;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 14px;
+    position: relative;
+    /* Inherit the global text-shadow rather than stacking another */
+  }
+  .focusable::before {
+    content: '> ';
+    color: var(--amber-dim);
+    margin-right: 6px;
+    font-weight: 400;
+  }
+  .focusable:focus,
+  .focusable:focus-visible {
+    outline: none;
+    border-color: var(--amber-bright);
+    color: var(--amber-bright);
+    background: rgba(255, 176, 0, 0.08);
+    box-shadow:
+      0 0 20px rgba(255, 176, 0, 0.5),
+      inset 0 0 12px rgba(255, 176, 0, 0.15);
+  }
+  .focusable:focus::before {
+    color: var(--amber-bright);
+    animation: blink 0.6s steps(2) infinite;
+  }
+
+  /* Loading */
+  .loading-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .progress-line {
+    font-size: 18px;
+    color: var(--amber);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+  .progress-bar {
+    width: 100%;
+    height: 16px;
+    border: 2px solid var(--amber-dim);
+    margin: 16px 0 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--amber);
+    box-shadow: 0 0 12px var(--amber);
+    transition: width 200ms linear;
+  }
+  .progress-percent {
+    font-size: 14px;
+    color: var(--amber-dim);
+    letter-spacing: 1px;
+  }
+  .loading-sub {
+    margin-top: 24px;
+    color: var(--amber-dim);
+    font-size: 14px;
+    letter-spacing: 0.5px;
+  }
+
+  /* List */
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--amber-dim);
+    font-size: 14px;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+  }
+  .list-header .label { color: var(--amber-bright); font-weight: 700; }
+  .list-header .count { color: var(--amber-dim); }
+
+  /* Scrolling list — overflow-y auto enables real scrollIntoView */
+  .list-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    /* Hide native scrollbar — D-pad does the navigating */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .list-scroll::-webkit-scrollbar { display: none; }
+
+  .list-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-bottom: 4px;
+  }
+  .shop-item {
+    background: transparent;
+    border: 1px solid var(--amber-dim);
+    padding: 12px 16px;
+    min-height: 88px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--amber);
+    font-family: var(--font-mono);
+    text-align: left;
+    width: 100%;
+    border-radius: 0;
+    position: relative;
+    transition: border-color 120ms ease, background 120ms ease, color 120ms ease, box-shadow 120ms ease;
+  }
+  .shop-item:focus,
+  .shop-item:focus-visible {
+    outline: none;
+    border-color: var(--amber-bright);
+    background: rgba(255, 176, 0, 0.1);
+    color: var(--amber-bright);
+    box-shadow:
+      0 0 18px rgba(255, 176, 0, 0.45),
+      inset 0 0 8px rgba(255, 176, 0, 0.1);
+  }
+  .shop-item:focus::before {
+    content: '►';
+    position: absolute;
+    left: -2px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--amber-bright);
+    font-size: 14px;
+    animation: blink 0.8s steps(2) infinite;
+  }
+  .shop-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: inherit;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .shop-meta {
+    font-size: 14px;
+    color: var(--amber-dim);
+    display: flex;
+    gap: 14px;
+    letter-spacing: 1px;
+  }
+  .shop-item:focus .shop-meta { color: var(--amber); }
+  .meta-key { color: var(--amber-dim); }
+  .meta-val { color: var(--amber); font-weight: 700; }
+  .shop-item:focus .meta-val { color: var(--amber-bright); }
+
+  /* Filter bar (top of list) */
+  .filter-bar {
+    min-height: 44px;
+    padding: 10px 16px;
+    font-size: 14px;
+    margin-top: 0;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .filter-bar::before { content: ''; margin: 0; } /* no '> ' prefix on filter bar */
+  .filter-icon {
+    color: var(--amber-dim);
+    margin-right: 6px;
+  }
+  .filter-bar:focus .filter-icon { color: var(--amber-bright); }
+  .filter-state {
+    margin-left: 8px;
+    color: var(--amber-bright);
+    font-weight: 700;
+  }
+  .filter-bar:focus .filter-state { color: var(--amber-bright); }
+
+  /* Filter screen rows */
+  .filter-row {
+    min-height: 56px;
+    padding: 14px 18px;
+    font-size: 15px;
+    margin-top: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .filter-row::before { content: ''; margin: 0; }
+  .filter-label {
+    color: inherit;
+    font-weight: 700;
+  }
+  .filter-value {
+    color: var(--amber-bright);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .filter-row.is-on .filter-value {
+    color: var(--amber-bright);
+  }
+  .filter-row.is-on {
+    border-color: var(--amber);
+  }
+  .filter-reset {
+    margin-top: 8px;
+    color: var(--amber-dim);
+  }
+  .filter-apply {
+    margin-top: 10px;
+    border-color: var(--amber);
+    color: var(--amber-bright);
+    font-size: 16px;
+  }
+
+  /* Empty state when filters eat all results */
+  .empty-state {
+    border: 1px dashed var(--amber-dim);
+    padding: 24px 16px;
+    text-align: center;
+    color: var(--amber-dim);
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-top: 8px;
+  }
+
+  /* Favorite star */
+  .fav-star {
+    color: var(--amber-bright);
+    font-weight: 700;
+    margin-right: 2px;
+  }
+  .shop-item:focus .fav-star { color: var(--amber-bright); }
+
+  /* List toolbar: filter + view-toggle side by side */
+  .list-toolbar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+  .list-toolbar .filter-bar {
+    flex: 1;
+    margin-bottom: 0;
+  }
+  .toolbar-btn {
+    flex: 0 0 auto;
+    min-width: 110px;
+    justify-content: center;
+  }
+  .toolbar-btn::before { content: ''; }
+
+  /* Radar */
+  .radar-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 0;
+  }
+  #radar-svg {
+    width: 380px;
+    height: 380px;
+    max-height: calc(100% - 40px);
+  }
+  .radar-selected {
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--amber-bright);
+    letter-spacing: 1px;
+    text-align: center;
+    min-height: 20px;
+    padding: 4px 12px;
+    border: 1px solid var(--amber-dim);
+  }
+  /* Radar dot animation: faint pulse on the focused shop */
+  .radar-dot {
+    transition: r 150ms ease, fill 150ms ease;
+  }
+  .radar-dot-focused {
+    animation: radar-pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes radar-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  /* Slow radar sweep */
+  #radar-sweep {
+    transform-origin: 200px 200px;
+    animation: sweep 4s linear infinite;
+  }
+  @keyframes sweep {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #radar-sweep, .radar-dot-focused { animation: none; }
+  }
+
+  /* Detail */
+  .detail-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--amber-bright);
+    margin-bottom: 14px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .compass-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 12px 0 18px;
+    padding: 16px;
+    border: 1px solid var(--amber-dim);
+  }
+  .compass {
+    width: 90px;
+    height: 90px;
+    border: 2px solid var(--amber);
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+    box-shadow: 0 0 12px rgba(255, 176, 0, 0.3);
+  }
+  /* Cardinal cross-hairs */
+  .compass::before,
+  .compass::after {
+    content: '';
+    position: absolute;
+    background: var(--amber-dim);
+  }
+  .compass::before {
+    top: 0; bottom: 0;
+    left: 50%;
+    width: 1px;
+    transform: translateX(-50%);
+  }
+  .compass::after {
+    left: 0; right: 0;
+    top: 50%;
+    height: 1px;
+    transform: translateY(-50%);
+  }
+  .compass-n {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    color: var(--amber-dim);
+    letter-spacing: 1px;
+  }
+  .compass-arrow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 3px;
+    height: 38px;
+    background: var(--amber-bright);
+    transform-origin: 50% 0%;
+    transform: translate(-50%, 0) rotate(0deg);
+    box-shadow: 0 0 10px var(--amber-bright);
+    /* Transition handled in JS for shortest-path rotation */
+  }
+  .compass-arrow::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 12px solid var(--amber-bright);
+  }
+  .compass-info { flex: 1; min-width: 0; }
+  .compass-distance {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--amber-bright);
+    margin-bottom: 4px;
+    letter-spacing: 2px;
+  }
+  .compass-direction {
+    font-size: 14px;
+    color: var(--amber);
+    letter-spacing: 1px;
+  }
+  .compass-eta {
+    font-size: 14px;
+    color: var(--amber-bright);
+    letter-spacing: 1px;
+    margin-top: 2px;
+    font-weight: 700;
+  }
+  .compass-note {
+    font-size: 11px;
+    color: var(--amber-dim);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  .detail-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+  }
+  .detail-label {
+    color: var(--amber-dim);
+    min-width: 56px;
+    text-transform: uppercase;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .detail-value {
+    color: var(--amber);
+    flex: 1;
+    line-height: 1.4;
+    overflow: hidden;
+    word-break: break-word;
+  }
+
+  .detail-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: auto;
+  }
+  .btn-small {
+    min-height: 56px;
+    padding: 12px 18px;
+    font-size: 16px;
+    margin-top: 0;
+  }
+
+  /* Error */
+  .error-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .error-banner {
+    border: 2px solid var(--amber-bright);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    color: var(--amber-bright);
+    font-size: 18px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    animation: error-blink 1.2s steps(2) infinite;
+  }
+  @keyframes error-blink {
+    0%, 80% { box-shadow: 0 0 16px rgba(255, 208, 96, 0.4); }
+    81%, 100% { box-shadow: none; }
+  }
+  .error-detail {
+    font-size: 16px;
+    color: var(--amber);
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+    line-height: 1.4;
+  }
+
+  /* Hint bar — anchored at the screen bottom */
+  .hint-bar {
+    position: absolute;
+    bottom: 14px;
+    left: 32px;
+    right: 32px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--amber-dim);
+    pointer-events: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .key {
+    color: var(--amber);
+    font-weight: 700;
+    border: 1px solid var(--amber-dim);
+    padding: 2px 6px;
+    margin-right: 4px;
+  }
+
+  .site-nav,
+  .site-cursor,
+  #page-veil { display: none; }
+
+  html.standalone,
+  html.standalone body {
+    width: 100%;
+    min-width: 100%;
+    height: 100%;
+    min-height: 100%;
+  }
+  html.standalone body {
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    padding-top: 72px;
+  }
+  html.standalone .site-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 220;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.1rem 3rem;
+    background: rgba(7, 4, 1, 0.9);
+    border-bottom: 1px solid rgba(255, 176, 0, 0.22);
+    box-shadow: 0 12px 36px rgba(0,0,0,.32), 0 1px 0 rgba(255,208,96,.12) inset;
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    text-shadow: none;
+  }
+  .site-logo,
+  .site-home {
+    font-family: var(--font-mono);
+    color: rgba(255, 242, 210, 0.68);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 12px;
+    font-weight: 700;
+  }
+  .site-logo {
+    color: var(--amber-bright);
+    letter-spacing: 0.08em;
+  }
+  .site-logo span { color: var(--amber); }
+  .site-home:hover { color: var(--amber-bright); }
+  html.standalone .screen {
+    left: 50%;
+    top: calc(50% + 32px);
+    transform: translate(-50%, -50%);
+    box-shadow: 0 24px 80px rgba(0,0,0,.58), 0 0 0 1px rgba(255,176,0,.18);
+  }
+  html.standalone .site-cursor {
+    position: fixed;
+    left: -100px;
+    top: -100px;
+    width: 14px;
+    height: 14px;
+    display: block;
+    border-radius: 50%;
+    background: var(--amber);
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: width .2s, height .2s, background .2s;
+    mix-blend-mode: difference;
+  }
+  html.standalone .site-cursor.hovering {
+    width: 42px;
+    height: 42px;
+    background: var(--amber-bright);
+  }
+  html.standalone #page-veil {
+    position: fixed;
+    inset: 0;
+    z-index: 100000;
+    display: block;
+    background: var(--bg);
+    opacity: 1;
+    pointer-events: auto;
+    transition: opacity .42s cubic-bezier(.16,1,.3,1);
+  }
+  html.standalone.page-ready #page-veil {
+    opacity: 0;
+    pointer-events: none;
+  }
+  html.standalone.page-leaving #page-veil {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Respect reduced-motion: kill anims, keep static states readable */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+    body::before { display: none; }
+    #page-veil { display: none !important; }
+  }
+
+  @media (max-width: 700px) {
+    html.standalone .site-nav {
+      padding: 1rem 1.1rem;
+      min-height: 58px;
+    }
+    .site-home { display: none; }
+    .site-logo {
+      max-width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      font-size: 11px;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="page-veil" aria-hidden="true"></div>
+<div class="site-cursor" id="siteCursor" aria-hidden="true"></div>
+<nav class="site-nav" aria-label="Demo navigation">
+  <a class="site-logo" href="../index.html">Jack Mao <span>|</span> Portfolio</a>
+  <a class="site-home" href="coffee-nearby.html">Back to Coffee Nearby</a>
+</nav>
+
+<!-- WELCOME -->
+<div class="screen active" id="screen-welcome">
+  <div class="statusbar">
+    <span><span class="dot"></span>SYS.READY</span>
+    <span id="welcome-time">--:--:--</span>
+  </div>
+
+  <div class="welcome-content">
+    <pre class="ascii-logo"> ████   ████  ██████ ██████ ██████ ██████
+██     ██  ██ ██     ██     ██     ██    
+██     ██  ██ █████  █████  █████  █████ 
+██     ██  ██ ██     ██     ██     ██    
+ ████   ████  ██     ██     ██████ ██████</pre>
+
+    <div class="boot-line">[<span class="ok">OK</span>] DISPLAY.INIT</div>
+    <div class="boot-line">[<span class="ok">OK</span>] NEURAL.BAND</div>
+    <div class="boot-line">[<span class="ok">OK</span>] GEO.MODULE</div>
+    <div class="boot-line">AWAITING INPUT<span class="cursor"></span></div>
+
+    <button class="focusable" id="btn-start" type="button">
+      <span>SCAN FOR COFFEE</span>
+      <span aria-hidden="true">►</span>
+    </button>
+  </div>
+
+  <div class="hint-bar">
+    <span><span class="key">ENT</span>SELECT</span>
+    <span>v1.0</span>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div class="screen" id="screen-loading">
+  <div class="statusbar">
+    <span><span class="dot"></span>SCANNING</span>
+    <span id="loading-time">--:--:--</span>
+  </div>
+
+  <div class="loading-content">
+    <div class="progress-line" id="loading-text">ACQUIRING GPS FIX...</div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="progress-percent" id="progress-percent">0%</div>
+    <div class="loading-sub" id="loading-sub">
+      AWAITING COMPANION DEVICE<span class="cursor"></span>
+    </div>
+  </div>
+</div>
+
+<!-- LIST -->
+<div class="screen" id="screen-list">
+  <div class="statusbar">
+    <span><span class="dot"></span>RESULTS</span>
+    <span id="list-time">--:--:--</span>
+  </div>
+
+  <div class="list-header">
+    <span class="label">// COFFEE.NEARBY</span>
+    <span class="count" id="result-count">00 HITS</span>
+  </div>
+
+  <div class="list-scroll" id="list-scroll">
+    <div class="list-items" id="list-items">
+      <div class="list-toolbar">
+        <button class="focusable filter-bar" id="btn-filter" type="button">
+          <span><span class="filter-icon">▼</span> FILTERS <span class="filter-state" id="filter-state">ALL</span></span>
+        </button>
+        <button class="focusable filter-bar toolbar-btn" id="btn-toggle-view" type="button" title="Toggle radar view">
+          <span>◎ RADAR</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="hint-bar">
+    <span><span class="key">↑↓</span>NAV</span>
+    <span><span class="key">ENT</span>SELECT</span>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div class="screen" id="screen-filters">
+  <div class="statusbar">
+    <span><span class="dot"></span>FILTERS</span>
+    <span id="filters-time">--:--:--</span>
+  </div>
+
+  <div class="list-header">
+    <span class="label">// FILTER.CONFIG</span>
+    <span class="count" id="filter-match-count">— OF —</span>
+  </div>
+
+  <div class="list-scroll" id="filters-scroll">
+    <div class="list-items" id="filter-items">
+
+      <button class="focusable filter-row" id="filter-radius" type="button" data-filter="radius">
+        <span class="filter-label">RADIUS</span>
+        <span class="filter-value" id="filter-radius-val">1.5KM</span>
+      </button>
+
+      <button class="focusable filter-row" id="filter-open" type="button" data-filter="open">
+        <span class="filter-label">OPEN NOW</span>
+        <span class="filter-value" id="filter-open-val">[ ]</span>
+      </button>
+
+      <button class="focusable filter-row" id="filter-outdoor" type="button" data-filter="outdoor">
+        <span class="filter-label">OUTDOOR SEATING</span>
+        <span class="filter-value" id="filter-outdoor-val">[ ]</span>
+      </button>
+
+      <button class="focusable filter-row" id="filter-takeaway" type="button" data-filter="takeaway">
+        <span class="filter-label">TAKEAWAY</span>
+        <span class="filter-value" id="filter-takeaway-val">[ ]</span>
+      </button>
+
+      <button class="focusable filter-row" id="filter-wheelchair" type="button" data-filter="wheelchair">
+        <span class="filter-label">WHEELCHAIR ACCESS</span>
+        <span class="filter-value" id="filter-wheelchair-val">[ ]</span>
+      </button>
+
+      <button class="focusable filter-row filter-reset" id="filter-reset" type="button">
+        <span class="filter-label">RESET ALL</span>
+        <span aria-hidden="true">↻</span>
+      </button>
+
+      <button class="focusable filter-apply" id="filter-apply" type="button">
+        <span>APPLY &amp; VIEW RESULTS</span>
+        <span aria-hidden="true">►</span>
+      </button>
+
+    </div>
+  </div>
+
+  <div class="hint-bar">
+    <span><span class="key">↑↓</span>NAV</span>
+    <span><span class="key">ESC</span>BACK</span>
+  </div>
+</div>
+
+<!-- DETAIL -->
+<div class="screen" id="screen-detail">
+  <div class="statusbar">
+    <span><span class="dot"></span>TARGET LOCK</span>
+    <span id="detail-time">--:--:--</span>
+  </div>
+
+  <div class="detail-name" id="detail-name">—</div>
+
+  <div class="compass-row">
+    <div class="compass">
+      <span class="compass-n">N</span>
+      <div class="compass-arrow" id="compass-arrow"></div>
+    </div>
+    <div class="compass-info">
+      <div class="compass-distance" id="detail-distance">—</div>
+      <div class="compass-direction" id="detail-direction">—</div>
+      <div class="compass-eta" id="detail-eta">— WALK</div>
+      <div class="compass-note" id="compass-note">FIXED BEARING</div>
+    </div>
+  </div>
+
+  <div class="detail-row">
+    <span class="detail-label">LOC:</span>
+    <span class="detail-value" id="detail-address">—</span>
+  </div>
+  <div class="detail-row" id="detail-hours-row" style="display:none;">
+    <span class="detail-label">HRS:</span>
+    <span class="detail-value" id="detail-hours">—</span>
+  </div>
+
+  <div class="detail-buttons">
+    <button class="focusable btn-small" id="btn-favorite" type="button">
+      <span id="btn-favorite-label">☆ ADD TO FAVORITES</span>
+    </button>
+    <button class="focusable btn-small" id="btn-back" type="button">BACK TO LIST</button>
+  </div>
+
+  <div class="hint-bar">
+    <span><span class="key">ESC</span>BACK</span>
+    <span><span class="key">ENT</span>SELECT</span>
+  </div>
+</div>
+
+<!-- RADAR -->
+<div class="screen" id="screen-radar">
+  <div class="statusbar">
+    <span><span class="dot"></span>RADAR</span>
+    <span id="radar-time">--:--:--</span>
+  </div>
+
+  <div class="list-header">
+    <span class="label">// RADAR.SWEEP</span>
+    <span class="count" id="radar-range">— RANGE</span>
+  </div>
+
+  <div class="radar-container">
+    <svg id="radar-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <!-- Rings -->
+      <circle cx="200" cy="200" r="60"  fill="none" stroke="#8C6000" stroke-width="1" stroke-dasharray="2 4"/>
+      <circle cx="200" cy="200" r="120" fill="none" stroke="#8C6000" stroke-width="1" stroke-dasharray="2 4"/>
+      <circle cx="200" cy="200" r="180" fill="none" stroke="#FFB000" stroke-width="1.5"/>
+      <!-- Cardinal cross -->
+      <line x1="200" y1="20"  x2="200" y2="380" stroke="#8C6000" stroke-width="1"/>
+      <line x1="20"  y1="200" x2="380" y2="200" stroke="#8C6000" stroke-width="1"/>
+      <!-- Cardinal labels -->
+      <text x="200" y="14"  text-anchor="middle" fill="#FFB000" font-family="monospace" font-size="14" font-weight="700">N</text>
+      <text x="200" y="395" text-anchor="middle" fill="#8C6000" font-family="monospace" font-size="12">S</text>
+      <text x="10"  y="205" fill="#8C6000" font-family="monospace" font-size="12">W</text>
+      <text x="384" y="205" fill="#8C6000" font-family="monospace" font-size="12">E</text>
+      <!-- Sweep line (rotates via JS) -->
+      <line id="radar-sweep" x1="200" y1="200" x2="200" y2="20"
+        stroke="#FFD060" stroke-width="2" opacity="0.5"/>
+      <!-- User dot at center -->
+      <circle cx="200" cy="200" r="4" fill="#FFD060"/>
+      <!-- Dynamic shop dots get appended here -->
+      <g id="radar-dots"></g>
+    </svg>
+    <div class="radar-selected" id="radar-selected">USE ↑↓ TO BROWSE</div>
+  </div>
+
+  <div class="hint-bar">
+    <span><span class="key">↑↓</span>CYCLE</span>
+    <span><span class="key">ENT</span>SELECT</span>
+  </div>
+</div>
+
+<!-- ERROR -->
+<div class="screen" id="screen-error">
+  <div class="statusbar">
+    <span><span class="dot"></span>ERROR</span>
+    <span id="error-time">--:--:--</span>
+  </div>
+
+  <div class="error-content">
+    <div class="error-banner" id="error-text">! SYSTEM ERROR</div>
+    <div class="error-detail" id="error-sub">An unknown error occurred.</div>
+    <button class="focusable" id="btn-retry" type="button">
+      <span>RETRY</span>
+      <span aria-hidden="true">↻</span>
+    </button>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.top !== window.self) return;
+  const root = document.documentElement;
+  const veil = document.getElementById('page-veil');
+  const cursor = document.getElementById('siteCursor');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const ready = () => {
+    root.classList.remove('page-leaving');
+    root.classList.add('page-ready');
+  };
+
+  if (veil && !reduceMotion) {
+    requestAnimationFrame(() => requestAnimationFrame(ready));
+  } else {
+    ready();
+  }
+
+  if (cursor) {
+    document.addEventListener('mousemove', event => {
+      cursor.style.left = event.clientX + 'px';
+      cursor.style.top = event.clientY + 'px';
+    });
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+    });
+  }
+
+  window.addEventListener('pageshow', ready);
+  document.addEventListener('click', event => {
+    const link = event.target.closest('a[href]');
+    if (!link || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    if (link.target === '_blank' || link.hasAttribute('download')) return;
+    const href = link.getAttribute('href');
+    if (!href || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:')) return;
+    const url = new URL(href, window.location.href);
+    if (url.origin !== window.location.origin) return;
+    if (!veil || reduceMotion) return;
+    event.preventDefault();
+    root.classList.remove('page-ready');
+    root.classList.add('page-leaving');
+    setTimeout(() => { window.location.href = url.href; }, 360);
+  });
+})();
+
+'use strict';
+
+// ─── State ──────────────────────────────────────────────────────────────────
+const state = {
+  screen: 'welcome',
+  userPos: null,
+  heading: null,        // device compass heading, 0–360°
+  allShops: [],         // unfiltered, sorted by distance
+  shops: [],            // filtered subset shown in the list
+  selectedShop: null,
+  orientationActive: false,
+  // Tracks the unwrapped arrow rotation so we can take the shortest path
+  arrowRotation: 0,
+  // Generation counter — bumped on every navigation to cancel stale work
+  navGen: 0,
+  // Filters
+  filters: {
+    radius: 1500,       // meters; one of 500, 1000, 1500, 3000
+    openNow: false,
+    outdoor: false,
+    takeaway: false,
+    wheelchair: false,
+  },
+  // Favorites — Set of shop names (string), since OSM ids can change.
+  // Name-based is fuzzy but resilient across data refreshes.
+  favorites: new Set(),
+  // Auto-refresh tracking
+  watchId: null,
+  fetchAnchor: null,        // { lat, lon } where we last queried Overpass
+  lastFetchTime: 0,         // ms timestamp
+};
+
+const RADIUS_CYCLE = [500, 1000, 1500, 3000]; // meters
+const STORAGE_KEY_FILTERS = 'coffee.filters.v1';
+const STORAGE_KEY_FAVS = 'coffee.favorites.v1';
+
+// Auto-refresh: re-query Overpass when user moves > REFETCH_DIST meters
+// from the previous fetch anchor, but not more than once per REFETCH_COOLDOWN ms.
+const REFETCH_DIST = 300;          // meters
+const REFETCH_COOLDOWN = 60 * 1000; // 60 seconds
+const RECOMPUTE_DIST = 15;          // recompute distances if user moved > 15m
+
+// ─── Persistence ───────────────────────────────────────────────────────────
+function loadPersisted() {
+  try {
+    const f = localStorage.getItem(STORAGE_KEY_FILTERS);
+    if (f) {
+      const parsed = JSON.parse(f);
+      // Merge defensively — never trust stored shape
+      if (parsed && typeof parsed === 'object') {
+        if (RADIUS_CYCLE.includes(parsed.radius)) state.filters.radius = parsed.radius;
+        state.filters.openNow    = !!parsed.openNow;
+        state.filters.outdoor    = !!parsed.outdoor;
+        state.filters.takeaway   = !!parsed.takeaway;
+        state.filters.wheelchair = !!parsed.wheelchair;
+      }
+    }
+    const favs = localStorage.getItem(STORAGE_KEY_FAVS);
+    if (favs) {
+      const arr = JSON.parse(favs);
+      if (Array.isArray(arr)) state.favorites = new Set(arr.filter(x => typeof x === 'string'));
+    }
+  } catch (e) {
+    // Storage may be disabled (private mode, glasses sandbox) — silent fallback
+  }
+}
+
+function saveFilters() {
+  try {
+    localStorage.setItem(STORAGE_KEY_FILTERS, JSON.stringify(state.filters));
+  } catch (e) { /* ignore */ }
+}
+
+function saveFavorites() {
+  try {
+    localStorage.setItem(STORAGE_KEY_FAVS, JSON.stringify([...state.favorites]));
+  } catch (e) { /* ignore */ }
+}
+
+function isFavorite(shop) {
+  return state.favorites.has(shop.name);
+}
+
+function toggleFavorite(shop) {
+  if (state.favorites.has(shop.name)) state.favorites.delete(shop.name);
+  else state.favorites.add(shop.name);
+  saveFavorites();
+}
+
+const DPAD = {
+  UP: 'ArrowUp', DOWN: 'ArrowDown',
+  LEFT: 'ArrowLeft', RIGHT: 'ArrowRight',
+  SELECT: 'Enter', BACK: 'Escape',
+};
+
+// ─── Clock ─────────────────────────────────────────────────────────────────
+function updateClocks() {
+  const now = new Date();
+  const pad = n => String(n).padStart(2, '0');
+  const t = pad(now.getHours()) + ':' + pad(now.getMinutes()) + ':' + pad(now.getSeconds());
+  ['welcome-time','loading-time','list-time','detail-time','error-time','filters-time','radar-time']
+    .forEach(id => { const el = document.getElementById(id); if (el) el.textContent = t; });
+}
+setInterval(updateClocks, 1000);
+updateClocks();
+
+// ─── Screen management ─────────────────────────────────────────────────────
+function showScreen(name) {
+  // Bump generation — any in-flight progress animation will see this and stop
+  state.navGen++;
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById('screen-' + name);
+  if (!target) return;
+  target.classList.add('active');
+  state.screen = name;
+  // Focus the first focusable on the new screen (next frame, after layout)
+  requestAnimationFrame(() => {
+    const focusables = target.querySelectorAll('.focusable:not([disabled])');
+    if (focusables.length) focusables[0].focus();
+  });
+}
+
+// ─── Geo math ──────────────────────────────────────────────────────────────
+function haversine(lat1, lon1, lat2, lon2) {
+  const R = 6371000; // meters
+  const toRad = d => d * Math.PI / 180;
+  const dLat = toRad(lat2 - lat1);
+  const dLon = toRad(lon2 - lon1);
+  const a = Math.sin(dLat / 2) ** 2 +
+            Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+            Math.sin(dLon / 2) ** 2;
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function bearing(lat1, lon1, lat2, lon2) {
+  const toRad = d => d * Math.PI / 180;
+  const toDeg = r => r * 180 / Math.PI;
+  const dLon = toRad(lon2 - lon1);
+  const y = Math.sin(dLon) * Math.cos(toRad(lat2));
+  const x = Math.cos(toRad(lat1)) * Math.sin(toRad(lat2)) -
+            Math.sin(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.cos(dLon);
+  return (toDeg(Math.atan2(y, x)) + 360) % 360;
+}
+
+function bearingToCompass(deg) {
+  const dirs = ['N','NE','E','SE','S','SW','W','NW'];
+  return dirs[Math.round(deg / 45) % 8];
+}
+
+function formatDistance(m) {
+  if (m < 1000) return Math.round(m) + 'M';
+  return (m / 1000).toFixed(m < 10000 ? 1 : 0) + 'KM';
+}
+
+// Walking ETA at ~80 m/min (~4.8 km/h, average urban pace)
+function formatETA(m) {
+  const mins = Math.max(1, Math.round(m / 80));
+  if (mins < 60) return mins + ' MIN';
+  const h = Math.floor(mins / 60);
+  const rem = mins % 60;
+  return h + 'H' + (rem ? ' ' + rem + 'M' : '');
+}
+
+// ─── Progress bar ──────────────────────────────────────────────────────────
+let progressRAF = null;
+let progressGen = 0;
+
+function setProgress(pct, label) {
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-percent').textContent = Math.round(pct) + '%';
+  if (label) document.getElementById('loading-text').textContent = label;
+}
+
+function stopProgressAnim() {
+  if (progressRAF) {
+    cancelAnimationFrame(progressRAF);
+    progressRAF = null;
+  }
+}
+
+function animateProgress(from, to, durationMs) {
+  stopProgressAnim();
+  const navAtStart = state.navGen;
+  const myGen = ++progressGen;
+  const start = performance.now();
+  const tick = now => {
+    // Bail if user navigated away OR a newer animation started
+    if (state.navGen !== navAtStart || progressGen !== myGen) return;
+    const t = Math.min((now - start) / durationMs, 1);
+    setProgress(from + (to - from) * t);
+    if (t < 1) progressRAF = requestAnimationFrame(tick);
+    else progressRAF = null;
+  };
+  progressRAF = requestAnimationFrame(tick);
+}
+
+// ─── Location ──────────────────────────────────────────────────────────────
+function getLocation() {
+  showScreen('loading');
+  const navAtStart = state.navGen;
+  setProgress(5, 'ACQUIRING GPS FIX...');
+  document.getElementById('loading-sub').innerHTML =
+    'AWAITING COMPANION DEVICE<span class="cursor"></span>';
+  animateProgress(5, 40, 8000);
+
+  if (!navigator.geolocation) {
+    showError('GEO NOT SUPPORTED', 'Your device does not expose geolocation APIs.');
+    return;
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    pos => {
+      if (state.navGen !== navAtStart) return; // user navigated away
+      state.userPos = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+      setProgress(45, 'GPS LOCKED');
+      fetchCoffeeShops();
+    },
+    err => {
+      if (state.navGen !== navAtStart) return;
+      let msg = 'GEO FAILURE';
+      let sub = 'Please try again.';
+      if (err.code === 1) {
+        msg = 'PERMISSION DENIED';
+        sub = 'Enable location access for the glasses to scan for coffee.';
+      } else if (err.code === 2) {
+        msg = 'POSITION UNAVAILABLE';
+        sub = 'Check that your companion phone is connected.';
+      } else if (err.code === 3) {
+        msg = 'GPS TIMEOUT';
+        sub = 'Signal too weak. Try moving to an open area.';
+      }
+      showError(msg, sub);
+    },
+    { enableHighAccuracy: true, timeout: 15000, maximumAge: 60000 }
+  );
+}
+
+// ─── Overpass query ────────────────────────────────────────────────────────
+async function fetchCoffeeShops() {
+  const navAtStart = state.navGen;
+  setProgress(50, 'QUERYING DATABASE...');
+  document.getElementById('loading-sub').innerHTML =
+    'SCANNING 1.5KM RADIUS<span class="cursor"></span>';
+  animateProgress(50, 90, 8000);
+
+  const { lat, lon } = state.userPos;
+  const radius = state.filters.radius;
+  const query =
+    '[out:json][timeout:15];' +
+    '(' +
+      'node["amenity"="cafe"](around:' + radius + ',' + lat + ',' + lon + ');' +
+      'node["shop"="coffee"](around:' + radius + ',' + lat + ',' + lon + ');' +
+      'node["cuisine"="coffee_shop"](around:' + radius + ',' + lat + ',' + lon + ');' +
+    ');out body 40;';
+
+  const endpoints = [
+    'https://overpass-api.de/api/interpreter',
+    'https://overpass.kumi.systems/api/interpreter',
+  ];
+
+  let data = null;
+  let lastErr = null;
+  for (const url of endpoints) {
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'data=' + encodeURIComponent(query),
+      });
+      if (state.navGen !== navAtStart) return;
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      data = await res.json();
+      if (state.navGen !== navAtStart) return;
+      break;
+    } catch (e) {
+      lastErr = e;
+    }
+  }
+
+  if (!data) {
+    showError('NETWORK ERROR', 'Could not reach the coffee database. Check connection.');
+    return;
+  }
+
+  // Overpass may return a "remark" field on rate-limit / quota issues
+  if (!Array.isArray(data.elements)) {
+    showError('SERVICE BUSY', data.remark || 'Coffee database temporarily unavailable.');
+    return;
+  }
+
+  setProgress(95, 'PROCESSING...');
+
+  const seen = new Set();
+  const shops = [];
+  for (const el of data.elements) {
+    if (!el.tags || !el.tags.name || el.lat == null || el.lon == null) continue;
+    const key = el.tags.name.toLowerCase() + '|' +
+                el.lat.toFixed(4) + '|' + el.lon.toFixed(4);
+    if (seen.has(key)) continue;
+    seen.add(key);
+
+    const dist = haversine(lat, lon, el.lat, el.lon);
+    const bear = bearing(lat, lon, el.lat, el.lon);
+
+    shops.push({
+      id: el.id,
+      name: el.tags.name,
+      lat: el.lat,
+      lon: el.lon,
+      distance: dist,
+      bearing: bear,
+      compass: bearingToCompass(bear),
+      address: buildAddress(el.tags),
+      hours: el.tags.opening_hours || null,
+      // Filter-relevant attributes
+      outdoor: el.tags.outdoor_seating || null,
+      takeaway: el.tags.takeaway || null,
+      wheelchair: el.tags.wheelchair || null,
+    });
+  }
+
+  shops.sort((a, b) => a.distance - b.distance);
+  // Keep all shops within radius — filtering happens client-side later.
+  // Cap to a reasonable number so the list doesn't get crazy.
+  state.allShops = shops.slice(0, 50);
+  state.shops = applyFilters(state.allShops);
+
+  // Remember where we fetched, so we know when to refetch later
+  state.fetchAnchor = { lat: lat, lon: lon };
+  state.lastFetchTime = Date.now();
+
+  setProgress(100, 'COMPLETE');
+
+  if (state.allShops.length === 0) {
+    setTimeout(() => {
+      if (state.navGen !== navAtStart) return;
+      showError('NO RESULTS', 'No coffee shops detected within ' +
+        formatRadius(state.filters.radius) + '.');
+    }, 300);
+    return;
+  }
+
+  setTimeout(() => {
+    if (state.navGen !== navAtStart) return;
+    renderList();
+    showScreen('list');
+    startCompass();
+    startWatch();
+  }, 400);
+}
+
+function buildAddress(tags) {
+  const parts = [];
+  if (tags['addr:housenumber'] && tags['addr:street']) {
+    parts.push(tags['addr:housenumber'] + ' ' + tags['addr:street']);
+  } else if (tags['addr:street']) {
+    parts.push(tags['addr:street']);
+  }
+  if (tags['addr:city']) parts.push(tags['addr:city']);
+  return parts.join(', ').toUpperCase() || 'NO ADDRESS DATA';
+}
+
+function formatRadius(m) {
+  if (m < 1000) return m + 'M';
+  return (m / 1000).toFixed(m % 1000 ? 1 : 0) + 'KM';
+}
+
+// ─── Opening hours parser ──────────────────────────────────────────────────
+// OSM opening_hours is a full grammar; we handle the common 80% of cases
+// (weekday ranges + time ranges + "24/7"). Anything we can't parse confidently
+// returns null → caller treats unknown hours as "show it" rather than hiding.
+const DAY_MAP = { mo:0, tu:1, we:2, th:3, fr:4, sa:5, su:6 };
+
+function isOpenNow(hoursStr, now) {
+  if (!hoursStr) return null;
+  const s = hoursStr.trim().toLowerCase();
+  if (s === '24/7' || s === '24h') return true;
+  if (s === 'off' || s === 'closed') return false;
+
+  const today = (now.getDay() + 6) % 7; // JS: Sun=0; OSM: Mon=0
+  const mins = now.getHours() * 60 + now.getMinutes();
+
+  // Split into rules by ';'
+  const rules = s.split(';').map(r => r.trim()).filter(Boolean);
+
+  let anyParsed = false;
+  let openNow = false;
+
+  for (const rule of rules) {
+    // Rule shape: "<dayspec> <timespec>" e.g. "mo-fr 07:00-19:00"
+    //                            or  "mo,we,fr 08:00-12:00,13:00-17:00"
+    // We allow missing dayspec → applies every day.
+    const m = rule.match(/^([a-z,\- ]+?)?\s*([0-9:,\- ]+)$/i);
+    if (!m) continue;
+    const dayPart = (m[1] || '').trim();
+    const timePart = m[2].trim();
+
+    const days = parseDays(dayPart);
+    if (days === null) continue; // unparseable day spec
+
+    const times = parseTimes(timePart);
+    if (times === null) continue;
+
+    anyParsed = true;
+    if (days.includes(today)) {
+      for (const [start, end] of times) {
+        // Handle overnight ranges (e.g. 22:00-02:00)
+        if (end < start) {
+          if (mins >= start || mins < end) openNow = true;
+        } else {
+          if (mins >= start && mins < end) openNow = true;
+        }
+      }
+    }
+  }
+
+  return anyParsed ? openNow : null;
+}
+
+function parseDays(spec) {
+  if (!spec) return [0,1,2,3,4,5,6]; // no dayspec = every day
+  const result = new Set();
+  // Split by comma for lists like "mo,we,fr"
+  for (const part of spec.split(',').map(p => p.trim())) {
+    if (!part) continue;
+    // Range like "mo-fr"
+    const range = part.match(/^([a-z]{2})\s*-\s*([a-z]{2})$/);
+    if (range) {
+      const a = DAY_MAP[range[1]];
+      const b = DAY_MAP[range[2]];
+      if (a == null || b == null) return null;
+      let i = a;
+      while (true) {
+        result.add(i);
+        if (i === b) break;
+        i = (i + 1) % 7;
+      }
+      continue;
+    }
+    // Single day like "mo"
+    const single = part.match(/^([a-z]{2})$/);
+    if (single && DAY_MAP[single[1]] != null) {
+      result.add(DAY_MAP[single[1]]);
+      continue;
+    }
+    return null; // unparseable
+  }
+  return [...result];
+}
+
+function parseTimes(spec) {
+  const result = [];
+  // Split comma-separated ranges
+  for (const part of spec.split(',').map(p => p.trim())) {
+    const m = part.match(/^(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})$/);
+    if (!m) return null;
+    const start = parseInt(m[1], 10) * 60 + parseInt(m[2], 10);
+    const end = parseInt(m[3], 10) * 60 + parseInt(m[4], 10);
+    result.push([start, end]);
+  }
+  return result.length ? result : null;
+}
+
+// ─── Filtering ─────────────────────────────────────────────────────────────
+// Philosophy: a filter excludes a shop only when the user opts in AND the
+// shop's data either explicitly says "no" or is missing. We surface the
+// match count in the filter screen so the user sees what's being eaten.
+function applyFilters(shops) {
+  const f = state.filters;
+  const now = new Date();
+  const filtered = shops.filter(shop => {
+    if (shop.distance > f.radius) return false;
+
+    if (f.openNow) {
+      const open = isOpenNow(shop.hours, now);
+      // Unknown hours → treat as "show", since hiding shops with no hours data
+      // would gut the list in most cities.
+      if (open === false) return false;
+    }
+    if (f.outdoor) {
+      if (shop.outdoor !== 'yes') return false;
+    }
+    if (f.takeaway) {
+      if (shop.takeaway !== 'yes' && shop.takeaway !== 'only') return false;
+    }
+    if (f.wheelchair) {
+      if (shop.wheelchair !== 'yes') return false;
+    }
+    return true;
+  });
+
+  // Sort: favorites first (keeping their relative distance order),
+  // then non-favorites by distance.
+  filtered.sort((a, b) => {
+    const af = isFavorite(a) ? 0 : 1;
+    const bf = isFavorite(b) ? 0 : 1;
+    if (af !== bf) return af - bf;
+    return a.distance - b.distance;
+  });
+  return filtered;
+}
+
+function activeFilterCount() {
+  const f = state.filters;
+  let n = 0;
+  if (f.openNow) n++;
+  if (f.outdoor) n++;
+  if (f.takeaway) n++;
+  if (f.wheelchair) n++;
+  // Radius counts as "active" only if it's not the default
+  if (f.radius !== 1500) n++;
+  return n;
+}
+
+// ─── Filter screen ─────────────────────────────────────────────────────────
+function renderFilters() {
+  document.getElementById('filter-radius-val').textContent =
+    formatRadius(state.filters.radius);
+
+  const setToggle = (key, valId, rowId) => {
+    const on = state.filters[key];
+    document.getElementById(valId).textContent = on ? '[X]' : '[ ]';
+    document.getElementById(rowId).classList.toggle('is-on', on);
+  };
+  setToggle('openNow',    'filter-open-val',       'filter-open');
+  setToggle('outdoor',    'filter-outdoor-val',    'filter-outdoor');
+  setToggle('takeaway',   'filter-takeaway-val',   'filter-takeaway');
+  setToggle('wheelchair', 'filter-wheelchair-val', 'filter-wheelchair');
+
+  // Live match count — shows how many shops survive the current filter set
+  const matches = applyFilters(state.allShops);
+  document.getElementById('filter-match-count').textContent =
+    String(matches.length).padStart(2, '0') + ' OF ' +
+    String(state.allShops.length).padStart(2, '0');
+}
+
+function cycleRadius() {
+  const idx = RADIUS_CYCLE.indexOf(state.filters.radius);
+  state.filters.radius = RADIUS_CYCLE[(idx + 1) % RADIUS_CYCLE.length];
+  saveFilters();
+}
+
+function toggleFilter(name) {
+  state.filters[name] = !state.filters[name];
+  saveFilters();
+}
+
+function resetFilters() {
+  state.filters = {
+    radius: 1500,
+    openNow: false,
+    outdoor: false,
+    takeaway: false,
+    wheelchair: false,
+  };
+  saveFilters();
+}
+
+function applyAndClose() {
+  // If radius changed, we need to re-fetch. Otherwise just re-filter locally.
+  const currentMaxDist = state.allShops.length
+    ? state.allShops[state.allShops.length - 1].distance
+    : 0;
+  // We re-fetch if the new radius is larger than what we have data for,
+  // OR if it's much smaller (saves bandwidth on next ops, but functionally
+  // we could just filter — for simplicity, only re-fetch on grow).
+  if (state.filters.radius > 1500 && state.filters.radius > currentMaxDist + 100) {
+    getLocation(); // full re-scan
+    return;
+  }
+  state.shops = applyFilters(state.allShops);
+  renderList();
+  updateFilterStateLabel();
+  showScreen('list');
+}
+
+function updateFilterStateLabel() {
+  const n = activeFilterCount();
+  document.getElementById('filter-state').textContent =
+    n === 0 ? 'ALL' : n + ' ACTIVE';
+}
+
+// ─── Rendering ─────────────────────────────────────────────────────────────
+function renderList() {
+  const container = document.getElementById('list-items');
+  // Clear shop items but preserve the filter bar (it's the first child)
+  const filterBar = document.getElementById('btn-filter');
+  container.innerHTML = '';
+  container.appendChild(filterBar);
+
+  const totalCount = state.shops.length;
+  document.getElementById('result-count').textContent =
+    String(totalCount).padStart(2, '0') + ' HITS';
+
+  if (totalCount === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'empty-state';
+    empty.textContent = activeFilterCount() > 0
+      ? 'NO MATCHES — TRY ADJUSTING FILTERS'
+      : 'NO SHOPS IN RANGE';
+    container.appendChild(empty);
+  }
+
+  state.shops.forEach((shop, idx) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'shop-item focusable';
+    btn.dataset.index = String(idx);
+    const idxStr = String(idx + 1).padStart(2, '0');
+    const star = isFavorite(shop) ? '<span class="fav-star">★</span> ' : '';
+    btn.innerHTML =
+      '<div class="shop-name">' + star + idxStr + '. ' + escapeHtml(shop.name) + '</div>' +
+      '<div class="shop-meta">' +
+        '<span><span class="meta-key">DIST:</span> ' +
+          '<span class="meta-val">' + formatDistance(shop.distance) + '</span></span>' +
+        '<span><span class="meta-key">ETA:</span> ' +
+          '<span class="meta-val">' + formatETA(shop.distance) + '</span></span>' +
+        '<span><span class="meta-key">DIR:</span> ' +
+          '<span class="meta-val">' + shop.compass + '</span></span>' +
+      '</div>';
+    btn.addEventListener('click', () => openDetail(idx));
+    container.appendChild(btn);
+  });
+
+  // Reset scroll position when the list is freshly rendered
+  const scrollEl = document.getElementById('list-scroll');
+  if (scrollEl) scrollEl.scrollTop = 0;
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+function openDetail(idx) {
+  const shop = state.shops[idx];
+  if (!shop) return;
+  state.selectedShop = shop;
+
+  document.getElementById('detail-name').textContent = shop.name;
+  document.getElementById('detail-distance').textContent = formatDistance(shop.distance);
+  document.getElementById('detail-direction').textContent =
+    'BEARING ' + shop.compass + ' / ' +
+    String(Math.round(shop.bearing)).padStart(3, '0') + '°';
+  document.getElementById('detail-eta').textContent = formatETA(shop.distance) + ' WALK';
+  document.getElementById('detail-address').textContent = shop.address;
+
+  const hoursRow = document.getElementById('detail-hours-row');
+  if (shop.hours) {
+    hoursRow.style.display = 'flex';
+    document.getElementById('detail-hours').textContent = shop.hours;
+  } else {
+    hoursRow.style.display = 'none';
+  }
+
+  // Reset arrow to absolute bearing on entry (no transition for first frame)
+  const arrow = document.getElementById('compass-arrow');
+  arrow.style.transition = 'none';
+  state.arrowRotation = shop.bearing - (state.heading ?? 0);
+  arrow.style.transform =
+    'translate(-50%, 0) rotate(' + state.arrowRotation + 'deg)';
+  // Force reflow, then re-enable transition
+  void arrow.offsetWidth;
+  arrow.style.transition = 'transform 250ms ease';
+
+  updateCompassNote();
+  updateFavoriteButton();
+  showScreen('detail');
+}
+
+function updateFavoriteButton() {
+  const label = document.getElementById('btn-favorite-label');
+  if (!label || !state.selectedShop) return;
+  label.textContent = isFavorite(state.selectedShop)
+    ? '★ REMOVE FAVORITE'
+    : '☆ ADD TO FAVORITES';
+}
+
+function updateCompassNote() {
+  const note = document.getElementById('compass-note');
+  if (!note) return;
+  note.textContent = state.heading == null
+    ? 'FIXED BEARING'
+    : 'LIVE HEADING ' + String(Math.round(state.heading)).padStart(3, '0') + '°';
+}
+
+function updateCompass() {
+  if (!state.selectedShop) return;
+  const arrow = document.getElementById('compass-arrow');
+  if (!arrow) return;
+
+  const targetAbsolute = state.selectedShop.bearing - (state.heading ?? 0);
+  // Find shortest-path rotation from current arrowRotation to target
+  let delta = targetAbsolute - (state.arrowRotation % 360);
+  // Normalize delta to [-180, 180]
+  delta = ((delta % 360) + 540) % 360 - 180;
+  state.arrowRotation += delta;
+  arrow.style.transform =
+    'translate(-50%, 0) rotate(' + state.arrowRotation + 'deg)';
+}
+
+// ─── Compass / orientation ─────────────────────────────────────────────────
+// IMPORTANT: requestPermission() must be called from a user gesture.
+// We trigger this from the Start button click (which is a gesture),
+// not after the async network fetch. On the glasses runtime and most
+// Android browsers no prompt is shown and we attach immediately.
+function requestOrientation() {
+  if (state.orientationActive) return;
+
+  const attach = () => {
+    if (state.orientationActive) return;
+    state.orientationActive = true;
+    window.addEventListener('deviceorientation', e => {
+      if (e.alpha != null) {
+        state.heading = e.alpha;
+        if (state.screen === 'detail') {
+          updateCompass();
+          updateCompassNote();
+        }
+        if (state.screen === 'radar') drawRadar();
+      }
+    });
+  };
+
+  if (typeof DeviceOrientationEvent !== 'undefined' &&
+      typeof DeviceOrientationEvent.requestPermission === 'function') {
+    DeviceOrientationEvent.requestPermission()
+      .then(s => { if (s === 'granted') attach(); })
+      .catch(() => { /* user denied or unsupported — keep static compass */ });
+  } else {
+    attach();
+  }
+}
+
+// Backwards-compat alias used in code paths after data loads
+function startCompass() {
+  // If permission already granted at button-press time, listener is attached.
+  // If the runtime doesn't gate orientation, attach now as a fallback.
+  if (!state.orientationActive &&
+      (typeof DeviceOrientationEvent === 'undefined' ||
+       typeof DeviceOrientationEvent.requestPermission !== 'function')) {
+    requestOrientation();
+  }
+}
+
+// ─── Auto-refresh as user walks ────────────────────────────────────────────
+function startWatch() {
+  if (state.watchId != null) return; // already watching
+  if (!navigator.geolocation || !navigator.geolocation.watchPosition) return;
+
+  state.watchId = navigator.geolocation.watchPosition(
+    pos => onPositionUpdate(pos.coords.latitude, pos.coords.longitude),
+    () => { /* silent — watch errors shouldn't disrupt UI */ },
+    { enableHighAccuracy: true, maximumAge: 10000, timeout: 30000 }
+  );
+}
+
+function onPositionUpdate(lat, lon) {
+  if (!state.userPos) return;
+
+  // How far have we moved since the last position?
+  const moved = haversine(state.userPos.lat, state.userPos.lon, lat, lon);
+  if (moved < RECOMPUTE_DIST) return; // GPS jitter — ignore
+
+  state.userPos = { lat, lon };
+
+  // Cheap update: recompute distances + bearings for existing shops
+  for (const shop of state.allShops) {
+    shop.distance = haversine(lat, lon, shop.lat, shop.lon);
+    shop.bearing = bearing(lat, lon, shop.lat, shop.lon);
+    shop.compass = bearingToCompass(shop.bearing);
+  }
+  state.shops = applyFilters(state.allShops);
+
+  // Refresh visible UI without disrupting focus
+  if (state.screen === 'list') renderListPreserveFocus();
+  if (state.screen === 'detail' && state.selectedShop) refreshDetailLive();
+  if (state.screen === 'radar') drawRadar();
+
+  // Expensive update: re-query Overpass only if we moved a meaningful distance
+  // from the anchor AND cooldown has elapsed.
+  if (!state.fetchAnchor) return;
+  const fromAnchor = haversine(
+    state.fetchAnchor.lat, state.fetchAnchor.lon, lat, lon
+  );
+  const cooledDown = Date.now() - state.lastFetchTime > REFETCH_COOLDOWN;
+  if (fromAnchor > REFETCH_DIST && cooledDown) {
+    // Refetch silently in the background — don't disrupt the user's screen
+    silentRefetch();
+  }
+}
+
+async function silentRefetch() {
+  if (!state.userPos) return;
+  state.lastFetchTime = Date.now(); // claim the slot now to prevent overlap
+
+  const { lat, lon } = state.userPos;
+  const radius = state.filters.radius;
+  const query =
+    '[out:json][timeout:15];' +
+    '(' +
+      'node["amenity"="cafe"](around:' + radius + ',' + lat + ',' + lon + ');' +
+      'node["shop"="coffee"](around:' + radius + ',' + lat + ',' + lon + ');' +
+      'node["cuisine"="coffee_shop"](around:' + radius + ',' + lat + ',' + lon + ');' +
+    ');out body 40;';
+
+  let data = null;
+  for (const url of ['https://overpass-api.de/api/interpreter',
+                     'https://overpass.kumi.systems/api/interpreter']) {
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'data=' + encodeURIComponent(query),
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      data = await res.json();
+      break;
+    } catch (e) { /* try next */ }
+  }
+  if (!data || !Array.isArray(data.elements)) return; // give up silently
+
+  const seen = new Set();
+  const shops = [];
+  for (const el of data.elements) {
+    if (!el.tags || !el.tags.name || el.lat == null || el.lon == null) continue;
+    const key = el.tags.name.toLowerCase() + '|' +
+                el.lat.toFixed(4) + '|' + el.lon.toFixed(4);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    shops.push({
+      id: el.id,
+      name: el.tags.name,
+      lat: el.lat,
+      lon: el.lon,
+      distance: haversine(lat, lon, el.lat, el.lon),
+      bearing: bearing(lat, lon, el.lat, el.lon),
+      compass: bearingToCompass(bearing(lat, lon, el.lat, el.lon)),
+      address: buildAddress(el.tags),
+      hours: el.tags.opening_hours || null,
+      outdoor: el.tags.outdoor_seating || null,
+      takeaway: el.tags.takeaway || null,
+      wheelchair: el.tags.wheelchair || null,
+    });
+  }
+  shops.sort((a, b) => a.distance - b.distance);
+  state.allShops = shops.slice(0, 50);
+  state.shops = applyFilters(state.allShops);
+  state.fetchAnchor = { lat, lon };
+
+  // Update visible UI without yanking focus
+  if (state.screen === 'list') renderListPreserveFocus();
+  if (state.screen === 'radar') drawRadar();
+}
+
+// Re-render list but try to keep focus on the same shop (matched by name)
+function renderListPreserveFocus() {
+  const focused = document.activeElement;
+  const focusedName = focused && focused.classList.contains('shop-item')
+    ? focused.querySelector('.shop-name').textContent
+    : null;
+  const wasFilterFocused = focused && focused.id === 'btn-filter';
+  const wasViewFocused = focused && focused.id === 'btn-toggle-view';
+
+  renderList();
+
+  if (wasFilterFocused) {
+    document.getElementById('btn-filter').focus();
+  } else if (wasViewFocused) {
+    const v = document.getElementById('btn-toggle-view');
+    if (v) v.focus();
+  } else if (focusedName) {
+    // Find the item with matching name text and refocus
+    for (const item of document.querySelectorAll('.shop-item')) {
+      const nm = item.querySelector('.shop-name');
+      if (nm && nm.textContent === focusedName) { item.focus(); break; }
+    }
+  }
+}
+
+// Live update of the detail screen when we're looking at it and position changes
+function refreshDetailLive() {
+  const shop = state.selectedShop;
+  if (!shop) return;
+  // Find the corresponding (updated) shop in state.allShops
+  const fresh = state.allShops.find(s => s.name === shop.name &&
+    Math.abs(s.lat - shop.lat) < 0.0001 && Math.abs(s.lon - shop.lon) < 0.0001);
+  if (!fresh) return;
+  state.selectedShop = fresh;
+  document.getElementById('detail-distance').textContent = formatDistance(fresh.distance);
+  document.getElementById('detail-direction').textContent =
+    'BEARING ' + fresh.compass + ' / ' +
+    String(Math.round(fresh.bearing)).padStart(3, '0') + '°';
+  document.getElementById('detail-eta').textContent = formatETA(fresh.distance) + ' WALK';
+  updateCompass();
+}
+// ─── Radar view ────────────────────────────────────────────────────────────
+const RADAR_CENTER = 200;
+const RADAR_RADIUS = 180;  // outer ring radius in SVG units
+let radarFocusIdx = 0;     // index into state.shops for radar selection
+
+function showRadar() {
+  if (state.shops.length === 0) return;
+  radarFocusIdx = 0;
+  drawRadar();
+  showScreen('radar');
+}
+
+function drawRadar() {
+  const range = state.filters.radius; // meters → maps to radius 180
+  document.getElementById('radar-range').textContent = formatRadius(range) + ' RANGE';
+
+  const dots = document.getElementById('radar-dots');
+  if (!dots) return;
+  dots.innerHTML = '';
+
+  const heading = state.heading ?? 0;
+
+  state.shops.forEach((shop, i) => {
+    if (shop.distance > range) return;
+    // Place shop relative to user. "Up" on the screen is the user's heading.
+    // So a shop at bearing == heading sits at the top.
+    const relBearing = shop.bearing - heading;
+    const rad = (relBearing - 90) * Math.PI / 180; // -90 so 0° is up
+    const r = (shop.distance / range) * RADAR_RADIUS;
+    const x = RADAR_CENTER + r * Math.cos(rad);
+    const y = RADAR_CENTER + r * Math.sin(rad);
+
+    const isFocused = i === radarFocusIdx;
+    const isFav = isFavorite(shop);
+
+    if (isFav) {
+      // Star marker for favorites (just a larger filled diamond)
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const sz = isFocused ? 9 : 6;
+      path.setAttribute('d',
+        'M ' + x + ' ' + (y - sz) +
+        ' L ' + (x + sz) + ' ' + y +
+        ' L ' + x + ' ' + (y + sz) +
+        ' L ' + (x - sz) + ' ' + y + ' Z');
+      path.setAttribute('fill', '#FFD060');
+      path.setAttribute('stroke', '#FFD060');
+      if (isFocused) path.setAttribute('class', 'radar-dot radar-dot-focused');
+      else path.setAttribute('class', 'radar-dot');
+      dots.appendChild(path);
+    } else {
+      const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      circle.setAttribute('cx', String(x));
+      circle.setAttribute('cy', String(y));
+      circle.setAttribute('r', isFocused ? '7' : '4');
+      circle.setAttribute('fill', isFocused ? '#FFD060' : '#FFB000');
+      circle.setAttribute('class', isFocused ? 'radar-dot radar-dot-focused' : 'radar-dot');
+      dots.appendChild(circle);
+    }
+
+    // Number label next to focused dot
+    if (isFocused) {
+      const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+      label.setAttribute('x', String(x + 12));
+      label.setAttribute('y', String(y + 5));
+      label.setAttribute('fill', '#FFD060');
+      label.setAttribute('font-family', 'monospace');
+      label.setAttribute('font-size', '14');
+      label.setAttribute('font-weight', '700');
+      label.textContent = String(i + 1).padStart(2, '0');
+      dots.appendChild(label);
+    }
+  });
+
+  // Update info pane below the radar
+  const selected = state.shops[radarFocusIdx];
+  const infoEl = document.getElementById('radar-selected');
+  if (selected) {
+    const star = isFavorite(selected) ? '★ ' : '';
+    infoEl.textContent =
+      String(radarFocusIdx + 1).padStart(2, '0') + '. ' +
+      star + selected.name.toUpperCase() +
+      ' · ' + formatDistance(selected.distance) +
+      ' · ' + selected.compass +
+      ' · ' + formatETA(selected.distance);
+  } else {
+    infoEl.textContent = 'NO SHOPS IN RANGE';
+  }
+}
+
+function radarCycle(direction) {
+  if (state.shops.length === 0) return;
+  if (direction === 'next') {
+    radarFocusIdx = (radarFocusIdx + 1) % state.shops.length;
+  } else {
+    radarFocusIdx = (radarFocusIdx - 1 + state.shops.length) % state.shops.length;
+  }
+  drawRadar();
+}
+
+function radarSelect() {
+  if (state.shops[radarFocusIdx]) openDetail(radarFocusIdx);
+}
+
+// ─── Errors ────────────────────────────────────────────────────────────────
+function showError(msg, sub) {
+  document.getElementById('error-text').textContent = '! ' + msg;
+  document.getElementById('error-sub').textContent = sub || '';
+  showScreen('error');
+}
+
+// ─── D-pad ─────────────────────────────────────────────────────────────────
+function moveFocus(direction) {
+  const screenEl = document.querySelector('.screen.active');
+  if (!screenEl) return;
+  const focusables = Array.from(
+    screenEl.querySelectorAll('.focusable:not([disabled])')
+  );
+  if (!focusables.length) return;
+
+  const current = document.activeElement;
+  let idx = focusables.indexOf(current);
+  if (idx === -1) {
+    focusables[0].focus();
+    return;
+  }
+
+  let next;
+  if (direction === 'prev') {
+    next = idx > 0 ? idx - 1 : focusables.length - 1;
+  } else {
+    next = idx < focusables.length - 1 ? idx + 1 : 0;
+  }
+  const nextEl = focusables[next];
+  nextEl.focus();
+  // scrollIntoView now works because .list-scroll has overflow-y: auto
+  nextEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+
+document.addEventListener('keydown', e => {
+  // Radar screen has its own handling — no .focusable elements, we cycle
+  // through shops directly via the radarFocusIdx index.
+  if (state.screen === 'radar') {
+    switch (e.key) {
+      case DPAD.UP:
+      case DPAD.LEFT:
+        radarCycle('prev'); e.preventDefault(); return;
+      case DPAD.DOWN:
+      case DPAD.RIGHT:
+        radarCycle('next'); e.preventDefault(); return;
+      case DPAD.SELECT:
+        radarSelect(); e.preventDefault(); return;
+      case DPAD.BACK:
+        handleBack(); e.preventDefault(); return;
+    }
+    return;
+  }
+
+  switch (e.key) {
+    case DPAD.UP:
+    case DPAD.LEFT:
+      moveFocus('prev'); e.preventDefault(); break;
+    case DPAD.DOWN:
+    case DPAD.RIGHT:
+      moveFocus('next'); e.preventDefault(); break;
+    case DPAD.SELECT:
+      if (document.activeElement &&
+          document.activeElement.classList.contains('focusable')) {
+        document.activeElement.click();
+      }
+      e.preventDefault();
+      break;
+    case DPAD.BACK:
+      handleBack();
+      e.preventDefault();
+      break;
+  }
+});
+
+function handleBack() {
+  if (state.screen === 'detail') showScreen('list');
+  else if (state.screen === 'radar') showScreen('list');
+  else if (state.screen === 'filters') {
+    // Backing out of filters re-applies them — same as Apply
+    applyAndClose();
+  }
+  else if (state.screen === 'list' || state.screen === 'error') showScreen('welcome');
+}
+
+// ─── Wire up ───────────────────────────────────────────────────────────────
+document.getElementById('btn-start').addEventListener('click', () => {
+  // Request orientation permission here — this IS a user gesture,
+  // satisfying iOS Safari's requirement.
+  requestOrientation();
+  getLocation();
+});
+document.getElementById('btn-retry').addEventListener('click', getLocation);
+document.getElementById('btn-back').addEventListener('click', () => showScreen('list'));
+document.getElementById('btn-favorite').addEventListener('click', () => {
+  if (!state.selectedShop) return;
+  toggleFavorite(state.selectedShop);
+  updateFavoriteButton();
+  // Re-sort the list so favorites bubble up when user returns
+  state.shops = applyFilters(state.allShops);
+});
+
+// Radar
+document.getElementById('btn-toggle-view').addEventListener('click', showRadar);
+
+// Filters
+document.getElementById('btn-filter').addEventListener('click', () => {
+  renderFilters();
+  showScreen('filters');
+});
+document.getElementById('filter-radius').addEventListener('click', () => {
+  cycleRadius();
+  renderFilters();
+});
+document.getElementById('filter-open').addEventListener('click', () => {
+  toggleFilter('openNow');
+  renderFilters();
+});
+document.getElementById('filter-outdoor').addEventListener('click', () => {
+  toggleFilter('outdoor');
+  renderFilters();
+});
+document.getElementById('filter-takeaway').addEventListener('click', () => {
+  toggleFilter('takeaway');
+  renderFilters();
+});
+document.getElementById('filter-wheelchair').addEventListener('click', () => {
+  toggleFilter('wheelchair');
+  renderFilters();
+});
+document.getElementById('filter-reset').addEventListener('click', () => {
+  resetFilters();
+  renderFilters();
+});
+document.getElementById('filter-apply').addEventListener('click', applyAndClose);
+
+window.addEventListener('load', () => {
+  loadPersisted();
+  document.getElementById('btn-start').focus();
+});
+</script>
+</body>
+</html>

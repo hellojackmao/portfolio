@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
@@ -188,8 +188,17 @@
       background: rgba(204,255,0,.07); border: 1px solid rgba(204,255,0,.2);
       border-radius: 12px; cursor: pointer; user-select: none;
     }
-    .nav-dropdown-divider { border: none; border-top: 1px solid rgba(255,255,255,.08); margin: .45rem .9rem; }
-    /* ── Next project ── */
+    .nav-dropdown-category {
+      display: block;
+      padding: .72rem 1.1rem .3rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .58rem;
+      font-weight: 500;
+      letter-spacing: .16em;
+      line-height: 1.35;
+      text-transform: uppercase;
+      color: rgba(204,255,0,.68);
+    }/* ── Next project ── */
     .next-project {
       display: flex; align-items: center; justify-content: space-between;
       padding: 3rem; background: var(--navy2);
@@ -639,14 +648,19 @@
     <a class="nav-logo" href="../index.html">Jack Mao <span>|</span> Portfolio</a>
     <a class="nav-back" href="../index.html">Home</a>
     <div class="nav-dropdown">
-      <button type="button" class="nav-dropdown-btn" aria-label="Open project navigation" aria-expanded="false">Projects</button>
-      <div class="nav-dropdown-menu">
+      <button type="button" class="nav-dropdown-btn" aria-label="Open project navigation" aria-expanded="false" aria-controls="projectDropdown">Projects</button>
+      <div class="nav-dropdown-menu" id="projectDropdown">
+        <span class="nav-dropdown-category">Editorial &amp; Visual Direction</span>
         <a href="light-and-form.html">Light &amp; Form</a>
-        <span class="active-page">Chronicles of Elysium</span>
         <a href="so-good.html">Special Edition ft. Zara Larsson</a>
         <a href="after-hours.html">Special Edition ft. The Weeknd</a>
-        <a href="toronto-in-bloom.html">Toronto in Bloom</a>
+        <a href="karina.html">Karina</a>
+        <span class="nav-dropdown-category">Design Systems &amp; Product</span>
+        <span class="active-page">Chronicles of Elysium</span>
         <a href="tend-habit-tracker.html">Tend</a>
+        <a href="coffee-nearby.html">Coffee Nearby</a>
+        <span class="nav-dropdown-category">Social &amp; Cultural Storytelling</span>
+        <a href="toronto-in-bloom.html">Toronto in Bloom</a>
       </div>
     </div>
   </nav>
@@ -804,10 +818,10 @@
 
   </div>
 
-    <a class="next-project" href="so-good.html" rel="next">
+    <a class="next-project" href="tend-habit-tracker.html" rel="next">
     <div>
       <div class="next-label">Next project</div>
-      <div class="next-title">Special Edition ft. Zara Larsson</div>
+      <div class="next-title">Tend</div>
     </div>
     <div class="next-arrow">→</div>
   </a>
@@ -822,8 +836,11 @@
     <a href="light-and-form.html">Light &amp; Form <span>2021</span></a>
     <a href="so-good.html">Zara Larsson <span>2017</span></a>
     <a href="after-hours.html">The Weeknd <span>2022</span></a>
-    <a href="toronto-in-bloom.html">Toronto in Bloom <span>2026</span></a>
+    <a href="karina.html">Karina <span>2026</span></a>
+    <a href="chronicles-of-elysium.html">Chronicles <span>2023</span></a>
     <a href="tend-habit-tracker.html">Tend <span>2026</span></a>
+    <a href="coffee-nearby.html">Coffee Nearby <span>2026</span></a>
+    <a href="toronto-in-bloom.html">Toronto in Bloom <span>2026</span></a>
   </div>
   <div class="mobile-action-menu" id="mobileAboutMenu" aria-label="About actions">
     <a href="https://canva.link/hpvbnpc9260urd8" target="_blank" rel="noopener noreferrer">View resume <span>PDF</span></a>
@@ -885,10 +902,28 @@
     }
 
     const ddBtn = document.querySelector('.nav-dropdown-btn');
-    const dd    = document.querySelector('.nav-dropdown');
+    const dd = document.querySelector('.nav-dropdown');
+    const ddMenu = document.querySelector('.nav-dropdown-menu');
     if (ddBtn && dd) {
-      ddBtn.addEventListener('click', e => { e.stopPropagation(); dd.classList.toggle('open'); });
-      document.addEventListener('click', () => dd.classList.remove('open'));
+      const closeDropdown = () => {
+        dd.classList.remove('open');
+        ddBtn.setAttribute('aria-expanded', 'false');
+      };
+      ddBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const isOpen = dd.classList.toggle('open');
+        ddBtn.setAttribute('aria-expanded', String(isOpen));
+      });
+      if (ddMenu) {
+        ddMenu.addEventListener('click', e => {
+          if (e.target.closest('a')) closeDropdown();
+          else e.stopPropagation();
+        });
+      }
+      document.addEventListener('click', closeDropdown);
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeDropdown();
+      });
     }
 
     const revealEls = document.querySelectorAll(
@@ -1033,3 +1068,5 @@
   <button type="button" id="back-to-top" aria-label="Back to top">↑</button>
 </body>
 </html>
+
+
