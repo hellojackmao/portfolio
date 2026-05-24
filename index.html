@@ -352,59 +352,6 @@
       color: var(--lime);
       margin-bottom: 2.5rem;
     }
-    .work-categories {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-      margin-bottom: 4rem;
-    }
-    .category-card {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-top-color: var(--glass-border-top);
-      border-radius: 16px;
-      padding: 2rem;
-      transition: border-color 0.3s, background 0.3s, transform 0.3s, box-shadow 0.3s;
-      cursor: auto;
-      position: relative; overflow: hidden;
-    }
-    .category-card:hover {
-      border-color: rgba(123,108,246,0.45);
-      background: rgba(123,108,246,0.04);
-      transform: translateY(-3px);
-      box-shadow: 0 0 24px rgba(123,108,246,0.15), 0 8px 32px rgba(0,0,0,0.28);
-    }
-    .cat-num {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      color: var(--coral);
-      margin-bottom: 0.75rem;
-    }
-    .cat-title {
-      font-size: 1.3rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.75rem;
-    }
-    .cat-desc {
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.4);
-      line-height: 1.7;
-      margin-bottom: 1.25rem;
-    }
-    .cat-desc a { color: var(--purple-light); text-decoration: none; }
-    .cat-desc a:hover { color: var(--lime); }
-    .cat-link {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--lime);
-      text-decoration: none;
-    }
-
     /* -- Projects grid -- */
     .projects-heading {
       margin-bottom: 1.5rem;
@@ -432,6 +379,58 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
+    }
+    .featured-project-groups {
+      display: grid;
+      gap: 3.25rem;
+    }
+    .project-group {
+      display: grid;
+      gap: 1.1rem;
+    }
+    .project-group-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .project-group-kicker {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--lime);
+    }
+    .project-group-heading h3 {
+      font-size: clamp(1.25rem, 2vw, 1.85rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+    .project-group-heading p {
+      max-width: 26rem;
+      font-size: 0.82rem;
+      line-height: 1.6;
+      color: var(--muted);
+      text-align: right;
+    }
+    .project-group-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+    .project-group-grid.two-up {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .project-group-grid.single {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .project-group-grid .special-hub {
+      grid-column: auto;
+    }
+    .project-group-grid .special-hub .hub-banner {
+      aspect-ratio: 16/9;
     }
     .project-card {
       background: var(--glass-bg);
@@ -487,6 +486,18 @@
       object-fit: contain !important;
       border-radius: 30%;
       box-shadow: 0 18px 52px rgba(128,103,223,.2);
+    }
+    .project-thumb-wrap.coffee-thumb {
+      background:
+        radial-gradient(circle at 58% 38%, rgba(255,176,0,.26), transparent 45%),
+        linear-gradient(135deg, #1b0e05, #5f2d08 58%, #2a1404);
+    }
+    .project-thumb-wrap.coffee-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.05) contrast(1.03);
     }
     .project-info {
       padding: 1.25rem 1.5rem;
@@ -1055,11 +1066,6 @@
         flex-direction: row;
         text-align: left;
       }
-      .category-card {
-        background: rgba(255,255,255,0.02);
-        border: 1px solid rgba(255,255,255,0.08);
-        box-shadow: none; backdrop-filter: none;
-      }
       .project-card {
         background: var(--navy2);
         border: 1px solid rgba(255,255,255,0.06);
@@ -1076,7 +1082,6 @@
         backdrop-filter: none;
       }
       #hero { padding-top: 5rem; }
-      .work-categories { grid-template-columns: repeat(3, 1fr); }
     }
 
     /* ======================================
@@ -1243,8 +1248,21 @@
       }
       .hero-heading { font-size: clamp(2rem, 8vw, 3.5rem); }
       .hero-sub { font-size: 0.82rem; }      #work { padding: 5rem 1.5rem; }
-      .work-categories { grid-template-columns: 1fr; }
       .projects-grid { grid-template-columns: 1fr; }
+      .featured-project-groups { gap: 2.5rem; }
+      .project-group-heading {
+        display: grid;
+        gap: 0.55rem;
+      }
+      .project-group-heading p {
+        text-align: left;
+        max-width: none;
+      }
+      .project-group-grid,
+      .project-group-grid.two-up,
+      .project-group-grid.single {
+        grid-template-columns: 1fr;
+      }
       .hub-banner { flex-direction: column; aspect-ratio: auto; height: auto; }
       .hub-half   { height: 160px; flex: none !important; }
       .hub-divider { width: 100%; height: 1px; flex-shrink: 0; }
@@ -1257,14 +1275,6 @@
  }
       .social-btn { font-size: 0.72rem; padding: 0.6rem 1rem; }
       #back-to-top { bottom: calc(1.25rem + env(safe-area-inset-bottom)); right: 1.25rem; width: 64px; height: 64px; }
-      .category-card {
-        background: var(--glass-bg);
-        border: 1px solid var(--glass-border);
-        border-top-color: var(--glass-border-top);
-        backdrop-filter: var(--glass-blur);
-        -webkit-backdrop-filter: var(--glass-blur);
-        box-shadow: var(--glass-shadow-card);
-      }
       .project-card {
         background: rgba(22,21,43,0.7);
         border: 1px solid var(--glass-border);
@@ -1277,6 +1287,10 @@
         height: min(62%, 190px) !important;
         max-height: calc(100% - 2rem);
         max-width: 54%;
+      }
+      .project-thumb-wrap.coffee-thumb img {
+        height: 100%;
+        max-width: none;
       }
       .special-hub {
         background: rgba(22,21,43,0.7);
@@ -1422,126 +1436,164 @@
 
     <!-- Work -->
     <section id="work" aria-label="Selected work">
-      <div class="section-label fade-up">Selected Work</div>
-
-      <!-- Categories -->
-      <div class="work-categories">
-        <div class="category-card fade-up" data-delay="1">
-          <div class="cat-num">01</div>
-          <div class="cat-title">Illustrations</div>
-          <p class="cat-desc">From <a href="projects/light-and-form.html">symmetry studies</a> to photographic editing — two practices united by the same instinct: control what light does, and let the rest breathe. Every mark placed with <a href="projects/light-and-form.html">deliberate intention</a>.</p>
-          <a class="cat-link" href="projects/light-and-form.html">View work →</a>
-        </div>
-        <div class="category-card fade-up" data-delay="2">
-          <div class="cat-num">02</div>
-          <div class="cat-title">Game Design</div>
-          <p class="cat-desc">World-building through narrative and mechanics — <a href="projects/chronicles-of-elysium.html">Chronicles of Elysium</a> follows a heroine's journey across a shattered world, designed using Aristotle's Poetics and <a href="projects/chronicles-of-elysium.html">Campbell's Hero's Journey</a>.</p>
-          <a class="cat-link" href="projects/chronicles-of-elysium.html">View work →</a>
-        </div>
-
-        <div class="category-card fade-up" data-delay="3">
-          <div class="cat-num">03</div>
-          <div class="cat-title">Pop Culture</div>
-          <p class="cat-desc">Two editorial worlds, one design instinct. The high-energy pop of <a href="projects/so-good.html">Zara Larsson</a> and the cinematic darkness of <a href="projects/after-hours.html">The Weeknd</a> — each campaign built around an artist's identity rather than imposed on it.</p>
-          <a class="cat-link" href="projects/so-good.html">View projects →</a>
-        </div>
-
-      </div>
-
       <!-- Projects -->
       <div class="projects-heading">
         <h2 class="section-word-reveal"><span class="word">Featured</span> <em><span class="word" style="transition-delay:0.1s">Projects</span></em></h2>
       </div>
-            <div class="projects-grid">
-        <a href="projects/light-and-form.html" style="text-decoration:none; color:inherit; display:block;">
-        <div class="project-card">
-          <div class="project-thumb-wrap">
-            <img src="images/thumb-light-form.png" alt="Light &amp; Form — symmetry illustration study" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;" width="1400" height="788"/>
-          </div>
-          <div class="project-info">
+      <div class="featured-project-groups">
+        <section class="project-group fade-up" aria-labelledby="editorial-projects" data-delay="1">
+          <div class="project-group-heading">
             <div>
-              <h3>Light &amp; Form</h3>
-              <p>Illustration + Photo Editing · <time datetime="2021">2021</time></p>
+              <div class="project-group-kicker">01</div>
+              <h3 id="editorial-projects">Editorial &amp; Visual Direction</h3>
             </div>
-            <div class="project-arrow">→</div>
+            <p>Image-led projects where art direction, campaign mood, and visual voice do most of the storytelling.</p>
           </div>
-        </div>
-        </a>
-        <a href="projects/chronicles-of-elysium.html" style="text-decoration:none; color:inherit; display:block;">
-        <div class="project-card">
-          <div class="project-thumb-wrap">
-            <img src="images/thumb-chronicles.png" alt="Chronicles of Elysium — game design hex map" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;" width="1400" height="788"/>
-          </div>
-          <div class="project-info">
-            <div>
-              <h3>Chronicles of Elysium</h3>
-              <p>Game Design · <time datetime="2023">2023</time></p>
-            </div>
-            <div class="project-arrow">→</div>
-          </div>
-        </div>
-        </a>
-        <!-- Special Editions Hub -->
-        <a href="projects/special-editions.html" style="text-decoration:none;color:inherit;display:block;cursor: auto;grid-column:1/-1;">
-        <div class="special-hub fade-up project-card" data-delay="3">
-          <div class="hub-banner">
-            <div class="hub-half hub-half-zara">
-              <img class="hub-thumb" src="images/thumb-so-good.png"
-                   alt="Special Edition ft. Zara Larsson" loading="lazy" decoding="async" width="1400" height="788"/>
-              <div class="hub-half-label">
-                <div class="hub-half-tag">Editorial · <time datetime="2017">2017</time></div>
-                <div class="hub-half-title">Zara Larsson</div>
+          <div class="project-group-grid">
+            <a href="projects/light-and-form.html" style="text-decoration:none; color:inherit; display:block;">
+              <div class="project-card">
+                <div class="project-thumb-wrap">
+                  <img src="images/thumb-light-form.png" alt="Light &amp; Form — symmetry illustration study" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;" width="1400" height="788"/>
+                </div>
+                <div class="project-info">
+                  <div>
+                    <h3>Light &amp; Form</h3>
+                    <p>Illustration + Photo Editing · <time datetime="2021">2021</time></p>
+                  </div>
+                  <div class="project-arrow">→</div>
+                </div>
               </div>
-            </div>
-            <div class="hub-divider"></div>
-            <div class="hub-half hub-half-weeknd">
-              <img class="hub-thumb" src="images/thumb-after-hours.png"
-                   alt="Special Edition ft. The Weeknd" loading="lazy" decoding="async" width="1400" height="788"/>
-              <div class="hub-half-label">
-                <div class="hub-half-tag">Advertising · <time datetime="2022">2022</time></div>
-                <div class="hub-half-title">The Weeknd</div>
+            </a>
+
+            <a href="projects/special-editions.html" style="text-decoration:none;color:inherit;display:block;cursor: auto;">
+              <div class="special-hub fade-up project-card" data-delay="2">
+                <div class="hub-banner">
+                  <div class="hub-half hub-half-zara">
+                    <img class="hub-thumb" src="images/thumb-so-good.png"
+                         alt="Special Edition ft. Zara Larsson" loading="lazy" decoding="async" width="1400" height="788"/>
+                    <div class="hub-half-label">
+                      <div class="hub-half-tag">Editorial · <time datetime="2017">2017</time></div>
+                      <div class="hub-half-title">Zara Larsson</div>
+                    </div>
+                  </div>
+                  <div class="hub-divider"></div>
+                  <div class="hub-half hub-half-weeknd">
+                    <img class="hub-thumb" src="images/thumb-after-hours.png"
+                         alt="Special Edition ft. The Weeknd" loading="lazy" decoding="async" width="1400" height="788"/>
+                    <div class="hub-half-label">
+                      <div class="hub-half-tag">Advertising · <time datetime="2022">2022</time></div>
+                      <div class="hub-half-title">The Weeknd</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="project-info">
+                  <div>
+                    <h3>Special Editions</h3>
+                    <p>Editorial &amp; Advertising · <time datetime="2017">2017</time> · <time datetime="2022">2022</time></p>
+                  </div>
+                  <div class="project-arrow">→</div>
+                </div>
               </div>
-            </div>
-          </div>
-          <div class="project-info">
-            <div>
-              <h3>Special Editions</h3>
-              <p>Editorial &amp; Advertising · <time datetime="2017">2017</time> · <time datetime="2022">2022</time></p>
-            </div>
-            <div class="project-arrow">→</div>
-          </div>
-        </div>
-        </a>
+            </a>
 
-        <a href="projects/toronto-in-bloom.html" style="text-decoration:none; color:inherit; display:block;">
-        <div class="project-card fade-up" data-delay="4">
-          <div class="project-thumb-wrap">
-            <img src="images/toronto-bloom-canopy.jpeg" alt="Toronto in Bloom — cherry blossoms" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;" width="1637" height="1094"/>
+            <a href="projects/karina.html" style="text-decoration:none; color:inherit; display:block;">
+              <div class="project-card fade-up" data-delay="3">
+                <div class="project-thumb-wrap">
+                  <img src="images/karina-og-image.png" alt="Karina fan editorial cover" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;" width="1200" height="630"/>
+                </div>
+                <div class="project-info">
+                  <div>
+                    <h3>Karina</h3>
+                    <p>Fan Editorial · <time datetime="2026">2026</time></p>
+                  </div>
+                  <div class="project-arrow">→</div>
+                </div>
+              </div>
+            </a>
           </div>
-          <div class="project-info">
-            <div>
-              <h3>Toronto in Bloom</h3>
-              <p>Social Media · <time datetime="2026">2026</time></p>
-            </div>
-            <div class="project-arrow">→</div>
-          </div>
-        </div>
-        </a>
+        </section>
 
-        <a href="projects/tend-habit-tracker.html" style="text-decoration:none; color:inherit; display:block;">
-        <div class="project-card fade-up" data-delay="5">
-          <div class="project-thumb-wrap tend-thumb">
-            <img src="images/tend-app-store-icon.png" alt="Tend app icon with lavender leaf above pond ripples" loading="lazy" decoding="async" width="1024" height="1024"/>
-          </div>
-          <div class="project-info">
+        <section class="project-group fade-up" aria-labelledby="product-projects" data-delay="2">
+          <div class="project-group-heading">
             <div>
-              <h3>Tend</h3>
-              <p>UI/UX Design · SwiftUI App · <time datetime="2026">2026</time></p>
+              <div class="project-group-kicker">02</div>
+              <h3 id="product-projects">Design Systems &amp; Product</h3>
             </div>
-            <div class="project-arrow">→</div>
+            <p>Systems, flows, interaction logic, and interface decisions across games, mobile apps, and wearable prototypes.</p>
           </div>
-        </div>
-        </a>
+          <div class="project-group-grid">
+            <a href="projects/chronicles-of-elysium.html" style="text-decoration:none; color:inherit; display:block;">
+              <div class="project-card">
+                <div class="project-thumb-wrap">
+                  <img src="images/thumb-chronicles.png" alt="Chronicles of Elysium — game design hex map" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;" width="1400" height="788"/>
+                </div>
+                <div class="project-info">
+                  <div>
+                    <h3>Chronicles of Elysium</h3>
+                    <p>Game Design · <time datetime="2023">2023</time></p>
+                  </div>
+                  <div class="project-arrow">→</div>
+                </div>
+              </div>
+            </a>
+
+            <a href="projects/tend-habit-tracker.html" style="text-decoration:none; color:inherit; display:block;">
+              <div class="project-card fade-up" data-delay="5">
+                <div class="project-thumb-wrap tend-thumb">
+                  <img src="images/tend-app-store-icon.png" alt="Tend app icon with lavender leaf above pond ripples" loading="lazy" decoding="async" width="1024" height="1024"/>
+                </div>
+                <div class="project-info">
+                  <div>
+                    <h3>Tend</h3>
+                    <p>UI/UX Design · SwiftUI App · <time datetime="2026">2026</time></p>
+                  </div>
+                  <div class="project-arrow">→</div>
+                </div>
+              </div>
+            </a>
+
+            <a href="projects/coffee-nearby.html" style="text-decoration:none; color:inherit; display:block;">
+              <div class="project-card fade-up" data-delay="6">
+                <div class="project-thumb-wrap coffee-thumb">
+                  <img src="images/coffee-nearby-index-cover.png" alt="Coffee Nearby — amber terminal welcome screen" loading="lazy" decoding="async" width="1400" height="788"/>
+                </div>
+                <div class="project-info">
+                  <div>
+                    <h3>Coffee Nearby</h3>
+                    <p>UI/UX Design · Meta Wearables Web App · <time datetime="2026">2026</time></p>
+                  </div>
+                  <div class="project-arrow">→</div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <section class="project-group fade-up" aria-labelledby="social-projects" data-delay="3">
+          <div class="project-group-heading">
+            <div>
+              <div class="project-group-kicker">03</div>
+              <h3 id="social-projects">Social &amp; Cultural Storytelling</h3>
+            </div>
+            <p>Place, timing, and small observed moments shaped into a social-first visual story.</p>
+          </div>
+          <div class="project-group-grid single">
+            <a href="projects/toronto-in-bloom.html" style="text-decoration:none; color:inherit; display:block;">
+              <div class="project-card fade-up" data-delay="4">
+                <div class="project-thumb-wrap">
+                  <img src="images/toronto-bloom-canopy.jpeg" alt="Toronto in Bloom — cherry blossoms" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block;" width="1637" height="1094"/>
+                </div>
+                <div class="project-info">
+                  <div>
+                    <h3>Toronto in Bloom</h3>
+                    <p>Social Media · <time datetime="2026">2026</time></p>
+                  </div>
+                  <div class="project-arrow">→</div>
+                </div>
+              </div>
+            </a>
+          </div>
+        </section>
       </div>
 
       <p class="work-footer-line" style="margin-top:3rem;">Visual stories built with intent.</p>
@@ -1797,7 +1849,7 @@
       cursor.style.top = e.clientY + 'px';
     });
 
-    document.querySelectorAll('a, button, .category-card, .project-card').forEach(el => {
+    document.querySelectorAll('a, button, .project-card').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
     });
