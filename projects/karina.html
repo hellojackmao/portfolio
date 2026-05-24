@@ -224,10 +224,11 @@
     transform: translateY(-8px);
     transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
   }
-  .portfolio-dropdown.open .portfolio-dropdown-menu {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
+  .portfolio-dropdown.open .portfolio-dropdown-menu,
+  .portfolio-dropdown.open > .portfolio-dropdown-menu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateY(0) !important;
   }
   .portfolio-dropdown-menu a,
   .portfolio-active-page {

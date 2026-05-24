@@ -113,7 +113,12 @@
       border: 1px solid var(--glass-border); border-radius: 18px; padding: .75rem;
       box-shadow: 0 16px 48px rgba(54,45,71,.14), 0 1px 0 rgba(255,255,255,.8) inset;
     }
-    .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .nav-dropdown.open .nav-dropdown-menu,
+    .nav-dropdown.open > .nav-dropdown-menu {
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translateY(0) !important;
+    }
     .nav-dropdown-menu a {
       display: block; font-size: .75rem; font-weight: 700; letter-spacing: .08em;
       text-transform: uppercase; color: #747383;
