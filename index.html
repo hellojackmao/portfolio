@@ -396,6 +396,10 @@
       padding-bottom: 0.85rem;
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
+    .project-group-heading.category-fade {
+      animation: fadeSlideUp 0.7s cubic-bezier(0.16,1,0.3,1) both;
+      animation-delay: var(--category-delay, 0s);
+    }
     .project-group-kicker {
       font-family: 'DM Mono', monospace;
       font-size: 0.62rem;
@@ -1261,9 +1265,9 @@
         display: grid;
         gap: 0.55rem;
       }
-      .project-group.fade-up {
-        opacity: 1;
-        transform: none;
+      .project-group-heading.category-fade {
+        animation-duration: 0.55s;
+        animation-fill-mode: both;
       }
       .project-group-heading p {
         text-align: left;
@@ -1518,7 +1522,7 @@
       </div>
       <div class="featured-project-groups">
         <section class="project-group" aria-labelledby="editorial-projects">
-          <div class="project-group-heading">
+          <div class="project-group-heading category-fade" style="--category-delay: 0.04s;">
             <div>
               <div class="project-group-kicker">01</div>
               <h3 id="editorial-projects">Editorial &amp; Visual Direction</h3>
@@ -1590,7 +1594,7 @@
         </section>
 
         <section class="project-group" aria-labelledby="product-projects">
-          <div class="project-group-heading">
+          <div class="project-group-heading category-fade" style="--category-delay: 0.12s;">
             <div>
               <div class="project-group-kicker">02</div>
               <h3 id="product-projects">Design Systems &amp; Product</h3>
@@ -1646,7 +1650,7 @@
         </section>
 
         <section class="project-group" aria-labelledby="social-projects">
-          <div class="project-group-heading">
+          <div class="project-group-heading category-fade" style="--category-delay: 0.2s;">
             <div>
               <div class="project-group-kicker">03</div>
               <h3 id="social-projects">Social &amp; Cultural Storytelling</h3>
