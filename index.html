@@ -1247,7 +1247,7 @@
         position: relative; overflow: hidden;
       }
       .hero-heading { font-size: clamp(2rem, 8vw, 3.5rem); }
-      .hero-sub { font-size: 0.82rem; }      #work { padding: 5rem 1.5rem; }
+      .hero-sub { font-size: 0.82rem; }      #work { padding: 5rem 1.25rem; }
       .projects-grid { grid-template-columns: 1fr; }
       .featured-project-groups { gap: 2.5rem; }
       .project-group-heading {
@@ -1262,6 +1262,8 @@
       .project-group-grid.two-up,
       .project-group-grid.single {
         grid-template-columns: 1fr;
+        width: min(100%, 34rem);
+        margin-inline: auto;
       }
       .hub-banner {
         flex-direction: row;
@@ -1299,6 +1301,8 @@
       .social-btn { font-size: 0.72rem; padding: 0.6rem 1rem; }
       #back-to-top { bottom: calc(1.25rem + env(safe-area-inset-bottom)); right: 1.25rem; width: 64px; height: 64px; }
       .project-card {
+        width: 100%;
+        box-sizing: border-box;
         background: rgba(22,21,43,0.7);
         border: 1px solid var(--glass-border);
         border-top-color: var(--glass-border-top);
