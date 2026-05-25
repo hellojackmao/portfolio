@@ -266,6 +266,38 @@
       font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:var(--lime);
     }
     .case-snapshot p { margin:0; font-size:.84rem; line-height:1.55; color:#747383; }
+    .quick-study {
+      margin: -1rem 0 3.5rem;
+      border: 1px solid var(--glass-border);
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--glass-border);
+    }
+    .quick-study-role,
+    .quick-study-item {
+      background: rgba(251,250,246,.86);
+      padding: 1rem 1.1rem;
+    }
+    .quick-study-role {
+      border-bottom: 1px solid var(--glass-border);
+      font-family: 'DM Mono', monospace;
+      font-size: .7rem;
+      line-height: 1.65;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #747383;
+    }
+    .quick-study-role strong { color: var(--lime); font-weight: 700; }
+    .quick-study-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+    }
+    .quick-study-item span {
+      display:block; margin-bottom:.35rem; font-family:'DM Mono', monospace;
+      font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:var(--lime);
+    }
+    .quick-study-item p { margin:0; font-size:.84rem; line-height:1.55; color:#747383; }
     .ai-disclaimer {
       margin: -1.25rem 0 3rem;
       padding: 1rem 1.1rem;
@@ -642,6 +674,11 @@
         backdrop-filter:var(--glass-blur-sm);
         -webkit-backdrop-filter:var(--glass-blur-sm);
       }
+      .quick-study {
+        margin: 0 0 3rem;
+        border-radius: 18px;
+      }
+      .quick-study-grid { grid-template-columns: 1fr; }
       .snapshot-card,
       .final-design-card,
       .system-panel,
@@ -768,6 +805,12 @@
         backdrop-filter:none;
         -webkit-backdrop-filter:none;
       }
+      .quick-study {
+        margin-top: 0;
+        border-radius: 14px;
+        box-shadow: none;
+      }
+      .quick-study-grid { grid-template-columns: 1fr; }
       .snapshot-grid, .flow-map, .system-grid { grid-template-columns:1fr; }
       .final-design-grid { grid-template-columns:1fr; }
       .snapshot-card,
@@ -1171,6 +1214,29 @@
       margin: 3.5rem auto 4.25rem !important;
       max-width: 1040px;
     }
+    .quick-study {
+      max-width: 1040px;
+      margin: 0 auto 4rem;
+      border-color: rgba(255,176,0,.26);
+      border-top-color: rgba(255,208,96,.38);
+      background: rgba(255,176,0,.16);
+      box-shadow: 0 18px 42px rgba(0,0,0,.24);
+    }
+    .quick-study-role,
+    .quick-study-item {
+      background: rgba(255,176,0,.055);
+    }
+    .quick-study-role {
+      border-bottom-color: rgba(255,176,0,.2);
+      color: rgba(255,242,210,.68);
+    }
+    .quick-study-role strong,
+    .quick-study-item span {
+      color: #ffb000;
+    }
+    .quick-study-item p {
+      color: rgba(255,242,210,.78);
+    }
     .coffee-stack .system-panel,
     .system-panel {
       background: rgba(255,176,0,.055);
@@ -1356,6 +1422,24 @@
       <div class="project-intro">
         <p><strong>Coffee Nearby</strong> is a wearable-first Web App prototype built for Meta Ray-Ban Display glasses. The platform's additive waveguide display, D-pad-only input, and fixed 600x600 viewport force a complete rethink of standard web design instincts.</p>
         <p>The result is a single-file, dependency-free coffee shop finder with a live AR-style radar, walking ETAs, OpenStreetMap-powered search, and an amber terminal aesthetic chosen specifically to work with the display's physics rather than against them.</p>
+      </div>
+
+      <div class="quick-study" aria-label="Coffee Nearby case-study summary">
+        <div class="quick-study-role"><strong>What I did</strong> - Role: UI/UX Design, Interaction Design, Product Prototyping, Front-end Build</div>
+        <div class="quick-study-grid">
+          <div class="quick-study-item">
+            <span>Challenge</span>
+            <p>Design a coffee finder for a 600x600 wearable display with no mouse, touch, scroll assumptions, or dense phone-style UI.</p>
+          </div>
+          <div class="quick-study-item">
+            <span>Direction</span>
+            <p>Use an amber terminal language, D-pad focus states, radar-style spatial feedback, and state-based screens tuned to Meta Ray-Ban Display constraints.</p>
+          </div>
+          <div class="quick-study-item">
+            <span>Outcome</span>
+            <p>A working single-file prototype that finds nearby cafes, supports filters, detail views, favorites, walking ETAs, and a compass/radar mode.</p>
+          </div>
+        </div>
       </div>
 
       <div class="section-heading">Working Product</div>
@@ -1674,4 +1758,3 @@
 </script>
 </body>
 </html>
-
