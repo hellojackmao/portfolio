@@ -394,6 +394,26 @@
     overflow: hidden;
     border: 1px solid rgba(0,0,0,0.1);
   }
+  .hero-figure-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 50% 22%;
+    filter: saturate(0.9) contrast(1.05);
+    z-index: 0;
+  }
+  .hero-figure::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10,10,10,0.18) 0%, rgba(10,10,10,0.08) 45%, rgba(10,10,10,0.72) 100%),
+      linear-gradient(90deg, rgba(10,10,10,0.34) 0%, transparent 45%, rgba(10,10,10,0.16) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
   .hero-figure-inner {
     position: absolute;
     inset: 0;
@@ -402,6 +422,7 @@
     justify-content: space-between;
     padding: 28px;
     color: var(--paper);
+    z-index: 2;
   }
   .hero-figure-top {
     display: flex;
@@ -443,6 +464,7 @@
       rgba(245,241,234,0.12) 0%,
       transparent 60%);
     pointer-events: none;
+    display: none;
   }
   .portrait-mark::before {
     content: '';
@@ -758,6 +780,25 @@
     overflow: hidden;
     aspect-ratio: 3/4;
   }
+  .ed-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    z-index: 0;
+  }
+  .ed-frame:has(.ed-img)::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(10,10,10,0.46) 0%, rgba(10,10,10,0.08) 45%, rgba(10,10,10,0.74) 100%),
+      linear-gradient(90deg, rgba(10,10,10,0.28), transparent 42%);
+    z-index: 1;
+    pointer-events: none;
+  }
   .ed-frame.alt-1 {
     background: linear-gradient(135deg, #c8b8a2, #8a7a64);
   }
@@ -784,10 +825,11 @@
     flex-direction: column;
     justify-content: space-between;
     color: var(--paper);
+    z-index: 2;
   }
   .ed-frame.alt-1 .ed-content,
   .ed-frame.alt-3 .ed-content {
-    color: var(--ink);
+    color: var(--paper);
   }
   .ed-tag {
     font-size: 9px;
@@ -1006,6 +1048,9 @@
     object-fit: cover;
     object-position: center;
     z-index: 0;
+  }
+  .look-video {
+    background: #0a0a0a;
   }
   /* When a photo is present in a look-frame, add a dark gradient so captions stay legible */
   .look-frame:has(.look-img)::before {
@@ -2880,6 +2925,7 @@
     </div>
 
     <figure class="hero-figure">
+      <img class="hero-figure-img" src="../images/karina-flash-back-01.jpg" alt="Back view of Karina's white gown and embellished straps" loading="eager" decoding="async" width="1440" height="1800" />
       <div class="portrait-mark"></div>
       <div class="hero-figure-inner">
         <div class="hero-figure-top">
@@ -3043,6 +3089,7 @@
   <!-- LOOKBOOK SPREAD -->
   <div class="met-lookbook">
     <figure class="look-frame l-1">
+      <img src="../images/karina-backstage-full-01.jpg" alt="Full-length backstage portrait of Karina in a white Prada gown and black cape" class="look-img" loading="lazy" decoding="async" width="1350" height="1800" />
       <div class="look-content">
         <div class="look-num">01</div>
         <div>
@@ -3052,6 +3099,7 @@
       </div>
     </figure>
     <figure class="look-frame l-2">
+      <img src="../images/karina-backstage-portrait-01.jpg" alt="Karina in a white Prada look and black cape backstage" class="look-img" loading="lazy" decoding="async" width="1350" height="1800" />
       <div class="look-content">
         <div class="look-num">02</div>
         <div>
@@ -3061,7 +3109,7 @@
       </div>
     </figure>
     <figure class="look-frame l-3">
-      <img src="../images/karina-cape.jpg" alt="Detail of Karina's Met Gala 2026 Prada cape" class="look-img" loading="lazy" />
+      <img src="../images/karina-look-dress-cape-01.jpg" alt="White gown and black cape displayed on a dress form" class="look-img" loading="lazy" decoding="async" width="1120" height="1400" />
       <div class="look-content">
         <div class="look-num">03</div>
         <div>
@@ -3071,11 +3119,12 @@
       </div>
     </figure>
     <figure class="look-frame l-4">
+      <video class="look-img look-video" src="../images/karina-met-loop-source.mp4" poster="../images/karina-flash-front-01.jpg" muted playsinline autoplay loop preload="auto" data-loop-start="13" data-loop-end="24" aria-label="Looping backstage motion plate of Karina in the Prada look"></video>
       <div class="look-content">
         <div class="look-num">04</div>
         <div>
-          <div class="look-caption">On the steps. The hanbok neckline reads as a quiet flag — heritage filed into haute couture.</div>
-          <div class="look-credit">Plate · Red Carpet Wide · Getty / Vogue</div>
+          <div class="look-caption">Motion plate. The stillness breaks just enough to show the cape, neckline, and flash texture in motion.</div>
+          <div class="look-credit">Plate - Motion Loop</div>
         </div>
       </div>
     </figure>
@@ -3597,6 +3646,7 @@
 
   <div class="editorial">
     <figure class="ed-frame ed-1">
+      <img class="ed-img" src="../images/karina-flash-front-01.jpg" alt="Flash portrait of Karina holding a white clutch with a black cape" loading="lazy" decoding="async" width="1440" height="1800" />
       <div class="ed-content">
         <div class="ed-tag">Plate I · Met Gala 2026</div>
         <div class="ed-caption">"A tablier neckline, drawn from hanbok."</div>
@@ -3604,6 +3654,7 @@
     </figure>
 
     <figure class="ed-frame alt-1 ed-2">
+      <img class="ed-img" src="../images/karina-plate-ii.jpg" alt="Karina close-up for Vogue Korea with hands framing her face" loading="lazy" decoding="async" width="1448" height="1800" />
       <div class="ed-content">
         <div class="ed-tag">Plate II · Vogue Korea, 2024</div>
         <div class="ed-caption">"Soft gold light, ivory tones, classic codes."</div>
@@ -3611,6 +3662,7 @@
     </figure>
 
     <figure class="ed-frame alt-2 ed-3">
+      <img class="ed-img" src="../images/karina-plate-iii.jpg" alt="Karina at Prada FW25 in front of the Prada logo wall" loading="lazy" decoding="async" width="1200" height="1800" />
       <div class="ed-content">
         <div class="ed-tag">Plate III · Milan FW '25</div>
         <div class="ed-caption">"Yellow Prada, diamond pattern."</div>
@@ -3618,6 +3670,7 @@
     </figure>
 
     <figure class="ed-frame alt-3 ed-4 wide">
+      <img class="ed-img" src="../images/karina-plate-iv.jpg" alt="Karina for Marie Claire Korea against a pink background" loading="lazy" decoding="async" width="1473" height="1800" />
       <div class="ed-content">
         <div class="ed-tag">Plate IV · Marie Claire × Chanel Beauty, Feb 2026</div>
         <div class="ed-caption">"Pink-beige, shimmering ivory — a woman comfortable in her contradictions."</div>
@@ -3625,6 +3678,7 @@
     </figure>
 
     <figure class="ed-frame ed-5">
+      <img class="ed-img" src="../images/karina-plate-v.jpg" alt="Karina in red visor styling for Whiplash era imagery" loading="lazy" decoding="async" width="1200" height="1800" />
       <div class="ed-content">
         <div class="ed-tag">Plate V · "Whiplash" Era, 2024</div>
         <div class="ed-caption">"Confidence as a sound, choreography as a sentence."</div>
@@ -4391,6 +4445,27 @@
     root.classList.remove('page-ready');
     root.classList.add('page-leaving');
     setTimeout(() => { window.location.href = url.href; }, 360);
+  });
+})();
+
+(function () {
+  document.querySelectorAll('video[data-loop-start][data-loop-end]').forEach(video => {
+    const start = Number(video.dataset.loopStart || 0);
+    const end = Number(video.dataset.loopEnd || 0);
+    if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return;
+
+    const setStart = () => {
+      if (Math.abs(video.currentTime - start) > 0.35) video.currentTime = start;
+      video.play().catch(() => {});
+    };
+
+    if (video.readyState >= 1) setStart();
+    else video.addEventListener('loadedmetadata', setStart, { once: true });
+    video.addEventListener('canplay', setStart, { once: true });
+    window.setTimeout(setStart, 700);
+    video.addEventListener('timeupdate', () => {
+      if (video.currentTime < start - 0.5 || video.currentTime >= end) video.currentTime = start;
+    });
   });
 })();
 
