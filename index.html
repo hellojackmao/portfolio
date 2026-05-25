@@ -1263,14 +1263,32 @@
       .project-group-grid.single {
         grid-template-columns: 1fr;
       }
-      .hub-banner { flex-direction: column; aspect-ratio: auto; height: auto; }
-      .hub-half {
-        min-height: 190px;
+      .hub-banner {
+        flex-direction: row;
+        aspect-ratio: 16 / 10;
+        min-height: 230px;
         height: auto;
-        flex: none !important;
-        padding: 1.35rem 1.45rem;
       }
-      .hub-divider { width: 100%; height: 1px; flex-shrink: 0; }
+      .hub-half {
+        min-height: 0;
+        height: auto;
+        flex: 1 1 0 !important;
+        padding: 1.15rem;
+      }
+      .hub-half:hover { flex: 1 1 0 !important; }
+      .hub-divider { width: 1px; height: auto; flex-shrink: 0; }
+      .hub-half-label {
+        gap: 0.35rem;
+      }
+      .hub-half-tag {
+        font-size: 0.52rem;
+        line-height: 1.5;
+      }
+      .hub-half-title {
+        font-size: clamp(0.82rem, 3.6vw, 1rem);
+        line-height: 1.15;
+        overflow-wrap: anywhere;
+      }
           #about { padding: 5rem 1.5rem; }
       .about-inner { grid-template-columns: 1fr; gap: 3rem; }
       .inspirations-grid { grid-template-columns: 1fr; }
