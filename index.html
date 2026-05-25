@@ -1095,6 +1095,10 @@
     
     @media (max-width: 400px) {      .hero-heading { font-size: clamp(1.6rem, 6.5vw, 3rem); }
       .contact-email { font-size: 1rem; }
+      .hub-banner { min-height: 220px; }
+      .hub-half { padding: 1rem 0.78rem; }
+      .hub-half-tag { font-size: 0.48rem; }
+      .hub-half-title { font-size: 0.78rem; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1276,12 +1280,14 @@
         aspect-ratio: 16 / 10;
         min-height: 230px;
         height: auto;
+        width: 100%;
       }
       .hub-half {
         min-height: 0;
         height: auto;
+        min-width: 0;
         flex: 1 1 0 !important;
-        padding: 1.15rem;
+        padding: 1.2rem 0.95rem;
       }
       .hub-half:hover { flex: 1 1 0 !important; }
       .hub-divider { width: 1px; height: auto; flex-shrink: 0; }
@@ -1293,7 +1299,7 @@
         line-height: 1.5;
       }
       .hub-half-title {
-        font-size: clamp(0.82rem, 3.6vw, 1rem);
+        font-size: clamp(0.78rem, 3.35vw, 0.96rem);
         line-height: 1.15;
         overflow-wrap: anywhere;
       }
