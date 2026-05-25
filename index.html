@@ -1251,7 +1251,10 @@
         position: relative; overflow: hidden;
       }
       .hero-heading { font-size: clamp(2rem, 8vw, 3.5rem); }
-      .hero-sub { font-size: 0.82rem; }      #work { padding: 5rem clamp(1.6rem, 6vw, 2.25rem); }
+      .hero-sub { font-size: 0.82rem; }      #work {
+        padding: 5rem clamp(1.6rem, 6vw, 2.25rem);
+        overflow-x: hidden;
+      }
       .projects-grid { grid-template-columns: 1fr; }
       .featured-project-groups { gap: 2.5rem; }
       .project-group-heading {
@@ -1271,9 +1274,10 @@
       }
       .project-group-grid > a {
         display: block !important;
-        width: 100%;
+        width: calc(100% - 0.7rem);
         max-width: 100%;
         min-width: 0;
+        margin-inline: auto;
       }
       .hub-banner {
         flex-direction: row;
@@ -1316,6 +1320,7 @@
         width: 100%;
         max-width: 100%;
         box-sizing: border-box;
+        margin-inline: auto;
         background: rgba(22,21,43,0.7);
         border: 1px solid var(--glass-border);
         border-top-color: var(--glass-border-top);
@@ -1402,6 +1407,13 @@
       .nav-links a { font-size: clamp(.48rem, 1.95vw, .55rem); letter-spacing: .06em; padding: 0 .08rem; }
 
       .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 400px) {
+      .hub-banner { min-height: 220px; }
+      .hub-half { padding: 1rem 0.78rem; }
+      .hub-half-tag { font-size: 0.48rem; }
+      .hub-half-title { font-size: 0.78rem; }
+      .project-group-grid > a { width: calc(100% - 0.9rem); }
     }</style>
   <link rel="canonical" href="https://hellojackmao.com/"/>
 
