@@ -35,7 +35,7 @@
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
-    if (!window.location.hash) {
+    if (!window.location.hash || window.location.hash === '#top') {
       window.scrollTo(0, 0);
     }
   </script>
@@ -1261,6 +1261,10 @@
         display: grid;
         gap: 0.55rem;
       }
+      .project-group.fade-up {
+        opacity: 1;
+        transform: none;
+      }
       .project-group-heading p {
         text-align: left;
         max-width: none;
@@ -1315,7 +1319,13 @@
       .contact-email { font-size: clamp(0.9rem, 4vw, 1.2rem); word-break: break-word;
  }
       .social-btn { font-size: 0.72rem; padding: 0.6rem 1rem; }
-      #back-to-top { bottom: calc(1.25rem + env(safe-area-inset-bottom)); right: 1.25rem; width: 64px; height: 64px; }
+      #back-to-top {
+        bottom: calc(1.25rem + env(safe-area-inset-bottom));
+        right: 1.25rem;
+        width: 64px;
+        height: 64px;
+        z-index: 100001;
+      }
       .project-card {
         width: 100%;
         max-width: 100%;
@@ -1922,6 +1932,13 @@
     // -- Direct page reveal --
     const main = document.getElementById('main');
     const shouldScrollToWork = window.location.hash === '#work';
+    const shouldStartAtTop = !window.location.hash || window.location.hash === '#top';
+    function forceTopOnFreshLoad() {
+      if (!shouldStartAtTop) return;
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
     // -- Animation observers — all five systems --
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1970,17 +1987,27 @@
         el.style.opacity = '1';
         el.style.transform = 'translateY(0)';
       });
+    } else {
+      forceTopOnFreshLoad();
+      requestAnimationFrame(forceTopOnFreshLoad);
+      window.addEventListener('load', function() {
+        forceTopOnFreshLoad();
+        setTimeout(forceTopOnFreshLoad, 80);
+        setTimeout(forceTopOnFreshLoad, 260);
+      }, { once: true });
     }
     startRevealObserver();
     // -- Back to top --
     const btt = document.getElementById('back-to-top');
-    window.addEventListener('scroll', () => {
+    function updateBackToTop() {
       if (window.scrollY > 400) {
         btt.classList.add('visible');
       } else {
         btt.classList.remove('visible');
       }
-    }, { passive: true });
+    }
+    window.addEventListener('scroll', updateBackToTop, { passive: true });
+    updateBackToTop();
     btt.addEventListener('click', () => {
       btt.classList.add('spinning');
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -2072,13 +2099,15 @@
     })();
     // Fix bfcache restore — remove veil on back navigation
     window.addEventListener('pageshow', e => {
-      if (!window.location.hash) {
-        requestAnimationFrame(() => window.scrollTo(0, 0));
+      if (!window.location.hash || window.location.hash === '#top') {
+        requestAnimationFrame(forceTopOnFreshLoad);
+        setTimeout(forceTopOnFreshLoad, 80);
       }
       if (e.persisted) {
         const veil = document.getElementById('page-veil');
         if (veil) { veil.classList.remove('visible'); veil.style.opacity = '0'; }
       }
+      updateBackToTop();
     });
   </script>
 
