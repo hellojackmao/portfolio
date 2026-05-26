@@ -921,8 +921,8 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
     }
-    .contact-socials { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem; }
-    .social-btn {
+    .contact-links { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem; }
+    .contact-link-btn {
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -939,7 +939,7 @@
       cursor: auto;
       position: relative; overflow: hidden;
     }
-    .social-btn:hover {
+    .contact-link-btn:hover {
       color: var(--lime);
       border-color: rgba(204,255,0,0.35);
       box-shadow: 0 0 18px rgba(204,255,0,0.15), 0 4px 16px rgba(0,0,0,0.3);
@@ -1080,7 +1080,7 @@
         border: 1px solid rgba(255,255,255,0.06);
         backdrop-filter: none;
       }
-      .social-btn {
+      .contact-link-btn {
         background: transparent;
         border: 1px solid rgba(255,255,255,0.12);
         backdrop-filter: none;
@@ -1319,10 +1319,10 @@
       .about-inner { grid-template-columns: 1fr; gap: 3rem; }
       .inspirations-grid { grid-template-columns: 1fr; }
       #contact { padding: 5rem 1.5rem; }
-      .contact-socials { flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+      .contact-links { flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
       .contact-email { font-size: clamp(0.9rem, 4vw, 1.2rem); word-break: break-word;
  }
-      .social-btn { font-size: 0.72rem; padding: 0.6rem 1rem; }
+      .contact-link-btn { font-size: 0.72rem; padding: 0.6rem 1rem; }
       #back-to-top {
         bottom: calc(1.25rem + env(safe-area-inset-bottom));
         right: 1.25rem;
@@ -1373,7 +1373,7 @@
       .special-hub .project-arrow {
         padding-top: 0.1rem;
       }
-      .social-btn {
+      .contact-link-btn {
         background: var(--glass-bg);
         border: 1px solid var(--glass-border);
         border-top-color: var(--glass-border-top);
@@ -1649,11 +1649,11 @@
           </div>
         </section>
 
-        <section class="project-group" aria-labelledby="social-projects">
+        <section class="project-group" aria-labelledby="storytelling-projects">
           <div class="project-group-heading category-fade" style="--category-delay: 0.2s;">
             <div>
               <div class="project-group-kicker">03</div>
-              <h3 id="social-projects">Social &amp; Cultural Storytelling</h3>
+              <h3 id="storytelling-projects">Social &amp; Cultural Storytelling</h3>
             </div>
             <p>Place, timing, and small observed moments shaped into a social-first visual story.</p>
           </div>
@@ -1850,10 +1850,10 @@
           formspree('initForm', { formElement: '#contactForm', formId: 'mkoyznoe' });
         </script>
         <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
-        <div class="contact-socials">
-          <a class="social-btn" href="https://www.linkedin.com/in/jack-mao" target="_blank" rel="noopener noreferrer">↗ LinkedIn</a>
-          <a class="social-btn" href="https://www.instagram.com/jjjackmao" target="_blank" rel="noopener noreferrer">↗ Instagram</a>
-          <a class="social-btn" href="https://www.behance.net/jackmao11" target="_blank" rel="noopener noreferrer">↗ Behance</a>
+        <div class="contact-links">
+          <a class="contact-link-btn" href="https://www.linkedin.com/in/jack-mao" target="_blank" rel="noopener noreferrer">↗ LinkedIn</a>
+          <a class="contact-link-btn" href="https://www.instagram.com/jjjackmao" target="_blank" rel="noopener noreferrer">↗ Instagram</a>
+          <a class="contact-link-btn" href="https://www.behance.net/jackmao11" target="_blank" rel="noopener noreferrer">↗ Behance</a>
         </div>
       </div>
     </section>
