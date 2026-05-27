@@ -1092,6 +1092,132 @@
     /* ======================================
        V1 DESKTOP (≥769px) — strip glass, flush nav
     ====================================== */
+
+    /* ── Share / QR button ── */
+    #share-btn-wrap {
+      position: fixed;
+      bottom: 2rem; left: 2rem;
+      z-index: 500;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .75rem;
+    }
+
+    #share-btn {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      border: 0; padding: 0;
+      background: transparent;
+      cursor: auto;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .4s cubic-bezier(.16,1,.3,1),
+                  transform .4s cubic-bezier(.16,1,.3,1);
+      pointer-events: none;
+    }
+    #share-btn.visible {
+      opacity: 1; transform: translateY(0); pointer-events: all;
+    }
+    #share-btn::before {
+      content: '';
+      position: absolute; inset: 0;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.04);
+      transition: border-color .3s, background .3s;
+    }
+    #share-btn:hover::before,
+    #share-btn[aria-expanded="true"]::before {
+      border-color: rgba(204,255,0,0.45);
+      background: rgba(204,255,0,0.06);
+    }
+
+    /* Spinning ring */
+    .share-ring {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      animation: btt-spin 10s linear infinite;
+      animation-play-state: paused;
+    }
+    #share-btn:hover .share-ring,
+    #share-btn[aria-expanded="true"] .share-ring {
+      animation-play-state: running;
+    }
+    .share-ring-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 10.5px;
+      fill: rgba(255,255,255,0.35);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    #share-btn:hover .share-ring-text,
+    #share-btn[aria-expanded="true"] .share-ring-text {
+      fill: rgba(204,255,0,0.7);
+    }
+
+    /* QR icon */
+    .share-icon {
+      position: relative; z-index: 1;
+      width: 22px; height: 22px;
+      color: rgba(255,255,255,0.6);
+      transition: color .3s;
+      flex-shrink: 0;
+    }
+    #share-btn:hover .share-icon,
+    #share-btn[aria-expanded="true"] .share-icon {
+      color: var(--lime);
+    }
+
+    /* QR popup */
+    .share-qr-popup {
+      background: var(--cream);
+      border-radius: 16px;
+      padding: 1rem;
+      box-shadow: 0 16px 48px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .6rem;
+      width: 160px;
+      opacity: 0;
+      transform: translateY(8px) scale(0.92);
+      transform-origin: bottom center;
+      pointer-events: none;
+      transition: opacity .25s cubic-bezier(.16,1,.3,1),
+                  transform .25s cubic-bezier(.16,1,.3,1);
+    }
+    .share-qr-popup.open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+    .share-qr-popup svg,
+    .share-qr-popup img {
+      width: 100%; height: auto; display: block;
+    }
+    .share-qr-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .55rem;
+      letter-spacing: .08em;
+      color: rgba(15,14,26,0.45);
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      #share-btn-wrap {
+        bottom: calc(1.25rem + env(safe-area-inset-bottom));
+        left: 1.25rem;
+      }
+      #share-btn {
+        width: 64px; height: 64px;
+      }
+      .share-qr-popup { width: 140px; }
+    }
+
+
     @media (min-width: 769px) {
       nav {
         top: 0; left: 0; right: 0; transform: none; width: 100%; max-width: none;
@@ -1470,6 +1596,11 @@
       .hub-half-tag { font-size: 0.48rem; }
       .hub-half-title { font-size: 0.78rem; }
       .project-group-grid > a { width: calc(100% - 0.9rem); }
+
+    @media print {
+      #share-btn-wrap { display: none !important; }
+    }
+
     }</style>
   <link rel="canonical" href="https://hellojackmao.com/"/>
 
@@ -1927,6 +2058,35 @@
     </svg>
   </button>
 
+  <!-- Share / QR button -->
+  <div id="share-btn-wrap">
+    <div class="share-qr-popup" id="shareQrPopup" aria-hidden="true">
+      <div class="share-qr-inner">
+        <img src="images/qr-hellojackmao.svg" alt="QR code for hellojackmao.com" width="450" height="450" loading="lazy"/>
+        <span class="share-qr-label">hellojackmao.com</span>
+      </div>
+    </div>
+    <button id="share-btn" type="button" aria-label="Show QR code to share portfolio" aria-expanded="false">
+      <svg class="share-ring" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <path id="share-circle-path" d="M 60,60 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/>
+        </defs>
+        <text class="share-ring-text">
+          <textPath href="#share-circle-path" startOffset="0%">SHARE · SCAN ME · SHARE · SCAN ME · </textPath>
+        </text>
+      </svg>
+      <svg class="share-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
+        <rect x="3"  y="3"  width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/>
+        <rect x="14" y="3"  width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/>
+        <rect x="3"  y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/>
+        <rect x="16" y="16" width="2" height="2" fill="currentColor"/>
+        <rect x="19" y="16" width="2" height="2" fill="currentColor"/>
+        <rect x="16" y="19" width="2" height="2" fill="currentColor"/>
+        <rect x="19" y="19" width="2" height="2" fill="currentColor"/>
+      </svg>
+    </button>
+  </div>
+
   <script>
     // -- Image protection --
     document.addEventListener('contextmenu', e => {
@@ -2171,6 +2331,60 @@
           // Instant (reduced motion)
           window.location.href = url.href;
         }
+      });
+    })();
+  
+    // ── Share / QR button ──
+    (function() {
+      const wrap   = document.getElementById('share-btn-wrap');
+      const btn    = document.getElementById('share-btn');
+      const popup  = document.getElementById('shareQrPopup');
+      if (!btn || !popup) return;
+
+      // Show/hide with scroll (mirrors back-to-top)
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) {
+          btn.classList.add('visible');
+        } else {
+          btn.classList.remove('visible');
+          closePopup();
+        }
+      }, { passive: true });
+
+      function openPopup() {
+        popup.classList.add('open');
+        popup.setAttribute('aria-hidden', 'false');
+        btn.setAttribute('aria-expanded', 'true');
+      }
+      function closePopup() {
+        popup.classList.remove('open');
+        popup.setAttribute('aria-hidden', 'true');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+
+      btn.addEventListener('click', e => {
+        e.stopPropagation();
+        if (popup.classList.contains('open')) { closePopup(); } else { openPopup(); }
+      });
+
+      // Close on outside click
+      document.addEventListener('click', e => {
+        if (!wrap.contains(e.target)) closePopup();
+      });
+
+      // Close on Escape
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closePopup();
+      });
+
+      // Cursor hover
+      btn.addEventListener('mouseenter', () => {
+        const cur = document.getElementById('cursor');
+        if (cur) cur.classList.add('hovering');
+      });
+      btn.addEventListener('mouseleave', () => {
+        const cur = document.getElementById('cursor');
+        if (cur) cur.classList.remove('hovering');
       });
     })();
   </script>
