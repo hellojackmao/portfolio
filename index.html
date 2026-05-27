@@ -43,34 +43,24 @@
 
 /* -- Print styles -- */
 
-    /* ── Page transition — scale exit ── */
+    /* ── Page transition ── */
     #page-veil {
-      position: fixed;
-      inset: 0;
-      z-index: 100000;
-      background: var(--veil-color, var(--navy, #0f0e1a));
-      opacity: 1;
-      pointer-events: auto;
+      position: fixed; inset: 0; z-index: 100000;
+      background: var(--veil-color, #0f0e1a);
+      opacity: 1; pointer-events: auto;
       transition: opacity .42s cubic-bezier(.16,1,.3,1);
     }
-    .page-ready #page-veil {
-      opacity: 0;
-      pointer-events: none;
-    }
-    /* Scale-down exit on the main content wrapper */
+    .page-ready #page-veil { opacity: 0; pointer-events: none; }
     body {
       transition: transform .38s cubic-bezier(.4,0,1,1),
                   opacity   .38s cubic-bezier(.4,0,1,1);
     }
-    .page-leaving body,
-    html.page-leaving body {
-      transform: scale(0.97);
-      opacity: 0.4;
-    }
+    .page-leaving body { transform: scale(0.97); opacity: 0.4; }
     @media (prefers-reduced-motion: reduce) {
       #page-veil { transition: none; }
-      body        { transition: none; }
+      body { transition: none; }
     }
+
     @media print {
       body { background: #fff !important; color: #000 !important; cursor: auto !important; }
       nav, .cursor, #page-veil, #scroll-progress, #back-to-top,
@@ -950,8 +940,8 @@
       letter-spacing: 0.18em;
       text-transform: uppercase;
     }
-    .contact-socials { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem; }
-    .social-btn {
+    .contact-links { display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center; margin-top: 1rem; }
+    .contact-link-btn {
       display: flex;
       align-items: center;
       gap: 0.5rem;
@@ -968,7 +958,7 @@
       cursor: auto;
       position: relative; overflow: hidden;
     }
-    .social-btn:hover {
+    .contact-link-btn:hover {
       color: var(--lime);
       border-color: rgba(204,255,0,0.35);
       box-shadow: 0 0 18px rgba(204,255,0,0.15), 0 4px 16px rgba(0,0,0,0.3);
@@ -1109,7 +1099,7 @@
         border: 1px solid rgba(255,255,255,0.06);
         backdrop-filter: none;
       }
-      .social-btn {
+      .contact-link-btn {
         background: transparent;
         border: 1px solid rgba(255,255,255,0.12);
         backdrop-filter: none;
@@ -1138,7 +1128,7 @@
       .hero-scroll, .avail-dot, .btt-arrow,
       #back-to-top:hover .btt-arrow,
       .marquee-inner, .gradient-divider, .dt-dot { animation: none; }
-      .fade-up, .word { transition: none; opacity: 1; transform: none; }
+      .fade-up, .word, .category-fade, .section-word-reveal { transition: none; opacity: 1; transform: none; animation: none; }
     }
 
   
@@ -1348,10 +1338,10 @@
       .about-inner { grid-template-columns: 1fr; gap: 3rem; }
       .inspirations-grid { grid-template-columns: 1fr; }
       #contact { padding: 5rem 1.5rem; }
-      .contact-socials { flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+      .contact-links { flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
       .contact-email { font-size: clamp(0.9rem, 4vw, 1.2rem); word-break: break-word;
  }
-      .social-btn { font-size: 0.72rem; padding: 0.6rem 1rem; }
+      .contact-link-btn { font-size: 0.72rem; padding: 0.6rem 1rem; }
       #back-to-top {
         bottom: calc(1.25rem + env(safe-area-inset-bottom));
         right: 1.25rem;
@@ -1402,7 +1392,7 @@
       .special-hub .project-arrow {
         padding-top: 0.1rem;
       }
-      .social-btn {
+      .contact-link-btn {
         background: var(--glass-bg);
         border: 1px solid var(--glass-border);
         border-top-color: var(--glass-border-top);
@@ -1678,11 +1668,11 @@
           </div>
         </section>
 
-        <section class="project-group" aria-labelledby="social-projects">
+        <section class="project-group" aria-labelledby="storytelling-projects">
           <div class="project-group-heading category-fade" style="--category-delay: 0.2s;">
             <div>
               <div class="project-group-kicker">03</div>
-              <h3 id="social-projects">Social &amp; Cultural Storytelling</h3>
+              <h3 id="storytelling-projects">Social &amp; Cultural Storytelling</h3>
             </div>
             <p>Place, timing, and small observed moments shaped into a social-first visual story.</p>
           </div>
@@ -1879,10 +1869,10 @@
           formspree('initForm', { formElement: '#contactForm', formId: 'mkoyznoe' });
         </script>
         <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
-        <div class="contact-socials">
-          <a class="social-btn" href="https://www.linkedin.com/in/jack-mao" target="_blank" rel="noopener noreferrer">↗ LinkedIn</a>
-          <a class="social-btn" href="https://www.instagram.com/jjjackmao" target="_blank" rel="noopener noreferrer">↗ Instagram</a>
-          <a class="social-btn" href="https://www.behance.net/jackmao11" target="_blank" rel="noopener noreferrer">↗ Behance</a>
+        <div class="contact-links">
+          <a class="contact-link-btn" href="https://www.linkedin.com/in/jack-mao" target="_blank" rel="noopener noreferrer">↗ LinkedIn</a>
+          <a class="contact-link-btn" href="https://www.instagram.com/jjjackmao" target="_blank" rel="noopener noreferrer">↗ Instagram</a>
+          <a class="contact-link-btn" href="https://www.behance.net/jackmao11" target="_blank" rel="noopener noreferrer">↗ Behance</a>
         </div>
       </div>
     </section>
@@ -2130,83 +2120,53 @@
         bar.style.width = Math.min(pct, 100) + '%';
       }, { passive: true });
     })();
-  
+
     // ── Page transition ──
     (function() {
       const root         = document.documentElement;
       const veil         = document.getElementById('page-veil');
       const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      // Destination → ambient colour map
       const AMBIENT = {
-        'index.html':                  '#0f0e1a',
-        '../index.html':               '#0f0e1a',
-        '../':                         '#0f0e1a',
-        './':                          '#0f0e1a',
-        'light-and-form.html':         '#1a1540',
-        'so-good.html':                '#1a0010',
-        'after-hours.html':            '#120000',
-        'karina.html':                 '#fbf8f1',
-        'chronicles-of-elysium.html':  '#120f1a',
-        'tend-habit-tracker.html':     '#f1ece7',
-        'coffee-nearby.html':          '#f1ece7',
-        'toronto-in-bloom.html':       '#120010',
-        'special-editions.html':       '#0f0e1a',
-        '404.html':                    '#0f0e1a',
-        'projects/light-and-form.html':         '#1a1540',
-        'projects/so-good.html':                '#1a0010',
-        'projects/after-hours.html':            '#120000',
-        'projects/karina.html':                 '#fbf8f1',
-        'projects/chronicles-of-elysium.html':  '#120f1a',
-        'projects/tend-habit-tracker.html':     '#f1ece7',
-        'projects/coffee-nearby.html':          '#f1ece7',
-        'projects/toronto-in-bloom.html':       '#120010',
-        'projects/special-editions.html':       '#0f0e1a',
+        'index.html':'#0f0e1a','../index.html':'#0f0e1a','../':'#0f0e1a','./':'#0f0e1a',
+        'light-and-form.html':'#1a1540','so-good.html':'#1a0010','after-hours.html':'#120000',
+        'karina.html':'#fbf8f1','chronicles-of-elysium.html':'#120f1a',
+        'tend-habit-tracker.html':'#f1ece7','coffee-nearby.html':'#f1ece7',
+        'toronto-in-bloom.html':'#120010','special-editions.html':'#0f0e1a','404.html':'#0f0e1a',
+        'projects/light-and-form.html':'#1a1540','projects/so-good.html':'#1a0010',
+        'projects/after-hours.html':'#120000','projects/karina.html':'#fbf8f1',
+        'projects/chronicles-of-elysium.html':'#120f1a',
+        'projects/tend-habit-tracker.html':'#f1ece7','projects/coffee-nearby.html':'#f1ece7',
+        'projects/toronto-in-bloom.html':'#120010','projects/special-editions.html':'#0f0e1a',
       };
-
       const ready = () => {
         root.classList.remove('page-leaving');
         root.classList.add('page-ready');
       };
-
       if (veil && !reduceMotion) {
         requestAnimationFrame(() => requestAnimationFrame(ready));
-      } else {
-        ready();
-      }
-
-      // bfcache restore
+      } else { ready(); }
       window.addEventListener('pageshow', e => {
         if (e.persisted) {
-          if (veil) { veil.style.opacity = '0'; veil.style.pointerEvents = 'none'; }
+          if (veil) { veil.style.opacity='0'; veil.style.pointerEvents='none'; }
           root.classList.remove('page-leaving');
           root.classList.add('page-ready');
         }
       });
-
       document.addEventListener('click', e => {
         const link = e.target.closest('a[href]');
-        if (!link || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-        if (link.target === '_blank' || link.hasAttribute('download')) return;
+        if (!link||e.defaultPrevented||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey) return;
+        if (link.target==='_blank'||link.hasAttribute('download')) return;
         const href = link.getAttribute('href');
-        if (!href || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('javascript:') || href.startsWith('#')) return;
-        let url;
-        try { url = new URL(href, window.location.href); } catch { return; }
-        if (url.origin !== window.location.origin && !href.startsWith('.') && !href.startsWith('/') && !href.endsWith('.html')) return;
-        if (url.pathname === window.location.pathname && !url.hash) return;
-        if (!veil || reduceMotion) return;
-
+        if (!href||href.startsWith('mailto:')||href.startsWith('tel:')||href.startsWith('javascript:')||href.startsWith('#')) return;
+        let url; try { url=new URL(href,window.location.href); } catch { return; }
+        if (url.pathname===window.location.pathname&&!url.hash) return;
+        if (!veil||reduceMotion) return;
         e.preventDefault();
-
-        // Set veil to destination ambient colour
-        const destFile = href.split('/').pop() || 'index.html';
-        const colour   = AMBIENT[href] || AMBIENT[destFile] || '#0f0e1a';
-        veil.style.setProperty('--veil-color', colour);
+        const dest   = href.split('/').pop()||'index.html';
+        const colour = AMBIENT[href]||AMBIENT[dest]||'#0f0e1a';
         veil.style.background = colour;
-
         root.classList.remove('page-ready');
         root.classList.add('page-leaving');
-
         setTimeout(() => { window.location.href = url.href; }, 380);
       });
     })();
