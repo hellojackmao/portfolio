@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Share | Jack Mao</title>
+  <meta name="description" content="Scan to visit Jack Mao's portfolio — hellojackmao.com"/>
+  <meta name="robots" content="noindex"/>
+  <link rel="preload" href="https://fonts.gstatic.com/s/syne/v22/8vIS7w4qzmVxsWxjBZRjr0FKM_04uQ.ttf" as="font" type="font/ttf" crossorigin/>
+  <link rel="preload" href="https://fonts.gstatic.com/s/dmmono/v14/aFTU7PB1QTsUX8KYvrumztJS.ttf" as="font" type="font/ttf" crossorigin/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="icon" href="favicon.ico" sizes="any"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png"/>
+  <link rel="manifest" href="site.webmanifest"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Jack Mao"/>
+  <meta name="theme-color" content="#0f0e1a"/>
+  <meta name="referrer" content="strict-origin-when-cross-origin"/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:url" content="https://hellojackmao.com/share.html"/>
+  <meta property="og:title" content="Jack Mao — Portfolio"/>
+  <meta property="og:description" content="Editorial Design · Product Design · Visual Storytelling"/>
+  <meta property="og:image" content="https://hellojackmao.com/images/og-default.png"/>
+  <meta property="og:image:alt" content="Jack Mao Portfolio"/>
+  <meta property="og:locale" content="en_CA"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Jack Mao — Portfolio"/>
+  <meta name="twitter:description" content="Editorial Design · Product Design · Visual Storytelling"/>
+  <link rel="canonical" href="https://hellojackmao.com/share.html"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { -webkit-tap-highlight-color: transparent; }
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    :root {
+      --navy:         #0f0e1a;
+      --navy2:        #16152b;
+      --purple:       #7B6CF6;
+      --purple-light: #a99cf8;
+      --lime:         #ccff00;
+      --white:        #ffffff;
+      --cream:        #f5f0e8;
+      --muted:        rgba(255,255,255,0.35);
+    }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-text-size-adjust: 100%; text-size-adjust: 100%;
+    }
+
+    /* Cursor */
+    .cursor {
+      position: fixed; left: -100px; top: -100px;
+      width: 14px; height: 14px;
+      background: var(--lime);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: width .2s, height .2s;
+      mix-blend-mode: difference;
+      will-change: left, top;
+    }
+
+    /* Background glow */
+    .bg-glow {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 55% 55% at 25% 55%, rgba(123,108,246,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 75% 35%, rgba(204,255,0,0.06) 0%, transparent 65%);
+    }
+
+    /* Page veil */
+    #page-veil {
+      position: fixed; inset: 0; z-index: 100000;
+      background: var(--navy);
+      opacity: 1; pointer-events: auto;
+      transition: opacity .42s cubic-bezier(.16,1,.3,1);
+    }
+    .page-ready #page-veil { opacity: 0; pointer-events: none; }
+
+    /* VT */
+    @view-transition { navigation: auto; }
+    @media (prefers-reduced-motion: no-preference) {
+      ::view-transition-old(root) { animation: vt-out .28s cubic-bezier(.4,0,1,1) both; }
+      ::view-transition-new(root) { animation: vt-in  .32s cubic-bezier(.16,1,.3,1) both; }
+    }
+    @keyframes vt-out { from{opacity:1;transform:scale(1)} to{opacity:0;transform:scale(.97)} }
+    @keyframes vt-in  { from{opacity:0;transform:scale(1.01)} to{opacity:1;transform:scale(1)} }
+    @media (prefers-reduced-motion: reduce) {
+      ::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+    }
+
+    /* Print */
+    @media print {
+      body { background: #fff !important; color: #000 !important; }
+      .cursor, #page-veil, .bg-glow, .back-link { display: none !important; }
+      .qr-card { box-shadow: none !important; border: 1px solid #ddd !important; }
+    }
+
+    /* Layout */
+    .wrap {
+      position: relative; z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.5rem;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* Header */
+    .share-header { display: flex; flex-direction: column; gap: .4rem; }
+
+    .share-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .6rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--lime);
+    }
+
+    .share-name {
+      font-size: clamp(2rem, 6vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -.03em;
+      line-height: 1.05;
+    }
+
+    .share-name em {
+      font-family: 'DM Serif Display', serif;
+      font-style: italic;
+      color: var(--purple-light);
+    }
+
+    .share-role {
+      font-family: 'DM Mono', monospace;
+      font-size: .7rem;
+      letter-spacing: .1em;
+      color: var(--muted);
+      margin-top: .25rem;
+    }
+
+    /* QR card */
+    .qr-card {
+      background: var(--cream);
+      border-radius: 24px;
+      padding: 1.75rem;
+      box-shadow: 0 24px 64px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.06);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .qr-svg-wrap {
+      width: 100%;
+      color: var(--navy);
+      line-height: 0;
+    }
+
+    .qr-svg-wrap svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .qr-url {
+      font-family: 'DM Mono', monospace;
+      font-size: .65rem;
+      letter-spacing: .08em;
+      color: rgba(15,14,26,0.5);
+      text-decoration: none;
+    }
+
+    /* Copy button */
+    .copy-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      padding: .55rem 1.4rem;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.55);
+      font-family: 'DM Mono', monospace;
+      font-size: .65rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      cursor: auto;
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .copy-btn:hover {
+      border-color: rgba(255,255,255,.25);
+      color: var(--white);
+      background: rgba(255,255,255,.07);
+    }
+    .copy-btn.copied {
+      border-color: rgba(204,255,0,.35);
+      color: var(--lime);
+      background: rgba(204,255,0,.06);
+    }
+
+    /* Back link */
+    .back-link {
+      font-family: 'DM Mono', monospace;
+      font-size: .6rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.25);
+      text-decoration: none;
+      transition: color .2s;
+    }
+    .back-link:hover { color: rgba(255,255,255,.55); }
+
+    /* Focus */
+    :focus-visible { outline: 2px solid var(--lime); outline-offset: 3px; border-radius: 4px; }
+    :focus:not(:focus-visible) { outline: none; }
+
+    @media (pointer: fine) {
+      body { cursor: auto; }
+      a, button { cursor: auto; }
+    }
+    @media (max-width: 400px) {
+      .wrap { gap: 2rem; }
+      .qr-card { padding: 1.25rem; }
+    }
+  </style>
+</head>
+<body style="touch-action: pan-y;">
+  <div class="cursor" id="cursor"></div>
+  <div id="page-veil"></div>
+  <div class="bg-glow" aria-hidden="true"></div>
+
+  <main class="wrap">
+
+    <header class="share-header">
+      <p class="share-label">✦ &nbsp; Portfolio</p>
+      <h1 class="share-name">Jack<br><em>Mao.</em></h1>
+      <p class="share-role">Editorial · Product · Storytelling</p>
+    </header>
+
+    <div class="qr-card">
+      <div class="qr-svg-wrap">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 450" width="450" height="450" shape-rendering="crispEdges" aria-label="QR code linking to hellojackmao.com"><g fill="currentColor"><rect x="80" y="80" width="10" height="10"/><rect x="90" y="80" width="10" height="10"/><rect x="100" y="80" width="10" height="10"/><rect x="110" y="80" width="10" height="10"/><rect x="120" y="80" width="10" height="10"/><rect x="130" y="80" width="10" height="10"/><rect x="140" y="80" width="10" height="10"/><rect x="190" y="80" width="10" height="10"/><rect x="200" y="80" width="10" height="10"/><rect x="240" y="80" width="10" height="10"/><rect x="250" y="80" width="10" height="10"/><rect x="260" y="80" width="10" height="10"/><rect x="300" y="80" width="10" height="10"/><rect x="310" y="80" width="10" height="10"/><rect x="320" y="80" width="10" height="10"/><rect x="330" y="80" width="10" height="10"/><rect x="340" y="80" width="10" height="10"/><rect x="350" y="80" width="10" height="10"/><rect x="360" y="80" width="10" height="10"/><rect x="80" y="90" width="10" height="10"/><rect x="140" y="90" width="10" height="10"/><rect x="160" y="90" width="10" height="10"/><rect x="180" y="90" width="10" height="10"/><rect x="270" y="90" width="10" height="10"/><rect x="300" y="90" width="10" height="10"/><rect x="360" y="90" width="10" height="10"/><rect x="80" y="100" width="10" height="10"/><rect x="100" y="100" width="10" height="10"/><rect x="110" y="100" width="10" height="10"/><rect x="120" y="100" width="10" height="10"/><rect x="140" y="100" width="10" height="10"/><rect x="170" y="100" width="10" height="10"/><rect x="180" y="100" width="10" height="10"/><rect x="190" y="100" width="10" height="10"/><rect x="210" y="100" width="10" height="10"/><rect x="220" y="100" width="10" height="10"/><rect x="240" y="100" width="10" height="10"/><rect x="250" y="100" width="10" height="10"/><rect x="270" y="100" width="10" height="10"/><rect x="280" y="100" width="10" height="10"/><rect x="300" y="100" width="10" height="10"/><rect x="320" y="100" width="10" height="10"/><rect x="330" y="100" width="10" height="10"/><rect x="340" y="100" width="10" height="10"/><rect x="360" y="100" width="10" height="10"/><rect x="80" y="110" width="10" height="10"/><rect x="100" y="110" width="10" height="10"/><rect x="110" y="110" width="10" height="10"/><rect x="120" y="110" width="10" height="10"/><rect x="140" y="110" width="10" height="10"/><rect x="200" y="110" width="10" height="10"/><rect x="210" y="110" width="10" height="10"/><rect x="220" y="110" width="10" height="10"/><rect x="260" y="110" width="10" height="10"/><rect x="270" y="110" width="10" height="10"/><rect x="300" y="110" width="10" height="10"/><rect x="320" y="110" width="10" height="10"/><rect x="330" y="110" width="10" height="10"/><rect x="340" y="110" width="10" height="10"/><rect x="360" y="110" width="10" height="10"/><rect x="80" y="120" width="10" height="10"/><rect x="100" y="120" width="10" height="10"/><rect x="110" y="120" width="10" height="10"/><rect x="120" y="120" width="10" height="10"/><rect x="140" y="120" width="10" height="10"/><rect x="180" y="120" width="10" height="10"/><rect x="190" y="120" width="10" height="10"/><rect x="200" y="120" width="10" height="10"/><rect x="230" y="120" width="10" height="10"/><rect x="240" y="120" width="10" height="10"/><rect x="250" y="120" width="10" height="10"/><rect x="260" y="120" width="10" height="10"/><rect x="300" y="120" width="10" height="10"/><rect x="320" y="120" width="10" height="10"/><rect x="330" y="120" width="10" height="10"/><rect x="340" y="120" width="10" height="10"/><rect x="360" y="120" width="10" height="10"/><rect x="80" y="130" width="10" height="10"/><rect x="140" y="130" width="10" height="10"/><rect x="160" y="130" width="10" height="10"/><rect x="170" y="130" width="10" height="10"/><rect x="180" y="130" width="10" height="10"/><rect x="190" y="130" width="10" height="10"/><rect x="270" y="130" width="10" height="10"/><rect x="300" y="130" width="10" height="10"/><rect x="360" y="130" width="10" height="10"/><rect x="80" y="140" width="10" height="10"/><rect x="90" y="140" width="10" height="10"/><rect x="100" y="140" width="10" height="10"/><rect x="110" y="140" width="10" height="10"/><rect x="120" y="140" width="10" height="10"/><rect x="130" y="140" width="10" height="10"/><rect x="140" y="140" width="10" height="10"/><rect x="160" y="140" width="10" height="10"/><rect x="180" y="140" width="10" height="10"/><rect x="200" y="140" width="10" height="10"/><rect x="220" y="140" width="10" height="10"/><rect x="240" y="140" width="10" height="10"/><rect x="260" y="140" width="10" height="10"/><rect x="280" y="140" width="10" height="10"/><rect x="300" y="140" width="10" height="10"/><rect x="310" y="140" width="10" height="10"/><rect x="320" y="140" width="10" height="10"/><rect x="330" y="140" width="10" height="10"/><rect x="340" y="140" width="10" height="10"/><rect x="350" y="140" width="10" height="10"/><rect x="360" y="140" width="10" height="10"/><rect x="160" y="150" width="10" height="10"/><rect x="170" y="150" width="10" height="10"/><rect x="180" y="150" width="10" height="10"/><rect x="200" y="150" width="10" height="10"/><rect x="210" y="150" width="10" height="10"/><rect x="230" y="150" width="10" height="10"/><rect x="250" y="150" width="10" height="10"/><rect x="260" y="150" width="10" height="10"/><rect x="280" y="150" width="10" height="10"/><rect x="120" y="160" width="10" height="10"/><rect x="130" y="160" width="10" height="10"/><rect x="140" y="160" width="10" height="10"/><rect x="150" y="160" width="10" height="10"/><rect x="200" y="160" width="10" height="10"/><rect x="210" y="160" width="10" height="10"/><rect x="240" y="160" width="10" height="10"/><rect x="260" y="160" width="10" height="10"/><rect x="270" y="160" width="10" height="10"/><rect x="280" y="160" width="10" height="10"/><rect x="300" y="160" width="10" height="10"/><rect x="310" y="160" width="10" height="10"/><rect x="350" y="160" width="10" height="10"/><rect x="80" y="170" width="10" height="10"/><rect x="90" y="170" width="10" height="10"/><rect x="100" y="170" width="10" height="10"/><rect x="130" y="170" width="10" height="10"/><rect x="150" y="170" width="10" height="10"/><rect x="180" y="170" width="10" height="10"/><rect x="190" y="170" width="10" height="10"/><rect x="210" y="170" width="10" height="10"/><rect x="220" y="170" width="10" height="10"/><rect x="240" y="170" width="10" height="10"/><rect x="250" y="170" width="10" height="10"/><rect x="260" y="170" width="10" height="10"/><rect x="300" y="170" width="10" height="10"/><rect x="310" y="170" width="10" height="10"/><rect x="320" y="170" width="10" height="10"/><rect x="330" y="170" width="10" height="10"/><rect x="350" y="170" width="10" height="10"/><rect x="360" y="170" width="10" height="10"/><rect x="120" y="180" width="10" height="10"/><rect x="140" y="180" width="10" height="10"/><rect x="150" y="180" width="10" height="10"/><rect x="170" y="180" width="10" height="10"/><rect x="200" y="180" width="10" height="10"/><rect x="240" y="180" width="10" height="10"/><rect x="250" y="180" width="10" height="10"/><rect x="280" y="180" width="10" height="10"/><rect x="290" y="180" width="10" height="10"/><rect x="340" y="180" width="10" height="10"/><rect x="360" y="180" width="10" height="10"/><rect x="80" y="190" width="10" height="10"/><rect x="110" y="190" width="10" height="10"/><rect x="160" y="190" width="10" height="10"/><rect x="170" y="190" width="10" height="10"/><rect x="200" y="190" width="10" height="10"/><rect x="230" y="190" width="10" height="10"/><rect x="260" y="190" width="10" height="10"/><rect x="270" y="190" width="10" height="10"/><rect x="290" y="190" width="10" height="10"/><rect x="320" y="190" width="10" height="10"/><rect x="330" y="190" width="10" height="10"/><rect x="350" y="190" width="10" height="10"/><rect x="360" y="190" width="10" height="10"/><rect x="80" y="200" width="10" height="10"/><rect x="100" y="200" width="10" height="10"/><rect x="110" y="200" width="10" height="10"/><rect x="120" y="200" width="10" height="10"/><rect x="140" y="200" width="10" height="10"/><rect x="160" y="200" width="10" height="10"/><rect x="170" y="200" width="10" height="10"/><rect x="200" y="200" width="10" height="10"/><rect x="230" y="200" width="10" height="10"/><rect x="240" y="200" width="10" height="10"/><rect x="250" y="200" width="10" height="10"/><rect x="270" y="200" width="10" height="10"/><rect x="280" y="200" width="10" height="10"/><rect x="310" y="200" width="10" height="10"/><rect x="330" y="200" width="10" height="10"/><rect x="360" y="200" width="10" height="10"/><rect x="80" y="210" width="10" height="10"/><rect x="130" y="210" width="10" height="10"/><rect x="150" y="210" width="10" height="10"/><rect x="160" y="210" width="10" height="10"/><rect x="180" y="210" width="10" height="10"/><rect x="220" y="210" width="10" height="10"/><rect x="230" y="210" width="10" height="10"/><rect x="240" y="210" width="10" height="10"/><rect x="260" y="210" width="10" height="10"/><rect x="300" y="210" width="10" height="10"/><rect x="320" y="210" width="10" height="10"/><rect x="340" y="210" width="10" height="10"/><rect x="360" y="210" width="10" height="10"/><rect x="90" y="220" width="10" height="10"/><rect x="120" y="220" width="10" height="10"/><rect x="140" y="220" width="10" height="10"/><rect x="150" y="220" width="10" height="10"/><rect x="160" y="220" width="10" height="10"/><rect x="190" y="220" width="10" height="10"/><rect x="200" y="220" width="10" height="10"/><rect x="220" y="220" width="10" height="10"/><rect x="230" y="220" width="10" height="10"/><rect x="260" y="220" width="10" height="10"/><rect x="290" y="220" width="10" height="10"/><rect x="300" y="220" width="10" height="10"/><rect x="320" y="220" width="10" height="10"/><rect x="360" y="220" width="10" height="10"/><rect x="80" y="230" width="10" height="10"/><rect x="100" y="230" width="10" height="10"/><rect x="110" y="230" width="10" height="10"/><rect x="170" y="230" width="10" height="10"/><rect x="250" y="230" width="10" height="10"/><rect x="260" y="230" width="10" height="10"/><rect x="300" y="230" width="10" height="10"/><rect x="310" y="230" width="10" height="10"/><rect x="330" y="230" width="10" height="10"/><rect x="90" y="240" width="10" height="10"/><rect x="120" y="240" width="10" height="10"/><rect x="130" y="240" width="10" height="10"/><rect x="140" y="240" width="10" height="10"/><rect x="150" y="240" width="10" height="10"/><rect x="160" y="240" width="10" height="10"/><rect x="170" y="240" width="10" height="10"/><rect x="230" y="240" width="10" height="10"/><rect x="280" y="240" width="10" height="10"/><rect x="290" y="240" width="10" height="10"/><rect x="350" y="240" width="10" height="10"/><rect x="360" y="240" width="10" height="10"/><rect x="80" y="250" width="10" height="10"/><rect x="160" y="250" width="10" height="10"/><rect x="170" y="250" width="10" height="10"/><rect x="180" y="250" width="10" height="10"/><rect x="190" y="250" width="10" height="10"/><rect x="200" y="250" width="10" height="10"/><rect x="210" y="250" width="10" height="10"/><rect x="220" y="250" width="10" height="10"/><rect x="300" y="250" width="10" height="10"/><rect x="310" y="250" width="10" height="10"/><rect x="320" y="250" width="10" height="10"/><rect x="330" y="250" width="10" height="10"/><rect x="340" y="250" width="10" height="10"/><rect x="360" y="250" width="10" height="10"/><rect x="100" y="260" width="10" height="10"/><rect x="120" y="260" width="10" height="10"/><rect x="140" y="260" width="10" height="10"/><rect x="170" y="260" width="10" height="10"/><rect x="190" y="260" width="10" height="10"/><rect x="200" y="260" width="10" height="10"/><rect x="210" y="260" width="10" height="10"/><rect x="230" y="260" width="10" height="10"/><rect x="240" y="260" width="10" height="10"/><rect x="260" y="260" width="10" height="10"/><rect x="320" y="260" width="10" height="10"/><rect x="330" y="260" width="10" height="10"/><rect x="360" y="260" width="10" height="10"/><rect x="120" y="270" width="10" height="10"/><rect x="160" y="270" width="10" height="10"/><rect x="180" y="270" width="10" height="10"/><rect x="190" y="270" width="10" height="10"/><rect x="210" y="270" width="10" height="10"/><rect x="220" y="270" width="10" height="10"/><rect x="260" y="270" width="10" height="10"/><rect x="270" y="270" width="10" height="10"/><rect x="280" y="270" width="10" height="10"/><rect x="310" y="270" width="10" height="10"/><rect x="320" y="270" width="10" height="10"/><rect x="330" y="270" width="10" height="10"/><rect x="350" y="270" width="10" height="10"/><rect x="360" y="270" width="10" height="10"/><rect x="80" y="280" width="10" height="10"/><rect x="90" y="280" width="10" height="10"/><rect x="100" y="280" width="10" height="10"/><rect x="120" y="280" width="10" height="10"/><rect x="130" y="280" width="10" height="10"/><rect x="140" y="280" width="10" height="10"/><rect x="150" y="280" width="10" height="10"/><rect x="160" y="280" width="10" height="10"/><rect x="180" y="280" width="10" height="10"/><rect x="220" y="280" width="10" height="10"/><rect x="230" y="280" width="10" height="10"/><rect x="240" y="280" width="10" height="10"/><rect x="260" y="280" width="10" height="10"/><rect x="280" y="280" width="10" height="10"/><rect x="290" y="280" width="10" height="10"/><rect x="300" y="280" width="10" height="10"/><rect x="310" y="280" width="10" height="10"/><rect x="320" y="280" width="10" height="10"/><rect x="330" y="280" width="10" height="10"/><rect x="360" y="280" width="10" height="10"/><rect x="160" y="290" width="10" height="10"/><rect x="170" y="290" width="10" height="10"/><rect x="190" y="290" width="10" height="10"/><rect x="210" y="290" width="10" height="10"/><rect x="220" y="290" width="10" height="10"/><rect x="230" y="290" width="10" height="10"/><rect x="260" y="290" width="10" height="10"/><rect x="270" y="290" width="10" height="10"/><rect x="280" y="290" width="10" height="10"/><rect x="320" y="290" width="10" height="10"/><rect x="340" y="290" width="10" height="10"/><rect x="360" y="290" width="10" height="10"/><rect x="80" y="300" width="10" height="10"/><rect x="90" y="300" width="10" height="10"/><rect x="100" y="300" width="10" height="10"/><rect x="110" y="300" width="10" height="10"/><rect x="120" y="300" width="10" height="10"/><rect x="130" y="300" width="10" height="10"/><rect x="140" y="300" width="10" height="10"/><rect x="160" y="300" width="10" height="10"/><rect x="170" y="300" width="10" height="10"/><rect x="180" y="300" width="10" height="10"/><rect x="190" y="300" width="10" height="10"/><rect x="200" y="300" width="10" height="10"/><rect x="210" y="300" width="10" height="10"/><rect x="230" y="300" width="10" height="10"/><rect x="240" y="300" width="10" height="10"/><rect x="270" y="300" width="10" height="10"/><rect x="280" y="300" width="10" height="10"/><rect x="300" y="300" width="10" height="10"/><rect x="320" y="300" width="10" height="10"/><rect x="360" y="300" width="10" height="10"/><rect x="80" y="310" width="10" height="10"/><rect x="140" y="310" width="10" height="10"/><rect x="160" y="310" width="10" height="10"/><rect x="170" y="310" width="10" height="10"/><rect x="180" y="310" width="10" height="10"/><rect x="190" y="310" width="10" height="10"/><rect x="210" y="310" width="10" height="10"/><rect x="240" y="310" width="10" height="10"/><rect x="250" y="310" width="10" height="10"/><rect x="270" y="310" width="10" height="10"/><rect x="280" y="310" width="10" height="10"/><rect x="320" y="310" width="10" height="10"/><rect x="330" y="310" width="10" height="10"/><rect x="350" y="310" width="10" height="10"/><rect x="360" y="310" width="10" height="10"/><rect x="80" y="320" width="10" height="10"/><rect x="100" y="320" width="10" height="10"/><rect x="110" y="320" width="10" height="10"/><rect x="120" y="320" width="10" height="10"/><rect x="140" y="320" width="10" height="10"/><rect x="160" y="320" width="10" height="10"/><rect x="170" y="320" width="10" height="10"/><rect x="190" y="320" width="10" height="10"/><rect x="250" y="320" width="10" height="10"/><rect x="270" y="320" width="10" height="10"/><rect x="280" y="320" width="10" height="10"/><rect x="290" y="320" width="10" height="10"/><rect x="300" y="320" width="10" height="10"/><rect x="310" y="320" width="10" height="10"/><rect x="320" y="320" width="10" height="10"/><rect x="350" y="320" width="10" height="10"/><rect x="360" y="320" width="10" height="10"/><rect x="80" y="330" width="10" height="10"/><rect x="100" y="330" width="10" height="10"/><rect x="110" y="330" width="10" height="10"/><rect x="120" y="330" width="10" height="10"/><rect x="140" y="330" width="10" height="10"/><rect x="170" y="330" width="10" height="10"/><rect x="190" y="330" width="10" height="10"/><rect x="210" y="330" width="10" height="10"/><rect x="220" y="330" width="10" height="10"/><rect x="230" y="330" width="10" height="10"/><rect x="310" y="330" width="10" height="10"/><rect x="330" y="330" width="10" height="10"/><rect x="340" y="330" width="10" height="10"/><rect x="350" y="330" width="10" height="10"/><rect x="80" y="340" width="10" height="10"/><rect x="100" y="340" width="10" height="10"/><rect x="110" y="340" width="10" height="10"/><rect x="120" y="340" width="10" height="10"/><rect x="140" y="340" width="10" height="10"/><rect x="180" y="340" width="10" height="10"/><rect x="240" y="340" width="10" height="10"/><rect x="260" y="340" width="10" height="10"/><rect x="270" y="340" width="10" height="10"/><rect x="280" y="340" width="10" height="10"/><rect x="290" y="340" width="10" height="10"/><rect x="330" y="340" width="10" height="10"/><rect x="340" y="340" width="10" height="10"/><rect x="350" y="340" width="10" height="10"/><rect x="360" y="340" width="10" height="10"/><rect x="80" y="350" width="10" height="10"/><rect x="140" y="350" width="10" height="10"/><rect x="170" y="350" width="10" height="10"/><rect x="180" y="350" width="10" height="10"/><rect x="190" y="350" width="10" height="10"/><rect x="210" y="350" width="10" height="10"/><rect x="220" y="350" width="10" height="10"/><rect x="240" y="350" width="10" height="10"/><rect x="250" y="350" width="10" height="10"/><rect x="280" y="350" width="10" height="10"/><rect x="310" y="350" width="10" height="10"/><rect x="330" y="350" width="10" height="10"/><rect x="350" y="350" width="10" height="10"/><rect x="360" y="350" width="10" height="10"/><rect x="80" y="360" width="10" height="10"/><rect x="90" y="360" width="10" height="10"/><rect x="100" y="360" width="10" height="10"/><rect x="110" y="360" width="10" height="10"/><rect x="120" y="360" width="10" height="10"/><rect x="130" y="360" width="10" height="10"/><rect x="140" y="360" width="10" height="10"/><rect x="170" y="360" width="10" height="10"/><rect x="180" y="360" width="10" height="10"/><rect x="200" y="360" width="10" height="10"/><rect x="210" y="360" width="10" height="10"/><rect x="220" y="360" width="10" height="10"/><rect x="230" y="360" width="10" height="10"/><rect x="240" y="360" width="10" height="10"/><rect x="250" y="360" width="10" height="10"/><rect x="270" y="360" width="10" height="10"/><rect x="280" y="360" width="10" height="10"/><rect x="290" y="360" width="10" height="10"/><rect x="300" y="360" width="10" height="10"/><rect x="320" y="360" width="10" height="10"/><rect x="330" y="360" width="10" height="10"/><rect x="350" y="360" width="10" height="10"/></g></svg>
+      </div>
+      <a class="qr-url" href="https://hellojackmao.com" target="_blank" rel="noopener">
+        hellojackmao.com
+      </a>
+    </div>
+
+    <button class="copy-btn" id="copyBtn" type="button" aria-label="Copy portfolio link">
+      <span class="copy-icon">⎘</span>
+      <span class="copy-label">Copy link</span>
+    </button>
+
+    <a class="back-link" href="./">← Back to portfolio</a>
+
+  </main>
+
+  <script>
+    // Cursor
+    const cur = document.getElementById('cursor');
+    if (cur) {
+      document.addEventListener('mousemove', e => {
+        cur.style.left = e.clientX + 'px';
+        cur.style.top  = e.clientY + 'px';
+      });
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => { cur.style.width = cur.style.height = '32px'; });
+        el.addEventListener('mouseleave', () => { cur.style.width = cur.style.height = '14px'; });
+      });
+    }
+
+    // Copy link
+    const copyBtn = document.getElementById('copyBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText('https://hellojackmao.com');
+          copyBtn.classList.add('copied');
+          copyBtn.querySelector('.copy-label').textContent = 'Copied!';
+          setTimeout(() => {
+            copyBtn.classList.remove('copied');
+            copyBtn.querySelector('.copy-label').textContent = 'Copy link';
+          }, 2000);
+        } catch {
+          // Fallback for older browsers
+          const el = document.createElement('textarea');
+          el.value = 'https://hellojackmao.com';
+          el.style.position = 'fixed'; el.style.opacity = '0';
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          document.body.removeChild(el);
+          copyBtn.classList.add('copied');
+          copyBtn.querySelector('.copy-label').textContent = 'Copied!';
+          setTimeout(() => {
+            copyBtn.classList.remove('copied');
+            copyBtn.querySelector('.copy-label').textContent = 'Copy link';
+          }, 2000);
+        }
+      });
+    }
+
+    // Page transition
+    (function() {
+      const root = document.documentElement;
+      const veil = document.getElementById('page-veil');
+      const rm   = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const supportsVT = 'startViewTransition' in document;
+      const ready = () => { root.classList.remove('page-leaving'); root.classList.add('page-ready'); };
+      if (veil && !rm && !supportsVT) { requestAnimationFrame(() => requestAnimationFrame(ready)); }
+      else { ready(); }
+      window.addEventListener('pageshow', e => {
+        if (e.persisted) {
+          if (veil) { veil.style.opacity = '0'; veil.style.pointerEvents = 'none'; }
+          root.classList.remove('page-leaving'); root.classList.add('page-ready');
+        }
+      });
+      document.addEventListener('click', e => {
+        const link = e.target.closest('a[href]');
+        if (!link || e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        if (link.target === '_blank' || link.hasAttribute('download')) return;
+        const href = link.getAttribute('href');
+        if (!href || href.startsWith('mailto:') || href.startsWith('tel:') || href.startsWith('#')) return;
+        let url; try { url = new URL(href, window.location.href); } catch { return; }
+        if (url.origin !== window.location.origin) return;
+        if (url.pathname === window.location.pathname && !url.hash) return;
+        e.preventDefault();
+        if (supportsVT && !rm) {
+          document.startViewTransition(() => { window.location.href = url.href; });
+        } else if (veil && !rm) {
+          root.classList.remove('page-ready'); root.classList.add('page-leaving');
+          setTimeout(() => { window.location.href = url.href; }, 320);
+        } else { window.location.href = url.href; }
+      });
+    })();
+  </script>
+</body>
+</html>
