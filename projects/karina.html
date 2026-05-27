@@ -2911,7 +2911,7 @@
       position: fixed;
       inset: 0;
       z-index: 100000;
-      background: var(--veil-color, var(--navy, #0f0e1a));
+      background: var(--veil-color, #fbf8f1);
       opacity: 1;
       pointer-events: auto;
       transition: opacity .42s cubic-bezier(.16,1,.3,1);
@@ -4993,6 +4993,10 @@
       const veil = document.getElementById('page-veil');
       const rm   = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       const supportsVT = 'startViewTransition' in document;
+      const A = {
+        'chronicles-of-elysium.html': '#120f1a',
+        '../': '#fbf8f1', '../index.html': '#fbf8f1',
+      };
 
       // Page reveal on load
       const ready = () => {
@@ -5035,6 +5039,9 @@
           });
         } else if (veil && !rm) {
           // Fallback: veil + scale exit
+          const dest = href.split('/').pop() || 'index.html';
+          const colour = A[href] || A[dest] || '#fbf8f1';
+          if (veil) veil.style.background = colour;
           root.classList.remove('page-ready');
           root.classList.add('page-leaving');
           setTimeout(() => { window.location.href = url.href; }, 320);
