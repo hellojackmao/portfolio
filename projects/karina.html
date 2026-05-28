@@ -2932,7 +2932,8 @@
     }
     @media (prefers-reduced-motion: reduce) {
       #page-veil { transition: none; }
-      body        { transition: none; }
+      body { transition: none; }
+    }
 
     /* ── View Transitions API ── */
     @view-transition { navigation: auto; }
@@ -2955,8 +2956,6 @@
     @media (prefers-reduced-motion: reduce) {
       ::view-transition-old(root),
       ::view-transition-new(root) { animation: none; }
-    }
-
     }</style>
 </head>
 <body>
