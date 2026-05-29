@@ -254,7 +254,7 @@
     .img-slot img { width: 100%; height: 100%; object-fit: cover; }
     .img-caption {
       font-family: 'DM Mono', monospace; font-size: .68rem;
-      letter-spacing: .08em; color: rgba(255,255,255,.25);
+      letter-spacing: .08em; color: rgba(255,255,255,0.45);
       margin-top: -.25rem; margin-bottom: 1.5rem;
     }
     .series-label {
@@ -275,7 +275,7 @@
     .next-label {
       font-family: 'DM Mono', monospace; font-size: .68rem;
       letter-spacing: .2em; text-transform: uppercase;
-      color: rgba(255,255,255,.3); margin-bottom: .4rem;
+      color: rgba(255,255,255,0.5); margin-bottom: .4rem;
     }
     .next-project > div { min-width: 0; }
     .next-title { display: block; font-size: 1.5rem; font-weight: 800; letter-spacing: -.02em; line-height: 1.28; padding-bottom: .04em; overflow: visible; }
@@ -716,6 +716,12 @@
     }
 </style>
   <link rel="preload" as="image" href="../images/waves-01.png" type="image/png" fetchpriority="high"/>
+  <noscript>
+    <style>
+      #page-veil { display: none !important; }
+      .reveal, .reveal-stagger > *, .category-fade, .word { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
 </head>
 <body>
   <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>

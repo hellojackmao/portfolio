@@ -233,7 +233,7 @@
     .img-slot img { width: 100%; height: 100%; object-fit: cover; }
     .img-caption {
       font-family: 'DM Mono', monospace; font-size: .68rem;
-      letter-spacing: .08em; color: rgba(255,255,255,.25);
+      letter-spacing: .08em; color: rgba(255,255,255,0.45);
       margin-top: -.25rem; margin-bottom: 1.5rem;
     }
 
@@ -806,6 +806,12 @@
     }
 </style>
   <link rel="preload" as="image" href="../images/thumb-so-good.png" type="image/png" fetchpriority="high"/>
+  <noscript>
+    <style>
+      #page-veil { display: none !important; }
+      .reveal, .reveal-stagger > *, .category-fade, .word { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
 </head>
 <body>
   <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
