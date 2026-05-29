@@ -281,6 +281,9 @@ a:focus-visible { outline: 2px solid #ccff00; outline-offset: 4px; border-radius
     }
     @media (max-width: 768px) {
       :root {
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in:  cubic-bezier(0.4, 0, 1, 1);
+      --ease-io:  cubic-bezier(0.4, 0, 0.2, 1);
         --glass-bg: rgba(255,255,255,.04);
         --glass-border: rgba(255,255,255,.09);
         --glass-border-top: rgba(255,255,255,.16);
@@ -349,7 +352,7 @@ a:focus-visible { outline: 2px solid #ccff00; outline-offset: 4px; border-radius
 
   <main class="wrap">
     <div class="four-oh-four">404</div>
-    <div class="tag">✦ &nbsp; Page not found</div>
+    <div class="tag">✦ &nbsp; Page not found &nbsp; ✦</div>
     <h1 class="heading">Nothing here.<br><em>Yet.</em></h1>
     <p class="sub">The page you're looking for doesn't exist —<br/>or hasn't been designed yet.</p>
     <div class="btn-row">
@@ -359,6 +362,8 @@ a:focus-visible { outline: 2px solid #ccff00; outline-offset: 4px; border-radius
   </main>
 
   <script>
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
     const cur = document.getElementById('cursor');
     cur.style.left = '-100px'; cur.style.top = '-100px';
     document.addEventListener('mousemove', e => {
