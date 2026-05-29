@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
@@ -48,6 +48,9 @@
     }
     
     :root {
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in:  cubic-bezier(0.4, 0, 1, 1);
+      --ease-io:  cubic-bezier(0.4, 0, 0.2, 1);
       --navy: #0f0e1a; --navy2: #16152b;
       --purple: #7B6CF6; --purple-light: #a99cf8;
       --lime: #ccff00; --coral: #ff5533; --white: #ffffff;
@@ -111,8 +114,20 @@
       font-size: .78rem; font-weight: 700; letter-spacing: .1em;
       text-transform: uppercase; color: rgba(255,255,255,.5);
       text-decoration: none; transition: color .2s; cursor: auto;
+      position: relative;
     }
     .nav-back:hover { color: var(--lime); }
+    .nav-back::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 100%; height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s var(--ease-out);
+    }
+    .nav-back:hover::after { transform: scaleX(1); }
     .nav-dropdown { position: relative; }
     .nav-dropdown-btn {
       font-family: 'Syne', sans-serif;
@@ -196,7 +211,7 @@
     .section-heading::after {
       content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.08);
     }
-    .body-text { font-size: 1rem; line-height: 1.85; color: rgba(255,255,255,.55); }
+    .body-text { font-size: 1rem; line-height: 1.72; color: rgba(255,255,255,.55); }
     .body-text p { margin-bottom: 1.5rem; }
     .body-text strong { color: var(--white); }
 
@@ -930,6 +945,8 @@
   </nav>
 
   <script>
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
 
 
     const jm_clicks = (() => {

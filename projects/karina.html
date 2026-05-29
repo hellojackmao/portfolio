@@ -37,6 +37,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Inter+Tight:wght@300;400;500;600;700&family=Anton&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in:  cubic-bezier(0.4, 0, 1, 1);
+      --ease-io:  cubic-bezier(0.4, 0, 0.2, 1);
     color-scheme: light only;
     --ink:        #0a0a0a;
     --paper:      #fbf8f1;   /* brighter off-white for clearer black-text reading */
@@ -2956,12 +2959,22 @@
     @media (prefers-reduced-motion: reduce) {
       ::view-transition-old(root),
       ::view-transition-new(root) { animation: none; }
-    }</style>
+    }
+
+    /* ── Scroll progress (added for cohesion) ── */
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; height: 2px; width: 0;
+      background: var(--accent);
+      z-index: 90;
+      transition: width 0.1s linear;
+    }
+    @media print { #scroll-progress { display: none !important; } }</style>
 </head>
 <body>
 
 <div class="cursor" id="cursor"></div>
 <div id="page-veil" aria-hidden="true"></div>
+  <div id="scroll-progress"></div>
 
 <nav class="portfolio-header" aria-label="Portfolio navigation">
   <a class="portfolio-logo" href="../">Jack Mao <span>|</span> Portfolio</a>
@@ -4488,6 +4501,8 @@
 </div>
 
 <script>
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
 (function () {
   const dropdown = document.querySelector('.portfolio-dropdown');
   const button = document.querySelector('.portfolio-dropdown-btn');
@@ -5050,6 +5065,14 @@
         }
       });
     })();
+    // ── Scroll progress (added for cohesion) ──
+    window.addEventListener('scroll', () => {
+      const prog = document.getElementById('scroll-progress');
+      if (prog) {
+        const h = document.documentElement;
+        prog.style.width = (h.scrollTop / (h.scrollHeight - h.clientHeight) * 100) + '%';
+      }
+    }, { passive: true });
   </script>
 </body>
 </html>

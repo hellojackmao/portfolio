@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
@@ -41,6 +41,9 @@
   </script>
   <style>
     :root {
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in:  cubic-bezier(0.4, 0, 1, 1);
+      --ease-io:  cubic-bezier(0.4, 0, 0.2, 1);
       --navy:#111018; --navy2:#fbfaf6; --purple:#8067df; --purple-light:#a994f2;
       --lime:#8067df; --coral:#8067df; --white:#111018; --leaf:#4f8654;
       --cream:#f1ece7; --sage:#e6ddf8; --mint:#ebe5df;
@@ -91,8 +94,20 @@
       font-size: .78rem; font-weight: 700; letter-spacing: .1em;
       text-transform: uppercase; color: #747383;
       text-decoration: none; transition: color .2s; cursor: auto;
+      position: relative;
     }
     .nav-back:hover { color: var(--lime); }
+    .nav-back::after {
+      content: '';
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 100%; height: 1px;
+      background: currentColor;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s var(--ease-out);
+    }
+    .nav-back:hover::after { transform: scaleX(1); }
     .nav-dropdown { position: relative; }
     .nav-dropdown-btn {
       font-family: 'Syne', sans-serif; font-size: .78rem; font-weight: 700; letter-spacing: .1em;
@@ -366,7 +381,7 @@
       letter-spacing:.22em; text-transform:uppercase; color:var(--lime);
       margin:3.25rem 0 1.2rem;
     }
-    .body-text { color:#747383; font-size:.98rem; line-height:1.85; }
+    .body-text { color:#747383; font-size:.98rem; line-height:1.72; }
     .body-text p + p { margin-top:1rem; }
     .body-text strong { color:var(--navy); }
     .snapshot-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin:2rem 0 1rem; }
@@ -1388,6 +1403,8 @@
   </nav>
 
   <script>
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
     const jm_clicks = (() => {
       let n = parseInt(sessionStorage.getItem('jm_clicks') || '0');
       return { inc() { n++; sessionStorage.setItem('jm_clicks', n); return n; }, get() { return n; } };
