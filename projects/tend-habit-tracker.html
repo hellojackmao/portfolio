@@ -44,13 +44,13 @@
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-in:  cubic-bezier(0.4, 0, 1, 1);
       --ease-io:  cubic-bezier(0.4, 0, 0.2, 1);
-      --navy:#111018; --navy2:#fbfaf6; --purple:#8067df; --purple-light:#a994f2;
-      --lime:#8067df; --coral:#8067df; --white:#111018; --leaf:#4f8654;
+      --navy:#111018; --navy2:#fbfaf6; --purple:#7057cf; --purple-light:#715cba;
+      --lime:#7057cf; --coral:#7057cf; --white:#111018; --leaf:#4f8654;
       --cream:#f1ece7; --sage:#e6ddf8; --mint:#ebe5df;
       --glass-bg:#fbfaf6;
       --glass-border:#e2dce8;
       --glass-border-top:#eee8f1;
-      --case-accent:#8067df;
+      --case-accent:#7057cf;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -92,7 +92,7 @@
     .nav-logo span { color: var(--purple-light); }
     .nav-back {
       font-size: .78rem; font-weight: 700; letter-spacing: .1em;
-      text-transform: uppercase; color: #747383;
+      text-transform: uppercase; color: #6a697a;
       text-decoration: none; transition: color .2s; cursor: auto;
       position: relative;
     }
@@ -111,7 +111,7 @@
     .nav-dropdown { position: relative; }
     .nav-dropdown-btn {
       font-family: 'Syne', sans-serif; font-size: .78rem; font-weight: 700; letter-spacing: .1em;
-      text-transform: uppercase; color: #747383;
+      text-transform: uppercase; color: #6a697a;
       background: #fbfaf6; border: 1px solid var(--glass-border);
       border-radius: 100px; padding: .45rem 1rem; cursor: auto;
       transition: color .2s, border-color .2s;
@@ -131,7 +131,7 @@
     .nav-dropdown.open .nav-dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
     .nav-dropdown-menu a {
       display: block; font-size: .75rem; font-weight: 700; letter-spacing: .08em;
-      text-transform: uppercase; color: #747383;
+      text-transform: uppercase; color: #6a697a;
       text-decoration: none; padding: .85rem 1.1rem;
       border-radius: 12px; white-space: nowrap;
       transition: background .15s, color .15s;
@@ -139,7 +139,7 @@
     .nav-dropdown-menu a:hover { background: rgba(128,103,223,.08); color: var(--lime); }
     .active-page {
       display: block; font-size: .75rem; font-weight: 700; letter-spacing: .08em;
-      text-transform: uppercase; color: var(--lime);
+      text-transform: uppercase; color: rgb(103, 80, 190);
       padding: .75rem 1.1rem; margin: .35rem .35rem .2rem;
       background: rgba(128,103,223,.08); border: 1px solid rgba(128,103,223,.22);
       border-radius: 12px; cursor: pointer; user-select: none;
@@ -182,13 +182,13 @@
       color: var(--lime); font-weight: 400;
     }
     .hero-subtitle {
-      font-family: 'DM Mono', monospace; color: #747383;
+      font-family: 'DM Mono', monospace; color: #6a697a;
       letter-spacing: .14em; text-transform: uppercase;
     }
     .hero-meta {
       display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: .7rem 1.5rem; margin-top: 2rem; max-width: 620px;
-      font-family: 'DM Mono', monospace; font-size: .72rem; color: #747383;
+      font-family: 'DM Mono', monospace; font-size: .72rem; color: #6a697a;
     }
     .hero-meta span { color: var(--lime); }
     .hero-panel {
@@ -273,14 +273,14 @@
       display:block; margin-bottom:.35rem; font-family:'DM Mono', monospace;
       font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:var(--lime);
     }
-    .case-snapshot p { margin:0; font-size:.84rem; line-height:1.55; color:#747383; }
+    .case-snapshot p { margin:0; font-size:.84rem; line-height:1.55; color:#6a697a; }
     .ai-disclaimer {
       margin: -1.25rem 0 3rem;
       padding: 1rem 1.1rem;
       border: 1px solid var(--glass-border);
       border-radius: 18px;
       background: rgba(251,250,246,.64);
-      color: #747383;
+      color: #6a697a;
       font-size: .9rem;
       line-height: 1.65;
     }
@@ -365,7 +365,7 @@
     }
 
     .outcome-callout::before {
-      background: var(--lime, #8067df);
+      background: var(--lime, #7057cf);
       box-shadow: 0 0 24px rgba(128, 103, 223, 0.18);
     }
 
@@ -381,7 +381,7 @@
       letter-spacing:.22em; text-transform:uppercase; color:var(--lime);
       margin:3.25rem 0 1.2rem;
     }
-    .body-text { color:#747383; font-size:.98rem; line-height:1.72; }
+    .body-text { color:#6a697a; font-size:.98rem; line-height:1.72; }
     .body-text p + p { margin-top:1rem; }
     .body-text strong { color:var(--navy); }
     .snapshot-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; margin:2rem 0 1rem; }
@@ -450,7 +450,7 @@
       color:var(--lime); margin-bottom:.6rem;
     }
     .flow-title { font-weight:800; margin-bottom:.35rem; }
-    .flow-desc { font-size:.8rem; color:#747383; line-height:1.55; }
+    .flow-desc { font-size:.8rem; color:#6a697a; line-height:1.55; }
     .system-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:1rem; margin:2rem 0; }
     .system-panel {
       background:rgba(251,250,246,.82); border:1px solid var(--glass-border);
@@ -477,7 +477,7 @@
     }
     .next-project:hover { background:#f7f3ee; }
     .next-project > div { min-width:0; overflow:visible; }
-    .next-label { font-family:'DM Mono', monospace; font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:#747383; margin-bottom:.4rem; }
+    .next-label { font-family:'DM Mono', monospace; font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:#6a697a; margin-bottom:.4rem; }
     .next-title { display:block; font-size:1.5rem; font-weight:800; letter-spacing:-.02em; line-height:1.45; padding-bottom:.22em; overflow:visible; }
     .next-arrow { flex:0 0 auto; font-size:2rem; line-height:1; color:#b6a8c9; transition:color .2s; }
     .next-project:hover .next-arrow { color:var(--lime); }
@@ -848,7 +848,7 @@
         border-top-color: rgba(255,255,255,.75);
         box-shadow: 0 16px 48px rgba(54,45,71,.14), 0 1px 0 rgba(255,255,255,.8) inset;
       }
-      .nav-dropdown-menu a { color: #747383; }
+      .nav-dropdown-menu a { color: #6a697a; }
       .nav-dropdown-menu a:hover { background: rgba(128,103,223,.08); color: var(--lime); }
       .active-page { color: var(--lime); background: rgba(128,103,223,.08); }
       .nav-back { display: none !important; }
@@ -1165,6 +1165,12 @@
     }
 </style>
   <link rel="preload" as="image" href="../images/tend-app-store-icon.png" type="image/png" fetchpriority="high"/>
+  <noscript>
+    <style>
+      #page-veil { display: none !important; }
+      .reveal, .reveal-stagger > *, .category-fade, .word { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
 </head>
 <body>
   <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
