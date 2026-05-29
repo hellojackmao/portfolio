@@ -129,16 +129,16 @@
       --cream: #f5f0e8;
       --cream2: #e8e0d0;
       --white: #ffffff;
-      --muted: #6b6880;
+      --muted: #7c7991;
       /* -- Motion tokens -- */
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-in:  cubic-bezier(0.4, 0, 1, 1);
       --ease-io:  cubic-bezier(0.4, 0, 0.2, 1);
       /* -- Glass tokens: transparent in V1, activated in V2 -- */
       --glass-bg: transparent;
-      --glass-bg-hover: rgba(255,255,255,0.04);
-      --glass-border: rgba(255,255,255,0.08);
-      --glass-border-top: rgba(255,255,255,0.08);
+      --glass-bg-hover: rgba(255,255,255,0.62);
+      --glass-border: rgba(255,255,255,0.62);
+      --glass-border-top: rgba(255,255,255,0.62);
       --glass-blur: none;
       --glass-blur-sm: none;
       --glass-shine: none;
@@ -222,7 +222,7 @@
       justify-content: space-between;
       padding: 0.85rem 1.25rem;
       border-radius: 100px;
-      background: rgba(15,14,26,0.45);
+      background: rgba(15,14,26,0.6);
       backdrop-filter: var(--glass-blur);
       -webkit-backdrop-filter: var(--glass-blur);
       border: 1px solid var(--glass-border);
@@ -232,7 +232,7 @@
     nav::before {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 70%);
+      background: linear-gradient(180deg, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0) 70%);
       border-radius: inherit;
       pointer-events: none;
     }
@@ -328,7 +328,7 @@
     .hero-heading em .word { color: var(--purple-light); }
     .hero-sub {
       font-size: clamp(0.85rem, 1.4vw, 1rem);
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.62);
       max-width: 500px;
       line-height: 1.75;
       margin-bottom: 3.5rem;
@@ -340,7 +340,7 @@
       font-size: 0.7rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.62);
       position: relative; z-index: 1;
       animation: float-idle 3.2s ease-in-out infinite;
       will-change: transform;
@@ -375,7 +375,7 @@
       font-size: 0.72rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.62);
     }
     .marquee-span b { color: var(--purple-light); }
 
@@ -451,7 +451,7 @@
       justify-content: space-between;
       gap: 1rem;
       padding-bottom: 0.85rem;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.62);
     }
     .project-group-heading.category-fade {
       animation: fadeSlideUp 0.7s cubic-bezier(0.16,1,0.3,1) both;
@@ -508,11 +508,11 @@
     .project-card::after {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.62), transparent);
     }
     .project-card:hover {
       transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.1) inset;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4), 0 1px 0 rgba(255,255,255,0.62) inset;
       border-color: rgba(123,108,246,0.3);
     }
     .project-thumb-wrap {
@@ -580,7 +580,7 @@
     }
     .project-arrow {
       font-size: 1.1rem;
-      color: rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.62);
       transition: color 0.2s, transform 0.2s;
       flex-shrink: 0;
     }
@@ -593,7 +593,7 @@
       font-size: 0.7rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.62);
       margin-top: 2.5rem;
       text-align: center;
     }
@@ -610,13 +610,13 @@
       transition: border-color 0.35s ease, box-shadow 0.35s ease;
     }
     .special-hub:hover {
-      border-color: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.62);
       box-shadow: 0 24px 60px rgba(0,0,0,0.4);
     }
     .special-hub::after {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.62), transparent);
     }
     .hub-banner {
       position: relative; aspect-ratio: 32/9;
@@ -656,7 +656,7 @@
       font-size: 0.6rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.62);
     }
     .hub-half-title {
       font-size: 1rem;
@@ -666,7 +666,7 @@
     }
     .hub-divider {
       width: 1px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.62);
       flex-shrink: 0;
       position: relative; z-index: 2;
     }
@@ -767,7 +767,7 @@
       gap: 0.2rem;
       padding: 0.5rem 1rem;
       background: rgba(15,14,26,0.75);
-      border: 1px solid rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.62);
       border-radius: 10px;
       font-family: 'DM Mono', monospace;
       font-size: 0.68rem;
@@ -798,7 +798,7 @@
     }
     .skill-pill {
       background: rgba(0,0,0,0.06);
-      border: 1px solid rgba(15,14,26,0.1);
+      border: 1px solid rgba(15,14,26,0.58);
       border-radius: 100px;
       padding: 0.35rem 0.9rem;
       font-size: 0.72rem;
@@ -809,14 +809,14 @@
     .inspirations-section {
       margin-top: 0;
       padding-top: 4rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,255,0.62);
     }
     .inspirations-label {
       font-family: 'DM Mono', monospace;
       font-size: 0.68rem;
       letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: var(--coral);
+      color: #d32907;
       margin-bottom: 2rem;
     }
     .inspirations-grid {
@@ -847,7 +847,7 @@
       margin-bottom: 0.4rem;
     }
     .inspiration-name { font-size: 0.88rem; font-weight: 800; color: var(--navy); }
-    .inspiration-arrow { font-size: 0.8rem; color: rgba(15,14,26,0.3); transition: color 0.2s; }
+    .inspiration-arrow { font-size: 0.8rem; color: rgba(15,14,26,0.58); transition: color 0.2s; }
     .inspiration-card:hover .inspiration-arrow { color: var(--purple); }
     .inspiration-role {
       font-family: 'DM Mono', monospace;
@@ -859,7 +859,7 @@
     .inspiration-desc {
       font-size: 0.8rem;
       line-height: 1.65;
-      color: rgba(15,14,26,0.55);
+      color: rgba(15,14,26,0.58);
       margin-bottom: 0.75rem;
     }
     .inspiration-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
@@ -871,7 +871,7 @@
       padding: 0.2rem 0.6rem;
       background: rgba(0,0,0,0.05);
       border-radius: 100px;
-      color: rgba(15,14,26,0.4);
+      color: rgba(15,14,26,0.58);
     }
     .avail-pill {
       display: inline-flex;
@@ -938,7 +938,7 @@
     }
     .contact-sub {
       font-size: 0.95rem;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.62);
       max-width: 480px;
       line-height: 1.75;
       margin-bottom: 2rem;
@@ -953,7 +953,7 @@
       font-weight: 800;
       color: var(--white);
       text-decoration: none;
-      border-bottom: 2px solid rgba(255,255,255,0.15);
+      border-bottom: 2px solid rgba(255,255,255,0.62);
       padding-bottom: 0.25rem;
       transition: border-color 0.2s, color 0.2s;
       cursor: auto;
@@ -964,15 +964,15 @@
       max-width: 100%;
       margin: 0 auto 2.25rem;
       padding: 1rem 1.25rem 1.1rem;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.62);
       border-radius: 20px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(255,255,255,0.62);
       box-shadow: 0 16px 40px rgba(0,0,0,0.18);
     }
     .contact-direct-label {
       display: block;
       margin-bottom: 0.45rem;
-      color: rgba(255,255,255,0.35);
+      color: rgba(255,255,255,0.62);
       font-family: 'DM Mono', monospace;
       font-size: 0.66rem;
       letter-spacing: 0.24em;
@@ -1006,7 +1006,7 @@
     /* -- Footer -- */
     footer {
       padding: 2rem 3rem;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255,255,255,0.62);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -1043,12 +1043,12 @@
       content: '';
       position: absolute; inset: 0;
       border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.62);
+      background: rgba(255,255,255,0.62);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       transition: border-color 0.3s, background 0.3s;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.08) inset;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.62) inset;
     }
     #back-to-top:hover::before {
       border-color: rgba(204,255,0,0.45);
@@ -1065,7 +1065,7 @@
     .btt-ring-text {
       font-family: 'DM Mono', monospace;
       font-size: 10.5px;
-      fill: rgba(255,255,255,0.35);
+      fill: rgba(255,255,255,0.62);
       letter-spacing: 0.22em;
       text-transform: uppercase;
     }
@@ -1138,8 +1138,8 @@
       content: '';
       position: absolute; inset: 0;
       border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.62);
+      background: rgba(255,255,255,0.62);
       transition: border-color .3s, background .3s;
       box-shadow: 0 4px 16px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.2);
     }
@@ -1163,7 +1163,7 @@
     .share-ring-text {
       font-family: 'DM Mono', monospace;
       font-size: 10.5px;
-      fill: rgba(255,255,255,0.35);
+      fill: rgba(255,255,255,0.62);
       letter-spacing: 0.22em;
       text-transform: uppercase;
     }
@@ -1198,7 +1198,7 @@
       padding: 1rem 1rem .85rem;
       box-shadow:
         0 24px 64px rgba(0,0,0,.7),
-        0 0 0 1px rgba(255,255,255,.06),
+        0 0 0 1px rgba(255,255,255,0.62),
         0 0 32px rgba(204,255,0,0.08);
       display: flex;
       flex-direction: column;
@@ -1226,7 +1226,7 @@
       font-family: 'DM Mono', monospace;
       font-size: .6rem;
       letter-spacing: .1em;
-      color: rgba(255,255,255,0.45);
+      color: rgba(255,255,255,0.62);
       text-align: center;
       width: 100%;
     }
@@ -1258,7 +1258,7 @@
       nav {
         top: 0; left: 0; right: 0; transform: none; width: 100%; max-width: none;
         border-radius: 0; padding: 1.4rem 3rem;
-        border: none; border-bottom: 1px solid rgba(255,255,255,0.05);
+        border: none; border-bottom: 1px solid rgba(255,255,255,0.62);
         background: rgba(15,14,26,0.85);
         backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
         box-shadow: none;
@@ -1266,7 +1266,7 @@
       nav::before { display: none; }
       footer {
         margin: 0; border-radius: 0; padding: 2rem 3rem;
-        border: none; border-top: 1px solid rgba(255,255,255,0.06);
+        border: none; border-top: 1px solid rgba(255,255,255,0.62);
         background: transparent;
         backdrop-filter: none; -webkit-backdrop-filter: none;
         box-shadow: none;
@@ -1276,17 +1276,17 @@
       }
       .project-card {
         background: var(--navy2);
-        border: 1px solid rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.62);
         box-shadow: none; backdrop-filter: none;
       }
       .special-hub {
         background: var(--navy2);
-        border: 1px solid rgba(255,255,255,0.06);
+        border: 1px solid rgba(255,255,255,0.62);
         backdrop-filter: none;
       }
       .contact-link-btn {
         background: transparent;
-        border: 1px solid rgba(255,255,255,0.12);
+        border: 1px solid rgba(255,255,255,0.62);
         backdrop-filter: none;
       }
       #hero { padding-top: 5rem; }
@@ -1333,9 +1333,9 @@
       width: 100%; max-width: 560px;
       margin: 0 auto 2rem;
       padding: 1.25rem;
-      border: 1px solid rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.62);
       border-radius: 24px;
-      background: rgba(255,255,255,0.025);
+      background: rgba(255,255,255,0.62);
       box-shadow: 0 20px 50px rgba(0,0,0,0.16);
     }
     .form-row {
@@ -1347,17 +1347,17 @@
     .form-label {
       font-family: 'DM Mono', monospace; font-size: .65rem;
       letter-spacing: .15em; text-transform: uppercase;
-      color: rgba(255,255,255,.35);
+      color: rgba(255,255,255,0.85);
     }
     .form-input {
-      width: 100%; background: rgba(255,255,255,.04);
-      border: 1px solid rgba(255,255,255,.1);
+      width: 100%; background: rgba(255,255,255,0.62);
+      border: 1px solid rgba(255,255,255,0.62);
       border-radius: 10px; padding: .75rem 1rem;
       font-family: 'Syne', sans-serif; font-size: .9rem;
       color: var(--white); outline: none;
       transition: border-color .2s, background .2s;
     }
-    .form-input::placeholder { color: rgba(255,255,255,.2); }
+    .form-input::placeholder { color: rgba(255,255,255,0.62); }
     .form-input:focus {
       border-color: rgba(204,255,0,.4);
       background: rgba(204,255,0,.03);
@@ -1411,7 +1411,7 @@
     .about-skill-soon { opacity: .45; font-style: italic; }
     .form-char-count {
       font-family: 'DM Mono', monospace; font-size: .65rem;
-      color: rgba(255,255,255,.25); text-align: right;
+      color: rgba(255,255,255,0.62); text-align: right;
       margin-top: .2rem; transition: color .2s;
     }
     .form-char-count.near-limit { color: var(--coral); }
@@ -1437,14 +1437,14 @@
     }
     @media (max-width: 768px) {
       :root {
-        --glass-bg: rgba(255,255,255,0.04);
-        --glass-bg-hover: rgba(255,255,255,0.07);
-        --glass-border: rgba(255,255,255,0.09);
-        --glass-border-top: rgba(255,255,255,0.16);
+        --glass-bg: rgba(255,255,255,0.62);
+        --glass-bg-hover: rgba(255,255,255,0.62);
+        --glass-border: rgba(255,255,255,0.62);
+        --glass-border-top: rgba(255,255,255,0.62);
         --glass-blur: blur(18px) saturate(160%);
         --glass-blur-sm: blur(10px) saturate(140%);
-        --glass-shadow: 0 6px 24px rgba(0,0,0,0.28), 0 1px 0 rgba(255,255,255,0.06) inset, 0 -1px 0 rgba(0,0,0,0.15) inset;
-        --glass-shadow-card: 0 12px 36px rgba(0,0,0,0.32), 0 1px 0 rgba(255,255,255,0.07) inset, 0 -1px 0 rgba(0,0,0,0.18) inset;
+        --glass-shadow: 0 6px 24px rgba(0,0,0,0.28), 0 1px 0 rgba(255,255,255,0.62) inset, 0 -1px 0 rgba(0,0,0,0.15) inset;
+        --glass-shadow-card: 0 12px 36px rgba(0,0,0,0.32), 0 1px 0 rgba(255,255,255,0.62) inset, 0 -1px 0 rgba(0,0,0,0.18) inset;
       }
       #hero { padding-top: 6rem; }
       .hero-tag {
@@ -1589,7 +1589,7 @@
         margin: 0 1rem 1rem; border-radius: 14px;
         border: 1px solid var(--glass-border);
         border-top-color: var(--glass-border-top);
-        background: rgba(15,14,26,0.5);
+        background: rgba(15,14,26,0.58);
         backdrop-filter: var(--glass-blur-sm);
         -webkit-backdrop-filter: var(--glass-blur-sm);
         box-shadow: var(--glass-shadow);
@@ -1654,6 +1654,12 @@
       }
     }
   </script>
+  <noscript>
+    <style>
+      #page-veil { display: none !important; }
+      .reveal, .reveal-stagger > *, .category-fade, .word { opacity: 1 !important; transform: none !important; }
+    </style>
+  </noscript>
 </head>
 <body style="touch-action: pan-y;">
 
@@ -2096,7 +2102,7 @@
 
   <!-- Share / QR button -->
   <div id="share-btn-wrap">
-    <div class="share-qr-popup" id="shareQrPopup" aria-hidden="true">
+    <div class="share-qr-popup" id="shareQrPopup" aria-hidden="true" inert>
       <div class="share-qr-inner" style="display:flex;flex-direction:column;align-items:center;gap:.65rem;width:100%;">
         <a class="share-qr-title" href="share.html">Scan to visit</a>
         <img src="images/qr-hellojackmao.svg" alt="QR code for hellojackmao.com" width="450" height="450" loading="lazy"/>
@@ -2390,12 +2396,12 @@
 
       function openPopup() {
         popup.classList.add('open');
-        popup.setAttribute('aria-hidden', 'false');
+        popup.setAttribute('aria-hidden', 'false'); popup.removeAttribute('inert');
         btn.setAttribute('aria-expanded', 'true');
       }
       function closePopup() {
         popup.classList.remove('open');
-        popup.setAttribute('aria-hidden', 'true');
+        popup.setAttribute('aria-hidden', 'true'); popup.setAttribute('inert', '');
         btn.setAttribute('aria-expanded', 'false');
       }
 
