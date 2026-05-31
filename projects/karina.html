@@ -2412,6 +2412,14 @@
     letter-spacing: 0;
     color: var(--ink);
   }
+  /* While a photocard modal is open, suppress the sticky header so it never
+     overlaps the modal or its close button (header z-index sits at 320). */
+  body:has(.pc-modal.open) .portfolio-header {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
   .pc-modal-close {
     position: absolute;
     top: 20px;
@@ -2426,7 +2434,7 @@
     color: var(--ink);
     font-size: 20px;
     cursor: pointer;
-    z-index: 10;
+    z-index: 400;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -2611,8 +2619,9 @@
     .pc-modal-close {
       top: 12px;
       right: 12px;
-      width: 40px;
-      height: 40px;
+      width: 44px;
+      height: 44px;
+      z-index: 400;
     }
 
     /* ═══════════════════════════════════════════════════════════════
@@ -3561,103 +3570,159 @@
         <span style="text-align:right;">Sample</span>
       </div>
 
-      <!-- WDA pre-release: full embed, since it's already out -->
+      <!-- LEMONADE — all 11 tracks as individual Spotify embeds (album out May 29, 2026) -->
       <div class="player-row">
         <div class="track-num">01</div>
         <div>
           <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
             <div class="track-name title">WDA <em>(Whole Different Animal)</em></div>
-            <div class="track-feat" style="text-align:right;">Pre-release · feat. G-DRAGON</div>
+            <div class="track-feat" style="text-align:right;">feat. G-DRAGON</div>
           </div>
           <div class="player-embed">
-            <iframe title="Spotify player — Whole Different Animal (feat. G-DRAGON)" src="https://open.spotify.com/embed/track/59QIYdXAL9XeNtM0j8vN0k?utm_source=generator&theme=0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+            <iframe title="Spotify player — WDA (Whole Different Animal) (feat. G-DRAGON) by aespa" src="https://open.spotify.com/embed/track/5U91cIDMrNEdsDBavYuQQh?utm_source=generator&theme=0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
           </div>
         </div>
-        <span class="now-playing">Now Playing</span>
+        <span class="now-playing">Sample</span>
       </div>
 
-      <!-- LEMONADE album — pre-release card (album releases May 29, 2026) -->
       <div class="player-row">
         <div class="track-num">02</div>
         <div>
           <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
-            <div class="track-name title"><em>LEMONADE</em> — The 2nd Album</div>
-            <div class="track-feat" style="text-align:right;">Pre-release · Out May 29, 2026</div>
+            <div class="track-name title"><em>LEMONADE</em></div>
+            <div class="track-feat" style="text-align:right;">Double title · electronic dance</div>
           </div>
-          <a class="prerelease-card" href="https://open.spotify.com/prerelease/41dOjZWsyiANKJRyLG5B8e" target="_blank" rel="noopener">
-            <span class="prerelease-art" aria-hidden="true">
-              <img src="https://i.scdn.co/image/ab67616d0000b27353ca3f7b64b26001a22ea1c3" alt="" loading="lazy" onerror="this.style.display='none'"  width="640" height="640"/>
-            </span>
-            <span class="prerelease-meta">
-              <span class="prerelease-tag">★ PRE-RELEASE · 11 TRACKS</span>
-              <span class="prerelease-title">Lemonade</span>
-              <span class="prerelease-sub">Pre-save on Spotify →</span>
-            </span>
-          </a>
+          <div class="player-embed">
+            <iframe title="Spotify player — LEMONADE by aespa" src="https://open.spotify.com/embed/track/2oR7jPvWPC08Su4KYmKR3O?utm_source=generator&theme=0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
         </div>
-        <span class="now-playing">Pre-Save</span>
+        <span class="now-playing">Sample</span>
       </div>
 
-      <!-- Static rows for the rest — they'll have live embeds when the album drops -->
-      <div class="track-row">
+      <div class="player-row">
         <div class="track-num">03</div>
-        <div class="track-name title"><em>LEMONADE</em></div>
-        <div class="track-feat">Double title · electronic dance</div>
-        <div class="track-length">29 May</div>
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+            <div class="track-name title">SHAKIN'</div>
+            <div class="track-feat" style="text-align:right;">Rough synth bass</div>
+          </div>
+          <div class="player-embed">
+            <iframe title="Spotify player — SHAKIN' by aespa" src="https://open.spotify.com/embed/track/4hWEH4DPWe6rot4JHJUMr4?utm_source=generator&theme=0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <span class="now-playing">Sample</span>
       </div>
-      <div class="track-row">
+
+      <div class="player-row">
         <div class="track-num">04</div>
-        <div class="track-name">SHAKIN'</div>
-        <div class="track-feat">Rough synth bass</div>
-        <div class="track-length">29 May</div>
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+            <div class="track-name title">Can't Help Myself</div>
+            <div class="track-feat" style="text-align:right;">Guitar-led pop-rock</div>
+          </div>
+          <div class="player-embed">
+            <iframe title="Spotify player — Can't Help Myself by aespa" src="https://open.spotify.com/embed/track/1ubVpU4mU0xbgq2FM3k5id?utm_source=generator&theme=0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <span class="now-playing">Sample</span>
       </div>
-      <div class="track-row">
+
+      <div class="player-row">
         <div class="track-num">05</div>
-        <div class="track-name">Can't Help Myself</div>
-        <div class="track-feat">Album cut</div>
-        <div class="track-length">29 May</div>
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+            <div class="track-name title">Camouflage</div>
+            <div class="track-feat" style="text-align:right;">Hyperpop</div>
+          </div>
+          <div class="player-embed">
+            <iframe title="Spotify player — Camouflage by aespa" src="https://open.spotify.com/embed/track/4bqn9QgIrsgRy6HjcYhxak?utm_source=generator&theme=0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <span class="now-playing">Sample</span>
       </div>
-      <div class="track-row">
+
+      <div class="player-row">
         <div class="track-num">06</div>
-        <div class="track-name">Camouflage</div>
-        <div class="track-feat">Album cut</div>
-        <div class="track-length">29 May</div>
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+            <div class="track-name title">Bite</div>
+            <div class="track-feat" style="text-align:right;">Album cut</div>
+          </div>
+          <div class="player-embed">
+            <iframe title="Spotify player — Bite by aespa" src="https://open.spotify.com/embed/track/5M7EPlVtfHdqlxY628HvHx?utm_source=generator&theme=0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <span class="now-playing">Sample</span>
       </div>
-      <div class="track-row">
+
+      <div class="player-row">
         <div class="track-num">07</div>
-        <div class="track-name">Bite</div>
-        <div class="track-feat">Album cut</div>
-        <div class="track-length">29 May</div>
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+            <div class="track-name title">Switchblade</div>
+            <div class="track-feat" style="text-align:right;">feat. Ty Dolla $ign · electronic dance</div>
+          </div>
+          <div class="player-embed">
+            <iframe title="Spotify player — Switchblade (feat. Ty Dolla $ign) by aespa" src="https://open.spotify.com/embed/track/3KHbQsyerMst6uLw8JiAwu?utm_source=generator&theme=0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <span class="now-playing">Sample</span>
       </div>
-      <div class="track-row">
+
+      <div class="player-row">
         <div class="track-num">08</div>
-        <div class="track-name">Switchblade</div>
-        <div class="track-feat">feat. Ty Dolla $ign · electronic dance</div>
-        <div class="track-length">29 May</div>
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+            <div class="track-name title">Roll</div>
+            <div class="track-feat" style="text-align:right;">Bouncy, minimal dance</div>
+          </div>
+          <div class="player-embed">
+            <iframe title="Spotify player — Roll by aespa" src="https://open.spotify.com/embed/track/3UW9TYmzopPvD1Gte1a5NN?utm_source=generator&theme=0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <span class="now-playing">Sample</span>
       </div>
-      <div class="track-row">
+
+      <div class="player-row">
         <div class="track-num">09</div>
-        <div class="track-name">Roll</div>
-        <div class="track-feat">Bouncy, minimal dance</div>
-        <div class="track-length">29 May</div>
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+            <div class="track-name title">My Plan</div>
+            <div class="track-feat" style="text-align:right;">R&amp;B</div>
+          </div>
+          <div class="player-embed">
+            <iframe title="Spotify player — My Plan by aespa" src="https://open.spotify.com/embed/track/4in8lrVCzPgXK9iTBJHrWO?utm_source=generator&theme=0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <span class="now-playing">Sample</span>
       </div>
-      <div class="track-row">
+
+      <div class="player-row">
         <div class="track-num">10</div>
-        <div class="track-name">My Plan</div>
-        <div class="track-feat">R&amp;B</div>
-        <div class="track-length">29 May</div>
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+            <div class="track-name title">'Til We Die</div>
+            <div class="track-feat" style="text-align:right;">Pop-rock</div>
+          </div>
+          <div class="player-embed">
+            <iframe title="Spotify player — 'Til We Die by aespa" src="https://open.spotify.com/embed/track/3bKpQla1Cn6WF7vZqb0MRZ?utm_source=generator&theme=0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <span class="now-playing">Sample</span>
       </div>
-      <div class="track-row">
+
+      <div class="player-row">
         <div class="track-num">11</div>
-        <div class="track-name">'Til We Die</div>
-        <div class="track-feat">Pop-rock</div>
-        <div class="track-length">29 May</div>
-      </div>
-      <div class="track-row">
-        <div class="track-num">12</div>
-        <div class="track-name"><em>LEMONADE</em></div>
-        <div class="track-feat">Digital exclusive · feat. Becky G</div>
-        <div class="track-length">29 May</div>
+        <div>
+          <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px;">
+            <div class="track-name title"><em>LEMONADE</em></div>
+            <div class="track-feat" style="text-align:right;">Digital exclusive · feat. Becky G</div>
+          </div>
+          <div class="player-embed">
+            <iframe title="Spotify player — LEMONADE (feat. Becky G) by aespa" src="https://open.spotify.com/embed/track/4NMJt97p0KujNuQsLcC7Ut?utm_source=generator&theme=0" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+        <span class="now-playing">Sample</span>
       </div>
     </div>
 
@@ -4630,6 +4695,14 @@
     pages.forEach((p, i) => {
       if (i < currentSpread) p.classList.add('flipped');
       else p.classList.remove('flipped');
+      // Z-index management — the heart of a correct page turn:
+      // • Unflipped pages: earlier pages sit ON TOP (page 1 is the top sheet ready to lift).
+      // • Flipped pages: most-recently-flipped sits on top of the left stack.
+      if (i < currentSpread) {
+        p.style.zIndex = String(i + 1);            // flipped: 1,2,3… (last flipped highest)
+      } else {
+        p.style.zIndex = String(totalPages - i);   // unflipped: page 1 highest of the right stack
+      }
     });
 
     // Update the static left pane to mirror the most recently-flipped page's back face
@@ -4681,6 +4754,9 @@
       pages.forEach((p, i) => {
         if (i < currentSpread) p.classList.add('flipped');
         else p.classList.remove('flipped');
+        // Keep z-index correct on the way back too
+        if (i < currentSpread) p.style.zIndex = String(i + 1);
+        else p.style.zIndex = String(totalPages - i);
       });
 
       if (currentSpread === 0) {
