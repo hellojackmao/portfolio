@@ -2479,18 +2479,14 @@
     pointer-events: none;
   }
   @media (max-width: 900px) {
-    .pc-modal-nav {
-      top: auto;
-      bottom: calc(20px + env(safe-area-inset-bottom, 0px));
-      transform: none;
-      width: 44px;
-      height: 44px;
-      font-size: 24px;
+    /* Mobile uses swipe gestures instead of arrow buttons */
+    .pc-modal-nav { display: none; }
+    /* Subtle swipe hint shown on mobile only */
+    .pc-modal-swipe-hint {
+      display: flex;
     }
-    .pc-modal-prev { left: 16px; }
-    .pc-modal-next { right: 16px; }
-    .pc-modal-nav:hover { transform: scale(1.08); }
   }
+  .pc-modal-swipe-hint { display: none; }
 
 
   @media (max-width: 900px) {
@@ -2607,6 +2603,20 @@
     /* Book: hide the spine illusion and switch to single page */
     .book-stage { aspect-ratio: 4 / 5; max-width: 100%; }
     .page { left: 0; width: 100%; }
+    /* Mobile: a full-width page can't do a believable 3D edge-flip, so use a
+       clean horizontal slide + fade instead — reads as a natural page advance. */
+    .page {
+      transform-origin: center center;
+      transition: transform 0.55s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.45s ease;
+      backface-visibility: visible;
+      -webkit-backface-visibility: visible;
+    }
+    .page.flipped {
+      transform: translateX(-12%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .page-face.back { display: none; }
     .page-static { width: 100%; }
     .book-spine { display: none; }
     .page-content { padding: 28px 24px; }
@@ -5097,6 +5107,34 @@
     else if (e.key === 'ArrowLeft') stepCard(-1);
     else if (e.key === 'ArrowRight') stepCard(1);
   });
+
+  // ─── Mobile swipe navigation between cards ───
+  // Swipe left → next card, swipe right → previous card.
+  (function () {
+    if (!pcModal) return;
+    let startX = 0, startY = 0, tracking = false;
+    const THRESHOLD = 45;      // min horizontal px to count as a swipe
+    const V_TOLERANCE = 75;    // max vertical drift before we treat it as a scroll
+
+    pcModal.addEventListener('touchstart', function (e) {
+      if (!pcModal.classList.contains('open') || e.touches.length !== 1) return;
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+      tracking = true;
+    }, { passive: true });
+
+    pcModal.addEventListener('touchend', function (e) {
+      if (!tracking) return;
+      tracking = false;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - startX;
+      const dy = t.clientY - startY;
+      // Only act on a deliberate horizontal swipe (not a vertical scroll).
+      if (Math.abs(dx) >= THRESHOLD && Math.abs(dy) <= V_TOLERANCE) {
+        stepCard(dx < 0 ? 1 : -1);   // swipe left = next, swipe right = prev
+      }
+    }, { passive: true });
+  })();
 
   // ═══════════════ SCROLL REVEALS — IntersectionObserver ═══════════════
   // Apply .reveal/.reveal-stagger classes to elements, then watch them
