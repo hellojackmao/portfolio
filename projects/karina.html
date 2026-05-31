@@ -2445,6 +2445,52 @@
     transform: scale(1.08);
     background: rgba(255,255,255,1);
   }
+  .pc-modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(251, 248, 241, 0.9);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.7);
+    color: var(--ink);
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px -4px rgba(0,0,0,0.3);
+    transition: transform 0.2s, background 0.2s, opacity 0.2s;
+  }
+  .pc-modal-prev { left: 20px; }
+  .pc-modal-next { right: 20px; }
+  .pc-modal-nav:hover {
+    background: rgba(255,255,255,1);
+    transform: translateY(-50%) scale(1.08);
+  }
+  .pc-modal-nav:disabled {
+    opacity: 0.35;
+    cursor: default;
+    pointer-events: none;
+  }
+  @media (max-width: 900px) {
+    .pc-modal-nav {
+      top: auto;
+      bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+      transform: none;
+      width: 44px;
+      height: 44px;
+      font-size: 24px;
+    }
+    .pc-modal-prev { left: 16px; }
+    .pc-modal-next { right: 16px; }
+    .pc-modal-nav:hover { transform: scale(1.08); }
+  }
 
 
   @media (max-width: 900px) {
@@ -3971,7 +4017,7 @@
 
     <div class="photocards-grid">
       <article class="photocard" data-card="01" tabindex="0" role="button" aria-label="Open card 01: Black Mamba">
-        <svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
+        <svg preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
   <defs>
     <linearGradient id="bm-bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1a0a14"/>
@@ -4042,7 +4088,7 @@
 </svg>
       </article>
       <article class="photocard" data-card="02" tabindex="0" role="button" aria-label="Open card 02: Next Level">
-        <svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
+        <svg preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
   <defs>
     <linearGradient id="nl-bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#ff2d87"/>
@@ -4121,7 +4167,7 @@
 </svg>
       </article>
       <article class="photocard" data-card="03" tabindex="0" role="button" aria-label="Open card 03: Supernova">
-        <svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
+        <svg preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
   <defs>
     <radialGradient id="sn-bg" cx="50%" cy="50%" r="70%">
       <stop offset="0%" stop-color="#fff5b8"/>
@@ -4212,7 +4258,7 @@
 </svg>
       </article>
       <article class="photocard" data-card="04" tabindex="0" role="button" aria-label="Open card 04: Met Gala 2026">
-        <svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
+        <svg preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
   <defs>
     <linearGradient id="mg-bg" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%" stop-color="#0a0a0a"/>
@@ -4292,7 +4338,7 @@
 </svg>
       </article>
       <article class="photocard" data-card="05" tabindex="0" role="button" aria-label="Open card 05: Lemonade">
-        <svg preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
+        <svg preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600">
   <defs>
     <linearGradient id="lm-bg" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#e8ff5a"/>
@@ -4495,6 +4541,8 @@
 <!-- MODAL (single, populated by JS) -->
 <div class="pc-modal" id="pcModal" role="dialog" aria-modal="true" aria-hidden="true" inert>
   <button class="pc-modal-close" id="pcModalClose" aria-label="Close">✕</button>
+  <button class="pc-modal-nav pc-modal-prev" id="pcModalPrev" aria-label="Previous card">‹</button>
+  <button class="pc-modal-nav pc-modal-next" id="pcModalNext" aria-label="Next card">›</button>
   <div class="pc-modal-inner">
     <div class="pc-modal-card" id="pcModalCard"></div>
     <div class="pc-modal-body" id="pcModalBody"></div>
@@ -4690,20 +4738,38 @@
   // Save the original foreword so we can restore it on going back to state 0
   const foreword = staticPane.innerHTML;
 
-  function update() {
-    // Flip pages: pages with index < currentSpread are flipped
+  // Track which page is mid-flip so it can ride above the stack during its rotation.
+  let flipTimer = null;
+
+  function settleZ() {
+    // Final resting z-index for every page (no page is mid-flight here).
+    pages.forEach((p, i) => {
+      if (i < currentSpread) {
+        p.style.zIndex = String(i + 1);            // flipped: 1,2,3… (last flipped highest on left)
+      } else {
+        p.style.zIndex = String(totalPages - i);   // unflipped: page 1 highest on the right
+      }
+    });
+  }
+
+  function update(activeIndex) {
+    // Apply flipped state to all pages.
     pages.forEach((p, i) => {
       if (i < currentSpread) p.classList.add('flipped');
       else p.classList.remove('flipped');
-      // Z-index management — the heart of a correct page turn:
-      // • Unflipped pages: earlier pages sit ON TOP (page 1 is the top sheet ready to lift).
-      // • Flipped pages: most-recently-flipped sits on top of the left stack.
-      if (i < currentSpread) {
-        p.style.zIndex = String(i + 1);            // flipped: 1,2,3… (last flipped highest)
-      } else {
-        p.style.zIndex = String(totalPages - i);   // unflipped: page 1 highest of the right stack
-      }
     });
+
+    // Set every page to its final resting z-index first…
+    if (flipTimer) { clearTimeout(flipTimer); flipTimer = null; }
+    settleZ();
+
+    // …then lift ONLY the page that is actively turning so nothing shows through
+    // mid-rotation (the cause of the flashing). It settles after the 1s flip.
+    const active = (typeof activeIndex === 'number') ? pages[activeIndex] : null;
+    if (active) {
+      active.style.zIndex = String(totalPages + 5);
+      flipTimer = setTimeout(() => { settleZ(); flipTimer = null; }, 1000);
+    }
 
     // Update the static left pane to mirror the most recently-flipped page's back face
     if (currentSpread === 0) {
@@ -4740,7 +4806,7 @@
   nextBtn.addEventListener('click', () => {
     if (currentSpread < totalPages) {
       currentSpread++;
-      update();
+      update(currentSpread - 1); // the page that just flipped forward rides on top
     }
   });
 
@@ -4754,10 +4820,16 @@
       pages.forEach((p, i) => {
         if (i < currentSpread) p.classList.add('flipped');
         else p.classList.remove('flipped');
-        // Keep z-index correct on the way back too
-        if (i < currentSpread) p.style.zIndex = String(i + 1);
-        else p.style.zIndex = String(totalPages - i);
       });
+      // Final resting stack, then lift the page that is turning BACK so nothing
+      // shows through during its reverse rotation.
+      if (flipTimer) { clearTimeout(flipTimer); flipTimer = null; }
+      settleZ();
+      const reversing = pages[currentSpread]; // the page that just un-flipped
+      if (reversing) {
+        reversing.style.zIndex = String(totalPages + 5);
+        flipTimer = setTimeout(() => { settleZ(); flipTimer = null; }, 1000);
+      }
 
       if (currentSpread === 0) {
         // After the un-flip animation, restore the foreword
@@ -4939,8 +5011,12 @@
   const pcModalCard = document.getElementById('pcModalCard');
   const pcModalBody = document.getElementById('pcModalBody');
   const pcModalClose = document.getElementById('pcModalClose');
+  const pcModalPrev = document.getElementById('pcModalPrev');
+  const pcModalNext = document.getElementById('pcModalNext');
+  let currentCardNum = null;
 
   function openCard(num) {
+    currentCardNum = parseInt(num, 10);
     const data = cardData.find(d => d.num === num);
     if (!data) return;
 
@@ -4971,6 +5047,22 @@
     pcModal.classList.add('open');
     pcModal.setAttribute('aria-hidden', 'false'); pcModal.removeAttribute('inert');
     document.body.style.overflow = 'hidden';
+    updateNavButtons();
+  }
+
+  // Total cards = number of photocards in the gallery.
+  const totalCards = document.querySelectorAll('.photocard').length;
+
+  function updateNavButtons() {
+    if (pcModalPrev) pcModalPrev.disabled = currentCardNum <= 1;
+    if (pcModalNext) pcModalNext.disabled = currentCardNum >= totalCards;
+  }
+
+  function stepCard(dir) {
+    const target = currentCardNum + dir;
+    if (target >= 1 && target <= totalCards) {
+      openCard(String(target).padStart(2, '0')); // match zero-padded data-card ("01".."05")
+    }
   }
 
   function closeCard() {
@@ -4992,15 +5084,18 @@
   });
 
   if (pcModalClose) pcModalClose.addEventListener('click', closeCard);
+  if (pcModalPrev) pcModalPrev.addEventListener('click', () => stepCard(-1));
+  if (pcModalNext) pcModalNext.addEventListener('click', () => stepCard(1));
   if (pcModal) {
     pcModal.addEventListener('click', (e) => {
       if (e.target === pcModal) closeCard();
     });
   }
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && pcModal && pcModal.classList.contains('open')) {
-      closeCard();
-    }
+    if (!pcModal || !pcModal.classList.contains('open')) return;
+    if (e.key === 'Escape') closeCard();
+    else if (e.key === 'ArrowLeft') stepCard(-1);
+    else if (e.key === 'ArrowRight') stepCard(1);
   });
 
   // ═══════════════ SCROLL REVEALS — IntersectionObserver ═══════════════
