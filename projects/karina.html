@@ -2229,7 +2229,7 @@
     border-radius: 22px;
     overflow: hidden;
     cursor: pointer;
-    background: var(--ink);
+    background: transparent;
     box-shadow:
       0 4px 12px -4px rgba(0,0,0,0.15),
       0 8px 24px -8px rgba(0,0,0,0.12);
@@ -2324,7 +2324,7 @@
     aspect-ratio: 2/3;
     border-radius: 18px;
     overflow: hidden;
-    background: var(--ink);
+    background: transparent;
     align-self: center;
   }
   .pc-modal-card svg {
@@ -2617,7 +2617,10 @@
       pointer-events: none;
     }
     .page-face.back { display: none; }
-    .page-static { width: 100%; }
+    .page-static {
+      width: 100%;
+      z-index: 6; /* sit above faded/sliding pages so transitions never flash */
+    }
     .book-spine { display: none; }
     .page-content { padding: 28px 24px; }
     .page-heading { font-size: 24px; }
@@ -4774,9 +4777,12 @@
     settleZ();
 
     // …then lift ONLY the page that is actively turning so nothing shows through
-    // mid-rotation (the cause of the flashing). It settles after the 1s flip.
+    // mid-rotation (the cause of the flashing). DESKTOP ONLY — on mobile the
+    // transition is a slide+fade where a page riding on top would itself flash,
+    // so we skip elevation and let the static pane (raised in CSS) stay on top.
+    const isMobile = window.matchMedia('(max-width: 900px)').matches;
     const active = (typeof activeIndex === 'number') ? pages[activeIndex] : null;
-    if (active) {
+    if (active && !isMobile) {
       active.style.zIndex = String(totalPages + 5);
       flipTimer = setTimeout(() => { settleZ(); flipTimer = null; }, 1000);
     }
@@ -4836,7 +4842,8 @@
       if (flipTimer) { clearTimeout(flipTimer); flipTimer = null; }
       settleZ();
       const reversing = pages[currentSpread]; // the page that just un-flipped
-      if (reversing) {
+      const isMobileBack = window.matchMedia('(max-width: 900px)').matches;
+      if (reversing && !isMobileBack) {
         reversing.style.zIndex = String(totalPages + 5);
         flipTimer = setTimeout(() => { settleZ(); flipTimer = null; }, 1000);
       }
