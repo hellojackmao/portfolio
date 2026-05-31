@@ -2601,7 +2601,7 @@
     .wda::before { font-size: 50px; }
     .classics-grid { grid-template-columns: 1fr; }
     /* Book: hide the spine illusion and switch to single page */
-    .book-stage { aspect-ratio: 4 / 5; max-width: 100%; }
+    .book-stage { aspect-ratio: 4 / 5; max-width: 100%; background: #faf8f3; border-radius: 10px; overflow: hidden; }
     .page { left: 0; width: 100%; }
     /* Mobile: a full-width page can't do a believable 3D edge-flip, so use a
        clean horizontal slide + fade instead — reads as a natural page advance. */
@@ -4726,6 +4726,36 @@
   const dotsWrap = document.getElementById('bookDots');
   const staticPane = document.getElementById('bookStatic');
 
+  // On mobile the static pane is the ONLY thing the reader sees (it sits above the
+  // hidden .page elements), so its content swap is what must animate. swapStatic
+  // fades + slides the pane out, swaps the HTML, then brings it back — giving a
+  // real, visible page-change on phones. On desktop we keep the instant swap
+  // (the 3D page flip is the animation there).
+  const isMobileBook = () => window.matchMedia('(max-width: 900px)').matches;
+  let staticAnimTimer = null;
+  function swapStatic(html, dir) {
+    if (!staticPane) return;
+    if (!isMobileBook()) { staticPane.innerHTML = html; return; }
+    if (staticAnimTimer) clearTimeout(staticAnimTimer);
+    // A quick, even slide-and-fade. Phase 1: the current page slides a short way
+    // out and fades down (fast). Phase 2: swap content, snap it just off the other
+    // edge, then ease it back to centre. Short durations keep it snappy on a phone.
+    const outX  = (dir === 'back') ? '38%'  : '-38%';
+    const inX   = (dir === 'back') ? '-38%' : '38%';
+    staticPane.style.transition = 'transform 0.16s ease-in, opacity 0.16s ease-in';
+    staticPane.style.transform  = 'translateX(' + outX + ')';
+    staticPane.style.opacity     = '0';
+    staticAnimTimer = setTimeout(() => {
+      staticPane.innerHTML = html;
+      staticPane.style.transition = 'none';
+      staticPane.style.transform  = 'translateX(' + inX + ')';
+      void staticPane.offsetWidth; // force reflow so the return transition runs
+      staticPane.style.transition = 'transform 0.26s cubic-bezier(0.16,1,0.3,1), opacity 0.22s ease-out';
+      staticPane.style.transform  = 'translateX(0)';
+      staticPane.style.opacity     = '1';
+    }, 165);
+  }
+
   if (!pages.length) return;
 
   // currentSpread = how many pages are flipped (0 = book closed, totalPages = all flipped)
@@ -4789,19 +4819,22 @@
 
     // Update the static left pane to mirror the most recently-flipped page's back face
     if (currentSpread === 0) {
-      staticPane.innerHTML = foreword;
+      swapStatic(foreword, 'back');
     } else {
       const lastFlipped = pages[currentSpread - 1];
       const backFace = lastFlipped.querySelector('.page-face.back');
       if (backFace) {
-        // Wait until the animation has progressed before swapping, so the user
-        // sees the back face turn, then it settles as a static left page.
-        setTimeout(() => {
-          // Only swap if we're still on the same spread (user didn't click rapidly)
-          if (pages.filter(p => p.classList.contains('flipped')).length === currentSpread) {
-            staticPane.innerHTML = backFace.innerHTML;
-          }
-        }, 520); // halfway through the 1s flip animation
+        if (isMobileBook()) {
+          // Mobile: the static pane IS the visible page — animate its swap now.
+          swapStatic(backFace.innerHTML, 'fwd');
+        } else {
+          // Desktop: wait until the 3D flip has progressed, then settle the left page.
+          setTimeout(() => {
+            if (pages.filter(p => p.classList.contains('flipped')).length === currentSpread) {
+              staticPane.innerHTML = backFace.innerHTML;
+            }
+          }, 520);
+        }
       }
     }
 
@@ -4849,20 +4882,27 @@
       }
 
       if (currentSpread === 0) {
-        // After the un-flip animation, restore the foreword
-        setTimeout(() => {
-          if (pages.filter(p => p.classList.contains('flipped')).length === 0) {
-            staticPane.innerHTML = foreword;
-          }
-        }, 520);
+        if (isMobileBook()) {
+          swapStatic(foreword, 'back');
+        } else {
+          setTimeout(() => {
+            if (pages.filter(p => p.classList.contains('flipped')).length === 0) {
+              staticPane.innerHTML = foreword;
+            }
+          }, 520);
+        }
       } else {
         // Show the back face of the now-topmost flipped page
         const lastFlipped = pages[currentSpread - 1];
         const backFace = lastFlipped.querySelector('.page-face.back');
         if (backFace) {
-          setTimeout(() => {
-            staticPane.innerHTML = backFace.innerHTML;
-          }, 520);
+          if (isMobileBook()) {
+            swapStatic(backFace.innerHTML, 'back');
+          } else {
+            setTimeout(() => {
+              staticPane.innerHTML = backFace.innerHTML;
+            }, 520);
+          }
         }
       }
 
