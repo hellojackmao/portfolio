@@ -2617,6 +2617,7 @@
       pointer-events: none;
     }
     .page-face.back { display: none; }
+    .book { display: none; }
     .page-static {
       width: 100%;
       z-index: 6; /* sit above faded/sliding pages so transitions never flash */
@@ -4735,25 +4736,18 @@
   let staticAnimTimer = null;
   function swapStatic(html, dir) {
     if (!staticPane) return;
+    // Desktop keeps the instant swap (the 3D page flip is the animation there).
     if (!isMobileBook()) { staticPane.innerHTML = html; return; }
+    // Mobile: a simple, bulletproof cross-fade. Fade the pane out, swap the
+    // content while it's invisible, fade it back in. No transforms, nothing to
+    // ghost — the opaque cream pane is the only visible layer.
     if (staticAnimTimer) clearTimeout(staticAnimTimer);
-    // A quick, even slide-and-fade. Phase 1: the current page slides a short way
-    // out and fades down (fast). Phase 2: swap content, snap it just off the other
-    // edge, then ease it back to centre. Short durations keep it snappy on a phone.
-    const outX  = (dir === 'back') ? '38%'  : '-38%';
-    const inX   = (dir === 'back') ? '-38%' : '38%';
-    staticPane.style.transition = 'transform 0.16s ease-in, opacity 0.16s ease-in';
-    staticPane.style.transform  = 'translateX(' + outX + ')';
-    staticPane.style.opacity     = '0';
+    staticPane.style.transition = 'opacity 0.18s ease';
+    staticPane.style.opacity = '0';
     staticAnimTimer = setTimeout(() => {
       staticPane.innerHTML = html;
-      staticPane.style.transition = 'none';
-      staticPane.style.transform  = 'translateX(' + inX + ')';
-      void staticPane.offsetWidth; // force reflow so the return transition runs
-      staticPane.style.transition = 'transform 0.26s cubic-bezier(0.16,1,0.3,1), opacity 0.22s ease-out';
-      staticPane.style.transform  = 'translateX(0)';
-      staticPane.style.opacity     = '1';
-    }, 165);
+      staticPane.style.opacity = '1';
+    }, 190);
   }
 
   if (!pages.length) return;
