@@ -5240,14 +5240,48 @@
         }
       });
     }, {
-      threshold: 0.12,
-      rootMargin: '0px 0px -8% 0px'
+      threshold: 0,                      // any pixel entering triggers (fast-scroll safe)
+      rootMargin: '0px 0px -5% 0px'
     });
 
     document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
       // skip the hero elements we already revealed
       if (!el.classList.contains('is-visible')) io.observe(el);
     });
+
+    // Safety net: reveal anything already within (or above) the viewport. Runs on
+    // load and on scroll so a fast flick can never strand an element invisible.
+    const revealInView = () => {
+      const vh = window.innerHeight;
+      document.querySelectorAll('.reveal:not(.is-visible), .reveal-stagger:not(.is-visible)').forEach(el => {
+        const r = el.getBoundingClientRect();
+        // Reveal if the element's top has reached the viewport bottom — this also
+        // catches anything a fast scroll has already pushed ABOVE the viewport
+        // (r.top negative), so nothing is ever left stranded invisible.
+        if (r.top < vh * 0.95) {
+          el.classList.add('is-visible');
+          io.unobserve(el);
+        }
+      });
+    };
+    revealInView();
+    let revealTick = false;
+    window.addEventListener('scroll', () => {
+      if (revealTick) return;
+      revealTick = true;
+      requestAnimationFrame(() => { revealInView(); revealTick = false; });
+    }, { passive: true });
+    // scrollend backstop (fires once a flick settles) + a brief polling backstop
+    // so nothing stays hidden even if scroll events are throttled.
+    window.addEventListener('scrollend', revealInView, { passive: true });
+    let pollCount = 0;
+    const revealPoll = setInterval(() => {
+      revealInView();
+      if (++pollCount > 12 ||
+          document.querySelectorAll('.reveal:not(.is-visible), .reveal-stagger:not(.is-visible)').length === 0) {
+        clearInterval(revealPoll);
+      }
+    }, 400);
   } else {
     // Fallback: show everything immediately
     document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => {
