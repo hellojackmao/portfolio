@@ -215,7 +215,7 @@
     bar.id = "wfx-bar";
     bar.setAttribute("style", [
       "position:fixed", "top:0", "left:0", "right:0", "z-index:99999",
-      "display:flex", "align-items:center", "justify-content:space-between",
+      "display:grid", "grid-template-columns:1fr auto 1fr", "align-items:center",
       "gap:16px", "padding:10px 18px",
       "font-family:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif",
       "background:rgba(20,20,20,0.72)", "backdrop-filter:blur(14px)",
@@ -232,16 +232,20 @@
     };
 
     bar.innerHTML =
-      '<a href="wayfare-standalone.html" style="display:inline-flex;align-items:center;gap:7px;color:rgba(255,255,255,0.85);text-decoration:none;font-size:13px;font-weight:500;">' +
-        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>' +
-        'Wayfarer Library</a>' +
-      '<a href="wayfare-standalone.html" style="display:inline-flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-weight:800;font-size:15px;letter-spacing:-0.01em;">' +
-        '<svg width="20" height="20" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="none" stroke="#4ECDC4" stroke-width="1.5" opacity="0.5"/><path d="M16 2 L19 16 L16 30 L13 16 Z" fill="#4ECDC4"/><path d="M2 16 L16 13 L30 16 L16 19 Z" fill="#4ECDC4" opacity="0.6"/><circle cx="16" cy="16" r="2.4" fill="#fff"/></svg>' +
-        'Wayfarer</a>' +
-      '<div style="display:inline-flex;align-items:center;gap:8px;">' +
+      // LEFT: Back to Wayfarer
+      '<div style="justify-self:start;display:inline-flex;align-items:center;">' +
+        '<a href="index.html" style="display:inline-flex;align-items:center;gap:7px;color:rgba(255,255,255,0.85);text-decoration:none;font-size:13px;font-weight:600;">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>' +
+          'Back to Wayfarer</a>' +
+      '</div>' +
+      // CENTER: save buttons
+      '<div style="justify-self:center;display:inline-flex;align-items:center;gap:8px;">' +
         '<a href="saved.html" id="wfx-saved" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.85);text-decoration:none;font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:6px 11px;">Saved <span id="wfx-ct" style="background:#4ECDC4;color:#062a27;border-radius:9999px;min-width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;padding:0 4px;">0</span></a>' +
         (cur ? '<button id="wfx-save" aria-label="Save this guide" style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:6px 13px;color:#fff;font-family:inherit;font-size:12px;font-weight:600;">' + bookmark(Saved.has(currentId)) + '<span id="wfx-save-tx">' + (Saved.has(currentId) ? "Saved" : "Save") + '</span></button>' : '') +
-        (next ? '<a href="' + next.file + '" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.85);text-decoration:none;font-size:12px;font-weight:600;">Next guide<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>' : '') +
+      '</div>' +
+      // RIGHT: Next guide
+      '<div style="justify-self:end;display:inline-flex;align-items:center;">' +
+        (next ? '<a href="' + next.file + '" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.85);text-decoration:none;font-size:13px;font-weight:600;">Next guide<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>' : '') +
       '</div>';
 
     document.body.appendChild(bar);
