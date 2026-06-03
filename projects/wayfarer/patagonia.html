@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Long Quiet — Patagonia · Wayfarer</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111111'/%3E%3Cpath d='M16 3 L19 16 L16 29 L13 16 Z' fill='%234ECDC4'/%3E%3Cpath d='M3 16 L16 13 L29 16 L16 19 Z' fill='%234ECDC4' opacity='0.6'/%3E%3Ccircle cx='16' cy='16' r='2.4' fill='%23ffffff'/%3E%3C/svg%3E" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --paper: #e8e6e1; --ink: #1a1a18; --concrete: #b8b5ad; --line: #1a1a18;
+    --accent: #1a1a18; --faint: #8a8780;
+    --sans: "Archivo", sans-serif; --mono: "JetBrains Mono", monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans);
+    -webkit-font-smoothing: antialiased; line-height: 1.5; }
+  ::selection { background: var(--ink); color: var(--paper); }
+
+  .rv { opacity: 0; transform: translateY(20px); transition: opacity .8s cubic-bezier(.2,.7,.3,1), transform .8s cubic-bezier(.2,.7,.3,1); }
+  .rv.in { opacity: 1; transform: none; }
+
+  .grid-frame { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
+
+  /* Brutalist top strip */
+  .meta-strip { border-bottom: 2px solid var(--line); font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.05em; text-transform: uppercase; }
+  .meta-strip .grid-frame { display: flex; justify-content: space-between; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; gap: 12px; }
+  .meta-strip a { color: var(--ink); text-decoration: none; }
+  .meta-strip a:hover { text-decoration: underline; }
+
+  /* Masthead */
+  .masthead { border-bottom: 2px solid var(--line); padding: 80px 0 60px; }
+  .masthead .coords { font-family: var(--mono); font-size: 12px; color: var(--faint); margin-bottom: 40px; letter-spacing: 0.08em; }
+  .masthead h1 { font-size: clamp(3rem, 11vw, 9rem); font-weight: 900; line-height: 0.86; letter-spacing: -0.04em;
+    text-transform: uppercase; margin-bottom: 30px; }
+  .masthead .sub { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; border-top: 1px solid var(--line); padding-top: 24px; }
+  .masthead .sub p { font-size: 1.05rem; line-height: 1.6; max-width: 38ch; }
+  .masthead .sub .stat { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .masthead .sub .stat b { display: block; font-family: var(--sans); font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin-top: 4px; text-transform: none; }
+  @media (max-width: 720px){ .masthead .sub { grid-template-columns: 1fr; gap: 24px; } }
+
+  /* Field log entries */
+  .log { padding: 0 0 40px; }
+  .entry { display: grid; grid-template-columns: 160px 1fr; border-bottom: 1px solid var(--line); }
+  .entry:last-child { border-bottom: 2px solid var(--line); }
+  .entry-marker { border-right: 1px solid var(--line); padding: 40px 24px 40px 0; font-family: var(--mono); font-size: 11px;
+    letter-spacing: 0.05em; text-transform: uppercase; color: var(--faint); }
+  .entry-marker .day { font-size: 2.6rem; color: var(--ink); font-family: var(--sans); font-weight: 800; line-height: 1; letter-spacing: -0.03em; margin-bottom: 8px; }
+  .entry-body { padding: 40px 0 40px 40px; }
+  .entry-body h2 { font-size: clamp(1.6rem, 3.5vw, 2.6rem); font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 18px; text-transform: uppercase; }
+  .entry-body p { font-size: 1.05rem; line-height: 1.7; max-width: 62ch; margin-bottom: 16px; }
+  .entry-body .note { font-family: var(--mono); font-size: 12px; color: var(--faint); border-left: 2px solid var(--line);
+    padding-left: 14px; margin-top: 22px; line-height: 1.7; letter-spacing: 0.02em; }
+  @media (max-width: 720px){ .entry { grid-template-columns: 1fr; } .entry-marker { border-right: none; border-bottom: 1px solid var(--line); padding: 24px 0; display: flex; align-items: baseline; gap: 16px; } .entry-marker .day { margin-bottom: 0; } .entry-body { padding: 28px 0; } }
+
+  /* Big concrete divider quote */
+  .slab { background: var(--ink); color: var(--paper); padding: 90px 0; margin: 0; }
+  .slab .grid-frame { }
+  .slab q { font-size: clamp(1.6rem, 4.5vw, 3.4rem); font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; display: block; max-width: 20ch; }
+  .slab q::before, .slab q::after { content: ""; }
+  .slab .by { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 30px; opacity: 0.7; }
+
+  /* Practical block */
+  .practical { padding: 70px 0; border-bottom: 2px solid var(--line); }
+  .practical h3 { font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 30px; color: var(--faint); }
+  .practical-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); }
+  .practical-grid .cell { background: var(--paper); padding: 28px; }
+  .practical-grid .cell .k { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--faint); margin-bottom: 10px; }
+  .practical-grid .cell .v { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; }
+  @media (max-width: 720px){ .practical-grid { grid-template-columns: 1fr; } }
+
+  /* Author + footer */
+  .author { padding: 60px 0; border-bottom: 2px solid var(--line); display: flex; gap: 24px; align-items: flex-start; }
+  .author .badge { width: 70px; height: 70px; border: 2px solid var(--line); display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-weight: 700; font-size: 1.4rem; flex-shrink: 0; }
+  .author .who h4 { font-size: 1.3rem; font-weight: 800; letter-spacing: -0.01em; }
+  .author .who .h { font-family: var(--mono); font-size: 12px; color: var(--faint); margin: 4px 0 12px; }
+  .author .who p { font-size: 1rem; line-height: 1.6; max-width: 56ch; }
+  .author .who a { color: var(--ink); }
+
+  footer { padding: 50px 0 70px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--faint); }
+  footer .grid-frame { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  footer a { color: var(--ink); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+  <div class="meta-strip">
+    <div class="grid-frame">
+      <a href="wayfare-standalone.html">← WAYFARER</a>
+      <span>FIELD LOG / 002</span>
+      <span>50°29′S 73°03′W</span>
+      <span>SLOW JOURNEYS</span>
+    </div>
+  </div>
+
+  <header class="masthead">
+    <div class="grid-frame">
+      <div class="coords rv">PATAGONIA — THE FAR SOUTH / EST. READ 10 MIN / WIND FROM THE WEST</div>
+      <h1 class="rv">The<br>Long<br>Quiet</h1>
+      <div class="sub">
+        <p class="rv">A walking guide for the patient. Down here the land does not perform for you. It waits, and weathers, and asks only that you keep up. Come for the silence between the gusts.</p>
+        <div class="rv">
+          <div class="stat" style="margin-bottom:24px;">PEAK SEASON<b>Nov–Mar</b></div>
+          <div class="stat">APPROX. TREK<b>4–9 days</b></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="log">
+    <div class="grid-frame">
+
+      <div class="entry rv">
+        <div class="entry-marker"><div class="day">01</div>Arrival<br>El Chaltén</div>
+        <div class="entry-body">
+          <h2>The town at the end of the road</h2>
+          <p>You arrive by bus, always by bus, on the only paved road in, and it ends here. El Chaltén was built in 1985 to settle a border dispute — a town willed into being at the foot of the Fitz Roy massif. There is no airport. There is no bank that reliably works. There is the wind, and there is the mountain when the cloud lifts, which is not often.</p>
+          <p>Spend the first day doing nothing. Buy bread. Watch the ridge. The mountains here reward the people who are still here on day four, not day one.</p>
+          <div class="note">FIELD NOTE — Cash before you come. The ATMs fail. Bring more than you think; there is nothing to spend it on until suddenly there is.</div>
+        </div>
+      </div>
+
+      <div class="entry rv">
+        <div class="entry-marker"><div class="day">02</div>Ascent<br>Laguna de los Tres</div>
+        <div class="entry-body">
+          <h2>Twenty kilometres for one lake</h2>
+          <p>The trail leaves from the north edge of town and climbs gently for hours through lenga forest, lulling you, before the final kilometre — a brutal scramble up scree that gains four hundred metres and takes everything you have. At the top: the lake, the glacier, and Fitz Roy standing over both like a verdict.</p>
+          <p>Most people turn back too early, at the first viewpoint. Don't. The last hour is the whole point, and the crowd thins to almost nothing the higher you go.</p>
+          <div class="note">FIELD NOTE — Start before sunrise if you want the alpenglow on the granite. It lasts four minutes and it is the reason people come back for the rest of their lives.</div>
+        </div>
+      </div>
+
+      <div class="entry rv">
+        <div class="entry-marker"><div class="day">03</div>Rest<br>The valley floor</div>
+        <div class="entry-body">
+          <h2>A day for the legs and the weather</h2>
+          <p>The third day is when the wind usually wins, and that is fine. This is a place that runs on its own clock. Walk the flat trail to Chorrillo del Salto, a small waterfall an hour out, and otherwise let the body recover. Read. Watch the condors work the thermals off the cliffs. Learn to sit still — it is the actual skill the far south teaches.</p>
+          <div class="note">FIELD NOTE — Patagonian weather changes in minutes, not hours. Four seasons before lunch is normal. Pack the shell even for the short walks.</div>
+        </div>
+      </div>
+
+      <div class="entry rv">
+        <div class="entry-marker"><div class="day">04</div>Distance<br>Lago del Desierto</div>
+        <div class="entry-body">
+          <h2>North, toward the quiet that has no name</h2>
+          <p>Few people go this far. A rough road runs thirty-seven kilometres north to a long, cold lake hemmed by forest, and beyond it the trail toward the Chilean frontier. This is where the guidebooks stop and the real long quiet begins — no signal, no kiosks, only the lake and the southern beech and the sound of your own boots.</p>
+          <p>Go if you have the legs and the days. This is the chapter you'll tell people about, and the one they won't quite believe.</p>
+          <div class="note">FIELD NOTE — Border crossing on foot to Villa O'Higgins (Chile) is possible in summer for the truly committed. It is one of the great remote crossings on the continent. Plan it properly or not at all.</div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <section class="slab">
+    <div class="grid-frame">
+      <q>The land does not perform. It waits, and weathers, and asks only that you keep up.</q>
+      <div class="by">— FROM THE FIELD LOG</div>
+    </div>
+  </section>
+
+  <section class="practical">
+    <div class="grid-frame">
+      <h3>Practical / The bare facts</h3>
+      <div class="practical-grid">
+        <div class="cell"><div class="k">Get there</div><div class="v">Fly to El Calafate, bus 3 hrs north to El Chaltén</div></div>
+        <div class="cell"><div class="k">When</div><div class="v">November to March. Wind always.</div></div>
+        <div class="cell"><div class="k">Stay</div><div class="v">Hosterías in town; refugios on the longer treks</div></div>
+        <div class="cell"><div class="k">Bring</div><div class="v">Wind shell, cash, patience, layers</div></div>
+        <div class="cell"><div class="k">Permits</div><div class="v">None for day hikes; register for multi-day</div></div>
+        <div class="cell"><div class="k">Pace</div><div class="v">Slow. The point is the staying.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="author">
+    <div class="grid-frame" style="display:flex; gap:24px;">
+      <div class="badge">SM</div>
+      <div class="who">
+        <h4>Sofía Marín</h4>
+        <div class="h">@thelongquiet · El Chaltén, Argentina</div>
+        <p>Mountain guide and writer at the bottom of the world. She documents the long walks most people never make time for. <a href="author.html?author=thelongquiet">See her guides →</a></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="grid-frame">
+      <a href="wayfare-standalone.html">WAYFARER</a>
+      <a href="guides.html">ALL GUIDES</a>
+      <span>© 2026 — WRITTEN FROM THE FAR SOUTH</span>
+    </div>
+  </footer>
+
+<script src="wayfarer-shared.js"></script>
+<script>if(window.Wayfarer)Wayfarer.mountChrome("patagonia");</script>
+<script>
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{threshold:0.12,rootMargin:"0px 0px -40px 0px"});
+  document.querySelectorAll(".rv").forEach(function(el){io.observe(el);});
+</script>
+</body>
+</html>

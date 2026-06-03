@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Saved guides — Wayfarer</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111111'/%3E%3Cpath d='M16 3 L19 16 L16 29 L13 16 Z' fill='%232aa89f'/%3E%3Cpath d='M3 16 L16 13 L29 16 L16 19 Z' fill='%232aa89f' opacity='0.6'/%3E%3Ccircle cx='16' cy='16' r='2.4' fill='%23ffffff'/%3E%3C/svg%3E" />
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root { --ink:#111; --teal:#2aa89f; --muted:#6b6b6b; --line:rgba(0,0,0,0.1);
+    --ui:"Inter Tight",sans-serif; --smooth:cubic-bezier(0.22,1,0.36,1); }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:var(--ui); color:var(--ink); background:#fdfcfb; -webkit-font-smoothing:antialiased; }
+  a { color:inherit; }
+
+  .wf-nav { position:sticky; top:0; z-index:50; background:rgba(253,252,251,0.9); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; padding:14px 32px; }
+  .wf-brand { display:flex; align-items:center; gap:10px; text-decoration:none; }
+  .wf-brand .wm { font-size:1.25rem; font-weight:800; letter-spacing:-0.01em; }
+  .wf-navlinks { display:flex; align-items:center; gap:22px; }
+  .wf-navlinks a { font-size:0.9rem; font-weight:500; text-decoration:none; color:var(--ink); }
+  .wf-navlinks a.active { color:var(--teal); }
+  .wf-saved-pill { display:inline-flex; align-items:center; gap:7px; border:1px solid var(--line); border-radius:9999px; padding:7px 14px; }
+  .wf-saved-pill .ct { background:var(--teal); color:#fff; font-size:0.72rem; font-weight:700; border-radius:9999px; min-width:18px; height:18px; display:inline-flex; align-items:center; justify-content:center; padding:0 5px; }
+
+  .head { max-width:1200px; margin:0 auto; padding:54px 32px 10px; }
+  .head .eyebrow { font-size:12px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--teal);
+    margin-bottom:12px; display:flex; align-items:center; gap:10px; }
+  .head .eyebrow::before { content:""; width:26px; height:2px; background:var(--teal); }
+  .head h1 { font-size:clamp(2rem,4.5vw,3.2rem); font-weight:800; letter-spacing:-0.03em; line-height:1.05; margin-bottom:12px; }
+  .head p { font-size:1.05rem; color:var(--muted); max-width:560px; }
+
+  .count { max-width:1200px; margin:0 auto; padding:20px 32px 16px; font-size:13px; color:var(--muted); }
+
+  .grid { max-width:1200px; margin:0 auto; padding:0 32px 80px; display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
+  @media (max-width:900px){ .grid { grid-template-columns:1fr; } }
+
+  .card { border-radius:16px; overflow:hidden; background:#fff; border:1px solid var(--line);
+    display:flex; flex-direction:column; text-decoration:none; color:inherit; transition:transform .5s var(--smooth), box-shadow .5s var(--smooth); }
+  .card:hover { transform:translateY(-5px); box-shadow:0 22px 46px rgba(0,0,0,0.12); }
+  .card-art { height:180px; position:relative; overflow:hidden; }
+  .card-art svg { position:absolute; inset:0; width:100%; height:100%; transition:transform .7s var(--smooth); }
+  .card:hover .card-art svg { transform:scale(1.05); }
+  .card-handle { position:absolute; left:14px; bottom:14px; z-index:2; background:rgba(255,255,255,0.92);
+    color:#111; font-size:12px; font-weight:600; padding:5px 11px; border-radius:9999px; text-decoration:none; }
+  .card-save { position:absolute; top:12px; left:12px; z-index:3; width:34px; height:34px; border-radius:50%;
+    background:rgba(255,255,255,0.92); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:transform .3s var(--smooth); }
+  .card-save:hover { transform:scale(1.1); }
+  .card-save svg { width:17px; height:17px; }
+  .card-body { padding:18px; flex:1; display:flex; flex-direction:column; }
+  .card-place { font-size:0.72rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+  .card h3 { font-size:1.3rem; font-weight:800; letter-spacing:-0.01em; line-height:1.15; margin-bottom:6px; }
+  .card p { font-size:0.93rem; color:var(--muted); line-height:1.5; flex:1; margin-bottom:14px; }
+  .card-foot { display:flex; align-items:center; justify-content:space-between; font-size:0.78rem; }
+  .card-foot .read { font-weight:700; letter-spacing:0.05em; text-transform:uppercase; }
+  .card-foot .mins { color:var(--muted); }
+
+  .empty { max-width:680px; margin:0 auto; padding:30px 32px 110px; text-align:center; }
+  .empty .ill { width:84px; height:84px; margin:0 auto 22px; border-radius:50%; background:rgba(42,168,159,0.1);
+    display:flex; align-items:center; justify-content:center; }
+  .empty h2 { font-size:1.5rem; font-weight:800; letter-spacing:-0.02em; margin-bottom:10px; }
+  .empty p { color:var(--muted); font-size:1rem; line-height:1.6; margin-bottom:24px; }
+  .empty a.btn { display:inline-block; background:var(--ink); color:#fff; text-decoration:none; font-size:0.9rem; font-weight:600;
+    padding:13px 26px; border-radius:9999px; transition:background .3s var(--smooth); }
+  .empty a.btn:hover { background:var(--teal); }
+
+  .note { max-width:1200px; margin:0 auto; padding:0 32px 50px; }
+  .note span { font-size:0.78rem; color:var(--muted); background:rgba(0,0,0,0.03); border:1px solid var(--line);
+    border-radius:10px; padding:10px 14px; display:inline-block; line-height:1.5; }
+
+  footer { border-top:1px solid var(--line); padding:32px; text-align:center; font-size:0.8rem; color:var(--muted); }
+</style>
+</head>
+<body>
+  <nav class="wf-nav">
+    <a class="wf-brand" href="wayfare-standalone.html">
+      <svg width="26" height="26" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="none" stroke="#2aa89f" stroke-width="1.5" opacity="0.5"/><path d="M16 2 L19 16 L16 30 L13 16 Z" fill="#2aa89f"/><path d="M2 16 L16 13 L30 16 L16 19 Z" fill="#2aa89f" opacity="0.6"/><circle cx="16" cy="16" r="2.4" fill="#111"/></svg>
+      <span class="wm">Wayfarer</span>
+    </a>
+    <div class="wf-navlinks">
+      <a href="guides.html">All guides</a>
+      <a href="share.html">Share your guide</a>
+      <a href="wayfare-standalone.html#featured">Featured</a>
+      <a class="wf-saved-pill active" href="saved.html">Saved <span class="ct" id="savedCt">0</span></a>
+    </div>
+  </nav>
+
+  <div class="head">
+    <div class="eyebrow">Your collection</div>
+    <h1>Saved guides.</h1>
+    <p>The places you're keeping for later. The beginning of a trip, perhaps.</p>
+  </div>
+
+  <div class="count" id="countLine"></div>
+  <div class="grid" id="grid"></div>
+  <div id="emptyWrap"></div>
+  <div class="note" id="noteWrap"></div>
+
+  <footer>© 2026 Wayfarer · A place to get lost reading about places.</footer>
+
+<script src="wayfarer-shared.js"></script>
+<script>
+  "use strict";
+  const W = window.Wayfarer;
+  const grid = document.getElementById("grid");
+  const countLine = document.getElementById("countLine");
+  const emptyWrap = document.getElementById("emptyWrap");
+  const noteWrap = document.getElementById("noteWrap");
+
+  function saveIcon(filled){
+    return filled
+      ? '<svg viewBox="0 0 24 24" fill="#2aa89f" stroke="#2aa89f" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>';
+  }
+
+  function render(){
+    const ids = W.Saved.list();
+    const saved = ids.map(function(id){ return W.guideById(id); }).filter(Boolean);
+    grid.innerHTML = "";
+    emptyWrap.innerHTML = "";
+    noteWrap.innerHTML = "";
+
+    if (saved.length === 0){
+      countLine.textContent = "";
+      emptyWrap.innerHTML =
+        '<div class="empty">' +
+          '<div class="ill"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#2aa89f" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>' +
+          '<h2>Nothing saved yet.</h2>' +
+          '<p>Tap the bookmark on any guide to keep it here. It is the first step toward planning a trip — borrow an itinerary, gather the places that pull at you.</p>' +
+          '<a class="btn" href="guides.html">Browse the library →</a>' +
+        '</div>';
+      return;
+    }
+
+    countLine.textContent = saved.length + (saved.length === 1 ? " guide saved" : " guides saved");
+
+    saved.forEach(function(g){
+      const card = document.createElement("a");
+      card.className = "card";
+      card.href = g.file;
+      card.innerHTML =
+        '<div class="card-art">' + W.cardArt(g, 400, 180) +
+          '<span class="card-handle">@' + g.author + '</span>' +
+        '</div>' +
+        '<div class="card-body">' +
+          '<div class="card-place">' + g.place + '</div>' +
+          '<h3>' + g.title + '</h3>' +
+          '<p>' + g.blurb + '</p>' +
+          '<div class="card-foot">' +
+            '<span class="read">Read the guide →</span>' +
+            (g.readMins ? '<span class="mins">' + g.readMins + ' min</span>' : '') +
+          '</div>' +
+        '</div>';
+
+      const btn = document.createElement("button");
+      btn.className = "card-save";
+      btn.setAttribute("aria-label", "Remove from saved");
+      btn.innerHTML = saveIcon(true);
+      btn.onclick = function(e){
+        e.preventDefault(); e.stopPropagation();
+        W.Saved.toggle(g.id);
+        render();
+      };
+      card.querySelector(".card-art").appendChild(btn);
+      grid.appendChild(card);
+    });
+
+    noteWrap.innerHTML = '<span>Saved guides are remembered for this browsing session. In the full Wayfarer, your collection would follow you across devices — and become the basis for planning a trip.</span>';
+  }
+
+  function refreshCount(){ document.getElementById("savedCt").textContent = W.Saved.count(); }
+  document.addEventListener("wf:saved-changed", refreshCount);
+
+  render();
+  refreshCount();
+</script>
+</body>
+</html>

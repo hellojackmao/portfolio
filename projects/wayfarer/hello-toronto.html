@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>HELLO, TORONTO — A City in Primary Colours</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #e63027;
+    --blue: #1452b8;
+    --yellow: #f4c430;
+    --black: #141414;
+    --white: #f7f4ee;
+    --concrete: #b8b3a8;
+    --concrete-dark: #8e897e;
+    --paper: #f7f4ee;
+
+    --display: 'Archivo Black', 'Archivo', sans-serif;
+    --sans: 'Archivo', sans-serif;
+    --mono: 'Space Mono', monospace;
+
+    --snap: cubic-bezier(0.7, 0, 0.3, 1);
+    --click: cubic-bezier(0.34, 1.4, 0.64, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--black);
+    font-family: var(--sans);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+
+  ::selection { background: var(--yellow); color: var(--black); }
+
+  /* ─────────── Nav ─────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    background: var(--white);
+    border-bottom: 4px solid var(--black);
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 68px;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    padding: 0 1.5rem;
+    border-right: 4px solid var(--black);
+    font-family: var(--display);
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .nav-logo .mark {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .nav-logo .sq { width: 14px; height: 14px; background: var(--red); }
+  .nav-logo .ci { width: 14px; height: 14px; border-radius: 50%; background: var(--blue); }
+  .nav-logo .tr { width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 14px solid var(--yellow); }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    align-items: stretch;
+  }
+
+  .nav-links li { display: flex; }
+
+  .nav-links a {
+    display: flex;
+    align-items: center;
+    padding: 0 1.5rem;
+    border-left: 2px solid var(--black);
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--black);
+    text-decoration: none;
+    transition: all 0.25s var(--snap);
+  }
+
+  .nav-links a:hover { background: var(--black); color: var(--white); }
+
+  .nav-cta {
+    display: flex;
+    align-items: center;
+    padding: 0 1.8rem;
+    border-left: 4px solid var(--black);
+    background: var(--red);
+    color: var(--white);
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.25s var(--snap);
+  }
+  .nav-cta:hover { background: var(--black); }
+
+  /* ─────────── Hero — Constructivist composition ─────────── */
+  .hero {
+    margin-top: 68px;
+    min-height: calc(100vh - 68px);
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    grid-template-rows: 1fr 1fr;
+    border-bottom: 4px solid var(--black);
+    position: relative;
+  }
+
+  .hero-main {
+    grid-row: 1 / 3;
+    padding: 4rem 3.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-right: 4px solid var(--black);
+    position: relative;
+    overflow: hidden;
+    background: var(--white);
+  }
+
+  /* decorative grid lines */
+  .hero-main::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--concrete) 1px, transparent 1px),
+      linear-gradient(90deg, var(--concrete) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  .hero-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    animation: pop 0.6s var(--click) 0.2s forwards;
+  }
+
+  .hero-kicker .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--red); }
+
+  h1.hero-title {
+    font-family: var(--display);
+    font-size: clamp(3.2rem, 8vw, 8rem);
+    line-height: 0.88;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 2.5rem;
+  }
+
+  .hero-title .word {
+    display: block;
+    overflow: hidden;
+  }
+  .hero-title .word span {
+    display: block;
+    transform: translateY(105%);
+    animation: slideup 0.7s var(--snap) forwards;
+  }
+  .hero-title .word:nth-child(1) span { animation-delay: 0.35s; }
+  .hero-title .word:nth-child(2) span { animation-delay: 0.45s; }
+  .hero-title .word:nth-child(3) span { animation-delay: 0.55s; }
+
+  .hero-title .red { color: var(--red); }
+  .hero-title .blue { color: var(--blue); }
+
+  @keyframes slideup { to { transform: translateY(0); } }
+  @keyframes pop {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  .hero-sub {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    animation: pop 0.6s var(--click) 0.8s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    animation: pop 0.6s var(--click) 1s forwards;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 1.1rem 2rem;
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 3px solid var(--black);
+    cursor: pointer;
+    transition: all 0.2s var(--snap);
+  }
+
+  .btn-solid { background: var(--black); color: var(--white); box-shadow: 6px 6px 0 var(--red); }
+  .btn-solid:hover { transform: translate(3px,3px); box-shadow: 3px 3px 0 var(--red); }
+
+  .btn-ghost { background: var(--white); color: var(--black); box-shadow: 6px 6px 0 var(--blue); }
+  .btn-ghost:hover { transform: translate(3px,3px); box-shadow: 3px 3px 0 var(--blue); }
+
+  /* Hero geometric panels */
+  .hero-shape-top {
+    background: var(--blue);
+    border-bottom: 4px solid var(--black);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-shape-top .circle {
+    width: 60%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--yellow);
+    opacity: 0;
+    animation: pop 0.7s var(--click) 0.6s forwards;
+  }
+
+  .hero-shape-bottom {
+    background: var(--red);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-shape-bottom svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+  /* CN tower abstracted into the corner */
+  .hero-tower {
+    position: absolute;
+    bottom: 0;
+    right: 12%;
+    z-index: 3;
+  }
+
+  /* ─────────── Section base ─────────── */
+  section { position: relative; }
+
+  .sec-head {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    border-bottom: 4px solid var(--black);
+  }
+
+  .sec-num {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    color: var(--white);
+    background: var(--black);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    line-height: 1;
+  }
+
+  .sec-titleblock {
+    padding: 1.5rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .sec-titleblock .label {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 0.4rem;
+  }
+
+  .sec-titleblock h2 {
+    font-family: var(--display);
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
+  /* ─────────── Why Toronto (manifesto blocks) ─────────── */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-bottom: 4px solid var(--black);
+  }
+
+  .why-block {
+    padding: 3rem 2.5rem;
+    border-right: 4px solid var(--black);
+    position: relative;
+    min-height: 340px;
+    display: flex;
+    flex-direction: column;
+    transition: background 0.3s var(--snap);
+  }
+  .why-block:last-child { border-right: none; }
+
+  .why-block .geo {
+    margin-bottom: 2rem;
+  }
+
+  .why-block h3 {
+    font-family: var(--display);
+    font-size: 1.6rem;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+
+  .why-block p {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--black);
+  }
+
+  .why-block .stat {
+    margin-top: auto;
+    padding-top: 1.5rem;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .why-block:nth-child(1):hover { background: var(--yellow); }
+  .why-block:nth-child(2):hover { background: #cfe0ff; }
+  .why-block:nth-child(3):hover { background: #ffd6d3; }
+
+  /* ─────────── Neighbourhoods (catalog blocks) ─────────── */
+  .hoods {
+    border-bottom: 4px solid var(--black);
+  }
+
+  .hood-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .hood {
+    border-right: 4px solid var(--black);
+    border-bottom: 4px solid var(--black);
+    padding: 2.5rem;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 1.8rem;
+    align-items: start;
+    transition: background 0.3s var(--snap);
+    cursor: pointer;
+  }
+  .hood:nth-child(2n) { border-right: none; }
+
+  .hood:hover { background: var(--black); }
+  .hood:hover h3, .hood:hover p, .hood:hover .hood-num { color: var(--white); }
+  .hood:hover .hood-tag { background: var(--white); color: var(--black); }
+
+  .hood-icon {
+    width: 72px; height: 72px;
+    display: flex; align-items: center; justify-content: center;
+    border: 3px solid var(--black);
+    transition: border-color 0.3s var(--snap);
+  }
+  .hood:hover .hood-icon { border-color: var(--white); }
+
+  .hood-num {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--concrete-dark);
+    margin-bottom: 0.6rem;
+  }
+
+  .hood h3 {
+    font-family: var(--display);
+    font-size: 1.5rem;
+    line-height: 1;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.01em;
+  }
+
+  .hood-tag {
+    display: inline-block;
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    color: var(--white);
+    margin-bottom: 0.9rem;
+  }
+  .tag-r { background: var(--red); }
+  .tag-b { background: var(--blue); }
+  .tag-y { background: var(--yellow); color: var(--black) !important; }
+  .tag-k { background: var(--black); }
+
+  .hood p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+
+  /* ─────────── Quote band ─────────── */
+  .band {
+    background: var(--yellow);
+    border-bottom: 4px solid var(--black);
+    padding: 5rem 3.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .band-mark {
+    font-family: var(--display);
+    font-size: 8rem;
+    line-height: 0.6;
+    color: var(--black);
+  }
+
+  .band blockquote {
+    font-family: var(--display);
+    font-size: clamp(1.6rem, 3.5vw, 3rem);
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+
+  .band blockquote .blue { color: var(--blue); }
+  .band blockquote .red { color: var(--red); }
+
+  .band cite {
+    display: block;
+    margin-top: 1.5rem;
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ─────────── The Pass (offer) ─────────── */
+  .pass {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 4px solid var(--black);
+  }
+
+  .pass-info {
+    padding: 4rem 3.5rem;
+    border-right: 4px solid var(--black);
+    background: var(--blue);
+    color: var(--white);
+  }
+
+  .pass-info .label {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 1.5rem;
+  }
+
+  .pass-info h2 {
+    font-family: var(--display);
+    font-size: clamp(2rem, 4vw, 3.4rem);
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    margin-bottom: 2rem;
+  }
+
+  .pass-info h2 .yellow { color: var(--yellow); }
+
+  .pass-list { list-style: none; }
+  .pass-list li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 2px solid rgba(247,244,238,0.25);
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 1.05rem;
+  }
+  .pass-list li:last-child { border-bottom: none; }
+  .pass-list .check {
+    width: 24px; height: 24px; flex-shrink: 0;
+    background: var(--yellow);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--black);
+    font-weight: 900;
+    font-family: var(--display);
+    font-size: 0.85rem;
+  }
+
+  .pass-form-wrap {
+    padding: 4rem 3.5rem;
+    background: var(--white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .pass-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 3px solid var(--black);
+  }
+  .pass-price .big {
+    font-family: var(--display);
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--red);
+  }
+  .pass-price .small {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .field { margin-bottom: 1.4rem; }
+  .field label {
+    display: block;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .field input, .field select {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 3px solid var(--black);
+    background: var(--white);
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--black);
+    transition: box-shadow 0.2s var(--snap);
+  }
+  .field input::placeholder { color: var(--concrete-dark); }
+  .field input:focus, .field select:focus {
+    outline: none;
+    box-shadow: 5px 5px 0 var(--yellow);
+  }
+  .field select { appearance: none; cursor: pointer; background-image: linear-gradient(45deg, transparent 50%, var(--black) 50%), linear-gradient(135deg, var(--black) 50%, transparent 50%); background-position: calc(100% - 18px) 1.3rem, calc(100% - 12px) 1.3rem; background-size: 6px 6px; background-repeat: no-repeat; }
+
+  .pass-submit {
+    width: 100%;
+    margin-top: 0.8rem;
+    padding: 1.3rem;
+    background: var(--red);
+    color: var(--white);
+    border: 3px solid var(--black);
+    font-family: var(--display);
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 6px 6px 0 var(--black);
+    transition: all 0.2s var(--snap);
+  }
+  .pass-submit:hover { transform: translate(3px,3px); box-shadow: 3px 3px 0 var(--black); background: var(--black); }
+
+  /* ─────────── Manifesto CTA ─────────── */
+  .manifesto {
+    background: var(--black);
+    color: var(--white);
+    padding: 7rem 3.5rem;
+    border-bottom: 4px solid var(--black);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .manifesto-shapes { position: absolute; inset: 0; pointer-events: none; }
+  .m-circle { position: absolute; top: 10%; right: 8%; width: 180px; height: 180px; border-radius: 50%; background: var(--red); opacity: 0.9; }
+  .m-square { position: absolute; bottom: 12%; left: 6%; width: 120px; height: 120px; background: var(--blue); transform: rotate(12deg); }
+  .m-tri { position: absolute; top: 30%; left: 30%; width: 0; height: 0; border-left: 60px solid transparent; border-right: 60px solid transparent; border-bottom: 104px solid var(--yellow); opacity: 0.85; }
+
+  .manifesto-content { position: relative; z-index: 2; max-width: 900px; }
+
+  .manifesto .label {
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 2rem;
+  }
+
+  .manifesto h2 {
+    font-family: var(--display);
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    line-height: 0.92;
+    text-transform: uppercase;
+    letter-spacing: -0.025em;
+    margin-bottom: 2.5rem;
+  }
+  .manifesto h2 .red { color: var(--red); }
+  .manifesto h2 .blue { color: var(--blue); }
+  .manifesto h2 .yellow { color: var(--yellow); }
+
+  .manifesto p {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    max-width: 560px;
+    margin-bottom: 2.5rem;
+    color: rgba(247,244,238,0.85);
+  }
+
+  .manifesto .btn-solid {
+    background: var(--yellow);
+    color: var(--black);
+    border-color: var(--yellow);
+    box-shadow: 6px 6px 0 var(--red);
+  }
+  .manifesto .btn-solid:hover { transform: translate(3px,3px); box-shadow: 3px 3px 0 var(--red); }
+
+  /* ─────────── Footer ─────────── */
+  footer {
+    background: var(--white);
+    padding: 3.5rem 3.5rem 2rem;
+  }
+
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 4px solid var(--black);
+  }
+
+  .foot-brand .logo {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: var(--display);
+    font-size: 1.3rem;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .foot-brand .logo .mark { display: flex; gap: 4px; }
+  .foot-brand .logo .sq { width: 14px; height: 14px; background: var(--red); }
+  .foot-brand .logo .ci { width: 14px; height: 14px; border-radius: 50%; background: var(--blue); }
+  .foot-brand .logo .tr { width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-bottom: 14px solid var(--yellow); }
+
+  .foot-brand p {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.95rem;
+    color: var(--black);
+    max-width: 300px;
+    line-height: 1.6;
+  }
+
+  .foot-col h4 {
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 1.2rem;
+  }
+  .foot-col ul { list-style: none; }
+  .foot-col li { margin-bottom: 0.6rem; }
+  .foot-col a, .foot-col span {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--black);
+    text-decoration: none;
+    transition: color 0.2s var(--snap);
+  }
+  .foot-col a:hover { color: var(--red); }
+
+  .foot-base {
+    padding-top: 1.8rem;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.7s var(--snap), transform 0.7s var(--snap); }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+  /* Responsive */
+  @media (max-width: 940px) {
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; grid-template-rows: auto 200px 200px; }
+    .hero-main { grid-row: auto; border-right: none; border-bottom: 4px solid var(--black); padding: 3rem 1.5rem; }
+    .hero-shape-top { border-right: none; }
+    .why-grid { grid-template-columns: 1fr; }
+    .why-block { border-right: none; border-bottom: 4px solid var(--black); min-height: auto; }
+    .why-block:last-child { border-bottom: none; }
+    .hood-grid { grid-template-columns: 1fr; }
+    .hood { border-right: none; }
+    .band { grid-template-columns: 1fr; padding: 3rem 1.5rem; gap: 1.5rem; }
+    .band-mark { font-size: 5rem; }
+    .pass { grid-template-columns: 1fr; }
+    .pass-info { border-right: none; border-bottom: 4px solid var(--black); padding: 3rem 1.5rem; }
+    .pass-form-wrap { padding: 3rem 1.5rem; }
+    .manifesto { padding: 4.5rem 1.5rem; }
+    .sec-titleblock { padding: 1.2rem 1.5rem; }
+    .foot-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .foot-base { flex-direction: column; gap: 0.8rem; }
+    section, .manifesto { padding-left: 0; padding-right: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav>
+  <div class="nav-logo">
+    <span class="mark"><span class="sq"></span><span class="ci"></span><span class="tr"></span></span>
+    Hello,&nbsp;Toronto
+  </div>
+  <ul class="nav-links">
+    <li><a href="#why">Why</a></li>
+    <li><a href="#hoods">Neighbourhoods</a></li>
+    <li><a href="#pass">The Pass</a></li>
+  </ul>
+  <a href="#pass" class="nav-cta">Get the Pass</a>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="hero-main">
+    <div class="hero-kicker"><span class="dot"></span>A City Built in Primary Colours</div>
+    <h1 class="hero-title">
+      <span class="word"><span>Hello,</span></span>
+      <span class="word"><span class="red">Toron</span><span class="blue">to.</span></span>
+    </h1>
+    <p class="hero-sub">
+      One city. A hundred and forty neighbourhoods. Two hundred languages. Come see how all the bold parts lock together into a single, generous whole.
+    </p>
+    <div class="hero-actions">
+      <a href="#pass" class="btn btn-solid">Get the City Pass →</a>
+      <a href="#why" class="btn btn-ghost">Why Toronto</a>
+    </div>
+  </div>
+
+  <div class="hero-shape-top">
+    <div class="circle"></div>
+  </div>
+
+  <div class="hero-shape-bottom">
+    <svg viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
+      <!-- abstract skyline blocks -->
+      <rect x="40" y="120" width="50" height="180" fill="#141414"/>
+      <rect x="110" y="80" width="40" height="220" fill="#141414"/>
+      <rect x="170" y="150" width="60" height="150" fill="#141414"/>
+      <rect x="300" y="100" width="50" height="200" fill="#141414"/>
+      <!-- CN tower abstract -->
+      <rect x="252" y="30" width="14" height="270" fill="#141414"/>
+      <ellipse cx="259" cy="90" rx="26" ry="14" fill="#f4c430"/>
+      <polygon points="252,30 266,30 263,0 255,0" fill="#141414"/>
+      <!-- sun -->
+      <circle cx="120" cy="55" r="26" fill="#f4c430"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════════ WHY ═══════════ -->
+<section id="why">
+  <div class="sec-head">
+    <div class="sec-num">01</div>
+    <div class="sec-titleblock">
+      <span class="label">The Case for the City</span>
+      <h2>Form Follows Fun</h2>
+    </div>
+  </div>
+
+  <div class="why-grid">
+    <div class="why-block reveal">
+      <div class="geo">
+        <svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="#e63027"/></svg>
+      </div>
+      <h3>A World in<br/>One City</h3>
+      <p>More than half of Torontonians were born somewhere else, and they brought the whole planet with them — the food, the festivals, the music, the markets. Every block is a different country and they all share one transit map.</p>
+      <div class="stat">200+ languages spoken daily</div>
+    </div>
+
+    <div class="why-block reveal">
+      <div class="geo">
+        <svg width="64" height="64" viewBox="0 0 64 64"><rect x="4" y="4" width="56" height="56" fill="#1452b8"/></svg>
+      </div>
+      <h3>Built Up,<br/>Built Bold</h3>
+      <p>A skyline that keeps reaching higher, ringed by ravines, beaches, and islands you can reach by ferry in fifteen minutes. The lake on one side, the wild on the other, and the engineered beauty of a working city in between.</p>
+      <div class="stat">A waterfront + 1,500 parks</div>
+    </div>
+
+    <div class="why-block reveal">
+      <div class="geo">
+        <svg width="64" height="72" viewBox="0 0 64 72"><polygon points="32,4 62,68 2,68" fill="#f4c430"/></svg>
+      </div>
+      <h3>Open All<br/>Hours</h3>
+      <p>Night markets and morning swims, gallery openings and patio season, hockey in winter and street festivals all summer long. A democratic, human-scaled city designed to be used — not just admired from a distance.</p>
+      <div class="stat">365 days of something on</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ NEIGHBOURHOODS ═══════════ -->
+<section class="hoods" id="hoods">
+  <div class="sec-head">
+    <div class="sec-num">02</div>
+    <div class="sec-titleblock">
+      <span class="label">The Working Parts</span>
+      <h2>Six Neighbourhoods</h2>
+    </div>
+  </div>
+
+  <div class="hood-grid">
+    <div class="hood reveal">
+      <div class="hood-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#e63027"/></svg>
+      </div>
+      <div>
+        <div class="hood-num">№ 01 / WEST</div>
+        <span class="hood-tag tag-r">Eat & Drink</span>
+        <h3>Kensington<br/>Market</h3>
+        <p>A car-free maze of vintage shops, fruit stalls, taquerias, and patios. The most analog corner of a digital city — and the best lunch you'll have all trip.</p>
+      </div>
+    </div>
+
+    <div class="hood reveal">
+      <div class="hood-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40"><rect x="3" y="3" width="34" height="34" fill="#1452b8"/></svg>
+      </div>
+      <div>
+        <div class="hood-num">№ 02 / EAST</div>
+        <span class="hood-tag tag-b">Make & See</span>
+        <h3>The<br/>Distillery</h3>
+        <p>Victorian industrial brick turned pedestrian arts village — galleries, studios, and the kind of cobblestone light that makes everyone slow down and look up.</p>
+      </div>
+    </div>
+
+    <div class="hood reveal">
+      <div class="hood-icon">
+        <svg width="44" height="44" viewBox="0 0 44 44"><polygon points="22,4 40,40 4,40" fill="#f4c430"/></svg>
+      </div>
+      <div>
+        <div class="hood-num">№ 03 / WATER</div>
+        <span class="hood-tag tag-y">Escape</span>
+        <h3>Toronto<br/>Islands</h3>
+        <p>A fifteen-minute ferry to car-free islands with beaches, bike paths, and the single best view of the skyline. The city's exhale, hiding in plain sight.</p>
+      </div>
+    </div>
+
+    <div class="hood reveal">
+      <div class="hood-icon">
+        <svg width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="18" fill="#141414"/></svg>
+      </div>
+      <div>
+        <div class="hood-num">№ 04 / NORTH</div>
+        <span class="hood-tag tag-k">Culture</span>
+        <h3>The<br/>Annex</h3>
+        <p>University energy, secondhand bookshops, jazz rooms, and a museum with a crystal bursting from its side. Where the city goes to think out loud.</p>
+      </div>
+    </div>
+
+    <div class="hood reveal">
+      <div class="hood-icon">
+        <svg width="44" height="40" viewBox="0 0 44 40"><rect x="2" y="2" width="20" height="36" fill="#e63027"/><circle cx="33" cy="20" r="9" fill="#1452b8"/></svg>
+      </div>
+      <div>
+        <div class="hood-num">№ 05 / DOWNTOWN</div>
+        <span class="hood-tag tag-r">Iconic</span>
+        <h3>Harbourfront<br/>& the Core</h3>
+        <p>The CN Tower, the lakeside boardwalk, the big galleries and the bigger games. The city's load-bearing centre — bold, busy, and proud of it.</p>
+      </div>
+    </div>
+
+    <div class="hood reveal">
+      <div class="hood-icon">
+        <svg width="44" height="44" viewBox="0 0 44 44"><polygon points="22,2 42,22 22,42 2,22" fill="#f4c430"/></svg>
+      </div>
+      <div>
+        <div class="hood-num">№ 06 / GLOBAL</div>
+        <span class="hood-tag tag-y">Flavour</span>
+        <h3>Little<br/>Everywhere</h3>
+        <p>Little Italy, Greektown, Koreatown, Little Jamaica, Chinatown — a transit ride between continents, each one a full meal and a different soundtrack.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ QUOTE BAND ═══════════ -->
+<section class="band">
+  <div class="band-mark">"</div>
+  <div>
+    <blockquote class="reveal">
+      A city isn't its <span class="blue">skyline.</span> It's the <span class="red">people</span> who decided to build it together.
+    </blockquote>
+    <cite class="reveal">— A Visitor, on Why They Stayed</cite>
+  </div>
+</section>
+
+<!-- ═══════════ THE PASS ═══════════ -->
+<section class="pass" id="pass">
+  <div class="pass-info">
+    <div class="label">03 / The City Pass</div>
+    <h2>One pass.<br/>The <span class="yellow">whole</span> city.</h2>
+    <ul class="pass-list">
+      <li><span class="check">✓</span> Entry to 40+ galleries, museums &amp; towers</li>
+      <li><span class="check">✓</span> Unlimited transit across all six zones</li>
+      <li><span class="check">✓</span> Island ferry &amp; harbour cruises included</li>
+      <li><span class="check">✓</span> A printed neighbourhood field guide</li>
+      <li><span class="check">✓</span> Festival &amp; night-market calendar, curated</li>
+    </ul>
+  </div>
+
+  <div class="pass-form-wrap">
+    <div class="pass-price">
+      <span class="big">Free</span>
+      <span class="small">a local's field notes · no strings</span>
+    </div>
+
+    <form onsubmit="event.preventDefault(); this.querySelector('.pass-submit').textContent='WELCOME TO TORONTO →';">
+      <div class="field">
+        <label for="p-name">Your Name</label>
+        <input type="text" id="p-name" placeholder="First and last" required />
+      </div>
+      <div class="field">
+        <label for="p-email">Email</label>
+        <input type="email" id="p-email" placeholder="We'll send your digital pass" required />
+      </div>
+      <div class="field">
+        <label for="p-when">Arriving</label>
+        <select id="p-when">
+          <option>This month</option>
+          <option>Spring — festival season</option>
+          <option>Summer — patios &amp; islands</option>
+          <option>Autumn — the colour change</option>
+          <option>Winter — rinks &amp; lights</option>
+          <option>Still deciding — surprise me</option>
+        </select>
+      </div>
+      <button type="submit" class="pass-submit">Claim My City Pass</button>
+    </form>
+  </div>
+</section>
+
+<!-- ═══════════ MANIFESTO CTA ═══════════ -->
+<section class="manifesto">
+  <div class="manifesto-shapes">
+    <div class="m-circle"></div>
+    <div class="m-square"></div>
+    <div class="m-tri"></div>
+  </div>
+  <div class="manifesto-content">
+    <div class="label">The Invitation</div>
+    <h2>Come build<br/>your <span class="red">own</span> <span class="blue">version</span><br/>of the <span class="yellow">city.</span></h2>
+    <p>Toronto doesn't hand you a single story. It hands you the parts — bold, primary, ready to assemble — and trusts you to make something only you could make. The pass is free. The shape is yours.</p>
+    <a href="#pass" class="btn btn-solid">Start Now →</a>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="foot-grid">
+    <div class="foot-brand">
+      <div class="logo">
+        <span class="mark"><span class="sq"></span><span class="ci"></span><span class="tr"></span></span>
+        Hello, Toronto
+      </div>
+      <p>A civic welcome project. One city, built in primary colours, assembled by everyone who lives here — and open to everyone who visits.</p>
+    </div>
+    <div class="foot-col">
+      <h4>Discover</h4>
+      <ul>
+        <li><a href="#why">Why Toronto</a></li>
+        <li><a href="#hoods">Neighbourhoods</a></li>
+        <li><a href="#">Festivals</a></li>
+        <li><a href="#">Getting Around</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>The Pass</h4>
+      <ul>
+        <li><a href="#pass">What's Included</a></li>
+        <li><a href="#">For Families</a></li>
+        <li><a href="#">For Students</a></li>
+        <li><a href="#">Group Visits</a></li>
+      </ul>
+    </div>
+    <div class="foot-col">
+      <h4>Find Us</h4>
+      <ul>
+        <li><span>Nathan Phillips Square</span></li>
+        <li><span>Toronto, ON</span></li>
+        <li><span>Canada · M5H</span></li>
+        <li><a href="#">hello@</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot-base">
+    <div>© Hello Toronto · MMXXVI</div>
+    <div>Form · Function · Fun</div>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in-view'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+<script src="wayfarer-shared.js"></script>
+<script>if(window.Wayfarer)Wayfarer.mountChrome("hello-toronto");</script>
+</body>
+</html>

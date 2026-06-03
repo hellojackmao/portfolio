@@ -1,0 +1,280 @@
+/* ============================================================================
+ * Wayfarer — shared data, chrome, and saved-guides logic.
+ * Loaded by index, author, saved, and (lightly) the guide pages.
+ * One source of truth so the index, search, author pages, and "saved" all agree.
+ * ==========================================================================*/
+(function () {
+  "use strict";
+
+  /* ---- The guide catalog (the single source of truth) ------------------- */
+  const GUIDES = [
+    {
+      id: "shizuka", file: "shizuka.html", title: "A season in Japan",
+      place: "Japan · Kyoto & beyond", mood: "Slow journeys", region: "Asia",
+      author: "shizuka", readMins: 9, status: "live",
+      blurb: "Slow mornings, temple silences, and the patient art of being a guest.",
+      art: { sky: ["#f7c1a6", "#e8826b"], hill: "#b8553f", sun: "#fff3d6", lm: "torii" }
+    },
+    {
+      id: "golden-route", file: "golden-route.html", title: "The Golden Route",
+      place: "Korea · The grand manner", mood: "Slow journeys", region: "Asia",
+      author: "goldenroute", readMins: 11, status: "live",
+      blurb: "A golden-age sojourn through palaces, peaks, and lacquered cities.",
+      art: { sky: ["#1a2a22", "#0e1411"], hill: "#c9a24b", sun: "#c9a24b", lm: "compass" }
+    },
+    {
+      id: "seorak-review", file: "seorak-review.html", title: "The Seorak Review",
+      place: "Korea · Read slowly", mood: "City stories", region: "Asia",
+      author: "seorak", readMins: 12, status: "live",
+      blurb: "Ceramics, temples, night cities, and the women of the sea, with an editor's eye.",
+      art: { sky: ["#6e9183", "#3a5249"], hill: "#2f433b", sun: "#f6f2ea", lm: "city" }
+    },
+    {
+      id: "hello-toronto", file: "hello-toronto.html", title: "Hello, Toronto",
+      place: "Canada · Toronto", mood: "City stories", region: "North America",
+      author: "hellotoronto", readMins: 7, status: "live",
+      blurb: "A city built in primary colours. Six neighbourhoods, two hundred languages.",
+      art: { sky: ["#f7f4ee", "#dfe4ea"], hill: "#141414", sun: "#f4c430", lm: "skyline" }
+    },
+    {
+      id: "patagonia", file: "patagonia.html", title: "The Long Quiet",
+      place: "Patagonia · The far south", mood: "Slow journeys", region: "South America",
+      author: "thelongquiet", readMins: 10, status: "live",
+      blurb: "Wind, granite, and endless light at the bottom of the world.",
+      art: { sky: ["#cfe6ef", "#3c5763"], hill: "#5b7d8c", sun: "#ffffff", lm: "peaks" }
+    },
+    {
+      id: "lisbon", file: "lisbon.html", title: "Seven Hills, Slowly",
+      place: "Portugal · Lisbon", mood: "City stories", region: "Europe",
+      author: "sevenhills", readMins: 8, status: "live",
+      blurb: "Trams, tiles, and the long golden light off the Tagus.",
+      art: { sky: ["#add2f2", "#274d77"], hill: "#3a6ea5", sun: "#fef0c9", lm: "tram" }
+    },
+    {
+      id: "reykjavik", file: "reykjavik.html", title: "Under the Aurora",
+      place: "Iceland · Reykjavik", mood: "Far north", region: "Europe",
+      author: "underaurora", readMins: 9, status: "live",
+      blurb: "Geothermal pools, black-sand coasts, and the green fire overhead.",
+      art: { sky: ["#1f3b4d", "#0d1f2b"], hill: "#16313f", sun: "#7fae9a", lm: "aurora" }
+    },
+    {
+      id: "marrakech", file: null, title: "The Red City, Unhurried",
+      place: "Morocco · Marrakech", mood: "City stories", region: "Africa",
+      author: "medinanotes", readMins: null, status: "soon",
+      blurb: "Souks, riads, and mint tea in the long afternoon shade of the medina.",
+      art: { sky: ["#f6c98a", "#c25a3a"], hill: "#9c3a26", sun: "#fff2c4", lm: "dome" }
+    },
+    {
+      id: "hoi-an", file: null, title: "Lantern Light",
+      place: "Vietnam · Hội An", mood: "Slow journeys", region: "Asia",
+      author: "riverlanterns", readMins: null, status: "soon",
+      blurb: "Tailors, river lanterns, and breakfast pho by the old town's yellow walls.",
+      art: { sky: ["#ffd9a0", "#d98a3d"], hill: "#8a4a1e", sun: "#fff4cf", lm: "tram" }
+    },
+    {
+      id: "namib", file: null, title: "The Oldest Desert",
+      place: "Namibia · Sossusvlei", mood: "Far horizons", region: "Africa",
+      author: "dunewalker", readMins: null, status: "soon",
+      blurb: "Rust-red dunes at dawn and a silence older than anything you know.",
+      art: { sky: ["#f4b878", "#a8421f"], hill: "#7d2e14", sun: "#fff0cf", lm: "dune" }
+    },
+    {
+      id: "azores", file: null, title: "Mid-Atlantic Green",
+      place: "Portugal · The Azores", mood: "Far horizons", region: "Europe",
+      author: "midatlantic", readMins: null, status: "soon",
+      blurb: "Volcanic crater lakes, hot springs, and whales off a green Atlantic rock.",
+      art: { sky: ["#a8d8e0", "#2f7d6e"], hill: "#1f5a4e", sun: "#f0fbf5", lm: "wave" }
+    }
+  ];
+
+  /* ---- Authors ---------------------------------------------------------- */
+  const AUTHORS = {
+    shizuka:     { handle: "shizuka", name: "Mei Tanaka", based: "Kyoto, Japan", since: "2023",
+                   bio: "Writes slowly about the places that ask you to slow down. Tea, temples, and the long way around." },
+    goldenroute: { handle: "goldenroute", name: "Évangéline Roux", based: "Seoul · Paris", since: "2022",
+                   bio: "A travel essayist drawn to the grand manner — railways, palaces, and arriving as an occasion." },
+    seorak:      { handle: "seorak", name: "The Seorak Review", based: "Seoul, Korea", since: "2022",
+                   bio: "An editorial collective reading single countries slowly, one quarterly guide at a time." },
+    hellotoronto:{ handle: "hellotoronto", name: "Devon Clarke", based: "Toronto, Canada", since: "2024",
+                   bio: "Civic booster and neighbourhood obsessive. Believes a city is the people who decided to build it together." },
+    thelongquiet:{ handle: "thelongquiet", name: "Sofía Marín", based: "El Chaltén, Argentina", since: "2025",
+                   bio: "Mountain guide and writer at the bottom of the world. She documents the long walks most people never make time for." },
+    sevenhills:  { handle: "sevenhills", name: "Tomás Reis", based: "Lisbon, Portugal", since: "2025",
+                   bio: "Born on the Alfama steps. Tram-rider and tile-spotter, mapping the Lisbon you find on the seventh hill, not the first." },
+    underaurora: { handle: "underaurora", name: "Kristín Jónsdóttir", based: "Reykjavik, Iceland", since: "2025",
+                   bio: "Photographer and winter-travel writer chasing long light and green fire — for those who would rather travel cold than crowded." },
+    medinanotes: { handle: "medinanotes", name: "Yasmine El Fassi", based: "Marrakech, Morocco", since: "2026",
+                   bio: "Riad-keeper's daughter writing the medina from the inside. Guide in progress." },
+    riverlanterns:{ handle: "riverlanterns", name: "Linh Tran", based: "Hội An, Vietnam", since: "2026",
+                   bio: "Follows the river and the lantern light through the old town. Guide in progress." },
+    dunewalker:  { handle: "dunewalker", name: "Pieter Botha", based: "Swakopmund, Namibia", since: "2026",
+                   bio: "Desert guide writing the silence of the oldest sand on earth. Guide in progress." },
+    midatlantic: { handle: "midatlantic", name: "Rita Medeiros", based: "São Miguel, Azores", since: "2026",
+                   bio: "Island-born, mapping the green volcanic middle of the Atlantic. Guide in progress." }
+  };
+
+  /* ---- SVG art generator (shared by every card across the site) --------- */
+  function landmark(lm, c) {
+    switch (lm) {
+      case "torii":   return '<rect x="120" y="95" width="14" height="105" fill="#1f0d09"/><rect x="250" y="95" width="14" height="105" fill="#1f0d09"/><rect x="104" y="95" width="176" height="12" fill="#1f0d09"/>';
+      case "tram":    return '<rect x="150" y="120" width="120" height="70" rx="8" fill="#fff" opacity="0.85"/><circle cx="175" cy="195" r="10" fill="#1a1a1a"/><circle cx="245" cy="195" r="10" fill="#1a1a1a"/>';
+      case "city":    return '<rect x="60" y="120" width="50" height="80" fill="#2f433b"/><rect x="125" y="95" width="55" height="105" fill="#1f2e28"/><rect x="195" y="130" width="45" height="70" fill="#2f433b"/><rect x="255" y="105" width="55" height="95" fill="#1f2e28"/>';
+      case "skyline": return '<rect x="70" y="110" width="40" height="90" fill="#141414"/><rect x="120" y="70" width="14" height="130" fill="#141414"/><ellipse cx="127" cy="95" rx="16" ry="8" fill="#f4c430"/><rect x="160" y="120" width="44" height="80" fill="#141414"/>';
+      case "peaks":   return '<path d="M40 200 L110 90 L160 150 L210 80 L300 200 Z" fill="'+c+'"/><path d="M96 116 L110 90 L126 116 Z" fill="#fff"/>';
+      case "aurora":  return '<path d="M60 90 Q150 30 240 80 Q320 120 360 70" fill="none" stroke="#7fae9a" stroke-width="10" stroke-linecap="round" opacity="0.85"/>';
+      case "compass": return '<circle cx="190" cy="110" r="48" fill="none" stroke="'+c+'" stroke-width="2" opacity="0.6"/><path d="M190 66 L200 110 L190 154 L180 110 Z" fill="'+c+'"/>';
+      case "dune":    return '<path d="M0 200 Q120 120 240 175 Q330 215 400 150 L400 200 Z" fill="'+c+'"/><path d="M0 200 Q160 165 300 200 Z" fill="'+c+'" opacity="0.6"/>';
+      case "wave":    return '<path d="M40 150 Q90 110 140 150 T240 150 T340 150" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity="0.7"/><path d="M40 180 Q90 145 140 180 T240 180 T340 180" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" opacity="0.45"/>';
+      case "dome":    return '<rect x="150" y="120" width="100" height="80" fill="'+c+'"/><path d="M150 120 Q200 60 250 120 Z" fill="'+c+'"/><rect x="193" y="150" width="14" height="50" fill="#fff" opacity="0.7"/><circle cx="200" cy="78" r="6" fill="#fff" opacity="0.8"/>';
+      default:        return '';
+    }
+  }
+  function cardArt(g, w, h) {
+    w = w || 400; h = h || 220;
+    const a = g.art;
+    return '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">'
+      + '<defs><linearGradient id="g' + g.id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="' + a.sky[0] + '"/><stop offset="100%" stop-color="' + a.sky[1] + '"/></linearGradient></defs>'
+      + '<rect width="' + w + '" height="' + h + '" fill="url(#g' + g.id + ')"/>'
+      + '<circle cx="' + (w*0.74) + '" cy="' + (h*0.32) + '" r="' + (h*0.22) + '" fill="' + a.sun + '" opacity="0.85"/>'
+      + '<g transform="translate(0,' + (h-200) + ')">' + landmark(a.lm, a.hill) + '</g>'
+      + '<path d="M0 ' + (h*0.82) + ' Q' + (w*0.25) + ' ' + (h*0.76) + ' ' + (w*0.5) + ' ' + (h*0.82) + ' T' + w + ' ' + (h*0.82) + ' L' + w + ' ' + h + ' L0 ' + h + ' Z" fill="' + a.hill + '" opacity="0.9"/>'
+      + '</svg>';
+  }
+
+  /* ---- Session store (saved guides + draft contributions) --------------- *
+   * Artifacts can't rely on localStorage, so we keep everything in a single
+   * JSON blob in window.name (survives same-tab navigation). One store now
+   * holds both the saved-guide ids and any in-progress contributor drafts. */
+  let _store = { saved: [], drafts: [] };
+  try {
+    if (window.name && window.name.indexOf("wf:") === 0) {
+      const raw = window.name.slice(3);
+      if (raw.charAt(0) === "{") {
+        _store = JSON.parse(raw);
+      } else {
+        // migrate old "wf:" comma-list format (saved ids only)
+        _store = { saved: raw.split(",").filter(Boolean), drafts: [] };
+      }
+    }
+  } catch (e) { _store = { saved: [], drafts: [] }; }
+  if (!_store.saved) _store.saved = [];
+  if (!_store.drafts) _store.drafts = [];
+
+  function writeStore() {
+    try { window.name = "wf:" + JSON.stringify(_store); } catch (e) {}
+  }
+
+  let saved = new Set(_store.saved);
+  function persist() {
+    _store.saved = Array.from(saved);
+    writeStore();
+    document.dispatchEvent(new CustomEvent("wf:saved-changed", { detail: { count: saved.size } }));
+  }
+  const Saved = {
+    has: function (id) { return saved.has(id); },
+    toggle: function (id) { if (saved.has(id)) saved.delete(id); else saved.add(id); persist(); return saved.has(id); },
+    list: function () { return Array.from(saved); },
+    count: function () { return saved.size; }
+  };
+
+  /* ---- Drafts (contributor flow, session-persistent) -------------------- */
+  const Drafts = {
+    list: function () { return _store.drafts.slice(); },
+    count: function () { return _store.drafts.length; },
+    add: function (draft) {
+      draft.id = "draft-" + Date.now();
+      draft.createdAt = new Date().toISOString();
+      _store.drafts.push(draft);
+      writeStore();
+      document.dispatchEvent(new CustomEvent("wf:drafts-changed", { detail: { count: _store.drafts.length } }));
+      return draft.id;
+    },
+    remove: function (id) {
+      _store.drafts = _store.drafts.filter(function (d) { return d.id !== id; });
+      writeStore();
+      document.dispatchEvent(new CustomEvent("wf:drafts-changed", { detail: { count: _store.drafts.length } }));
+    }
+  };
+
+  /* ---- Shared chrome (slim bar injected onto bespoke guide pages) -------- *
+   * Fully self-contained inline styles + a unique class prefix so it never
+   * collides with each guide's bespoke CSS. Shows: back-to-library, brand,
+   * a save toggle for this guide, and next-guide nav. Call:
+   *   Wayfarer.mountChrome("shizuka")
+   */
+  function mountChrome(currentId) {
+    if (document.getElementById("wfx-bar")) return;
+    var cur = GUIDES.find(function (g) { return g.id === currentId; });
+    // Next live guide (wraps around) for "next guide" nav.
+    var live = GUIDES.filter(function (g) { return g.status === "live"; });
+    var idx = live.findIndex(function (g) { return g.id === currentId; });
+    var next = live.length ? live[(idx + 1 + live.length) % live.length] : null;
+    if (next && next.id === currentId) next = null;
+
+    var bar = document.createElement("div");
+    bar.id = "wfx-bar";
+    bar.setAttribute("style", [
+      "position:fixed", "top:0", "left:0", "right:0", "z-index:99999",
+      "display:flex", "align-items:center", "justify-content:space-between",
+      "gap:16px", "padding:10px 18px",
+      "font-family:'Inter Tight',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif",
+      "background:rgba(20,20,20,0.72)", "backdrop-filter:blur(14px)",
+      "-webkit-backdrop-filter:blur(14px)",
+      "border-bottom:1px solid rgba(255,255,255,0.12)",
+      "box-shadow:0 2px 20px rgba(0,0,0,0.18)",
+      "transform:translateY(-100%)", "transition:transform 0.5s cubic-bezier(0.22,1,0.36,1)"
+    ].join(";"));
+
+    var bookmark = function (filled) {
+      return '<svg width="16" height="16" viewBox="0 0 24 24" fill="' + (filled ? "#4ECDC4" : "none") +
+        '" stroke="' + (filled ? "#4ECDC4" : "#fff") + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+        '<path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>';
+    };
+
+    bar.innerHTML =
+      '<a href="wayfare-standalone.html" style="display:inline-flex;align-items:center;gap:7px;color:rgba(255,255,255,0.85);text-decoration:none;font-size:13px;font-weight:500;">' +
+        '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>' +
+        'Wayfarer Library</a>' +
+      '<a href="wayfare-standalone.html" style="display:inline-flex;align-items:center;gap:8px;color:#fff;text-decoration:none;font-weight:800;font-size:15px;letter-spacing:-0.01em;">' +
+        '<svg width="20" height="20" viewBox="0 0 32 32"><circle cx="16" cy="16" r="15" fill="none" stroke="#4ECDC4" stroke-width="1.5" opacity="0.5"/><path d="M16 2 L19 16 L16 30 L13 16 Z" fill="#4ECDC4"/><path d="M2 16 L16 13 L30 16 L16 19 Z" fill="#4ECDC4" opacity="0.6"/><circle cx="16" cy="16" r="2.4" fill="#fff"/></svg>' +
+        'Wayfarer</a>' +
+      '<div style="display:inline-flex;align-items:center;gap:8px;">' +
+        '<a href="saved.html" id="wfx-saved" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.85);text-decoration:none;font-size:12px;font-weight:600;border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:6px 11px;">Saved <span id="wfx-ct" style="background:#4ECDC4;color:#062a27;border-radius:9999px;min-width:16px;height:16px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;padding:0 4px;">0</span></a>' +
+        (cur ? '<button id="wfx-save" aria-label="Save this guide" style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.2);border-radius:9999px;padding:6px 13px;color:#fff;font-family:inherit;font-size:12px;font-weight:600;">' + bookmark(Saved.has(currentId)) + '<span id="wfx-save-tx">' + (Saved.has(currentId) ? "Saved" : "Save") + '</span></button>' : '') +
+        (next ? '<a href="' + next.file + '" style="display:inline-flex;align-items:center;gap:6px;color:rgba(255,255,255,0.85);text-decoration:none;font-size:12px;font-weight:600;">Next guide<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>' : '') +
+      '</div>';
+
+    document.body.appendChild(bar);
+    // Nudge the page down so the fixed bar doesn't cover content.
+    var padder = document.createElement("style");
+    padder.textContent = "body{padding-top:52px !important;}";
+    document.head.appendChild(padder);
+    requestAnimationFrame(function () { bar.style.transform = "translateY(0)"; });
+
+    function syncCount() { var c = document.getElementById("wfx-ct"); if (c) c.textContent = Saved.count(); }
+    syncCount();
+    document.addEventListener("wf:saved-changed", syncCount);
+
+    var saveBtn = document.getElementById("wfx-save");
+    if (saveBtn) {
+      saveBtn.addEventListener("click", function () {
+        var nowSaved = Saved.toggle(currentId);
+        saveBtn.innerHTML = bookmark(nowSaved) + '<span id="wfx-save-tx">' + (nowSaved ? "Saved" : "Save") + '</span>';
+      });
+    }
+  }
+
+  /* ---- Public API ------------------------------------------------------- */
+  window.Wayfarer = {
+    guides: GUIDES,
+    authors: AUTHORS,
+    guideById: function (id) { return GUIDES.find(function (g) { return g.id === id; }); },
+    guidesByAuthor: function (h) { return GUIDES.filter(function (g) { return g.author === h; }); },
+    moods: function () { return Array.from(new Set(GUIDES.map(function (g) { return g.mood; }))); },
+    regions: function () { return Array.from(new Set(GUIDES.map(function (g) { return g.region; }))); },
+    cardArt: cardArt,
+    Saved: Saved,
+    Drafts: Drafts,
+    mountChrome: mountChrome
+  };
+})();

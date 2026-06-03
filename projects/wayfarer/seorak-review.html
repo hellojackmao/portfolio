@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>THE SEORAK REVIEW — Korea, Read Slowly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,900;1,9..144,400;1,9..144,500&family=Spectral:ital,wght@0,300;0,400;0,500;1,400&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f6f2ea;
+    --paper-warm: #efe9dc;
+    --ink: #1a1815;
+    --ink-soft: #3d3833;
+    --ink-faint: #6e665c;
+    --rule: #cfc6b4;
+    --rule-soft: #e0d9ca;
+
+    /* Korean palette — one accent per spread */
+    --celadon: #6e9183;        /* Goryeo celadon */
+    --celadon-deep: #4a6b5e;
+    --persimmon: #c45a2e;       /* bojagi persimmon */
+    --indigo: #2c3e57;          /* bojagi indigo */
+    --seal: #b8332a;            /* royal seal red */
+    --gold: #a8842c;
+
+    --display: 'Fraunces', Georgia, serif;
+    --body: 'Spectral', Georgia, serif;
+    --label: 'Archivo', sans-serif;
+
+    --turn: cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    font-weight: 400;
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    font-size: 18px;
+  }
+
+  /* Subtle paper grain */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.5;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.6 0 0 0 0 0.56 0 0 0 0 0.48 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  ::selection { background: var(--seal); color: var(--paper); }
+
+  /* ─────────── Masthead / Nav ─────────── */
+  .masthead {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--paper);
+    border-bottom: 1.5px solid var(--ink);
+    padding: 0;
+  }
+
+  .masthead-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 2.5rem;
+    border-bottom: 1px solid var(--rule);
+    font-family: var(--label);
+    font-size: 0.66rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .masthead-top .issue { color: var(--seal); font-weight: 600; }
+
+  .masthead-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 2.5rem 0.7rem;
+  }
+
+  .masthead-title {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(1.4rem, 2.5vw, 2.1rem);
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .masthead-nav {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .masthead-nav a {
+    font-family: var(--label);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.5s var(--turn);
+    position: relative;
+  }
+
+  .masthead-nav a:hover { color: var(--seal); }
+
+  .masthead-sub {
+    font-family: var(--label);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--ink);
+    padding: 0.55rem 1.2rem;
+    text-decoration: none;
+    transition: background 0.5s var(--turn);
+  }
+
+  .masthead-sub:hover { background: var(--seal); }
+
+  /* ─────────── Cover Spread ─────────── */
+  .cover {
+    padding: 5rem 2.5rem 4rem;
+    border-bottom: 1.5px solid var(--ink);
+    position: relative;
+  }
+
+  .cover-grid {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 3.5rem;
+    align-items: stretch;
+  }
+
+  .cover-kicker {
+    font-family: var(--label);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--seal);
+    margin-bottom: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    opacity: 0;
+    animation: settle 1.2s var(--turn) 0.2s forwards;
+  }
+
+  .cover-kicker::before {
+    content: "";
+    width: 36px; height: 2px;
+    background: var(--seal);
+  }
+
+  h1.cover-headline {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    line-height: 0.96;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 2rem;
+    font-optical-sizing: auto;
+  }
+
+  .cover-headline .l {
+    display: block;
+    overflow: hidden;
+  }
+
+  .cover-headline .l span {
+    display: block;
+    transform: translateY(102%);
+    animation: pageturn 1.4s var(--turn) forwards;
+  }
+  .cover-headline .l:nth-child(1) span { animation-delay: 0.35s; }
+  .cover-headline .l:nth-child(2) span { animation-delay: 0.5s; }
+  .cover-headline .l:nth-child(3) span { animation-delay: 0.65s; }
+
+  .cover-headline em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--celadon-deep);
+  }
+
+  @keyframes pageturn { to { transform: translateY(0); } }
+  @keyframes settle {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .cover-standfirst {
+    font-family: var(--body);
+    font-size: 1.3rem;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 540px;
+    margin-bottom: 2.5rem;
+    opacity: 0;
+    animation: settle 1.2s var(--turn) 0.9s forwards;
+  }
+
+  .cover-byline {
+    font-family: var(--label);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+    opacity: 0;
+    animation: settle 1.2s var(--turn) 1.1s forwards;
+  }
+
+  .cover-byline strong { color: var(--ink); font-weight: 700; }
+
+  /* Cover image panel — celadon spread */
+  .cover-image {
+    background: linear-gradient(160deg, var(--celadon) 0%, var(--celadon-deep) 100%);
+    position: relative;
+    overflow: hidden;
+    min-height: 480px;
+    display: flex;
+    align-items: flex-end;
+    opacity: 0;
+    animation: settle 1.4s var(--turn) 0.6s forwards;
+  }
+
+  .cover-image svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .cover-image .caption {
+    position: relative;
+    z-index: 2;
+    padding: 1.5rem;
+    font-family: var(--label);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(246, 242, 234, 0.85);
+    line-height: 1.5;
+    background: linear-gradient(180deg, transparent, rgba(26,24,21,0.4));
+    width: 100%;
+  }
+
+  .cover-image .caption .num {
+    color: var(--paper);
+    font-weight: 700;
+    border: 1px solid rgba(246,242,234,0.4);
+    padding: 0.1rem 0.4rem;
+    margin-right: 0.6rem;
+  }
+
+  /* ─────────── Section structure ─────────── */
+  section { padding: 6rem 2.5rem; }
+
+  .wrap { max-width: 1320px; margin: 0 auto; }
+
+  .section-rule {
+    display: flex;
+    align-items: baseline;
+    gap: 1.2rem;
+    margin-bottom: 3.5rem;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 1rem;
+  }
+
+  .section-num {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 1.4rem;
+    color: var(--seal);
+  }
+
+  .section-kicker {
+    font-family: var(--label);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    flex: 1;
+  }
+
+  .section-folio {
+    font-family: var(--label);
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+  }
+
+  /* ─────────── The Opening (feature lede) ─────────── */
+  .opening {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .opening-body {
+    columns: 2;
+    column-gap: 3.5rem;
+    max-width: 1000px;
+  }
+
+  .opening h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 2rem;
+    column-span: all;
+    max-width: 760px;
+    letter-spacing: -0.01em;
+  }
+
+  .opening h2 em { font-style: italic; color: var(--celadon-deep); }
+
+  .opening-body p {
+    font-size: 1.08rem;
+    line-height: 1.85;
+    color: var(--ink-soft);
+    margin-bottom: 1.3rem;
+    text-align: justify;
+    hyphens: auto;
+  }
+
+  .opening-body p:first-of-type::first-letter {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 4.6rem;
+    float: left;
+    line-height: 0.78;
+    padding: 0.1rem 0.7rem 0 0;
+    color: var(--seal);
+  }
+
+  /* ─────────── Pull Quote ─────────── */
+  .pullquote {
+    background: var(--ink);
+    color: var(--paper);
+    text-align: center;
+    padding: 7rem 2.5rem;
+  }
+
+  .pullquote blockquote {
+    max-width: 980px;
+    margin: 0 auto;
+    font-family: var(--display);
+    font-weight: 400;
+    font-style: italic;
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  .pullquote blockquote .hl { color: var(--celadon); font-style: normal; }
+
+  .pullquote cite {
+    display: block;
+    margin-top: 2.5rem;
+    font-family: var(--label);
+    font-style: normal;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(246,242,234,0.55);
+  }
+
+  /* ─────────── The Dispatches (3-column feature wells) ─────────── */
+  .dispatches { border-bottom: 1px solid var(--rule); }
+
+  .dispatch-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--ink);
+  }
+
+  .dispatch {
+    padding: 2.8rem 2rem;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+    position: relative;
+    transition: background 0.6s var(--turn);
+  }
+
+  .dispatch:nth-child(3n) { border-right: none; }
+  .dispatch:hover { background: var(--paper-warm); }
+
+  .dispatch-tag {
+    font-family: var(--label);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    margin-bottom: 1.4rem;
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    color: var(--paper);
+  }
+
+  .tag-celadon { background: var(--celadon-deep); }
+  .tag-persimmon { background: var(--persimmon); }
+  .tag-indigo { background: var(--indigo); }
+  .tag-seal { background: var(--seal); }
+  .tag-gold { background: var(--gold); }
+
+  .dispatch h3 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    letter-spacing: -0.005em;
+  }
+
+  .dispatch h3 em { font-style: italic; }
+
+  .dispatch p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--ink-soft);
+    margin-bottom: 1.5rem;
+  }
+
+  .dispatch .readmore {
+    font-family: var(--label);
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1.5px solid var(--seal);
+    padding-bottom: 2px;
+    transition: color 0.5s var(--turn);
+  }
+
+  .dispatch:hover .readmore { color: var(--seal); }
+
+  /* ─────────── Sidebar feature (asymmetric spread) ─────────── */
+  .feature {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+
+  .feature-main h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    line-height: 1.12;
+    color: var(--ink);
+    margin-bottom: 2rem;
+    letter-spacing: -0.015em;
+  }
+
+  .feature-main h2 em { font-style: italic; color: var(--persimmon); }
+
+  .feature-main p {
+    font-size: 1.08rem;
+    line-height: 1.85;
+    color: var(--ink-soft);
+    margin-bottom: 1.4rem;
+  }
+
+  .feature-main p .smallcaps {
+    font-variant: small-caps;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* Sidebar — "the practical column" */
+  .sidebar {
+    background: var(--paper-warm);
+    border-top: 3px solid var(--indigo);
+    padding: 2.5rem;
+  }
+
+  .sidebar-label {
+    font-family: var(--label);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--indigo);
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .sidebar-item {
+    margin-bottom: 1.6rem;
+    padding-bottom: 1.6rem;
+    border-bottom: 1px solid var(--rule-soft);
+  }
+  .sidebar-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .sidebar-item dt {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .sidebar-item dt .kr {
+    font-size: 0.85rem;
+    color: var(--persimmon);
+    font-weight: 500;
+    margin-left: 0.4rem;
+  }
+
+  .sidebar-item dd {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  /* ─────────── Voices (quoted travelers) ─────────── */
+  .voices {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .voices-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+  }
+
+  .voice {
+    border-left: 3px solid var(--gold);
+    padding-left: 2rem;
+  }
+
+  .voice p {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.4rem;
+    line-height: 1.45;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  .voice .who {
+    font-family: var(--label);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .voice .who strong { color: var(--ink); }
+
+  /* ─────────── Closing Column / CTA ─────────── */
+  .closing {
+    background: var(--paper-warm);
+    border-top: 1.5px solid var(--ink);
+    border-bottom: 1.5px solid var(--ink);
+    padding: 7rem 2.5rem;
+  }
+
+  .closing-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4.5rem;
+    align-items: center;
+  }
+
+  .closing-col h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 1.8rem;
+    letter-spacing: -0.015em;
+  }
+
+  .closing-col h2 em { font-style: italic; color: var(--seal); }
+
+  .closing-col .essay {
+    font-size: 1.1rem;
+    line-height: 1.85;
+    color: var(--ink-soft);
+    margin-bottom: 1.3rem;
+  }
+
+  .closing-col .essay:first-of-type::first-letter {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 3.6rem;
+    float: left;
+    line-height: 0.78;
+    padding: 0.1rem 0.6rem 0 0;
+    color: var(--seal);
+  }
+
+  /* Subscribe card */
+  .subscribe {
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    padding: 3rem;
+  }
+
+  .subscribe-label {
+    font-family: var(--label);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--seal);
+    margin-bottom: 0.8rem;
+  }
+
+  .subscribe h3 {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 1.8rem;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 1.5rem;
+  }
+
+  .subscribe .price {
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--ink-faint);
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .subscribe .price strong {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 1.2rem;
+  }
+
+  .sub-field { margin-bottom: 1.4rem; }
+
+  .sub-field label {
+    display: block;
+    font-family: var(--label);
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 0.5rem;
+  }
+
+  .sub-field input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1.5px solid var(--rule);
+    padding: 0.5rem 0;
+    font-family: var(--body);
+    font-size: 1.05rem;
+    color: var(--ink);
+    transition: border-color 0.5s var(--turn);
+  }
+
+  .sub-field input::placeholder { color: var(--ink-faint); font-style: italic; }
+  .sub-field input:focus { outline: none; border-bottom-color: var(--seal); }
+
+  .sub-btn {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1.1rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--label);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: background 0.6s var(--turn);
+  }
+
+  .sub-btn:hover { background: var(--seal); }
+
+  .sub-foot {
+    margin-top: 1.5rem;
+    font-family: var(--body);
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--ink-faint);
+    text-align: center;
+    line-height: 1.5;
+  }
+
+  /* ─────────── Colophon / Footer ─────────── */
+  footer {
+    background: var(--paper);
+    padding: 4rem 2.5rem 2.5rem;
+  }
+
+  .colophon {
+    max-width: 1320px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3.5rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .colophon-brand .title {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 1.6rem;
+    color: var(--ink);
+    margin-bottom: 1rem;
+  }
+
+  .colophon-brand p {
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--ink-faint);
+    max-width: 320px;
+    line-height: 1.7;
+  }
+
+  .colophon-col h4 {
+    font-family: var(--label);
+    font-size: 0.64rem;
+    font-weight: 700;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--seal);
+    margin-bottom: 1.2rem;
+  }
+
+  .colophon-col ul { list-style: none; }
+  .colophon-col li { margin-bottom: 0.6rem; }
+  .colophon-col a, .colophon-col span {
+    font-family: var(--body);
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+    transition: color 0.5s var(--turn);
+  }
+  .colophon-col a:hover { color: var(--seal); }
+
+  .colophon-base {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--label);
+    font-size: 0.64rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  /* ─── Reveal ─── */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1.1s var(--turn), transform 1.1s var(--turn); }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 940px) {
+    body { font-size: 17px; }
+    .masthead-top, .masthead-main { padding-left: 1.3rem; padding-right: 1.3rem; }
+    .masthead-nav { display: none; }
+    section { padding: 4rem 1.3rem; }
+    .cover { padding: 3rem 1.3rem; }
+    .cover-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .cover-image { min-height: 320px; }
+    .opening-body { columns: 1; }
+    .dispatch-grid { grid-template-columns: 1fr; }
+    .dispatch { border-right: none !important; }
+    .feature-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .voices-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .closing-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .colophon { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+    .colophon-base { flex-direction: column; gap: 0.8rem; }
+    .pullquote, .closing { padding-top: 4.5rem; padding-bottom: 4.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ MASTHEAD ═══════════ -->
+<header class="masthead">
+  <div class="masthead-top">
+    <span>Vol. XII <span class="issue">· The Korea Issue</span></span>
+    <span>Spring MMXXVI · A Travel Quarterly</span>
+  </div>
+  <div class="masthead-main">
+    <div class="masthead-title">The Seorak Review</div>
+    <ul class="masthead-nav">
+      <li><a href="#opening">The Feature</a></li>
+      <li><a href="#dispatches">Dispatches</a></li>
+      <li><a href="#feature">The Table</a></li>
+      <li><a href="#voices">Voices</a></li>
+    </ul>
+    <a href="#closing" class="masthead-sub">Follow</a>
+  </div>
+</header>
+
+<!-- ═══════════ COVER SPREAD ═══════════ -->
+<section class="cover">
+  <div class="cover-grid">
+    <div>
+      <div class="cover-kicker">The Cover Feature · No. 12</div>
+      <h1 class="cover-headline">
+        <span class="l"><span>A country</span></span>
+        <span class="l"><span>best read</span></span>
+        <span class="l"><span><em>slowly.</em></span></span>
+      </h1>
+      <p class="cover-standfirst">
+        An invitation to know Korea not as a checklist of sights, but as a long, layered story — told in tea houses and tile roofs, in celadon and in silence. Turn the page.
+      </p>
+      <div class="cover-byline">
+        Words &amp; Art Direction by <strong>The Seorak Review</strong> · Photography across Seoul, Andong, Jeju &amp; the Jeolla coast
+      </div>
+    </div>
+
+    <div class="cover-image">
+      <svg viewBox="0 0 500 600" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <!-- Layered mountains -->
+        <path d="M0 380 L100 300 L180 350 L280 270 L380 330 L500 280 L500 600 L0 600 Z" fill="#5d8073" opacity="0.6"/>
+        <path d="M0 440 L120 380 L240 420 L360 360 L500 410 L500 600 L0 600 Z" fill="#4a6b5e" opacity="0.7"/>
+        <!-- Hanok roofline silhouette -->
+        <g fill="#3a5249" opacity="0.92">
+          <path d="M40 520 Q70 480 110 478 Q150 480 180 520 L180 600 L40 600 Z"/>
+          <path d="M30 520 Q110 505 190 520 L190 530 Q110 514 30 530 Z" fill="#2f433b"/>
+          <path d="M200 540 Q230 505 270 503 Q310 505 340 540 L340 600 L200 600 Z"/>
+          <path d="M192 540 Q270 526 348 540 L348 549 Q270 535 192 549 Z" fill="#2f433b"/>
+          <path d="M360 528 Q385 498 420 496 Q455 498 480 528 L480 600 L360 600 Z"/>
+        </g>
+        <!-- Moon -->
+        <circle cx="380" cy="150" r="46" fill="#f6f2ea" opacity="0.85"/>
+        <circle cx="380" cy="150" r="46" fill="#6e9183" opacity="0.12"/>
+        <!-- Single seal-red lantern -->
+        <g transform="translate(120,200)">
+          <line x1="0" y1="-40" x2="0" y2="0" stroke="#2f433b" stroke-width="1.5"/>
+          <ellipse cx="0" cy="14" rx="13" ry="18" fill="#b8332a"/>
+          <line x1="0" y1="32" x2="0" y2="44" stroke="#2f433b" stroke-width="1.5"/>
+        </g>
+        <!-- pine branch stroke -->
+        <path d="M420 60 Q450 90 440 130 M440 130 Q460 120 480 130 M440 130 Q425 150 430 175" stroke="#2f433b" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+      </svg>
+      <div class="caption">
+        <span class="num">FIG. 1</span>Dusk over a hanok village — the hour the country exhales
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ OPENING / LEDE ═══════════ -->
+<section class="opening" id="opening">
+  <div class="wrap">
+    <div class="section-rule reveal">
+      <span class="section-num">I</span>
+      <span class="section-kicker">The Feature · An Invitation</span>
+      <span class="section-folio">Pages 14 — 19</span>
+    </div>
+
+    <h2 class="reveal">There is a version of Korea that the brochures never reach — and it begins the moment you <em>stop hurrying</em>.</h2>
+
+    <div class="opening-body reveal">
+      <p>The first thing Korea asks of a visitor is patience, and it asks quietly. The country will not perform for those in a rush. Its pleasures are layered, like the lacquer on an old chest — a dozen thin coats, each one applied and allowed to dry before the next, until the surface holds a depth that cannot be faked or hurried.</p>
+      <p>Come for the obvious things, by all means: the glass towers of Seoul, the night markets bright as fairgrounds, the food that arrives in a dozen small dishes before you have ordered a single one. But stay for the quieter register beneath them. Stay for the morning a temple bell carries across a valley still wet with mist. Stay for the grandmother who presses a second helping on you without a word of shared language, only the universal grammar of feeding a guest.</p>
+      <p>This issue is not a guidebook. It is an invitation — to read a country the way one reads a long and rewarding novel: slowly, attentively, and with the growing certainty that the best parts are the ones you almost missed. We have spent a season assembling it. We hope you will spend one answering it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PULL QUOTE ═══════════ -->
+<section class="pullquote">
+  <blockquote class="reveal">
+    "To travel Korea well is to <span class="hl">unlearn the itinerary</span> — and let the country set the pace instead."
+  </blockquote>
+  <cite class="reveal">From the Editor's Letter · The Korea Issue</cite>
+</section>
+
+<!-- ═══════════ DISPATCHES ═══════════ -->
+<section class="dispatches" id="dispatches">
+  <div class="wrap">
+    <div class="section-rule reveal">
+      <span class="section-num">II</span>
+      <span class="section-kicker">Dispatches · Five Ways to Begin</span>
+      <span class="section-folio">Pages 20 — 31</span>
+    </div>
+
+    <div class="dispatch-grid">
+      <div class="dispatch reveal">
+        <span class="dispatch-tag tag-celadon">The Ceramics</span>
+        <h3>The glaze that took a <em>dynasty</em></h3>
+        <p>In the kilns of Gangjin, potters still chase the blue-green Goryeo celadon that emperors once prized above gold. Spend a morning watching a master pull a single perfect bowl from the wheel — and understand why the Korean idea of beauty rewards restraint over flourish.</p>
+        <a href="#" class="readmore">Read the Dispatch</a>
+      </div>
+
+      <div class="dispatch reveal">
+        <span class="dispatch-tag tag-persimmon">The Table</span>
+        <h3>A meal that arrives all at <em>once</em></h3>
+        <p>The Korean table is a composition, not a sequence — a dozen banchan set down together, each a small argument about balance. We trace one temple-cuisine kitchen where a Buddhist nun has cooked without garlic, onion, or hurry for thirty-one years.</p>
+        <a href="#" class="readmore">Read the Dispatch</a>
+      </div>
+
+      <div class="dispatch reveal">
+        <span class="dispatch-tag tag-indigo">The Cloth</span>
+        <h3>Wrapping the world in <em>bojagi</em></h3>
+        <p>The patchwork wrapping cloth — indigo beside persimmon beside undyed hemp — turns the act of carrying into the act of honoring. In a Seoul atelier, a textile artist explains why Koreans wrap a gift as carefully as they choose it.</p>
+        <a href="#" class="readmore">Read the Dispatch</a>
+      </div>
+
+      <div class="dispatch reveal">
+        <span class="dispatch-tag tag-gold">The Mountains</span>
+        <h3>Where the temples keep <em>time</em></h3>
+        <p>Seventy percent of Korea is mountain, and the mountains are full of temples that will house you for a night. A templestay in the Jeolla highlands: the 4am bell, the bowing, the bowl of rice eaten in complete and clarifying silence.</p>
+        <a href="#" class="readmore">Read the Dispatch</a>
+      </div>
+
+      <div class="dispatch reveal">
+        <span class="dispatch-tag tag-seal">The Island</span>
+        <h3>Jeju, and the women of the <em>sea</em></h3>
+        <p>Off the southern coast, the <em>haenyeo</em> — sea women, many in their seventies — still dive without tanks for abalone and urchin. We spend three days on a volcanic island learning what a vanishing way of life can still teach the rest of us.</p>
+        <a href="#" class="readmore">Read the Dispatch</a>
+      </div>
+
+      <div class="dispatch reveal">
+        <span class="dispatch-tag tag-celadon">The City</span>
+        <h3>Seoul, after the <em>guidebook closes</em></h3>
+        <p>Beneath the headline city of neon and speed runs an older one: palace walls at dawn, bathhouse rituals, a hidden tea house up four flights of stairs. We map the Seoul that only reveals itself to those who linger past closing time.</p>
+        <a href="#" class="readmore">Read the Dispatch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FEATURE + SIDEBAR ═══════════ -->
+<section class="feature" id="feature">
+  <div class="wrap">
+    <div class="section-rule reveal">
+      <span class="section-num">III</span>
+      <span class="section-kicker">The Long Read · On Hospitality</span>
+      <span class="section-folio">Pages 32 — 40</span>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-main reveal">
+        <h2>The art of being a <em>guest</em> in a country that has perfected the art of hosting.</h2>
+        <p>There is a Korean word, <span class="smallcaps">jeong</span>, that resists clean translation. It is something like affection, something like loyalty, something like the warmth that accrues between people who have shared enough meals and enough silences to no longer need to perform politeness for one another.</p>
+        <p>You will encounter it sooner than you expect. In the <span class="smallcaps">ajumma</span> who refills your side dishes unasked. In the stranger who walks you three blocks to a door he could have merely pointed toward. In the host family who, on a templestay, leaves the brightest persimmon of the bowl beside your cushion.</p>
+        <p>To travel Korea well is, in part, to learn how to receive this — to set down the traveler's reflexive independence and allow yourself to be looked after. It is a small surrender, and it is the doorway to everything the country keeps for those who accept the invitation.</p>
+      </div>
+
+      <aside class="sidebar reveal">
+        <div class="sidebar-label">The Practical Column</div>
+        <dl>
+          <div class="sidebar-item">
+            <dt>When to go <span class="kr">언제</span></dt>
+            <dd>Spring for the cherry and the mountain greens; autumn for the maples and the clearest skies of the year. Both reward the unhurried.</dd>
+          </div>
+          <div class="sidebar-item">
+            <dt>How long <span class="kr">얼마나</span></dt>
+            <dd>Three weeks is a beginning. A season is an education. Our subscribers travel in stages, one region per visit.</dd>
+          </div>
+          <div class="sidebar-item">
+            <dt>Where to stay <span class="kr">어디서</span></dt>
+            <dd>A restored hanok in a city, a templestay in the hills, a guesthouse on the coast. Sleep close to the ground, by the old custom.</dd>
+          </div>
+          <div class="sidebar-item">
+            <dt>The one phrase <span class="kr">한마디</span></dt>
+            <dd><em>Cheoncheonhi.</em> "Slowly." It will serve you better in Korea than any other word you carry.</dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ VOICES ═══════════ -->
+<section class="voices" id="voices">
+  <div class="wrap">
+    <div class="section-rule reveal">
+      <span class="section-num">IV</span>
+      <span class="section-kicker">Voices · From the Field</span>
+      <span class="section-folio">Pages 41 — 44</span>
+    </div>
+
+    <div class="voices-grid">
+      <div class="voice reveal">
+        <p>"I came for a long weekend and rebooked my flight twice. By the end I wasn't sightseeing anymore — I was just living there, slowly, and it had become the point."</p>
+        <div class="who"><strong>Marisa Holt</strong> · Subscriber since Vol. IX · Lisbon</div>
+      </div>
+      <div class="voice reveal">
+        <p>"The templestay reset something I didn't know was broken. Four in the morning, a bell, a bow. I've kept the habit of silence since I came home."</p>
+        <div class="who"><strong>Daniel Okafor</strong> · Reader · Toronto</div>
+      </div>
+      <div class="voice reveal">
+        <p>"This isn't a magazine that tells you where to go. It's one that changes how you go. I read every issue twice before I pack a single bag."</p>
+        <div class="who"><strong>Yuki Tanaka</strong> · Charter Subscriber · Osaka</div>
+      </div>
+      <div class="voice reveal">
+        <p>"The celadon dispatch sent me to Gangjin for a week. I came back with one imperfect bowl and an entirely different idea of what beauty is for."</p>
+        <div class="who"><strong>Eleanor Voss</strong> · Subscriber · Edinburgh</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CLOSING COLUMN / CTA ═══════════ -->
+<section class="closing" id="closing">
+  <div class="closing-grid">
+    <div class="closing-col reveal">
+      <h2>The story doesn't end here — it <em>begins</em>.</h2>
+      <p class="essay">Every issue of The Seorak Review is a single chapter in a longer correspondence between us and a country we have not finished learning. We publish four times a year, each devoted to a place worth reading slowly. This spring, it is Korea.</p>
+      <p class="essay">Follow along, and you will not simply receive a magazine. You will receive an invitation, renewed each season — to put down the itinerary, to learn the word for "slowly," and to travel as though the point were not to arrive but to pay attention. The page is turned. The rest is yours to write.</p>
+    </div>
+
+    <div class="subscribe reveal">
+      <div class="subscribe-label">Stay With the Story</div>
+      <h3>Four guides a year. One country at a time.</h3>
+      <p class="price">Free to follow · The next Korea dispatch lands in your inbox first</p>
+
+      <form onsubmit="event.preventDefault(); this.querySelector('.sub-btn').textContent='Welcome — You\u2019re Following The Review';">
+        <div class="sub-field">
+          <label for="s-name">Your Name</label>
+          <input type="text" id="s-name" placeholder="What we should call you" required />
+        </div>
+        <div class="sub-field">
+          <label for="s-email">Your Email</label>
+          <input type="email" id="s-email" placeholder="Where we send the editor's letter" required />
+        </div>
+        <div class="sub-field">
+          <label for="s-where">Reading From</label>
+          <input type="text" id="s-where" placeholder="City &amp; country" required />
+        </div>
+        <button type="submit" class="sub-btn">Follow The Review</button>
+      </form>
+      <p class="sub-foot">Free, always. A new guide each season. No noise between issues.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ COLOPHON / FOOTER ═══════════ -->
+<footer>
+  <div class="colophon">
+    <div class="colophon-brand">
+      <div class="title">The Seorak Review</div>
+      <p>A travel quarterly devoted to reading countries slowly. Published four times a year for people who would rather understand one place than glimpse a dozen.</p>
+    </div>
+    <div class="colophon-col">
+      <h4>The Magazine</h4>
+      <ul>
+        <li><a href="#">About the Review</a></li>
+        <li><a href="#">Past Issues</a></li>
+        <li><a href="#">The Editors</a></li>
+        <li><a href="#">Contributors</a></li>
+      </ul>
+    </div>
+    <div class="colophon-col">
+      <h4>The Korea Issue</h4>
+      <ul>
+        <li><a href="#">Ceramics</a></li>
+        <li><a href="#">The Table</a></li>
+        <li><a href="#">Templestays</a></li>
+        <li><a href="#">Jeju &amp; the Coast</a></li>
+      </ul>
+    </div>
+    <div class="colophon-col">
+      <h4>Correspond</h4>
+      <ul>
+        <li><span>Insadong, Jongno-gu</span></li>
+        <li><span>Seoul 03145</span></li>
+        <li><span>Daehan Minguk · 대한민국</span></li>
+        <li><a href="#">letters@</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="colophon-base">
+    <div>© The Seorak Review · MMXXVI · Printed on acid-free paper</div>
+    <div>Cheoncheonhi · 천천히 · Slowly</div>
+  </div>
+</footer>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in-view');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+
+<script src="wayfarer-shared.js"></script>
+<script>if(window.Wayfarer)Wayfarer.mountChrome("seorak-review");</script>
+</body>
+</html>
