@@ -6,11 +6,11 @@
   <meta name="theme-color" content="#fff3df">
   <meta name="description" content="A warm beginner Korean learning app with daily practice, read-aloud, shadowing, review, and progress tracking.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Beginner Korean Studio">
+  <meta property="og:title" content="Hana — Beginner Korean">
   <meta property="og:description" content="Learn Korean with warm daily practice, read-aloud, shadowing, and review.">
   <meta property="og:image" content="./icons/og-image.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Beginner Korean Studio">
+  <meta name="twitter:title" content="Hana — Beginner Korean">
   <meta name="twitter:description" content="Learn Korean with warm daily practice, read-aloud, shadowing, and review.">
   <meta name="twitter:image" content="./icons/og-image.png">
   <link rel="icon" href="./icons/favicon.svg" type="image/svg+xml">
@@ -20,10 +20,10 @@
   <meta name="msapplication-TileColor" content="#fff3df">
   <meta name="msapplication-TileImage" content="./icons/icon-192.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Korean Studio">
+  <meta name="apple-mobile-web-app-title" content="Hana">
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="manifest" href="./manifest.webmanifest">
-  <title>Beginner Korean Studio</title>
+  <title>Hana — Beginner Korean</title>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Sans+KR:wght@400;500;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap");
 
@@ -720,6 +720,16 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
+    .lesson-grid:not(.expanded) .lesson-card:nth-child(n + 7) {
+      display: none;
+    }
+
+    .disclosure-row {
+      display: flex;
+      justify-content: center;
+      margin-top: 22px;
+    }
+
     .mission-grid {
       grid-template-columns: 1.1fr 0.95fr 0.95fr;
       align-items: stretch;
@@ -1023,12 +1033,26 @@
 
     .mode-tabs {
       display: grid;
-      grid-template-columns: repeat(9, 1fr);
+      grid-template-columns: repeat(5, 1fr);
       gap: 8px;
       padding: 8px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: rgba(255, 253, 248, 0.58);
+    }
+
+    .mode-tabs:not(.expanded) .mode-tab[data-advanced="true"] {
+      display: none;
+    }
+
+    .mode-tabs.expanded {
+      grid-template-columns: repeat(9, 1fr);
+    }
+
+    .mode-disclosure {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: -6px;
     }
 
     .mode-tab {
@@ -2182,6 +2206,58 @@
       transform: translateY(0);
     }
 
+    .tour-panel {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 70;
+      width: min(390px, calc(100% - 40px));
+      display: grid;
+      gap: 16px;
+      padding: 22px;
+      border: 1px solid rgba(16, 166, 122, 0.28);
+      border-radius: 24px;
+      background: rgba(255, 253, 248, 0.97);
+      box-shadow: 0 24px 70px rgba(31, 27, 22, 0.2);
+      backdrop-filter: blur(18px);
+    }
+
+    .tour-panel[hidden] {
+      display: none;
+    }
+
+    .tour-progress {
+      height: 6px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: var(--accent-soft);
+    }
+
+    .tour-progress span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--orange));
+      transition: width 0.24s ease;
+    }
+
+    .tour-copy {
+      display: grid;
+      gap: 8px;
+    }
+
+    .tour-copy p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .tour-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+    }
+
     @media (max-width: 900px) {
       .nav {
         grid-template-columns: 1fr;
@@ -2296,6 +2372,21 @@
         left: 12px;
         max-width: none;
       }
+
+      .tour-panel {
+        right: 12px;
+        bottom: 88px;
+        width: calc(100% - 24px);
+      }
+
+      .mode-tabs.expanded,
+      .tour-actions {
+        grid-template-columns: 1fr;
+      }
+
+      .tour-actions {
+        display: grid;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -2340,10 +2431,10 @@
       <a href="/" aria-label="Back to Jack Mao portfolio" style="display:inline-flex;align-items:center;gap:6px;color:#6b6258;text-decoration:none;font-size:12px;font-weight:600;border:1px solid rgba(31,27,22,0.16);border-radius:9999px;padding:5px 11px;margin-right:14px;white-space:nowrap;">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
         Portfolio</a>
-      <a class="brand" href="#top" aria-label="Beginner Korean home">
+      <a class="brand" href="#top" aria-label="Hana — Beginner Korean home">
         <span class="brand-mark" aria-hidden="true">한</span>
         <span>
-          <strong>Beginner Korean</strong>
+          <strong>Hana</strong>
           <small>Warm daily course</small>
         </span>
       </a>
@@ -2455,8 +2546,8 @@
                 <p>The experiment combines scenario missions, a voice companion, phrase details, adaptive review, and a short demo walkthrough.</p>
               </div>
               <div class="project-note">
-                <strong>Outcome</strong>
-                <p>The first impression becomes directed and low-pressure while deeper practice remains available once the learner has momentum.</p>
+                <strong>Expected outcome</strong>
+                <p>The design aims to create a directed, low-pressure first impression. This remains a prototype hypothesis until tested with new learners.</p>
               </div>
             </div>
           </aside>
@@ -2496,6 +2587,9 @@
         </article>
       </div>
       <div class="lesson-grid" id="lessonGrid" aria-label="Lesson list"></div>
+      <div class="disclosure-row">
+        <button class="btn ghost" type="button" id="toggleLessonsBtn">Show full learning path</button>
+      </div>
     </section>
 
     <section class="section" id="missions">
@@ -2641,14 +2735,17 @@
         <section class="lesson-stage">
           <div class="mode-tabs" role="tablist" aria-label="Practice modes">
             <button class="mode-tab active" type="button" data-mode="learn">Learn</button>
-            <button class="mode-tab" type="button" data-mode="cards">Cards</button>
+            <button class="mode-tab" type="button" data-mode="cards" data-advanced="true">Cards</button>
             <button class="mode-tab" type="button" data-mode="audio">Audio</button>
-            <button class="mode-tab" type="button" data-mode="shadow">Shadow</button>
+            <button class="mode-tab" type="button" data-mode="shadow" data-advanced="true">Shadow</button>
             <button class="mode-tab" type="button" data-mode="quiz">Quiz</button>
             <button class="mode-tab" type="button" data-mode="review">Review</button>
-            <button class="mode-tab" type="button" data-mode="write">Write</button>
+            <button class="mode-tab" type="button" data-mode="write" data-advanced="true">Write</button>
             <button class="mode-tab" type="button" data-mode="coach">Coach</button>
-            <button class="mode-tab" type="button" data-mode="stats">Stats</button>
+            <button class="mode-tab" type="button" data-mode="stats" data-advanced="true">Stats</button>
+          </div>
+          <div class="mode-disclosure">
+            <button class="mini-btn" type="button" id="toggleModesBtn">More practice tools</button>
           </div>
 
           <article class="panel panel-pad lesson-view" id="lessonView" aria-live="polite"></article>
@@ -2740,6 +2837,19 @@
     <button type="button" data-bottom-mode="review">Review</button>
     <button type="button" data-bottom-mode="stats">Stats</button>
   </nav>
+
+  <aside class="tour-panel" id="tourPanel" hidden aria-live="polite">
+    <div class="tour-progress" aria-hidden="true"><span id="tourProgress"></span></div>
+    <div class="tour-copy">
+      <p class="eyebrow" id="tourStepLabel">Step 1 of 4</p>
+      <h3 id="tourTitle">Hear one useful phrase.</h3>
+      <p id="tourText">Start by listening and connecting one Korean phrase to its meaning.</p>
+    </div>
+    <div class="tour-actions">
+      <button class="btn ghost" type="button" id="closeTourBtn">Exit tour</button>
+      <button class="btn" type="button" id="nextTourBtn">Next step</button>
+    </div>
+  </aside>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <section class="reward-modal" id="rewardModal" hidden aria-label="Milestone reward">
@@ -3102,9 +3212,26 @@
     const phraseDetailTip = document.getElementById("phraseDetailTip");
     const phraseDetailUsage = document.getElementById("phraseDetailUsage");
     const phraseDetailSpeak = document.getElementById("phraseDetailSpeak");
+    const toggleLessonsBtn = document.getElementById("toggleLessonsBtn");
+    const toggleModesBtn = document.getElementById("toggleModesBtn");
+    const modeTabs = document.querySelector(".mode-tabs");
+    const tourPanel = document.getElementById("tourPanel");
+    const tourProgress = document.getElementById("tourProgress");
+    const tourStepLabel = document.getElementById("tourStepLabel");
+    const tourTitle = document.getElementById("tourTitle");
+    const tourText = document.getElementById("tourText");
+    const nextTourBtn = document.getElementById("nextTourBtn");
     let activePhraseDetail = null;
     let deferredInstallPrompt = null;
     let preferredKoreanVoice = null;
+    let tourStep = -1;
+
+    const tourSteps = [
+      { title: "Hear one useful phrase.", text: "Start with hello. Listen once, connect it to meaning, and notice how little setup is required.", lesson: 2, mode: "learn", next: "Try a tiny check" },
+      { title: "Try one tiny check.", text: "A short question creates useful feedback without turning the first session into a test.", lesson: 2, mode: "quiz", next: "Use it in a scenario" },
+      { title: "Use it in a conversation.", text: "Guided replies turn the phrase into a small social moment instead of another isolated drill.", lesson: 2, mode: "coach", next: "See adaptive review" },
+      { title: "See what adapts next.", text: "The missed cafe phrase is already waiting in review. The system quietly chooses a useful next step instead of demanding more setup.", lesson: 6, mode: "review", next: "Finish walkthrough" }
+    ];
 
     function save() {
       localStorage.setItem("minimalKoreanCompleted", JSON.stringify(state.completed));
@@ -3291,6 +3418,10 @@
         return;
       }
       state.lesson = Math.max(0, Math.min(index, lessons.length - 1));
+      if (state.lesson >= 6) {
+        lessonGrid.classList.add("expanded");
+        toggleLessonsBtn.textContent = "Show shorter learning path";
+      }
       state.card = 0;
       state.mode = mode;
       syncModeControls(mode);
@@ -3452,7 +3583,7 @@
       state.quizWins = Math.max(state.quizWins, 4);
       state.audioWins = Math.max(state.audioWins, 3);
       state.streakDays = [todayKey(-2), todayKey(-1), todayKey()];
-      state.session = { heard: 2, correct: 3, completed: 1 };
+      state.session = { heard: 2, correct: 3, missed: 1, completed: 1, reviewAdded: 1 };
       state.reviewQueue = normalizeReviewQueue([
         { lesson: 6, status: "due", misses: 1, interval: 1, dueAt: todayKey(), updatedAt: todayKey() }
       ]);
@@ -3469,9 +3600,29 @@
       state.phraseMastery[phraseKey(3, 0)] = { status: "learning", attempts: 1, correct: 0, updatedAt: new Date().toISOString() };
       document.getElementById("placement").hidden = true;
       save();
-      selectLesson(2, "coach", true, true);
-      showPhraseDetail(2, 0);
-      showToast("Demo tour loaded with sample progress.");
+      tourStep = 0;
+      renderTourStep();
+      showToast("Prototype walkthrough started.");
+    }
+
+    function renderTourStep() {
+      const step = tourSteps[tourStep];
+      if (!step) return;
+      phraseDetailModal.hidden = true;
+      tourPanel.hidden = false;
+      tourProgress.style.width = `${((tourStep + 1) / tourSteps.length) * 100}%`;
+      tourStepLabel.textContent = `Step ${tourStep + 1} of ${tourSteps.length}`;
+      tourTitle.textContent = step.title;
+      tourText.textContent = step.text;
+      nextTourBtn.textContent = step.next;
+      selectLesson(step.lesson, step.mode, true, true);
+    }
+
+    function finishTour() {
+      tourStep = -1;
+      tourPanel.hidden = true;
+      document.getElementById("lens").scrollIntoView({ behavior: "smooth" });
+      showToast("Walkthrough complete. The project notes explain the design choices.");
     }
 
     function renderLessons() {
@@ -3494,6 +3645,10 @@
     }
 
     function syncModeControls(mode = state.mode) {
+      if (["cards", "shadow", "write", "stats"].includes(mode)) {
+        modeTabs.classList.add("expanded");
+        toggleModesBtn.textContent = "Fewer practice tools";
+      }
       document.querySelectorAll(".mode-tab").forEach((button) => {
         button.classList.toggle("active", button.dataset.mode === mode);
       });
@@ -3858,6 +4013,31 @@
         startDemoMode();
       }
 
+      if (event.target.closest("#toggleLessonsBtn")) {
+        const expanded = lessonGrid.classList.toggle("expanded");
+        toggleLessonsBtn.textContent = expanded ? "Show shorter learning path" : "Show full learning path";
+      }
+
+      if (event.target.closest("#toggleModesBtn")) {
+        const expanded = modeTabs.classList.toggle("expanded");
+        toggleModesBtn.textContent = expanded ? "Fewer practice tools" : "More practice tools";
+      }
+
+      if (event.target.closest("#closeTourBtn")) {
+        tourStep = -1;
+        tourPanel.hidden = true;
+        showToast("Walkthrough closed.");
+      }
+
+      if (event.target.closest("#nextTourBtn")) {
+        if (tourStep >= tourSteps.length - 1) {
+          finishTour();
+        } else {
+          tourStep += 1;
+          renderTourStep();
+        }
+      }
+
       const mission = event.target.closest("[data-mission-lesson]");
       if (mission) {
         const lessonIndex = Number(mission.dataset.missionLesson);
@@ -4201,9 +4381,8 @@
       installNudge.classList.remove("show");
     });
 
-    document.querySelectorAll(".sound-btn").forEach((button) => {
-      button.addEventListener("click", () => speak(button.dataset.speak));
-    });
+    // Sound buttons are handled by the delegated [data-speak] listener on document.body.
+    // (A direct per-button listener here previously caused the hero button to fire twice.)
 
     renderLessons();
     document.getElementById("placement").hidden = state.placementDone;

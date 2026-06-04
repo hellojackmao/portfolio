@@ -1,6 +1,6 @@
 {
-  "name": "Beginner Korean Studio",
-  "short_name": "Korean Studio",
+  "name": "Hana — Beginner Korean",
+  "short_name": "Hana",
   "description": "A personal tool for daily Korean practice — lessons, audio, shadowing, spaced review, and progress.",
   "start_url": "./index.html",
   "scope": "./",
