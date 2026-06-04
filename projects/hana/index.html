@@ -131,10 +131,10 @@
       width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
       display: grid;
-      grid-template-columns: auto 1fr auto;
-      gap: 20px;
+      grid-template-columns: auto auto 1fr auto;
+      gap: 18px;
       align-items: center;
-      min-height: 80px;
+      min-height: 72px;
     }
 
     .brand {
@@ -187,6 +187,7 @@
       backdrop-filter: blur(12px);
     }
 
+    .nav-menu-toggle { display: none; }
     .nav-links a {
       padding: 9px 12px;
       border-radius: 999px;
@@ -1313,7 +1314,7 @@
     }
 
     .speed-preset {
-      min-height: 34px;
+      min-height: 40px;
       border: 1px solid var(--line);
       border-radius: 999px;
       background: #fff;
@@ -1490,8 +1491,11 @@
       inset: 0;
       z-index: 80;
       display: grid;
-      place-items: center;
+      justify-items: center;
+      align-content: safe center;
       padding: 20px;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       background: rgba(247, 243, 237, 0.86);
       backdrop-filter: blur(18px);
     }
@@ -2260,16 +2264,69 @@
 
     @media (max-width: 900px) {
       .nav {
-        grid-template-columns: 1fr;
+        display: grid;
+        grid-template-columns: auto 1fr auto auto;
+        align-items: center;
         gap: 10px;
-        padding: 10px 0;
+        padding: 8px 0;
+        min-height: 60px;
+        position: relative;
       }
-
+      .nav-menu-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+        border: 1px solid rgba(31, 27, 22, 0.16);
+        background: rgba(255, 255, 255, 0.6);
+        color: var(--ink);
+        cursor: pointer;
+        justify-self: end;
+      }
+      .nav-menu-toggle[aria-expanded="true"] {
+        background: var(--ink);
+        color: #fff;
+        border-color: var(--ink);
+      }
+      .backlink-text { display: none; }
+      .nav > a[aria-label^="Back"] { margin-right: 0 !important; padding: 0 !important; width: 40px; height: 40px; justify-content: center; }
       .nav-links {
-        justify-content: flex-start;
-        overflow-x: auto;
-        flex-wrap: nowrap;
+        display: none;
+        position: absolute;
+        top: calc(100% + 6px);
+        right: 0;
+        flex-direction: column;
+        align-items: stretch;
+        width: min(220px, 70vw);
+        padding: 8px;
+        gap: 2px;
+        background: var(--surface, #fffdf9);
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        box-shadow: 0 18px 40px rgba(112, 76, 35, 0.16);
+        z-index: 60;
       }
+      .nav-links.open { display: flex; }
+      .nav-links a {
+        text-align: left;
+        padding: 11px 12px;
+        font-size: 15px;
+        border-radius: 9px;
+      }
+      .pill { width: auto; justify-self: end; flex: 0 0 auto; }
+      .brand small { display: none; }
+      .brand { grid-template-columns: 36px auto; gap: 10px; justify-self: center; }
+      .brand-mark { width: 36px; height: 36px; }
+      .workspace { grid-template-columns: 1fr; }
+      .workspace > *, .lesson-stage, .lesson-stage > *, .panel { min-width: 0; }
+      .mode-tabs { grid-template-columns: repeat(3, 1fr); }
+      .voice-copy { min-width: 0; }
+      .voice-controls { grid-template-columns: 1fr; }
+      .voice-controls select, .voice-controls .btn { width: 100%; min-width: 0; max-width: 100%; }
+
+      
 
       .hero,
       .section-head,
@@ -2357,8 +2414,7 @@
         grid-template-columns: 1fr;
       }
 
-      .btn,
-      .pill {
+      .btn {
         width: 100%;
       }
 
@@ -2382,6 +2438,29 @@
       .mode-tabs.expanded,
       .tour-actions {
         grid-template-columns: 1fr;
+      }
+
+      .mode-tabs,
+      .mode-tabs.expanded {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .mode-tab { min-width: 0; }
+      /* Each mode tab becomes its own container (no shared wrapper) */
+      .mode-tabs {
+        background: transparent;
+        border: 0;
+        box-shadow: none;
+        padding: 0;
+        gap: 10px;
+      }
+      .mode-tab {
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid var(--line);
+        box-shadow: 0 4px 14px rgba(112, 76, 35, 0.06);
+      }
+      .mode-tab.active {
+        border-color: transparent;
+        box-shadow: 0 10px 24px rgba(255, 90, 95, 0.28);
       }
 
       .tour-actions {
@@ -2428,9 +2507,9 @@
     </div>
   </section>  <header class="site-header">
     <nav class="nav" aria-label="Primary navigation">
-      <a href="/" aria-label="Back to Jack Mao portfolio" style="display:inline-flex;align-items:center;gap:6px;color:#6b6258;text-decoration:none;font-size:12px;font-weight:600;border:1px solid rgba(31,27,22,0.16);border-radius:9999px;padding:5px 11px;margin-right:14px;white-space:nowrap;">
+      <a href="/" aria-label="Back to Jack Mao portfolio" style="display:inline-flex;align-items:center;gap:6px;color:#6b6258;text-decoration:none;font-size:12px;font-weight:600;border:1px solid rgba(31,27,22,0.16);border-radius:9999px;padding:7px 12px;margin-right:14px;white-space:nowrap;">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-        Portfolio</a>
+        <span class="backlink-text">Portfolio</span></a>
       <a class="brand" href="#top" aria-label="Hana — Beginner Korean home">
         <span class="brand-mark" aria-hidden="true">한</span>
         <span>
@@ -2438,7 +2517,7 @@
           <small>Warm daily course</small>
         </span>
       </a>
-      <div class="nav-links">
+      <div class="nav-links" id="navLinks">
         <a href="#lens">Lens</a>
         <a href="#path">Path</a>
         <a href="#missions">Missions</a>
@@ -2447,6 +2526,9 @@
         <a href="#method">Method</a>
       </div>
       <div class="pill" aria-live="polite">Progress <strong id="navProgress">0%</strong></div>
+      <button class="nav-menu-toggle" id="navMenuToggle" type="button" aria-label="Open sections menu" aria-expanded="false" aria-controls="navLinks">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      </button>
     </nav>
   </header>
 
@@ -4397,6 +4479,31 @@
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       });
     }
+
+    // Mobile section-menu toggle
+    (function () {
+      const toggle = document.getElementById("navMenuToggle");
+      const links = document.getElementById("navLinks");
+      if (!toggle || !links) return;
+      const close = () => {
+        links.classList.remove("open");
+        toggle.setAttribute("aria-expanded", "false");
+      };
+      toggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const open = links.classList.toggle("open");
+        toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      });
+      links.addEventListener("click", (e) => {
+        if (e.target.closest("a")) close();
+      });
+      document.addEventListener("click", (e) => {
+        if (links.classList.contains("open") && !e.target.closest(".nav")) close();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") close();
+      });
+    })();
   </script>
 </body>
 </html>
