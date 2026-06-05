@@ -2477,7 +2477,18 @@
         animation-duration: 0.001ms !important;
       }
     }
-  </style>
+  
+    .hero-note {
+      margin: 14px 0 4px;
+      max-width: 54ch;
+      padding-left: 14px;
+      border-left: 2px solid var(--accent);
+      font-size: 0.84rem;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+    .hero-note strong { color: var(--ink); font-weight: 700; }
+</style>
 </head>
 <body>
   <a class="skip-link" href="#course">Skip to course</a>
@@ -2540,6 +2551,7 @@
           <span>practice <em>comes alive</em></span>
         </h1>
         <p class="lede">A warm daily studio for Hangul, speaking, shadowing, review, and tiny wins that keep Korean close.</p>
+        <p class="hero-note"><strong>A working personal tool.</strong> I built Hana to teach myself Korean — every feature here is real and runs entirely in your browser. It's a portfolio concept, not a commercial app.</p>
         <div class="hero-actions">
           <a class="btn" href="#course">Start first lesson</a>
           <button class="btn secondary" type="button" id="demoTourBtn">Start 90-second prototype walkthrough</button>
@@ -3125,6 +3137,48 @@
         quiz: { prompt: "What asks what is this?", answer: "이거 뭐예요?", options: ["있어요?", "없어요?", "이거 뭐예요?", "좋아요"] },
         build: ["이거", "뭐예요"],
         sentence: "이거 뭐예요?"
+      },
+      {
+        title: "Family",
+        tag: "People",
+        focus: "Name the people closest to you.",
+        phrases: [
+          ["가족", "gajok", "family"],
+          ["엄마", "eomma", "mom"],
+          ["아빠", "appa", "dad"],
+          ["동생", "dongsaeng", "younger sibling"]
+        ],
+        quiz: { prompt: "Which word means family?", answer: "가족", options: ["엄마", "아빠", "가족", "동생"] },
+        build: ["우리", "가족은", "네 명이에요"],
+        sentence: "우리 가족은 네 명이에요."
+      },
+      {
+        title: "Food and drink",
+        tag: "Daily",
+        focus: "Talk about what you eat and drink.",
+        phrases: [
+          ["음식", "eumsik", "food"],
+          ["물", "mul", "water"],
+          ["밥", "bap", "rice / a meal"],
+          ["맛있어요", "masisseoyo", "it's delicious"]
+        ],
+        quiz: { prompt: "How do you say it's delicious?", answer: "맛있어요", options: ["물", "밥", "맛있어요", "음식"] },
+        build: ["이 음식", "정말", "맛있어요"],
+        sentence: "이 음식 정말 맛있어요."
+      },
+      {
+        title: "Weather",
+        tag: "Daily",
+        focus: "Describe today's weather.",
+        phrases: [
+          ["날씨", "nalssi", "weather"],
+          ["더워요", "deowoyo", "it's hot"],
+          ["추워요", "chuwoyo", "it's cold"],
+          ["비가 와요", "biga wayo", "it's raining"]
+        ],
+        quiz: { prompt: "How do you say it's cold?", answer: "추워요", options: ["더워요", "추워요", "날씨", "비가 와요"] },
+        build: ["오늘", "날씨가", "좋아요"],
+        sentence: "오늘 날씨가 좋아요."
       },
       {
         title: "First conversation",
