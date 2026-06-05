@@ -98,15 +98,92 @@
   footer { padding: 50px 0 70px; text-align: center; font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--mute); }
   footer a { color: var(--ice); text-decoration: none; margin: 0 10px; }
   footer a:hover { color: var(--aur-teal); }
+
+    /* ---- Signature aurora scene ---- */
+    .aurora-scene { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .sky-stars { position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        radial-gradient(1.3px 1.3px at 12% 18%, #fff, transparent),
+        radial-gradient(1px 1px at 28% 32%, #cfe7f0, transparent),
+        radial-gradient(1.6px 1.6px at 42% 12%, #fff, transparent),
+        radial-gradient(1px 1px at 56% 26%, #bfe5dd, transparent),
+        radial-gradient(1.2px 1.2px at 68% 14%, #fff, transparent),
+        radial-gradient(1px 1px at 78% 30%, #d7eef6, transparent),
+        radial-gradient(1.5px 1.5px at 88% 16%, #fff, transparent),
+        radial-gradient(1px 1px at 8% 40%, #cfe7f0, transparent),
+        radial-gradient(1px 1px at 35% 46%, #fff, transparent),
+        radial-gradient(1.2px 1.2px at 50% 40%, #c9f0e6, transparent),
+        radial-gradient(1px 1px at 64% 48%, #fff, transparent),
+        radial-gradient(1.4px 1.4px at 92% 42%, #fff, transparent),
+        radial-gradient(1px 1px at 20% 54%, #bfe5dd, transparent),
+        radial-gradient(1px 1px at 74% 56%, #fff, transparent);
+      background-repeat: no-repeat;
+      animation: rvTwinkle 6.5s ease-in-out infinite;
+    }
+    .aurora-scene .ribbon { transform-origin: 50% 100%; mix-blend-mode: screen; }
+    .aurora-scene .ribbon-1 { animation: rvDrift1 26s ease-in-out infinite, rvShimmer 9s ease-in-out infinite; }
+    .aurora-scene .ribbon-2 { animation: rvDrift2 32s ease-in-out infinite, rvShimmer 12s ease-in-out infinite 1.5s; }
+    .aurora-scene .ribbon-3 { animation: rvDrift3 21s ease-in-out infinite, rvShimmer 7.5s ease-in-out infinite 0.8s; }
+    .aurora-scene .northstar { transform-box: fill-box; transform-origin: center; animation: rvStarPulse 5s ease-in-out infinite; }
+    @keyframes rvDrift1 { 0%,100% { transform: translateX(-3%) scaleY(1); } 50% { transform: translateX(3%) scaleY(1.10); } }
+    @keyframes rvDrift2 { 0%,100% { transform: translateX(3%) scaleY(1.05); } 50% { transform: translateX(-4%) scaleY(0.94); } }
+    @keyframes rvDrift3 { 0%,100% { transform: translateX(-2%) scaleY(0.96); } 50% { transform: translateX(4%) scaleY(1.12); } }
+    @keyframes rvShimmer { 0%,100% { opacity: 0.45; } 50% { opacity: 0.85; } }
+    @keyframes rvTwinkle { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
+    @keyframes rvStarPulse { 0%,100% { opacity: 0.7; transform: scale(0.92); } 50% { opacity: 1; transform: scale(1.08); } }
+    @media (prefers-reduced-motion: reduce) {
+      .sky-stars, .aurora-scene .ribbon, .aurora-scene .northstar { animation: none; }
+      .aurora-scene .ribbon { opacity: 0.62; }
+    }
 </style>
 </head>
 <body>
 
-  <div class="skyglow"></div>
+  <div class="skyglow" aria-hidden="true">
+    <div class="sky-stars"></div>
+    <svg class="aurora-scene" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="rvHorizon" cx="50%" cy="78%" r="70%">
+          <stop offset="0%" stop-color="#12384a" stop-opacity="0.9"/>
+          <stop offset="45%" stop-color="#0b1c28" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#060a10" stop-opacity="0"/>
+        </radialGradient>
+        <linearGradient id="rvAur1" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#5ff0b0" stop-opacity="0"/>
+          <stop offset="40%" stop-color="#5ff0b0" stop-opacity="0.62"/>
+          <stop offset="100%" stop-color="#4ecddc" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="rvAur2" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#4ecddc" stop-opacity="0"/>
+          <stop offset="45%" stop-color="#4ecddc" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#9a8cf0" stop-opacity="0"/>
+        </linearGradient>
+        <linearGradient id="rvAur3" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#9a8cf0" stop-opacity="0"/>
+          <stop offset="50%" stop-color="#7ad9c4" stop-opacity="0.4"/>
+          <stop offset="100%" stop-color="#5ff0b0" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="rvSoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="22"/></filter>
+        <filter id="rvStar" x="-200%" y="-200%" width="500%" height="500%"><feGaussianBlur stdDeviation="1.4"/></filter>
+      </defs>
+      <rect width="1440" height="900" fill="url(#rvHorizon)"/>
+      <g filter="url(#rvSoft)">
+        <path class="ribbon ribbon-1" d="M-160 250 C 240 110, 560 300, 880 180 S 1480 250, 1620 150 L1620 360 C 1240 470, 880 320, 460 430 S -160 400, -160 400 Z" fill="url(#rvAur1)"/>
+        <path class="ribbon ribbon-2" d="M-160 360 C 300 250, 620 440, 940 320 S 1500 380, 1620 300 L1620 520 C 1180 610, 820 470, 420 560 S -160 540, -160 540 Z" fill="url(#rvAur2)"/>
+        <path class="ribbon ribbon-3" d="M-160 150 C 360 60, 700 220, 1020 120 S 1520 190, 1620 110 L1620 250 C 1160 330, 760 210, 380 300 S -160 280, -160 280 Z" fill="url(#rvAur3)"/>
+      </g>
+      <g class="northstar" transform="translate(1108 132)">
+        <path d="M0 -30 L6 -6 L30 0 L6 6 L0 30 L-6 6 L-30 0 L-6 -6 Z" fill="#dff6ff"/>
+        <circle r="2.6" fill="#ffffff"/>
+      </g>
+      <path class="mtn mtn-far" d="M0 720 L150 632 L300 690 L470 596 L640 668 L820 588 L1010 662 L1200 600 L1380 660 L1440 636 L1440 900 L0 900 Z" fill="#0a1a24"/>
+      <path class="mtn mtn-near" d="M0 800 L210 712 L420 786 L640 700 L880 792 L1120 716 L1340 794 L1440 760 L1440 900 L0 900 Z" fill="#050a10"/>
+    </svg>
+  </div>
 
   <div class="content">
     <div class="topbar">
-      <a href="wayfare-standalone.html">← Wayfarer</a>
+      <a href="index.html">← Wayfarer</a>
       <span>Reykjavik · 64°08′N</span>
       <a href="guides.html">All guides</a>
     </div>
@@ -188,7 +265,7 @@
     </div>
 
     <footer>
-      <a href="wayfare-standalone.html">Wayfarer</a> · <a href="guides.html">All guides</a> · <span>© 2026 · Written in the dark</span>
+      <a href="index.html">Wayfarer</a> · <a href="guides.html">All guides</a> · <span>© 2026 · Written in the dark</span>
     </footer>
   </div>
 

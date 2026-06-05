@@ -103,20 +103,103 @@
   footer { padding: 44px 0 60px; text-align: center; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: #8a7d6f; }
   footer a { color: var(--ink); text-decoration: none; margin: 0 10px; }
   footer a:hover { color: var(--tile); }
+
+    .azulejo-panel { height: auto; position: relative; overflow: hidden; border-bottom: 3px solid var(--ink); }
+    .azulejo-art { display: block; width: 100%; height: clamp(220px, 30vw, 340px); }
+    .azulejo-panel .sw { transform-box: fill-box; transform-origin: center; }
+    .azulejo-panel .sw1 { animation: lisbonGlide1 14s ease-in-out infinite; }
+    .azulejo-panel .sw2 { animation: lisbonGlide2 18s ease-in-out infinite; }
+    .azulejo-panel .sw3 { animation: lisbonGlide3 11s ease-in-out infinite; }
+    @keyframes lisbonGlide1 { 0%,100% { transform: translate(0,0) rotate(-2deg); } 50% { transform: translate(26px,-10px) rotate(3deg); } }
+    @keyframes lisbonGlide2 { 0%,100% { transform: translate(0,0) rotate(2deg); } 50% { transform: translate(-22px,8px) rotate(-3deg); } }
+    @keyframes lisbonGlide3 { 0%,100% { transform: translate(0,0) rotate(0deg); } 50% { transform: translate(18px,12px) rotate(4deg); } }
+    @media (prefers-reduced-motion: reduce) { .azulejo-panel .sw { animation: none; } }
 </style>
 </head>
 <body>
 
   <div class="topbar">
     <div class="wrap">
-      <a href="wayfare-standalone.html">← Wayfarer</a>
+      <a href="index.html">← Wayfarer</a>
       <span>Lisbon, Portugal <span class="dot">·</span> City stories <span class="dot">·</span> A wander in seven parts</span>
       <a href="guides.html">All guides</a>
     </div>
   </div>
 
   <header class="hero">
-    <div class="hero-tiles azulejo"></div>
+    <div class="hero-tiles azulejo azulejo-panel" role="img" aria-label="A blue-and-white azulejo tile mural of Lisbon: hills, towers, the 28 tram, swallows, and the Tagus river">
+      <svg class="azulejo-art" viewBox="0 0 1200 340" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="azTile" width="60" height="60" patternUnits="userSpaceOnUse">
+            <rect width="60" height="60" fill="#fbfdff"/>
+            <circle cx="0" cy="0" r="5" fill="#dfeaf3"/><circle cx="60" cy="0" r="5" fill="#dfeaf3"/>
+            <circle cx="0" cy="60" r="5" fill="#dfeaf3"/><circle cx="60" cy="60" r="5" fill="#dfeaf3"/>
+            <path d="M30 24 L36 30 L30 36 L24 30 Z" fill="none" stroke="#e6eef6" stroke-width="1.5"/>
+          </pattern>
+          <linearGradient id="azWarm" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#fff6e4" stop-opacity="0.55"/>
+            <stop offset="60%" stop-color="#fff6e4" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <rect width="1200" height="340" fill="url(#azTile)"/>
+        <rect width="1200" height="340" fill="url(#azWarm)"/>
+        <!-- decorative borders -->
+        <rect x="14" y="14" width="1172" height="312" fill="none" stroke="#2c6e9c" stroke-width="3"/>
+        <rect x="22" y="22" width="1156" height="296" fill="none" stroke="#2c6e9c" stroke-width="1"/>
+        <g fill="#2c6e9c">
+          <!-- sun -->
+          <circle cx="985" cy="92" r="26" fill="none" stroke="#c98a2b" stroke-width="3"/>
+          <g stroke="#c98a2b" stroke-width="3" stroke-linecap="round">
+            <line x1="985" y1="48" x2="985" y2="58"/><line x1="985" y1="126" x2="985" y2="136"/>
+            <line x1="941" y1="92" x2="951" y2="92"/><line x1="1019" y1="92" x2="1029" y2="92"/>
+            <line x1="954" y1="61" x2="961" y2="68"/><line x1="1009" y1="116" x2="1016" y2="123"/>
+            <line x1="1016" y1="61" x2="1009" y2="68"/><line x1="961" y1="116" x2="954" y2="123"/>
+          </g>
+          <!-- far hill with rooftops -->
+          <path d="M40 232 Q 220 150 430 196 Q 640 240 880 178 Q 1040 134 1160 188 L1160 250 L40 250 Z" fill="#cfe2ee" stroke="#2c6e9c" stroke-width="2"/>
+          <!-- castle (Castelo) on left hill -->
+          <g fill="#2c6e9c">
+            <rect x="120" y="150" width="64" height="46"/>
+            <rect x="116" y="142" width="10" height="10"/><rect x="134" y="142" width="10" height="10"/><rect x="152" y="142" width="10" height="10"/><rect x="170" y="142" width="10" height="10"/>
+            <rect x="138" y="166" width="12" height="30" fill="#fbfdff"/>
+          </g>
+          <!-- cathedral towers + dome (mid) -->
+          <g fill="#2c6e9c">
+            <rect x="560" y="150" width="20" height="60"/><rect x="588" y="150" width="20" height="60"/>
+            <rect x="556" y="142" width="28" height="10"/><rect x="584" y="142" width="28" height="10"/>
+            <path d="M636 196 Q 660 150 684 196 Z" /><rect x="654" y="150" width="12" height="14"/><circle cx="660" cy="150" r="5"/>
+          </g>
+          <!-- terracotta rooftops cluster -->
+          <g fill="#c25a3a" opacity="0.9">
+            <path d="M740 200 l26 -20 l26 20 Z"/><path d="M778 204 l24 -18 l24 18 Z"/><path d="M818 200 l26 -20 l26 20 Z"/>
+          </g>
+          <!-- the 28 tram on the near slope -->
+          <g transform="translate(250 214)">
+            <rect x="0" y="0" width="118" height="46" rx="6" fill="#c98a2b"/>
+            <rect x="10" y="8" width="22" height="20" rx="3" fill="#fbfdff"/><rect x="40" y="8" width="22" height="20" rx="3" fill="#fbfdff"/><rect x="70" y="8" width="22" height="20" rx="3" fill="#fbfdff"/>
+            <rect x="98" y="10" width="14" height="26" rx="2" fill="#fbfdff"/>
+            <circle cx="28" cy="52" r="7" fill="#2c6e9c"/><circle cx="92" cy="52" r="7" fill="#2c6e9c"/>
+            <rect x="54" y="-16" width="3" height="16" fill="#2c6e9c"/><circle cx="55" cy="-18" r="3" fill="#2c6e9c"/>
+          </g>
+          <!-- the Tagus + sailboat -->
+          <g stroke="#2c6e9c" stroke-width="2.2" fill="none" stroke-linecap="round">
+            <path d="M60 286 q 40 -10 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0"/>
+            <path d="M70 300 q 40 -8 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0 t 80 0" opacity="0.6"/>
+          </g>
+          <g transform="translate(900 250)" fill="#2c6e9c">
+            <path d="M0 30 L60 30 L50 40 L10 40 Z"/>
+            <path d="M28 30 L28 -6 L54 26 L30 26" fill="#fbfdff" stroke="#2c6e9c" stroke-width="2"/>
+            <path d="M24 30 L24 0 L2 26 L24 26" fill="#cfe2ee" stroke="#2c6e9c" stroke-width="2"/>
+          </g>
+          <!-- andorinhas (swallows) -->
+          <g class="swallows" fill="#2c6e9c">
+            <g transform="translate(360 96)"><path class="sw sw1" d="M0 0 C 10 -8 18 -8 24 -2 C 18 -4 12 -2 8 2 C 14 2 20 6 26 4 C 18 10 8 10 0 6 C 4 4 4 2 0 0 Z"/></g>
+            <g transform="translate(470 74) scale(0.8)"><path class="sw sw2" d="M0 0 C 10 -8 18 -8 24 -2 C 18 -4 12 -2 8 2 C 14 2 20 6 26 4 C 18 10 8 10 0 6 C 4 4 4 2 0 0 Z"/></g>
+            <g transform="translate(700 110) scale(0.7)"><path class="sw sw3" d="M0 0 C 10 -8 18 -8 24 -2 C 18 -4 12 -2 8 2 C 14 2 20 6 26 4 C 18 10 8 10 0 6 C 4 4 4 2 0 0 Z"/></g>
+          </g>
+        </g>
+      </svg>
+    </div>
     <div class="hero-body wrap">
       <div class="kicker rv">An unhurried guide to</div>
       <h1 class="rv">Seven Hills,<br><em>Slowly</em></h1>
@@ -248,7 +331,7 @@
   </section>
 
   <footer>
-    <a href="wayfare-standalone.html">Wayfarer</a> · <a href="guides.html">All guides</a> · <span>© 2026 · Written from the seventh hill</span>
+    <a href="index.html">Wayfarer</a> · <a href="guides.html">All guides</a> · <span>© 2026 · Written from the seventh hill</span>
   </footer>
 
 <script src="wayfarer-shared.js"></script>
