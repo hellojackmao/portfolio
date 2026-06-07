@@ -135,6 +135,42 @@
       .sky-stars, .aurora-scene .ribbon, .aurora-scene .northstar { animation: none; }
       .aurora-scene .ribbon { opacity: 0.62; }
     }
+
+    /* ---- Section editorial polish ---- */
+    .intro p::first-letter { float: left; font-family: var(--serif); font-size: 4.6rem; line-height: 0.7; padding: 10px 16px 0 0; color: var(--aur-green); font-weight: 600; }
+    .hour { border-top: none !important; padding-top: 24px !important; }
+    .hour::before { content: "\2726"; display: block; text-align: center; color: var(--aur-teal); opacity: 0.6; font-size: 13px; letter-spacing: 0.5em; margin: 0 0 46px; }
+    .hour:first-of-type::before { opacity: 0.45; }
+    .hour-time::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 12px; vertical-align: middle; border-radius: 50%; background: var(--aur-teal); box-shadow: 0 0 10px var(--aur-teal); }
+    .moment .wrap::before { content: "\2726"; display: block; color: var(--aur-green); font-size: 18px; margin-bottom: 30px; opacity: 0.85; }
+
+    /* ---- The shape of a winter day (daylight arc) ---- */
+    .daylight { padding: 80px 0 20px; border-top: 1px solid transparent;
+      border-image: linear-gradient(90deg, transparent, rgba(95,240,176,0.5), rgba(78,205,220,0.45), rgba(154,140,240,0.4), transparent) 1; }
+    .daylight h3 { font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--aur-teal); margin-bottom: 22px; text-align: center; }
+    .daylight-lede { max-width: 30ch; margin: 0 auto 30px; text-align: center; font-family: var(--serif); font-style: italic; font-size: 1.4rem; line-height: 1.5; color: var(--ice); }
+    .daylight-arc { max-width: 720px; margin: 0 auto; }
+    .daylight-arc svg { width: 100%; height: auto; display: block; }
+    .dl-sun { transform-box: fill-box; transform-origin: center; animation: dlSunPulse 5s ease-in-out infinite; }
+    @keyframes dlSunPulse { 0%,100% { opacity: 0.92; } 50% { opacity: 1; } }
+    .daylight-marks { display: flex; justify-content: space-between; max-width: 600px; margin: 6px auto 0; }
+    .daylight-marks span { flex: 1; text-align: center; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mute); line-height: 1.7; }
+    .daylight-marks b { color: var(--aur-teal); font-weight: 600; font-size: 13px; letter-spacing: 0.06em; }
+    .daylight-marks .mid b { color: var(--aur-green); }
+    @media (prefers-reduced-motion: reduce) { .dl-sun { animation: none; } }
+
+    /* ---- What warms you (food of the dark months) ---- */
+    .warmth { padding: 80px 0 20px; border-top: 1px solid transparent;
+      border-image: linear-gradient(90deg, transparent, rgba(95,240,176,0.5), rgba(78,205,220,0.45), rgba(154,140,240,0.4), transparent) 1; }
+    .warmth h3 { font-size: 12px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--aur-teal); margin-bottom: 22px; text-align: center; }
+    .warmth-lede { max-width: 46ch; margin: 0 auto 40px; text-align: center; font-family: var(--serif); font-style: italic; font-size: 1.4rem; line-height: 1.55; color: var(--ice); }
+    .warm-list { max-width: 660px; margin: 0 auto; position: relative; }
+    .warm-list::before { content: ""; position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 64%; height: 100%; background: radial-gradient(ellipse at center, rgba(242,176,106,0.10), transparent 72%); pointer-events: none; }
+    .warm-item { position: relative; display: grid; grid-template-columns: 18px 1fr; gap: 16px; align-items: start; padding: 17px 0; border-bottom: 1px solid rgba(124,138,153,0.14); }
+    .warm-item:last-child { border-bottom: none; }
+    .warm-item .ember { width: 9px; height: 9px; margin-top: 11px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, #ffe2b4, #f2a85a); box-shadow: 0 0 12px rgba(242,168,90,0.85), 0 0 4px rgba(255,210,150,0.9); }
+    .warm-item .dish { font-family: var(--serif); font-size: 1.3rem; line-height: 1.5; color: #c4d0da; }
+    .warm-item .nm { color: var(--ice); font-weight: 600; }
 </style>
 </head>
 <body>
@@ -202,6 +238,13 @@
       </section>
 
       <article class="hour rv">
+<div class="hour-time">10:00 — The morning that comes late</div>
+<h2>Waking in the dark, slowly</h2>
+<p>The sun is in no hurry here, and in winter you learn not to be either. At ten in the morning the sky is still the deep ink-blue of somewhere between night and dawn, and the city moves at the pace of people who have made peace with the dark. There is no rush to the day, because the day — such as it is — will be brief, and there is no sense spending it anxious.</p>
+<p>Start where the locals start: a bakery with steamed-up windows and a queue out the door, a cardamom bun still warm from the oven, a coffee strong enough to lean on. Then walk down to the old harbour while the streetlamps are still doing the work of the sun. The water is black and perfectly still, and the mountains across the bay are only a suggestion — a darker dark against the sky.</p>
+<div class="aside">Icelanders drink more coffee per head than almost anyone on earth. Spend one morning in this dark and you will understand the arithmetic of it.</div>
+</article>
+<article class="hour rv">
         <div class="hour-time">15:00 — Last light</div>
         <h2>The blue hour that lasts for hours</h2>
         <p>Afternoon already feels like dusk. This is the time to be outside the city — at the <strong>black-sand coast near Vík</strong>, where the basalt stacks stand in the surf and the whole world goes the colour of slate and pewter. Photographers call this the blue hour; in Iceland in January it can last most of the afternoon.</p>
@@ -218,6 +261,13 @@
       </article>
 
       <article class="hour rv">
+<div class="hour-time">20:00 — The long table</div>
+<h2>Soup, rye, and the warmth of being indoors</h2>
+<p>When the cold has got into your bones, Iceland answers with a bowl. <strong>Kjötsúpa</strong> — lamb soup, root vegetables, a broth that tastes of the hillsides the sheep spent their summer on — is the country's quiet masterpiece, and it turns up everywhere: in roadside huts, in farm kitchens, in the back of a petrol station that has no business being this good.</p>
+<p>Order the rye bread alongside it. The best of it, <em>rúgbrauð</em>, is baked slowly in the geothermal ground itself — buried in a pot near a hot spring and left for the better part of a day, until it comes out dark and dense and faintly sweet. Eat it with cold butter and smoked trout, and understand that this is a place that has spent a thousand winters learning how to be warm from the inside.</p>
+<div class="aside">If a farmhouse offers you soup, say yes. The recipe will be older than the road you drove in on.</div>
+</article>
+<article class="hour rv">
         <div class="hour-time">22:00 — The watch begins</div>
         <h2>Driving out to meet the green fire</h2>
         <p>Now the real reason you came. Drive away from every light — twenty minutes out of Reykjavik is enough — kill the engine, and <strong>wait</strong>. The aurora does not arrive on schedule. It begins as a faint grey arc you mistake for cloud, until it moves, and then there is no mistaking it for anything.</p>
@@ -242,7 +292,50 @@
     </section>
 
     <div class="wrap">
-      <section class="practical rv">
+      <section class="daylight rv">
+<h3>The shape of a winter day</h3>
+<p class="daylight-lede">The sun never really climbs here. In deep winter it rolls along the horizon for four hours, maybe five, then slips away — and the long blue dark returns. Plan the day around that brief gold window, and let the night keep the rest.</p>
+<div class="daylight-arc">
+<svg viewBox="0 0 920 250" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" aria-label="A diagram of the low winter sun: about four hours of daylight, then a long night">
+<defs>
+<linearGradient id="dlArc" x1="0" y1="0" x2="1" y2="0">
+<stop offset="0%" stop-color="#5ff0b0"/><stop offset="50%" stop-color="#4ecddc"/><stop offset="100%" stop-color="#9a8cf0"/>
+</linearGradient>
+<linearGradient id="dlBand" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0%" stop-color="#5ff0b0" stop-opacity="0"/><stop offset="100%" stop-color="#5ff0b0" stop-opacity="0.16"/>
+</linearGradient>
+<radialGradient id="dlSun" cx="50%" cy="50%" r="50%">
+<stop offset="0%" stop-color="#fff6d8"/><stop offset="55%" stop-color="#f0dca0"/><stop offset="100%" stop-color="#f0dca0" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<path d="M330 190 Q 460 132 590 190 L590 190 L330 190 Z" fill="url(#dlBand)"/>
+<path class="dl-night" d="M20 232 Q 170 206 330 190" fill="none" stroke="#5a6b78" stroke-width="2" stroke-dasharray="2 9" stroke-linecap="round" opacity="0.6"/>
+<path class="dl-night" d="M590 190 Q 750 206 900 232" fill="none" stroke="#5a6b78" stroke-width="2" stroke-dasharray="2 9" stroke-linecap="round" opacity="0.6"/>
+<line x1="20" y1="190" x2="900" y2="190" stroke="#7c8a99" stroke-width="1" opacity="0.35"/>
+<path class="dl-day" d="M330 190 Q 460 110 590 190" fill="none" stroke="url(#dlArc)" stroke-width="3.5" stroke-linecap="round"/>
+<g class="dl-sun"><circle cx="460" cy="120" r="30" fill="url(#dlSun)"/><circle cx="460" cy="120" r="11" fill="#fff6d8"/></g>
+<g fill="#cfe7f0"><circle cx="120" cy="96" r="1.6"/><circle cx="210" cy="140" r="1.2"/><circle cx="70" cy="150" r="1.3"/><circle cx="250" cy="80" r="1.5"/><circle cx="700" cy="100" r="1.5"/><circle cx="800" cy="150" r="1.3"/><circle cx="760" cy="78" r="1.2"/><circle cx="860" cy="110" r="1.5"/></g>
+</svg>
+<div class="daylight-marks">
+<span><b>~11:20</b><br>first light</span>
+<span class="mid"><b>≈ 4 hours</b><br>of daylight</span>
+<span><b>~15:40</b><br>last light</span>
+</div>
+</div>
+</section>
+<section class="warmth rv">
+<h3>What warms you</h3>
+<p class="warmth-lede">The cold is not the enemy here; it is the reason for everything good. The food of the dark months is built to be come in from the snow for — slow, salted, and warm enough to forgive the weather.</p>
+<div class="warm-list">
+<div class="warm-item"><span class="ember"></span><div class="dish"><span class="nm">Kjötsúpa</span> — lamb and root vegetables simmered all day until the pot fogs the windows. The smell of it is the smell of coming indoors.</div></div>
+<div class="warm-item"><span class="ember"></span><div class="dish"><span class="nm">Plokkfiskur</span> — fish, potato, and white sauce mashed together, eaten with dark bread. Humble, grey-afternoon food, and quietly perfect.</div></div>
+<div class="warm-item"><span class="ember"></span><div class="dish"><span class="nm">Rúgbrauð</span> — dense dark rye, traditionally baked slow in the geothermal ground. Faintly sweet, best under a cold slab of butter.</div></div>
+<div class="warm-item"><span class="ember"></span><div class="dish"><span class="nm">Snúður &amp; kleina</span> — a cinnamon knot and a twisted doughnut beside a bottomless coffee: the warm pause in the middle of the dark.</div></div>
+<div class="warm-item"><span class="ember"></span><div class="dish"><span class="nm">Skyr</span> — thick, sour, and a thousand years old. Not breakfast, not pudding — simply always there, at any hour you need it.</div></div>
+<div class="warm-item"><span class="ember"></span><div class="dish"><span class="nm">The endless coffee</span> — strong, refilled without your asking. The social warmth of a country that spends its winter indoors, talking.</div></div>
+</div>
+</section>
+<section class="practical rv">
         <h3>Before the dark</h3>
         <div class="pgrid">
           <div class="cell"><div class="k">When</div><div class="v">Late Sep to early April, for the night</div></div>
