@@ -822,6 +822,18 @@
     .colophon-base { flex-direction: column; gap: 0.8rem; }
     .pullquote, .closing { padding-top: 4.5rem; padding-bottom: 4.5rem; }
   }
+
+    /* ---- Fig. 2 — celadon maebyeong plate ---- */
+    .plate { border-bottom: 1px solid var(--rule); background: var(--paper); }
+    .plate .wrap { padding: 0; }
+    .plate-frame { max-width: 560px; margin: 0 auto; padding: 48px 28px 30px; text-align: center; position: relative;
+      background: var(--paper-warm); border-left: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+    .plate-frame::before { content: ""; position: absolute; inset: 14px; border: 1px solid var(--celadon); opacity: 0.30; pointer-events: none; }
+    .plate-vase { width: 168px; height: auto; display: block; margin: 0 auto 20px; filter: drop-shadow(0 12px 24px rgba(74,107,94,0.20)); }
+    .plate-cap { font-family: var(--label); font-size: 0.66rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint); line-height: 1.5; max-width: 40ch; margin: 0 auto; }
+    .plate-cap .num { color: var(--seal); font-weight: 700; margin-right: 8px; }
+    .plate-cap em { font-family: var(--display); text-transform: none; font-style: italic; letter-spacing: 0; font-size: 0.82rem; color: var(--ink-soft); }
+    .plate-note { font-family: var(--display); font-style: italic; font-size: 1.1rem; line-height: 1.5; color: var(--celadon-deep); max-width: 34ch; margin: 14px auto 0; }
 </style>
 </head>
 <body>
@@ -977,6 +989,41 @@
 </section>
 
 <!-- ═══════════ FEATURE + SIDEBAR ═══════════ -->
+<section class="plate">
+<div class="wrap">
+<div class="plate-frame reveal">
+<svg class="plate-vase" viewBox="0 0 240 380" xmlns="http://www.w3.org/2000/svg" aria-label="A Goryeo celadon maebyeong vase with inlaid cranes and clouds">
+<defs>
+<linearGradient id="celGlaze" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0%" stop-color="#7da08f"/><stop offset="55%" stop-color="#6e9183"/><stop offset="100%" stop-color="#557565"/>
+</linearGradient>
+</defs>
+<path d="M120 28 C 110 28 104 31 104 38 C 104 45 100 47 96 52 C 72 74 52 92 52 138 C 52 196 68 244 90 292 C 95 305 88 315 88 330 C 88 342 96 350 104 352 L 136 352 C 144 350 152 342 152 330 C 152 315 145 305 150 292 C 172 244 188 196 188 138 C 188 92 168 74 144 52 C 140 47 136 45 136 38 C 136 31 130 28 120 28 Z" fill="url(#celGlaze)"/>
+<!-- glaze crackle -->
+<g stroke="#eef2ec" stroke-width="0.6" opacity="0.18" fill="none">
+<path d="M70 120 L92 150 L84 184"/><path d="M150 110 L132 150 L150 200"/><path d="M100 250 L120 270 L110 300"/><path d="M120 90 L116 130"/>
+</g>
+<!-- inlaid band lines (sanggam) -->
+<g stroke="#f1f4ee" stroke-width="1.4" fill="none" opacity="0.85">
+<path d="M64 96 Q120 78 176 96"/><path d="M58 110 Q120 92 182 110"/>
+<path d="M92 320 Q120 312 148 320"/><path d="M90 332 Q120 325 150 332"/>
+</g>
+<!-- inlaid cranes + clouds (white slip) -->
+<g fill="#f4f6f1" opacity="0.9">
+<!-- crane 1 -->
+<path d="M86 168 q 10 -7 20 -3 q -5 4 -11 4 q 6 3 13 1 q -7 6 -16 3 q -3 6 -9 7 q 5 -8 4 -15 q -3 5 -8 6 q 5 -8 7 -8 Z"/>
+<!-- crane 2 -->
+<path d="M132 210 q 9 -6 18 -3 q -4 4 -10 4 q 5 3 12 1 q -6 5 -15 3 q -3 5 -8 6 q 4 -7 4 -13 q -3 4 -7 5 q 4 -7 6 -7 Z"/>
+<!-- cloud curls -->
+<path d="M150 160 q 8 -2 9 4 q 5 -3 7 2 q -3 4 -9 2 q -4 3 -8 0 q 3 -3 1 -8 Z" opacity="0.8"/>
+<path d="M78 230 q 7 -2 8 3 q 5 -2 6 2 q -3 3 -8 2 q -3 3 -7 0 q 3 -3 1 -7 Z" opacity="0.8"/>
+</g>
+</svg>
+<div class="plate-cap"><span class="num">Fig. 2</span> Goryeo celadon <em>maebyeong</em>, 12th c. — the cloud-and-crane inlay (<em>sanggam</em>) the kilns of Gangjin made famous</div>
+<p class="plate-note">A glaze the colour of rain on jade, and a method no other country quite repeated.</p>
+</div>
+</div>
+</section>
 <section class="feature" id="feature">
   <div class="wrap">
     <div class="section-rule reveal">
