@@ -804,6 +804,7 @@
       .reveal, .reveal-stagger > *, .category-fade, .word { opacity: 1 !important; transform: none !important; }
     </style>
   </noscript>
+<style>::view-transition-group(project-hero){animation-duration:.5s;animation-timing-function:cubic-bezier(.16,1,.3,1)}::view-transition-old(project-hero),::view-transition-new(project-hero){height:100%;width:100%;object-fit:cover}</style>
 </head>
 <body>
   <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
@@ -836,7 +837,7 @@
 
 
   <main>
-  <div class="project-hero">
+  <div class="project-hero" style="view-transition-name: project-hero">
     <div class="project-meta">
       <div><span class="meta-label">Category</span><span class="meta-value">Social Media</span></div>
       <div><span class="meta-label">Year</span><span class="meta-value"><time datetime="2026">2026</time></span></div>

@@ -812,6 +812,7 @@
       .reveal, .reveal-stagger > *, .category-fade, .word { opacity: 1 !important; transform: none !important; }
     </style>
   </noscript>
+<style>::view-transition-group(project-hero){animation-duration:.5s;animation-timing-function:cubic-bezier(.16,1,.3,1)}::view-transition-old(project-hero),::view-transition-new(project-hero){height:100%;width:100%;object-fit:cover}</style>
 </head>
 <body>
   <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
@@ -844,7 +845,7 @@
 
 
 <main>
-    <div class="hub-hero">
+    <div class="hub-hero" style="view-transition-name: project-hero">
     <div class="hub-eyebrow">Pop Culture · Editorial &amp; Advertising</div>
     <h1 class="hub-title">Special<br><em>Editions</em></h1>
     <p class="hub-intro">Two projects. One design instinct — built around an artist's identity, not imposed on it.</p>
