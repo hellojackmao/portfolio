@@ -245,10 +245,7 @@
       min-height: 100svh; position: relative; overflow: hidden;
       display: flex; flex-direction: column; justify-content: center;
       padding: 7.5rem clamp(1.2rem, 5vw, 4.5rem) 4rem;
-      background:
-        radial-gradient(900px 560px at 50% 0%, rgba(123,108,246,0.14), transparent 62%),
-        radial-gradient(700px 480px at 82% 18%, rgba(123,108,246,0.10), transparent 60%),
-        radial-gradient(700px 480px at 8% 96%, rgba(204,255,0,0.05), transparent 60%);
+      background: radial-gradient(900px 540px at 82% 8%, rgba(123,108,246,0.13), transparent 62%);
     }
     #parallax-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
     .hero-mono {
@@ -291,6 +288,7 @@
     @keyframes pulseLine { 0%,100% { opacity: 0.4; transform: scaleX(0.6); transform-origin: left; } 50% { opacity: 1; transform: scaleX(1); } }
     /* hero notes */
     .note-hero-em { top: 31%; right: max(2vw, calc(50% - 620px)); }
+    @media (max-width: 1380px) { .note-hero-em { top: auto; bottom: 7%; right: 2vw; } }
     .note-hero-tag { bottom: 17%; right: max(6vw, calc(50% - 560px)); }
     /* word reveal (hooks for existing script) */
     .word-reveal { display: inline-block; }
@@ -498,7 +496,11 @@
       padding: 0.7rem 1.2rem; transition: all 0.25s var(--ease-out);
     }
     .contact-link-btn:hover { color: var(--lime); border-color: rgba(204,255,0,0.5); transform: translateY(-2px); }
-    .note-contact { right: 4%; top: 14%; }
+    .note-contact { right: -2.2rem; top: 46%; text-align: left; max-width: 200px;
+      transform: translateX(100%) translateY(6px); }
+    body.intent .note-contact { transform: translateX(100%); }
+    @media (max-width: 1250px) { .note-contact { display: none; } }
+    .note-contact.n-r::before { margin-left: 0; background: linear-gradient(90deg, var(--lime), transparent); box-shadow: -1px 0 0 var(--lime); }
 
     /* ---------- FOOTER ---------- */
     footer {
@@ -515,6 +517,13 @@
     .note-keys { position: static; display: none; margin-top: 0.7rem; max-width: 260px; margin-left: auto; }
     body.intent .note-keys { display: block; }
     .note-keys b { color: var(--lime); font-weight: 500; border: 1px solid rgba(204,255,0,0.45); border-radius: 3px; padding: 0 0.3em; }
+
+
+    /* ---- matted plates: full image, no crop ---- */
+    .plate-img.fit-contain { background: radial-gradient(120% 110% at 50% 0%, #1c1b33, var(--navy2)); }
+    .plate-img.fit-contain img { object-fit: contain; }
+    .row-thumb.fit-contain { background: #1c1b33; }
+    .row-thumb.fit-contain img { object-fit: contain; }
 
     /* ---- intent: per-row annotations ---- */
     .row-note { grid-column: 2 / -1; grid-row: 2; font: 400 0.6rem/1.45 'DM Mono', monospace; letter-spacing: 0.04em;
@@ -537,7 +546,13 @@
     body.intent .note.flow { display: block; opacity: 0.92; }
 
     @media (max-width: 1060px) {
-      .row-note, .measure { display: none !important; }
+      .measure { display: none !important; }
+      .row-note { display: none; }
+      body.intent .row-note { display: block; grid-area: auto; grid-column: 1 / -1; max-height: none; opacity: 0.85; margin-top: 0.35rem; }
+      body.intent .note:not(.note-keys):not(.note-plate) { display: block; position: static; max-width: none;
+        margin: 1rem 0 0; text-align: left; transform: none; opacity: 0.92; }
+      body.intent .note.n-r:not(.note-keys):not(.note-plate)::before { margin-left: 0;
+        background: linear-gradient(90deg, var(--lime), transparent); box-shadow: -1px 0 0 var(--lime); }
     }
 
     @media (max-width: 1060px) {
@@ -969,9 +984,9 @@
         <div class="plate-sticky" aria-hidden="true">
           <div class="plate">
             <div class="plate-img active" data-plate="0" aria-hidden="true"><img src="images/thumb-light-form.png" alt="" loading="lazy" decoding="async"/></div>
-            <div class="plate-img p-split" data-plate="1" aria-hidden="true"><img src="images/thumb-so-good.png" alt="" loading="lazy" decoding="async"/><img src="images/thumb-after-hours.png" alt="" loading="lazy" decoding="async"/></div>
-            <div class="plate-img" data-plate="2" aria-hidden="true"><img src="images/karina-og-image.png" alt="" loading="lazy" decoding="async"/></div>
-            <div class="plate-img" data-plate="3" aria-hidden="true"><img src="images/toronto-bloom-canopy.jpeg" alt="" loading="lazy" decoding="async"/></div>
+            <div class="plate-img p-split fit-contain" data-plate="1" aria-hidden="true"><img src="images/thumb-so-good.png" alt="" loading="lazy" decoding="async"/><img src="images/thumb-after-hours.png" alt="" loading="lazy" decoding="async"/></div>
+            <div class="plate-img fit-contain" data-plate="2" aria-hidden="true"><img src="images/karina-og-image.png" alt="" loading="lazy" decoding="async"/></div>
+            <div class="plate-img fit-contain" data-plate="3" aria-hidden="true"><img src="images/toronto-bloom-canopy.jpeg" alt="" loading="lazy" decoding="async"/></div>
             <div class="plate-img" data-plate="4" aria-hidden="true"><img src="images/thumb-chronicles.png" alt="" loading="lazy" decoding="async"/></div>
             <div class="plate-img p-tend" data-plate="5" aria-hidden="true"><img src="images/tend-app-store-icon.png" alt="" loading="lazy" decoding="async"/></div>
             <div class="plate-img" data-plate="6" aria-hidden="true"><img src="images/coffee-nearby-index-cover.png" alt="" loading="lazy" decoding="async"/></div>
@@ -1009,7 +1024,7 @@
           </a>
           <a class="row fade-up" href="projects/special-editions.html" data-plate="1" data-cap="Special Editions · Editorial & Advertising · 2017 / 2022">
             <span class="row-folio" aria-hidden="true">02</span>
-            <span class="row-thumb" aria-hidden="true"><img src="images/thumb-so-good.png" alt="" loading="lazy"/></span>
+            <span class="row-thumb fit-contain" aria-hidden="true"><img src="images/thumb-so-good.png" alt="" loading="lazy"/></span>
             <h3 class="row-title">Special Editions</h3>
             <span class="row-meta">Editorial &amp; Advertising · 2017 / 2022</span>
             <span class="row-arrow" aria-hidden="true">→</span>
@@ -1017,7 +1032,7 @@
           </a>
           <a class="row fade-up" href="projects/karina.html" data-plate="2" data-cap="Karina · Concept Editorial · 2026">
             <span class="row-folio" aria-hidden="true">03</span>
-            <span class="row-thumb" aria-hidden="true"><img src="images/karina-og-image.png" alt="" loading="lazy"/></span>
+            <span class="row-thumb fit-contain" aria-hidden="true"><img src="images/karina-og-image.png" alt="" loading="lazy"/></span>
             <h3 class="row-title">Karina</h3>
             <span class="row-meta">Concept Editorial · 2026</span>
             <span class="row-arrow" aria-hidden="true">→</span>
@@ -1025,7 +1040,7 @@
           </a>
           <a class="row fade-up" href="projects/toronto-in-bloom.html" data-plate="3" data-cap="Toronto in Bloom · Social Media · 2026">
             <span class="row-folio" aria-hidden="true">04</span>
-            <span class="row-thumb" aria-hidden="true"><img src="images/toronto-bloom-canopy.jpeg" alt="" loading="lazy"/></span>
+            <span class="row-thumb fit-contain" aria-hidden="true"><img src="images/toronto-bloom-canopy.jpeg" alt="" loading="lazy"/></span>
             <h3 class="row-title">Toronto in Bloom</h3>
             <span class="row-meta">Social Media · 2026</span>
             <span class="row-arrow" aria-hidden="true">→</span>
@@ -1525,36 +1540,6 @@
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(fill);
     })();
 
-    // ── Scroll-velocity marquee: the strip leans into your speed ──
-    (function () {
-      var inner = document.querySelector('.marquee-inner');
-      var wrap = document.querySelector('.marquee-wrap');
-      if (!inner || !wrap) return;
-      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      var anim = null;
-      function getAnim() {
-        if (anim) return anim;
-        if (inner.getAnimations) {
-          anim = inner.getAnimations().find(function (a) { return a.animationName === 'marquee'; }) || null;
-        }
-        return anim;
-      }
-      var lastY = window.scrollY, sv = 0, raf = null;
-      function tick() {
-        var y = window.scrollY, dy = y - lastY; lastY = y;
-        sv += (dy - sv) * 0.14;
-        var speed = Math.abs(sv);
-        var a = getAnim();
-        if (a) a.playbackRate = 1 + Math.min(speed / 14, 2.4);
-        var skew = Math.max(-6, Math.min(6, sv * 0.28));
-        wrap.style.transform = Math.abs(skew) > 0.15 ? 'skewX(' + (-skew).toFixed(2) + 'deg)' : '';
-        if (speed > 0.12) { raf = requestAnimationFrame(tick); }
-        else { wrap.style.transform = ''; if (a) a.playbackRate = 1; raf = null; }
-      }
-      window.addEventListener('scroll', function () {
-        if (raf === null) raf = requestAnimationFrame(tick);
-      }, { passive: true });
-    })();
   </script>
 
   <script>
