@@ -121,6 +121,46 @@
     .kicker { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
     .muted { color: var(--muted); }
 
+
+    /* ---------- practice hero ---------- */
+    .hero-card {
+      position: relative; overflow: hidden;
+      border-radius: 24px; border: 1px solid rgba(16, 166, 122, 0.22);
+      padding: clamp(1.2rem, 3.5vw, 1.7rem) clamp(1.1rem, 3.5vw, 1.6rem) 0;
+      margin-bottom: 1.2rem;
+      background:
+        radial-gradient(115% 80% at 16% 18%, #fff9f0 0%, rgba(255,249,240,0) 55%),
+        radial-gradient(95% 75% at 86% 92%, rgba(16,166,122,0.18) 0%, rgba(16,166,122,0) 60%),
+        radial-gradient(80% 85% at 72% 8%, rgba(255,166,120,0.20) 0%, rgba(255,166,120,0) 55%),
+        var(--surface);
+      box-shadow: var(--shadow);
+    }
+    .hero-jamo { position: absolute; font-family: var(--font-ko-display); font-weight: 700; color: rgba(31,27,22,0.06); pointer-events: none; user-select: none; line-height: 1; }
+    .hero-jamo.j1 { font-size: 7.5rem; top: -1.6rem; right: 14%; transform: rotate(-8deg); }
+    .hero-jamo.j2 { font-size: 5rem; right: 2%; bottom: 28%; transform: rotate(10deg); color: rgba(16,166,122,0.1); }
+    .hero-jamo.j3 { font-size: 4.2rem; left: 38%; bottom: -0.8rem; transform: rotate(-12deg); color: rgba(245,184,61,0.16); }
+    .hero-main { position: relative; display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; }
+    .hero-kicker { font: 700 0.68rem var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.45rem; }
+    .hero-card h1 { font-size: clamp(1.7rem, 5vw, 2.3rem); font-weight: 600; letter-spacing: -0.015em; line-height: 1.08; }
+    .hero-line { font-size: 0.78rem; font-weight: 600; color: var(--muted); margin-top: 0.55rem; max-width: 44ch; }
+    .hero-card .dayring { width: 70px; height: 70px; flex: none; filter: drop-shadow(0 6px 14px rgba(16,166,122,0.25)); }
+    .hero-card .dayring text { font-size: 0.56rem; }
+    .pod {
+      position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.8rem;
+      margin: 1.1rem calc(-1 * clamp(1.1rem, 3.5vw, 1.6rem)) 0; padding: 0.85rem clamp(1.1rem, 3.5vw, 1.6rem);
+      border-top: 1px dashed rgba(31,27,22,0.14); background: rgba(255,255,255,0.45);
+    }
+    .pod .speak { width: 38px; height: 38px; background: #fff; }
+    .pod-ko { font: 400 1.2rem var(--font-ko-display); display: block; }
+    .pod-en { font-size: 0.7rem; color: var(--muted); display: block; margin-top: 0.1rem; }
+    .pod-tag { font: 700 0.58rem var(--font-body); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(115,104,91,0.75); white-space: nowrap; }
+    @media (max-width: 560px) {
+      .hero-jamo.j1 { font-size: 5.5rem; right: 4%; }
+      .hero-jamo.j2 { display: none; }
+      .hero-card .dayring { width: 58px; height: 58px; }
+      .pod-tag { display: none; }
+    }
+
     /* ---------- today ---------- */
     .today-head { display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1rem; }
     .today-left { display: flex; align-items: center; gap: 0.85rem; }
@@ -890,6 +930,13 @@ function statusDot(id) {
 }
 
 /* ----- Today ----- */
+function phraseOfDay() {
+  const learned = Object.keys(state.srs).filter(id => phraseOf(id));
+  const pool = learned.length ? learned : lessons[0].phrases.map((_, i) => pid(0, i));
+  let h = 0; const d = todayStr();
+  for (let i = 0; i < d.length; i++) h = (h * 31 + d.charCodeAt(i)) >>> 0;
+  return pool[h % pool.length];
+}
 function renderToday() {
   ensureToday();
   const v = $("#view-today");
@@ -903,9 +950,24 @@ function renderToday() {
   const doneN = req.filter(k => state.today[k]).length;
   const ringFrac = req.length ? doneN / req.length : 0;
   const C = 2 * Math.PI * 21;
+  const podId = phraseOfDay();
+  const pod = phraseOf(podId);
+  const bits = [];
+  bits.push(state.streak.days > 0 ? state.streak.days + "-day streak" : "day one is the brave one");
+  if (due) bits.push(due + " card" + (due > 1 ? "s" : "") + " waiting");
+  bits.push(lessonForToday == null ? "all fifteen lessons done" : "lesson " + (lessonForToday + 1) + " ahead");
+  bits.push(state.goalMin + "-minute goal");
   let html = `
-    <div class="today-head">
-      <div class="today-left">
+    <section class="hero-card">
+      <span class="hero-jamo j1" aria-hidden="true">ㅎ</span>
+      <span class="hero-jamo j2" aria-hidden="true">ㅏ</span>
+      <span class="hero-jamo j3" aria-hidden="true">ㄴ</span>
+      <div class="hero-main">
+        <div class="hero-text">
+          <div class="hero-kicker">오늘 · ${esc(dateLabel)}</div>
+          <h1>${greeting()}</h1>
+          <p class="hero-line">${esc(bits.join(" · "))}</p>
+        </div>
         <svg class="dayring" viewBox="0 0 52 52" aria-hidden="true">
           <defs><linearGradient id="ringGrad" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stop-color="#10a67a"/><stop offset="1" stop-color="#7ce7b3"/>
@@ -914,15 +976,13 @@ function renderToday() {
           <circle class="arc" cx="26" cy="26" r="21" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${(C * (1 - ringFrac)).toFixed(1)}"></circle>
           <text x="26" y="30" text-anchor="middle">${doneN}/${req.length}</text>
         </svg>
-        <h1>${greeting()}</h1>
       </div>
-      <span class="today-date">${esc(dateLabel)}</span>
-    </div>
-    <div class="chips">
-      <span class="chip ${due ? "due" : ""}"><b>${due}</b> due for review</span>
-      <span class="chip"><b>${doneCount}</b>/${lessons.length} lessons</span>
-      <span class="chip">goal <b>${state.goalMin} min</b></span>
-    </div>`;
+      <div class="pod">
+        <button class="speak" data-say="${esc(pod[0])}" aria-label="Listen to the phrase of the day">▶</button>
+        <span><span class="pod-ko">${esc(pod[0])}</span><span class="pod-en">${esc(pod[1])} · ${esc(pod[2])}</span></span>
+        <span class="pod-tag">phrase of the day</span>
+      </div>
+    </section>`;
 
   if (!state.seenIntro) { html += introCard(); }
 
@@ -947,6 +1007,7 @@ function renderToday() {
   html += `<p class="foot-note"><strong>A working personal tool.</strong> I built Hana to teach myself Korean — every feature is real and runs entirely in your browser. Little and often: listen, speak, review.</p>`;
   v.innerHTML = html;
 
+  $$("[data-say]", v).forEach(el => el.addEventListener("click", () => speak(el.dataset.say)));
   $$(".step", v).forEach(b => b.addEventListener("click", () => {
     const kind = b.dataset.step;
     if (kind === "review") runReview();
