@@ -882,7 +882,10 @@ function loadVoices() {
   if (!("speechSynthesis" in window)) return;
   const all = speechSynthesis.getVoices() || [];
   const ko = all.filter(v => /^ko/i.test(v.lang));
-  koVoice = all.find(v => v.name === state.voice.name) || ko[0] || null;
+  /* default to a known female Korean voice when the person hasn't chosen one */
+  const FEMALE = ['yuna', 'sunhi', 'sun-hi', 'heami', 'google \ud55c\uad6d\uc758', 'seoyeon', 'kyuri', 'jihun female'];
+  const preferred = ko.find(v => FEMALE.some(f => v.name.toLowerCase().includes(f)));
+  koVoice = all.find(v => v.name === state.voice.name) || preferred || ko[0] || null;
   const sel = $("#voiceSel");
   if (sel) {
     const list = ko.length ? ko : all;
