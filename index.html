@@ -49,14 +49,17 @@
       transition: opacity .42s cubic-bezier(.16,1,.3,1);
     }
     .page-ready #page-veil { opacity: 0; pointer-events: none; }
-    body {
+    #page {
       transition: transform .38s cubic-bezier(.4,0,1,1),
                   opacity   .38s cubic-bezier(.4,0,1,1);
     }
-    .page-leaving body { transform: scale(0.97); opacity: 0.4; }
+    .page-leaving #page { transform: scale(0.97); opacity: 0.4; }
+    /* body must NEVER transform — a transformed body becomes the containing
+       block for the fixed nav and unpins it from the viewport */
+    body { transform: none !important; }
     @media (prefers-reduced-motion: reduce) {
       #page-veil { transition: none; }
-      body { transition: none; }
+      #page { transition: none; }
     }
 
     /* ── View Transitions API ── */
@@ -615,7 +618,6 @@
     ::view-transition-old(project-hero), ::view-transition-new(project-hero) { height: 100%; width: 100%; object-fit: cover; }
 
     /* page-exit: fade only — a transformed body un-fixes the nav on mobile */
-    html.page-leaving body { transform: none !important; }
 
     /* ---- chrome widgets (preserved verbatim) ---- */
 /* -- Back to top -- */
@@ -928,9 +930,7 @@
   <div id="cursor" class="cursor" aria-hidden="true"></div>
   <div id="page-veil" aria-hidden="true"></div>
 
-  <main id="main">
-
-    <nav aria-label="Primary">
+  <nav aria-label="Primary">
       <div class="nav-logo">Jack Mao<span>|</span><b>Portfolio</b></div>
       <ul class="nav-links">
         <li><a href="#work">Work</a></li>
@@ -939,6 +939,9 @@
         <li><button id="intent-toggle" class="intent-btn" type="button" aria-pressed="false" title="Reveal the design rationale annotations"><i aria-hidden="true"></i>intent</button></li>
       </ul>
     </nav>
+
+  <div id="page">
+  <main id="main">
 
     <!-- ============ HERO / COVER ============ -->
     <section id="hero" aria-label="Introduction">
@@ -1301,6 +1304,7 @@
     <span>© 2026 — All rights reserved</span>
     <span>Built with <span style="color:var(--coral)">♥</span> + Figma</span>
   </footer>
+  </div><!-- /#page -->
 
   <button id="back-to-top" type="button" aria-label="Back to top">
     <svg class="btt-ring" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
