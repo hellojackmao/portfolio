@@ -3007,6 +3007,11 @@
 
     /* ── View Transitions API ── */
     @view-transition { navigation: auto; }
+    /* paint the transition backdrop with Karina's cream so the dark→light
+       hand-off never exposes the browser's grey default canvas */
+    :root { background-color: #fbf8f1; }
+    ::view-transition { background: #fbf8f1; }
+    ::view-transition-new(root) { background: #fbf8f1; }
     /* Karina's hero figure sits ~2 screens below the fold on mobile, so morphing
        into it just shows a dark page. Disable the named morph on small screens —
        clean instant navigation reads far better. Desktop keeps the morph. */
