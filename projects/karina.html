@@ -5,13 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content="#fbf8f1" />
 <meta name="color-scheme" content="light" />
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23fbf8f1'/%3E%3Ctext x='32' y='48' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='44' font-weight='400' fill='%238c1d2a'%3Eæ%3C/text%3E%3C/svg%3E" />
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%23fbf8f1'/%3E%3Ctext x='90' y='130' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='120' font-weight='400' fill='%238c1d2a'%3Eæ%3C/text%3E%3C/svg%3E" />
 
 <!-- Favicon — inline SVG æ mark, no external file needed -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23fbf8f1'/><text x='50' y='72' font-family='Georgia,serif' font-style='italic' font-size='68' fill='%238c1d2a' text-anchor='middle' font-weight='400'>æ</text></svg>" />
-<link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><rect width='180' height='180' rx='40' fill='%23fbf8f1'/><text x='90' y='130' font-family='Georgia,serif' font-style='italic' font-size='124' fill='%238c1d2a' text-anchor='middle' font-weight='400'>æ</text></svg>" />
+<rect width='100' height='100' rx='22' fill='%23fbf8f1'/><text x='50' y='72' font-family='Georgia,serif' font-style='italic' font-size='68' fill='%238c1d2a' text-anchor='middle' font-weight='400'>æ</text></svg>" /><rect width='180' height='180' rx='40' fill='%23fbf8f1'/><text x='90' y='130' font-family='Georgia,serif' font-style='italic' font-size='124' fill='%238c1d2a' text-anchor='middle' font-weight='400'>æ</text></svg>" />
 <title>Karina — A Study in Modern Iconography</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23fbf8f1'/%3E%3Ctext x='32' y='48' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='44' font-weight='400' fill='%238c1d2a'%3Eæ%3C/text%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%23fbf8f1'/%3E%3Ctext x='90' y='130' text-anchor='middle' font-family='Georgia,serif' font-style='italic' font-size='120' font-weight='400' fill='%238c1d2a'%3Eæ%3C/text%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+  <link rel="apple-touch-icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'>
 <meta name="description" content="A concept editorial — a self-initiated design exercise featuring Karina of aespa — six years from debut to the 2026 Met Gala, in Prada. Plus the LEMONADE era, designer's notes, and the æ-Card series." />
 
 <!-- Open Graph / Facebook / iMessage / Discord -->
@@ -3009,6 +3010,12 @@
 
     /* ── View Transitions API ── */
     @view-transition { navigation: auto; }
+    /* Karina's hero figure sits ~2 screens below the fold on mobile, so morphing
+       into it just shows a dark page. Disable the named morph on small screens —
+       clean instant navigation reads far better. Desktop keeps the morph. */
+    @media (max-width: 859px){
+      .morph-hero { view-transition-name: none !important; }
+    }
     @media (prefers-reduced-motion: no-preference) {
       ::view-transition-old(root) {
         animation: vt-out 0.28s cubic-bezier(0.4, 0, 1, 1) both;
@@ -3135,7 +3142,7 @@
       <p class="byline">Words <span>Editorial</span> &nbsp;·&nbsp; Subject <span>Karina, of aespa</span></p>
     </div>
 
-    <figure class="hero-figure" style="view-transition-name: project-hero">
+    <figure class="hero-figure morph-hero" style="view-transition-name: project-hero">
       <img class="hero-figure-img" src="../images/karina-profile-hero-01.jpg" alt="Karina in a white Prada gown and black cape" loading="eager" decoding="async" width="1200" height="1500" />
       <div class="portrait-mark"></div>
       <div class="hero-figure-inner">
