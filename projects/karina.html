@@ -422,16 +422,12 @@
   /* ─────────────── HERO IMAGE ─────────────── */
     /* above-the-fold cover band — the morph target. Landscape 3:2 to match the
        index plate's geometry so the image expands cleanly into place. */
-    .hero-morph-band { display: block; position: relative; width: 100%; aspect-ratio: 3 / 2;
+    /* the cover is a finished 5:4 composition (title + tagline baked in), so the
+       band matches that aspect exactly and shows the whole image — no cropping. */
+    .hero-morph-band { display: block; position: relative; width: 100%; aspect-ratio: 1232 / 980;
       margin: 28px 0 8px; border-radius: 4px; overflow: hidden; background: #1a1118;
       border: 1px solid var(--rule); text-decoration: none; }
-    .hero-morph-band img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 28%; display: block; }
-    .hero-morph-band .hero-morph-cap { position: absolute; left: 16px; bottom: 14px; z-index: 1;
-      font-family: 'JetBrains Mono','Courier New',monospace; font-size: 10px; letter-spacing: 2px;
-      text-transform: uppercase; color: #fbf8f1; background: rgba(20,17,24,0.62); padding: 6px 10px;
-      border-radius: 999px; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); }
-    .hero-morph-band::after { content: ""; position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(20,17,24,0) 55%, rgba(20,17,24,0.45)); pointer-events: none; }
+    .hero-morph-band img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
   .hero-figure {
     aspect-ratio: 4 / 5;
@@ -3123,9 +3119,8 @@
     <span>Aespa<span class="dot"></span>Leader</span>
   </div>
 
-  <a class="hero-morph-band" href="#profile" aria-label="Karina cover" style="view-transition-name: project-hero">
-    <img src="../images/karina-profile-hero-01.jpg" alt="Karina in a white Prada gown and black cape" loading="eager" decoding="async" />
-    <span class="hero-morph-cap">Karina · Editorial &amp; Visual Direction · 2026</span>
+  <a class="hero-morph-band" href="#profile" aria-label="Karina — Met Gala 2026, Prada" style="view-transition-name: project-hero">
+    <img src="../images/karina-og-image.png" alt="Karina at the 2026 Met Gala in Prada — cover: The quiet weight of a signature" loading="eager" decoding="async" width="1232" height="980" />
   </a>
 
   <h1 class="hero-headline">
