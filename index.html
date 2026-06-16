@@ -182,8 +182,7 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       display: flex; align-items: center; gap: 1rem;
       padding: clamp(1rem, 2.6vw, 1.35rem) clamp(1.2rem, 4vw, 3rem);
-      background: rgba(15,14,26,0.95);
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      background: #0f0e1a;
       border-bottom: 1px solid var(--hair);
     }
     .nav-logo { font-weight: 800; font-size: 0.9rem; letter-spacing: 0.04em; white-space: nowrap;
@@ -617,6 +616,11 @@
     ::view-transition-old(project-hero), ::view-transition-new(project-hero) { height: 100%; width: 100%; object-fit: cover; }
 
     /* page-exit: fade only — a transformed body un-fixes the nav on mobile */
+
+    @media (hover: none), (pointer: coarse) {
+      .cursor { display: none !important; }
+      .blueprint { display: none !important; }
+    }
 
     /* ---- chrome widgets (preserved verbatim) ---- */
 /* -- Back to top -- */
