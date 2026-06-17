@@ -455,7 +455,7 @@
     .outcome-callout {
       position: relative;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr;
       gap: 0;
       margin: -1.6rem 0 3.75rem;
       overflow: hidden;
@@ -479,8 +479,8 @@
 
     .outcome-callout div {
       position: relative;
-      min-height: 9rem;
-      padding: 1.45rem 1.45rem 1.5rem 3.7rem;
+      min-height: 0;
+      padding: 1.15rem 1.45rem 1.2rem 3.7rem;
     }
 
     .outcome-callout div + div {
@@ -498,8 +498,8 @@
       opacity: 0.72;
     }
 
-    .outcome-callout div:nth-child(1)::before { content: '01'; }
-    .outcome-callout div:nth-child(2)::before { content: '02'; }
+    .outcome-callout div:nth-child(1)::before { content: '✦'; }
+    .outcome-callout div:nth-child(2)::before { content: '✦'; }
 
     .outcome-callout span {
       display: inline-flex;
@@ -515,7 +515,7 @@
     }
 
     .outcome-callout p {
-      max-width: 34rem;
+      max-width: none;
       margin: 0;
       color: rgba(255, 255, 255, 0.76);
       font-size: clamp(0.96rem, 1.35vw, 1.1rem);
@@ -867,10 +867,6 @@
       <div><span>Deliverables</span><p>Four grid posts, three video clips, captions, social framing, and performance summary.</p></div>
     </div>
         <div class="outcome-callout">
-          <div>
-            <span>Outcome</span>
-            <p>A platform-ready photo and social campaign shaped around launch rhythm, visual pacing, and repeatable content formats.</p>
-          </div>
           <div>
             <span>What this shows</span>
             <p>Social-first art direction with enough structure to move from concept to content system.</p>

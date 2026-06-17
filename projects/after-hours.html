@@ -316,7 +316,7 @@
     .outcome-callout {
       position: relative;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr;
       gap: 0;
       margin: -1.6rem 0 3.75rem;
       overflow: hidden;
@@ -340,8 +340,8 @@
 
     .outcome-callout div {
       position: relative;
-      min-height: 9rem;
-      padding: 1.45rem 1.45rem 1.5rem 3.7rem;
+      min-height: 0;
+      padding: 1.15rem 1.45rem 1.2rem 3.7rem;
     }
 
     .outcome-callout div + div {
@@ -359,8 +359,8 @@
       opacity: 0.72;
     }
 
-    .outcome-callout div:nth-child(1)::before { content: '01'; }
-    .outcome-callout div:nth-child(2)::before { content: '02'; }
+    .outcome-callout div:nth-child(1)::before { content: '✦'; }
+    .outcome-callout div:nth-child(2)::before { content: '✦'; }
 
     .outcome-callout span {
       display: inline-flex;
@@ -376,7 +376,7 @@
     }
 
     .outcome-callout p {
-      max-width: 34rem;
+      max-width: none;
       margin: 0;
       color: rgba(255, 255, 255, 0.76);
       font-size: clamp(0.96rem, 1.35vw, 1.1rem);
@@ -730,15 +730,13 @@
     <p class="mag-intro">
       A full crowd culture marketing plan for <em>After Hours</em> — The Weeknd's landmark 2020 album. Three campaigns, three ideologies, one artist navigating the space between celebrity and self.
     </p>
+<div class="case-frame" role="list" aria-label="Project summary"><div class="case-cell" role="listitem"><span class="case-k">Problem</span><span class="case-v">Sell The Weeknd's world by selling the crowd cultures inside it — not just the music.</span></div><div class="case-cell" role="listitem"><span class="case-k">Approach</span><span class="case-v">Design three campaigns around the fan subcultures that animate the era, each with its own visual logic.</span></div><div class="case-cell" role="listitem"><span class="case-k">Outcome</span><span class="case-v">A multi-campaign advertising study showing conceptual range and audience-first art direction.</span></div></div>
+
     <div class="case-snapshot">
       <div><span>Role</span><p>Campaign strategist and visual designer for a three-part crowd culture plan.</p></div>
       <div><span>Deliverables</span><p>Fan-vote concept, exhibition activation, out-of-home billboard, mockups, and campaign rationale.</p></div>
     </div>
         <div class="outcome-callout">
-          <div>
-            <span>Outcome</span>
-            <p>Three campaign concepts turn album themes into fan participation, exhibition activation, and out-of-home advertising.</p>
-          </div>
           <div>
             <span>What this shows</span>
             <p>Campaign thinking that connects audience insight, cultural context, and visual execution.</p>
@@ -746,8 +744,7 @@
         </div>
 
     <!-- OVERVIEW -->
-    <div class="case-frame" role="list" aria-label="Project summary"><div class="case-cell" role="listitem"><span class="case-k">Problem</span><span class="case-v">Sell The Weeknd's world by selling the crowd cultures inside it — not just the music.</span></div><div class="case-cell" role="listitem"><span class="case-k">Approach</span><span class="case-v">Design three campaigns around the fan subcultures that animate the era, each with its own visual logic.</span></div><div class="case-cell" role="listitem"><span class="case-k">Outcome</span><span class="case-v">A multi-campaign advertising study showing conceptual range and audience-first art direction.</span></div></div>
-        <h2 class="section-heading">Overview</h2>
+              <h2 class="section-heading">Overview</h2>
     <div class="body-text">
       <p>At the basis of crowd culture, branding is an essential aspect of marketing a product or service. The concept of crowd culture is the community of people connecting authentic purposes, ideologies, and services to leverage these ideologies to communicate with the crowd (Holt, 2016). Finding these opportunities for cultural innovation is why the Canadian singer known as <strong>The Weeknd</strong> has found his audience — targeting novel niches not afraid to be expressed compared to the norm in the music environment.</p>
       <p><em>After Hours</em>, released March 2020, is a fourteen-track long playing record — a reminiscence of Abel Tesfaye's mysterious background from his 2011 underground debut to the highest moments of his career. Throughout his eleven-year career, the Toronto-born artist played novelty through dark, genre-defining themes: trap and soul tunes of a drugged-out album embedded into almost every stance of his playlist.</p>

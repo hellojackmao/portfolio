@@ -316,7 +316,7 @@
     .outcome-callout {
       position: relative;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 1fr;
       gap: 0;
       margin: -1.6rem 0 3.75rem;
       overflow: hidden;
@@ -340,8 +340,8 @@
 
     .outcome-callout div {
       position: relative;
-      min-height: 9rem;
-      padding: 1.45rem 1.45rem 1.5rem 3.7rem;
+      min-height: 0;
+      padding: 1.15rem 1.45rem 1.2rem 3.7rem;
     }
 
     .outcome-callout div + div {
@@ -359,8 +359,8 @@
       opacity: 0.72;
     }
 
-    .outcome-callout div:nth-child(1)::before { content: '01'; }
-    .outcome-callout div:nth-child(2)::before { content: '02'; }
+    .outcome-callout div:nth-child(1)::before { content: '✦'; }
+    .outcome-callout div:nth-child(2)::before { content: '✦'; }
 
     .outcome-callout span {
       display: inline-flex;
@@ -376,7 +376,7 @@
     }
 
     .outcome-callout p {
-      max-width: 34rem;
+      max-width: none;
       margin: 0;
       color: rgba(255, 255, 255, 0.76);
       font-size: clamp(0.96rem, 1.35vw, 1.1rem);
@@ -729,6 +729,8 @@
     <p class="mag-intro">
       Reimagining Zara Larsson's <em>So Good</em> not as a tracklist — but as a full editorial experience. Every page a spread. Every lyric a headline. Every photograph a mood board.
     </p>
+<div class="case-frame" role="list" aria-label="Project summary"><div class="case-cell" role="listitem"><span class="case-k">Problem</span><span class="case-v">Make an album feel like an editorial object — heard, but also read and held.</span></div><div class="case-cell" role="listitem"><span class="case-k">Approach</span><span class="case-v">Treat the release like a magazine cover story: typographic system, layout grammar, and art direction that turn tracks into spreads.</span></div><div class="case-cell" role="listitem"><span class="case-k">Outcome</span><span class="case-v">A print-grade identity that gives the music a visual world and reads as a designer's command of editorial craft.</span></div></div>
+
     <div class="case-snapshot">
       <div><span>Role</span><p>Editorial designer building the layout system, typographic hierarchy, and final package direction.</p></div>
       
@@ -736,18 +738,13 @@
     </div>
         <div class="outcome-callout">
           <div>
-            <span>Outcome</span>
-            <p>A cohesive editorial package spanning roughs, headline studies, body layouts, photo direction, DPS, poster, and CD packaging.</p>
-          </div>
-          <div>
             <span>What this shows</span>
             <p>The ability to translate an artist identity into a flexible editorial system across print formats.</p>
           </div>
         </div>
 
     <!-- OVERVIEW -->
-    <div class="case-frame" role="list" aria-label="Project summary"><div class="case-cell" role="listitem"><span class="case-k">Problem</span><span class="case-v">Make an album feel like an editorial object — heard, but also read and held.</span></div><div class="case-cell" role="listitem"><span class="case-k">Approach</span><span class="case-v">Treat the release like a magazine cover story: typographic system, layout grammar, and art direction that turn tracks into spreads.</span></div><div class="case-cell" role="listitem"><span class="case-k">Outcome</span><span class="case-v">A print-grade identity that gives the music a visual world and reads as a designer's command of editorial craft.</span></div></div>
-        <h2 class="section-heading">The Brief</h2>
+              <h2 class="section-heading">The Brief</h2>
     <div class="body-text">
       <p><strong>So Good</strong>, released in March 2017, was Zara Larsson's global coming-of-age moment — a record that bridged Scandinavian pop sensibility with mainstream R&amp;B and dance production, debuting across charts in over 20 countries.</p>
       <p>The brief: treat the album as an editorial subject. Design a magazine feature around Larsson's world — her voice, her image, her persona — using real journalistic copy, photography direction, and typographic systems built from scratch. The result spans six distinct deliverables: roughs, headline studies, body layouts, photo spreads, a double page spread, a concert poster, and a full CD package.</p>
