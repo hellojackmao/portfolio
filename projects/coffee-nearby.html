@@ -8,8 +8,6 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
-  <link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png"/>
-  <link rel="icon" type="image/png" sizes="512x512" href="../icon-512.png"/>
   <link rel="manifest" href="../site.webmanifest"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -1433,6 +1431,15 @@
         color: var(--lime);
       }
     }
+
+    .skip-link{position:absolute;left:-9999px;top:0;z-index:10000;background:var(--lime,#ccff00);color:#0f0e1a;padding:.6rem 1rem;font-weight:700;border-radius:0 0 8px 0;text-decoration:none}
+    .skip-link:focus{left:0}
+
+    .case-frame{display:grid;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden;margin:0 0 3rem}
+    @media(min-width:680px){.case-frame{grid-template-columns:repeat(3,1fr)}}
+    .case-cell{background:var(--navy,#0f0e1a);padding:1.25rem 1.4rem;display:flex;flex-direction:column;gap:.5rem}
+    .case-k{font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--lime,#ccff00)}
+    .case-v{font-size:.86rem;line-height:1.55;color:rgba(255,255,255,.62)}
 </style>
   <noscript>
     <style>
@@ -1443,6 +1450,7 @@
 <style>::view-transition-group(project-hero){animation-duration:.5s;animation-timing-function:cubic-bezier(.16,1,.3,1)}::view-transition-old(project-hero),::view-transition-new(project-hero){height:100%;width:100%;object-fit:cover}</style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
   <script>document.documentElement.classList.add('page-ready');</script>
   <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
   <div class="cursor" id="cursor"></div>
@@ -1487,7 +1495,7 @@
 
     <div class="coffee-gradient-divider" aria-hidden="true"></div>
 
-    <section class="project-content">
+    <section class="project-content" id="main">
       <div class="project-intro">
         <p><strong>Coffee Nearby</strong> is a wearable-first Web App prototype built for Meta Ray-Ban Display glasses. The platform's additive waveguide display, D-pad-only input, and fixed 600x600 viewport force a complete rethink of standard web design instincts.</p>
         <p>The result is a single-file, dependency-free coffee shop finder with a live AR-style radar, walking ETAs, OpenStreetMap-powered search, and an amber terminal aesthetic chosen specifically to work with the display's physics rather than against them.</p>
@@ -1513,7 +1521,8 @@
 
       <p class="ai-disclaimer"><strong>Design authorship note:</strong> The product concept, interaction model, visual direction, interface decisions, and final presentation choices are mine. Parts of the build and prototype were vibe-coded with AI as a development collaborator.</p>
 
-      <div class="section-heading">Working Product</div>
+      <div class="case-frame" role="list" aria-label="Project summary"><div class="case-cell" role="listitem"><span class="case-k">Problem</span><span class="case-v">Design for Meta Ray-Ban Display glasses, where a 600×600 viewport, waveguide display, and D-pad-only input break every standard web assumption.</span></div><div class="case-cell" role="listitem"><span class="case-k">Approach</span><span class="case-v">Rebuild the interaction model from scratch — spatial-first navigation, high-contrast glanceable UI, and flows that never need a tap.</span></div><div class="case-cell" role="listitem"><span class="case-k">Outcome</span><span class="case-v">A wearable-first prototype proving fluency in emerging constraints most designers haven't touched yet.</span></div></div>
+        <h2 class="section-heading">Working Product</h2>
       <div class="body-text">
         <p>The prototype below is the actual working HTML product. It is best understood as a constrained 600x600 wearable interface: no scrolling assumptions, no mouse-first behavior, and no decorative glass effects that would fail on an additive waveguide display.</p>
       </div>
@@ -1523,7 +1532,7 @@
         </div>
       </div>
 
-      <div class="section-heading">Constraint System</div>
+      <h2 class="section-heading">Constraint System</h2>
       <div class="coffee-stack">
         <div class="system-panel">
           <div class="snapshot-label">Viewport</div>
@@ -1539,31 +1548,31 @@
         </div>
       </div>
 
-      <div class="section-heading">What It Does</div>
+      <h2 class="section-heading">What It Does</h2>
       <div class="body-text">
         <p>The app starts with a boot-style welcome screen, requests location, scans nearby OpenStreetMap cafe data through the Overpass API, then presents a list view, filter screen, detail view, and radar mode. Shops are sorted by distance with walking ETAs, compass direction, favorites, and live position updates.</p>
         <p>The radar view plots shops as dots on a circular display that rotates with the user's heading. D-pad controls cycle through shops, while the focused item pulses so the wearer always knows what is selected.</p>
       </div>
 
-      <div class="section-heading">Technical Decisions</div>
+      <h2 class="section-heading">Technical Decisions</h2>
       <div class="body-text">
         <p>The project uses vanilla JavaScript, HTML, and CSS with no framework, no build step, no npm dependencies, and no API keys. It combines <code>navigator.geolocation</code>, <code>watchPosition</code>, <code>DeviceOrientationEvent</code>, localStorage, haversine distance, great-circle bearing, and a defensive generation-counter pattern for stale async work.</p>
         <p>Filters are intentionally forgiving because OpenStreetMap data can be sparse. Unknown values pass unless the data explicitly says no. The opening-hours parser handles the common 80 percent of OSM strings and fails open rather than hiding useful results.</p>
       </div>
 
-      <div class="section-heading">Interaction Model</div>
+      <h2 class="section-heading">Interaction Model</h2>
       <div class="body-text">
         <p>Every interactive list item is a native button because there is no cursor. The D-pad handler gathers the focusable controls on the active screen and moves focus through them with arrow keys, while Enter becomes the primary selection action.</p>
         <p>The radar intentionally steps outside the general focus system. SVG targets are awkward focus surfaces, so radar mode tracks a dedicated selected-shop index and uses directional controls to cycle through shops instead of fighting browser focus mechanics.</p>
       </div>
 
-      <div class="section-heading">Location Logic</div>
+      <h2 class="section-heading">Location Logic</h2>
       <div class="body-text">
         <p>Auto-refresh uses two tiers. Cheap updates run whenever the user moves enough to affect distance, bearing, or walking ETA. Expensive updates only re-query Overpass when the wearer has moved meaningfully away from the last fetch anchor and enough time has passed to avoid hammering the API.</p>
         <p>The compass arrow uses shortest-path rotation, so moving from 350 degrees to 10 degrees rotates forward 20 degrees instead of snapping backward across the full circle. It is a small detail, but on a head-worn display small motion mistakes become very visible.</p>
       </div>
 
-      <div class="section-heading">Visual System</div>
+      <h2 class="section-heading">Visual System</h2>
       <div class="body-text">
         <p>The orange-to-brown direction is named <em>Amber</em>. It is a physics-informed theme: a dark base for transparency on additive display hardware, amber phosphor for legibility, and brown warmth to keep the interface from feeling purely technical.</p>
         <p><span class="terminal-chip">Amber phosphor</span><span class="terminal-chip">Brown base</span><span class="terminal-chip">No glass blur</span><span class="terminal-chip">D-pad focus</span></p>
@@ -1571,7 +1580,7 @@
 
       <div class="pull-quote">The interface works because it respects the hardware instead of pretending it is a phone.</div>
 
-      <div class="section-heading">Reflection</div>
+      <h2 class="section-heading">Reflection</h2>
       <div class="body-text">
         <p>This project became a study in designing against instinct. Most web patterns assume scroll, touch, pointers, modals, hover states, and full-color surfaces. Coffee Nearby strips those assumptions down to a state machine of visible screens and focusable actions.</p>
         <p>The strongest lesson was that constraints can create identity. Amber Waveguide is not just an aesthetic wrapper; it is a response to display physics, input limits, data uncertainty, and the need for quick decisions while moving through the world.</p>

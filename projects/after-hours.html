@@ -8,8 +8,6 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
-  <link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png"/>
-  <link rel="icon" type="image/png" sizes="512x512" href="../icon-512.png"/>
   <link rel="manifest" href="../site.webmanifest"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -657,6 +655,15 @@
         color: var(--lime, #ccff00);
       }
     }
+
+    .skip-link{position:absolute;left:-9999px;top:0;z-index:10000;background:var(--lime,#ccff00);color:#0f0e1a;padding:.6rem 1rem;font-weight:700;border-radius:0 0 8px 0;text-decoration:none}
+    .skip-link:focus{left:0}
+
+    .case-frame{display:grid;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden;margin:0 0 3rem}
+    @media(min-width:680px){.case-frame{grid-template-columns:repeat(3,1fr)}}
+    .case-cell{background:var(--navy,#0f0e1a);padding:1.25rem 1.4rem;display:flex;flex-direction:column;gap:.5rem}
+    .case-k{font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--lime,#ccff00)}
+    .case-v{font-size:.86rem;line-height:1.55;color:rgba(255,255,255,.62)}
 </style>
   <link rel="preload" as="image" href="../images/weeknd-concept-1.webp" type="image/webp" fetchpriority="high"/>
   <noscript>
@@ -667,6 +674,7 @@
   </noscript>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
   <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
   <div class="cursor" id="cursor"></div>
   <div id="page-veil" aria-hidden="true"></div>
@@ -717,7 +725,7 @@
   <div class="mag-rule"></div>
 
   <!-- CONTENT -->
-  <div class="project-content">
+  <div class="project-content" id="main">
 
     <p class="mag-intro">
       A full crowd culture marketing plan for <em>After Hours</em> — The Weeknd's landmark 2020 album. Three campaigns, three ideologies, one artist navigating the space between celebrity and self.
@@ -740,7 +748,8 @@
         </div>
 
     <!-- OVERVIEW -->
-    <div class="section-heading">Overview</div>
+    <div class="case-frame" role="list" aria-label="Project summary"><div class="case-cell" role="listitem"><span class="case-k">Problem</span><span class="case-v">Sell The Weeknd's world by selling the crowd cultures inside it — not just the music.</span></div><div class="case-cell" role="listitem"><span class="case-k">Approach</span><span class="case-v">Design three campaigns around the fan subcultures that animate the era, each with its own visual logic.</span></div><div class="case-cell" role="listitem"><span class="case-k">Outcome</span><span class="case-v">A multi-campaign advertising study showing conceptual range and audience-first art direction.</span></div></div>
+        <h2 class="section-heading">Overview</h2>
     <div class="body-text">
       <p>At the basis of crowd culture, branding is an essential aspect of marketing a product or service. The concept of crowd culture is the community of people connecting authentic purposes, ideologies, and services to leverage these ideologies to communicate with the crowd (Holt, 2016). Finding these opportunities for cultural innovation is why the Canadian singer known as <strong>The Weeknd</strong> has found his audience — targeting novel niches not afraid to be expressed compared to the norm in the music environment.</p>
       <p><em>After Hours</em>, released March 2020, is a fourteen-track long playing record — a reminiscence of Abel Tesfaye's mysterious background from his 2011 underground debut to the highest moments of his career. Throughout his eleven-year career, the Toronto-born artist played novelty through dark, genre-defining themes: trap and soul tunes of a drugged-out album embedded into almost every stance of his playlist.</p>
@@ -758,7 +767,7 @@
     </div>
 
     <!-- IDEOLOGIES -->
-    <div class="section-heading">The 3 Ideologies</div>
+    <h2 class="section-heading">The 3 Ideologies</h2>
     <div class="body-text">
       <p>Three distinct ideologies run through <em>After Hours</em>, each informing a separate campaign direction. Together, they map the full emotional and cultural terrain of the album.</p>
     </div>
@@ -782,7 +791,7 @@
     </div>
 
     <!-- CAMPAIGN 1 -->
-    <div class="section-heading">Campaign 01 — Going for Gold</div>
+    <h2 class="section-heading">Campaign 01 — Going for Gold</h2>
     <div class="campaign-card">
       <div class="campaign-label">Ideology — Masculinity &amp; Spirituality</div>
       <div class="campaign-title">Fan-voted track reimagining</div>
@@ -800,7 +809,7 @@
     <p class="img-caption">Campaign 1 — fan-voted special edition album concept &amp; CD mockup</p>
 
     <!-- CAMPAIGN 2 -->
-    <div class="section-heading">Campaign 02 — The Man Behind The Mask</div>
+    <h2 class="section-heading">Campaign 02 — The Man Behind The Mask</h2>
     <div class="campaign-card">
       <div class="campaign-label">Ideology — Individuality</div>
       <div class="campaign-title">After Hours Exhibition — Toronto</div>
@@ -818,7 +827,7 @@
     <p class="img-caption">Campaign 2 — After Hours Exhibition poster &amp; 3D environment visualization</p>
 
     <!-- CAMPAIGN 3 -->
-    <div class="section-heading">Campaign 03 — Making a Decision</div>
+    <h2 class="section-heading">Campaign 03 — Making a Decision</h2>
     <div class="campaign-card">
       <div class="campaign-label">Ideology — Maturity &amp; Religion</div>
       <div class="campaign-title">Out-of-Home Billboard — Yonge Dundas Square</div>
@@ -838,7 +847,7 @@
     <hr class="div" />
 
     <!-- REFLECTION -->
-    <div class="section-heading">Reflection</div>
+    <h2 class="section-heading">Reflection</h2>
     <div class="body-text">
       <p>This project reinforced how <strong>brand identity is determined through symbols and differences in the marketplace</strong> — the sum of various attributes that define the brand, distinguish it with features, and make it recognizable (Pareek, 2015). The Weeknd's <em>After Hours</em> is more than an album; it is an ideology made visible.</p>
       <p>Tying it all together, <em>After Hours</em> was the lovechild at his starting line eleven years ago — the days of melancholy with the heightened energy Tesfaye brings today. Marketing toward his audience requires forming a human relationship while offering value to consumers and music as an entirety. The empty pleasure given upon sharing the emotions has built a sense of trust between the crowd and the artist. Infused is the deconstruction and establishment of this Tesfaye that will not be forgotten.</p>

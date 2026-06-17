@@ -8,8 +8,6 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
-  <link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png"/>
-  <link rel="icon" type="image/png" sizes="512x512" href="../icon-512.png"/>
   <link rel="manifest" href="../site.webmanifest"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -796,6 +794,15 @@
         color: var(--lime, #ccff00);
       }
     }
+
+    .skip-link{position:absolute;left:-9999px;top:0;z-index:10000;background:var(--lime,#ccff00);color:#0f0e1a;padding:.6rem 1rem;font-weight:700;border-radius:0 0 8px 0;text-decoration:none}
+    .skip-link:focus{left:0}
+
+    .case-frame{display:grid;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden;margin:0 0 3rem}
+    @media(min-width:680px){.case-frame{grid-template-columns:repeat(3,1fr)}}
+    .case-cell{background:var(--navy,#0f0e1a);padding:1.25rem 1.4rem;display:flex;flex-direction:column;gap:.5rem}
+    .case-k{font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--lime,#ccff00)}
+    .case-v{font-size:.86rem;line-height:1.55;color:rgba(255,255,255,.62)}
 </style>
   <link rel="preload" as="image" href="../images/DSCF6080.jpeg" type="image/jpeg" fetchpriority="high"/>
   <noscript>
@@ -807,6 +814,7 @@
 <style>::view-transition-group(project-hero){animation-duration:.5s;animation-timing-function:cubic-bezier(.16,1,.3,1)}::view-transition-old(project-hero),::view-transition-new(project-hero){height:100%;width:100%;object-fit:cover}</style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
   <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
   <div class="cursor" id="cursor"></div>
   <div id="page-veil" aria-hidden="true"></div>
@@ -848,11 +856,12 @@
 
   <div class="mag-rule"></div>
 
-  <div class="project-content">
+  <div class="project-content" id="main">
 
     <p class="project-intro">
       Every spring, High Park holds its breath for two weeks. The cherry blossoms come fast and leave faster — and in 2026, the goal was to capture that window before it closed, and turn it into content designed to stop a scroll. Stills on Fujifilm. GIFs from a friendly neighbour.
     </p>
+        <div class="case-frame" role="list" aria-label="Project summary"><div class="case-cell" role="listitem"><span class="case-k">Problem</span><span class="case-v">Capture High Park's two-week cherry-blossom window and turn it into scroll-stopping content before it closed.</span></div><div class="case-cell" role="listitem"><span class="case-k">Approach</span><span class="case-v">Shoot on location against the clock, then art-direct the frames into a branded social-first visual series.</span></div><div class="case-cell" role="listitem"><span class="case-k">Outcome</span><span class="case-v">A time-boxed photo campaign that shows speed, eye, and the instinct to make content that performs.</span></div></div>
     <div class="case-snapshot">
       <div><span>Role</span><p>Photographer, video creator, editor, and platform designer for a self-initiated content series.</p></div>
       <div><span>Brief</span><p>Capture High Park's short cherry blossom window as scroll-stopping social content.</p></div>
@@ -870,7 +879,7 @@
           </div>
         </div>
 
-    <div class="section-heading">The Concept</div>
+    <h2 class="section-heading">The Concept</h2>
     <div class="body-text">
       <p>Toronto in Bloom is a social media content project built around the 2026 cherry blossom season at High Park. The brief was self-assigned: document the bloom, edit for platform, and produce a set of posts — photos and short-form video — that feel native to Instagram and Threads while still carrying a deliberate aesthetic point of view.</p>
       <p>The work sits at the intersection of street photography, videography, and platform-native design. <strong>Every frame was made to be stopped on</strong> — high contrast, strong colour temperature, and a consistent pink-purple palette that runs through stills and video alike.</p>
@@ -878,7 +887,7 @@
 
     <div class="pull-quote">"Two weeks. Every year. Most people miss it."</div>
 
-    <div class="section-heading">Social Posts</div>
+    <h2 class="section-heading">Social Posts</h2>
     <div class="body-text">
       <p>Four posts designed for the grid — each shot on a Fujifilm X-series camera with the Classic Negative film simulation. The lifted shadows, muted highlights, and slightly desaturated midtones give the stills a restrained, filmic quality that reads differently in a feed full of phone-saturated spring content.</p>
     </div>
@@ -930,7 +939,7 @@
       </div>
     </div>
 
-    <div class="section-heading">Inspiration</div>
+    <h2 class="section-heading">Inspiration</h2>
     <div class="body-text">
       <p>The same instinct that drove these four posts has a clear reference point: <strong>Dave Krugman</strong> — NYC street photographer — and his documentation of bloom season in Central Park. His approach is patient and crowd-aware, finding the human moment inside the spectacle rather than shooting around it. Seeing his work made it clear what High Park could look like treated the same way.</p>
     </div>
@@ -978,7 +987,7 @@
 
     <hr class="div"/>
 
-    <div class="section-heading">By the Numbers</div>
+    <h2 class="section-heading">By the Numbers</h2>
     <div class="stat-row">
       <div class="stat"><div class="stat-num">2 wks</div><div class="stat-label">Bloom window</div></div>
       <div class="stat"><div class="stat-num">4</div><div class="stat-label">Grid posts</div></div>
@@ -988,7 +997,7 @@
 
     <hr class="div"/>
 
-    <div class="section-heading">On Making It</div>
+    <h2 class="section-heading">On Making It</h2>
     <div class="body-text">
       <p>The discipline was platform-first thinking without platform-first compromise — every frame composed to work at 1:1 and 9:16, but none of them feeling like they were made for a grid. <strong>The photography came first. The crop came second.</strong></p>
       <p>The video was shot on iPhone in Cinematic mode, leaning on the camera's natural colour science rather than heavy post. The stills came from a Fujifilm X-series with Classic Negative — lifted shadows, restrained highlights, warm tones pulled back just enough that the blossoms feel like a memory rather than a spectacle. That restraint was the reference point. Dave Krugman's Central Park work showed what it looks like when a photographer treats bloom season as a human story rather than a backdrop — <strong>the same instinct, applied two weeks a year at High Park.</strong></p>

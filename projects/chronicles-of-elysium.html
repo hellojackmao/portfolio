@@ -8,8 +8,6 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
-  <link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png"/>
-  <link rel="icon" type="image/png" sizes="512x512" href="../icon-512.png"/>
   <link rel="manifest" href="../site.webmanifest"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -661,6 +659,15 @@
         color: var(--lime, #ccff00);
       }
     }
+
+    .skip-link{position:absolute;left:-9999px;top:0;z-index:10000;background:var(--lime,#ccff00);color:#0f0e1a;padding:.6rem 1rem;font-weight:700;border-radius:0 0 8px 0;text-decoration:none}
+    .skip-link:focus{left:0}
+
+    .case-frame{display:grid;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden;margin:0 0 3rem}
+    @media(min-width:680px){.case-frame{grid-template-columns:repeat(3,1fr)}}
+    .case-cell{background:var(--navy,#0f0e1a);padding:1.25rem 1.4rem;display:flex;flex-direction:column;gap:.5rem}
+    .case-k{font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--lime,#ccff00)}
+    .case-v{font-size:.86rem;line-height:1.55;color:rgba(255,255,255,.62)}
 </style>
   <link rel="preload" as="image" href="../images/kassandra-keyart.png" type="image/png" fetchpriority="high"/>
   <noscript>
@@ -672,6 +679,7 @@
 <style>::view-transition-group(project-hero){animation-duration:.5s;animation-timing-function:cubic-bezier(.16,1,.3,1)}::view-transition-old(project-hero),::view-transition-new(project-hero){height:100%;width:100%;object-fit:cover}</style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
   <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
   <div class="cursor" id="cursor"></div>
   <div id="page-veil" aria-hidden="true"></div>
@@ -718,11 +726,12 @@
   <div class="mag-rule"></div>
 
   <!-- CONTENT -->
-  <div class="project-content">
+  <div class="project-content" id="main">
 
     <p class="project-intro">
       A third-person action-adventure game built on Aristotle's Poetics and Joseph Campbell's Hero's Journey — following Kassandra, a humble musician, as she transforms into a legendary hero across the shattered world of Elysium.
     </p>
+        <div class="case-frame" role="list" aria-label="Project summary"><div class="case-cell" role="listitem"><span class="case-k">Problem</span><span class="case-v">Give a third-person action-adventure a story spine that actually holds — not just set-pieces.</span></div><div class="case-cell" role="listitem"><span class="case-k">Approach</span><span class="case-v">Build the narrative on Aristotle's Poetics and Campbell's Hero's Journey, tracking Kassandra from musician to legend across Elysium.</span></div><div class="case-cell" role="listitem"><span class="case-k">Outcome</span><span class="case-v">A game concept where structure and world-building are designed together — narrative design, not just visuals.</span></div></div>
     <div class="case-snapshot">
       <div><span>Role</span><p>Creator, designer, and producer for the narrative and systems concept.</p></div>
       <div><span>Brief</span><p>Design a third-person action-adventure game concept with story, mechanics, audience, and platform strategy.</p></div>
@@ -747,7 +756,7 @@
     <p class="img-caption">Key art — Kassandra: The Harmony of Elysium</p>
 
     <!-- OVERVIEW -->
-    <div class="section-heading">Overview</div>
+    <h2 class="section-heading">Overview</h2>
     <div class="body-text">
       <p>The player assumes the role of <strong>Kassandra</strong> — a tale of a young heroine who embarks on a quest to restore harmony to the shattered world of Elysium. The player makes critical decisions and witnesses the transformation of a humble musician into a legendary hero. The game provides players with a rich and emotionally engaging experience that explores the mature theme of <em>personal growth</em>.</p>
       <p>Built on a <strong>one-time purchase</strong> monetization model, Chronicles of Elysium is designed for PC (Steam, Epic Games), PS5, and Xbox Series X — targeting players who value narrative depth, character customization, and emotionally resonant storytelling.</p>
@@ -760,7 +769,7 @@
     </div>
 
     <!-- PLATFORMS -->
-    <div class="section-heading">Platforms &amp; Release</div>
+    <h2 class="section-heading">Platforms &amp; Release</h2>
     <div class="platform-row">
       <span class="platform-pill">PC — Steam</span>
       <span class="platform-pill">PC — Epic Games</span>
@@ -769,7 +778,7 @@
     </div>
 
     <!-- CORE MECHANICS -->
-    <div class="section-heading">Core Mechanics</div>
+    <h2 class="section-heading">Core Mechanics</h2>
     <div class="mechanics-grid">
       <div class="mechanic-card">
         <div class="mechanic-num">01 — PRIMARY</div>
@@ -784,7 +793,7 @@
     </div>
 
     <!-- AESTHETIC PLEASURE -->
-    <div class="section-heading">Pleasure Aesthetics</div>
+    <h2 class="section-heading">Pleasure Aesthetics</h2>
     <div class="body-text">
       <p>Using the MDA framework, eight aesthetic categories were evaluated to define the core experience of Chronicles of Elysium.</p>
     </div>
@@ -805,7 +814,7 @@
     </div>
 
     <!-- NARRATIVE -->
-    <div class="section-heading">Narrative Structure — The Hero's Journey</div>
+    <h2 class="section-heading">Narrative Structure — The Hero's Journey</h2>
     <div class="body-text">
       <p>The narrative is built on two interlocking frameworks: <strong>Aristotle's Poetics</strong> (beginning-middle-end, tragedy, catharsis) and <strong>Joseph Campbell's Hero's Journey</strong> (call to adventure, crossing the threshold, ordeal, return). Together they create a six-act structure that drives both character transformation and player investment.</p>
     </div>
@@ -844,7 +853,7 @@
     <hr class="div" />
 
     <!-- REFLECTION -->
-    <div class="section-heading">Reflection</div>
+    <h2 class="section-heading">Reflection</h2>
     <div class="body-text">
       <p>This project reinforced how <strong>narrative and gameplay must be fused rather than layered</strong>. Traditional linear narratives like Aristotle's Poetics and Campbell's Hero's Journey can interrupt a player-driven game that requires interaction — the challenge is finding the balance where story compels without constraining freedom.</p>
       <p>Designing Kassandra's arc — a female protagonist undergoing heightened personal growth — was an intentional exploration of the "Heroine's Journey" as an alternative monomythic framework. Playing a game that leaves players thinking about somebody else's story through their own eyes is, ultimately, the goal of any narrative-driven design.</p>

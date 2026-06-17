@@ -8,8 +8,6 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
-  <link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png"/>
-  <link rel="icon" type="image/png" sizes="512x512" href="../icon-512.png"/>
   <link rel="manifest" href="../site.webmanifest"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -657,6 +655,15 @@
         color: var(--lime, #ccff00);
       }
     }
+
+    .skip-link{position:absolute;left:-9999px;top:0;z-index:10000;background:var(--lime,#ccff00);color:#0f0e1a;padding:.6rem 1rem;font-weight:700;border-radius:0 0 8px 0;text-decoration:none}
+    .skip-link:focus{left:0}
+
+    .case-frame{display:grid;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden;margin:0 0 3rem}
+    @media(min-width:680px){.case-frame{grid-template-columns:repeat(3,1fr)}}
+    .case-cell{background:var(--navy,#0f0e1a);padding:1.25rem 1.4rem;display:flex;flex-direction:column;gap:.5rem}
+    .case-k{font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--lime,#ccff00)}
+    .case-v{font-size:.86rem;line-height:1.55;color:rgba(255,255,255,.62)}
 </style>
   <noscript>
     <style>
@@ -666,6 +673,7 @@
   </noscript>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
   <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
   <div class="cursor" id="cursor"></div>
   <div id="page-veil" aria-hidden="true"></div>
@@ -716,7 +724,7 @@
   <div class="mag-rule"></div>
 
   <!-- CONTENT -->
-  <div class="project-content">
+  <div class="project-content" id="main">
 
     <p class="mag-intro">
       Reimagining Zara Larsson's <em>So Good</em> not as a tracklist — but as a full editorial experience. Every page a spread. Every lyric a headline. Every photograph a mood board.
@@ -739,7 +747,8 @@
         </div>
 
     <!-- OVERVIEW -->
-    <div class="section-heading">The Brief</div>
+    <div class="case-frame" role="list" aria-label="Project summary"><div class="case-cell" role="listitem"><span class="case-k">Problem</span><span class="case-v">Make an album feel like an editorial object — heard, but also read and held.</span></div><div class="case-cell" role="listitem"><span class="case-k">Approach</span><span class="case-v">Treat the release like a magazine cover story: typographic system, layout grammar, and art direction that turn tracks into spreads.</span></div><div class="case-cell" role="listitem"><span class="case-k">Outcome</span><span class="case-v">A print-grade identity that gives the music a visual world and reads as a designer's command of editorial craft.</span></div></div>
+        <h2 class="section-heading">The Brief</h2>
     <div class="body-text">
       <p><strong>So Good</strong>, released in March 2017, was Zara Larsson's global coming-of-age moment — a record that bridged Scandinavian pop sensibility with mainstream R&amp;B and dance production, debuting across charts in over 20 countries.</p>
       <p>The brief: treat the album as an editorial subject. Design a magazine feature around Larsson's world — her voice, her image, her persona — using real journalistic copy, photography direction, and typographic systems built from scratch. The result spans six distinct deliverables: roughs, headline studies, body layouts, photo spreads, a double page spread, a concert poster, and a full CD package.</p>
@@ -751,7 +760,7 @@
     </div>
 
     <!-- ROUGHS -->
-    <div class="section-heading">01 — Roughs & Grid System</div>
+    <h2 class="section-heading">01 — Roughs & Grid System</h2>
     <div class="body-text">
       <p>Every editorial project begins with structure. The roughs phase established the underlying grid — a 12-column system adapted from classic NME layouts — and tested multiple typographic hierarchies before committing to a direction. Two headline approaches were explored in parallel: a condensed blackletter stacked vertically against the hairline letterforms that would become the final system.</p>
     </div>
@@ -761,7 +770,7 @@
     </div>
 
     <!-- HEADLINE -->
-    <div class="section-heading">02 — Headline Typography</div>
+    <h2 class="section-heading">02 — Headline Typography</h2>
     <div class="body-text">
       <p>The headline system was the most laboured element of the project. <strong>Meta OT Condensed Black</strong> set at 140pt was tested against <strong>Meta OT Hairline</strong> at 195pt — two extremes of the same typeface family in deliberate contrast. The final direction paired the condensed weight for "ZARA" against the hairline for "LARSSON", creating a visual push-pull that mirrors Larsson's own tension between pop accessibility and artistic ambition.</p>
       <p>Secondary headlines used <em>Avenir Heavy</em> as a subhead system, with pull quotes set in <em>Avenir Medium Oblique</em> — keeping the hierarchy clear across six layout variations.</p>
@@ -772,7 +781,7 @@
     </div>
 
     <!-- BODY -->
-    <div class="section-heading">03 — Body Copy Layouts</div>
+    <h2 class="section-heading">03 — Body Copy Layouts</h2>
     <div class="body-text">
       <p>Three body layout variations were developed, each exploring a different column configuration and reading rhythm. The copy — drawn from a real NME profile of Larsson — was set in <strong>Avenir Light 9pt</strong> throughout, giving the pages an airy editorial quality that never competes with the headline typography.</p>
       <p>The pull quote treatment evolved across iterations: from a simple italic inset to a fully centred typographic interruption that breaks the column grid entirely — the approach that made it into the final spread.</p>
@@ -783,7 +792,7 @@
     </div>
 
     <!-- PHOTO -->
-    <div class="section-heading">04 — Photo Layouts</div>
+    <h2 class="section-heading">04 — Photo Layouts</h2>
     <div class="body-text">
       <p>Photography integration was tested across two approaches. The first used a tight portrait strip — three stacked images of Larsson in pink — running vertically alongside the body text, giving the spread a catalogue-like efficiency. The second gave a single full-bleed image the entire left half of the spread, letting Larsson's presence overwhelm the page before the text takes over on the right.</p>
       <p>The second approach was selected for its editorial confidence — <strong>image first, then explanation</strong>.</p>
@@ -801,7 +810,7 @@
     </div>
 
     <!-- DPS -->
-    <div class="section-heading">05 — Double Page Spread</div>
+    <h2 class="section-heading">05 — Double Page Spread</h2>
     <div class="body-text">
       <p>The double page spread is the centrepiece of the project — the moment where every typographic and layout decision converges. <strong>"ZARA LARSSON"</strong> is set in an extreme condensed serif at near-poster scale, bleeding off the gutter, with Larsson's image occupying the full right half of the spread.</p>
       <p>Three DPS variations were developed: the first using custom typeface <em>Mark My Words</em> in a loose, expressive style; the second pairing it with a full-bleed pink photograph; the third combining <em>Beyond The Mountains</em> — a second custom face — with a high-contrast editorial composition. The final version leans into the handwritten-meets-editorial tension that defines the entire project.</p>
@@ -812,7 +821,7 @@
     </div>
 
     <!-- TRACKLIST -->
-    <div class="section-heading">The Full Tracklist</div>
+    <h2 class="section-heading">The Full Tracklist</h2>
     <div class="tracklist">
       <div class="tracklist-header"><span>#</span><span>Track</span><span>Note</span></div>
       <div class="track"><span class="track-num">01</span><div class="track-name">What They Say</div><span class="track-feat">Opener</span></div>
@@ -833,7 +842,7 @@
     </div>
 
     <!-- POSTER -->
-    <div class="section-heading">06 — Concert Poster</div>
+    <h2 class="section-heading">06 — Concert Poster</h2>
     <div class="body-text">
       <p>The poster brief called for a gig announcement for Larsson's show at the <strong>Phoenix Concert Theatre, Toronto — April 24, 2017</strong>. Two directions were developed: a clean black-and-white typographic poster using Avenir Black, and a full-bleed pink duotone poster using Univers Bold at 100pt — bold enough to read from across a street.</p>
       <p>The final version adopted the pink duotone with a heavily overexposed portrait, the name bleeding off the top edge. It captures the same oversized confidence as the DPS headline system, making the two pieces feel like parts of the same visual world.</p>
@@ -844,7 +853,7 @@
     </div>
 
     <!-- CD -->
-    <div class="section-heading">07 — CD Package Design</div>
+    <h2 class="section-heading">07 — CD Package Design</h2>
     <div class="body-text">
       <p>The CD package extended the visual system into three dimensions — a foldout jewel case insert and a disc design. The front cover uses the wavy <em>So Good</em> logotype over a duotone portrait on a pink ground, with the tracklist running in reverse on the back panel. The disc itself mirrors the cover, with Larsson's portrait cropped into the circle format and the album title repeated as a graphic element in the centre.</p>
       <p>A second disc variation explored an all-over pattern treatment — repeating the wave logotype across the disc surface as texture, referencing the visual language of the title track's artwork.</p>
@@ -857,7 +866,7 @@
     <hr class="div" />
 
     <!-- REFLECTION -->
-    <div class="section-heading">Reflection</div>
+    <h2 class="section-heading">Reflection</h2>
     <div class="body-text">
       <p>This project was an exercise in designing a cohesive visual world across multiple formats — from a single body text column to a full physical object. Every decision made in the roughs phase had consequences in the final spread; every typographic choice in the headline system echoed through the poster and CD.</p>
       <p>Working with Zara Larsson's material reinforced something central to editorial design: <strong>the subject has to live inside the work</strong>. The system isn't just a container for the content — it should feel like an expression of the same energy. The overscaled type, the pink saturation, the handwritten-meets-condensed type pairing: all of it needed to feel like it could only belong to this artist, this album, this moment.</p>

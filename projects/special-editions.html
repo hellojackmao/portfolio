@@ -8,8 +8,6 @@
   <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16.png"/>
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png"/>
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png"/>
-  <link rel="icon" type="image/png" sizes="192x192" href="../icon-192.png"/>
-  <link rel="icon" type="image/png" sizes="512x512" href="../icon-512.png"/>
   <link rel="manifest" href="../site.webmanifest"/>
   <meta name="apple-mobile-web-app-capable" content="yes"/>
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -804,6 +802,15 @@
         color: var(--lime, #ccff00);
       }
     }
+
+    .skip-link{position:absolute;left:-9999px;top:0;z-index:10000;background:var(--lime,#ccff00);color:#0f0e1a;padding:.6rem 1rem;font-weight:700;border-radius:0 0 8px 0;text-decoration:none}
+    .skip-link:focus{left:0}
+
+    .case-frame{display:grid;gap:1px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);border-radius:10px;overflow:hidden;margin:0 0 3rem}
+    @media(min-width:680px){.case-frame{grid-template-columns:repeat(3,1fr)}}
+    .case-cell{background:var(--navy,#0f0e1a);padding:1.25rem 1.4rem;display:flex;flex-direction:column;gap:.5rem}
+    .case-k{font-size:.62rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--lime,#ccff00)}
+    .case-v{font-size:.86rem;line-height:1.55;color:rgba(255,255,255,.62)}
 </style>
   <link rel="preload" as="image" href="../images/thumb-so-good.png" type="image/png" fetchpriority="high"/>
   <noscript>
@@ -815,6 +822,7 @@
 <style>::view-transition-group(project-hero){animation-duration:.5s;animation-timing-function:cubic-bezier(.16,1,.3,1)}::view-transition-old(project-hero),::view-transition-new(project-hero){height:100%;width:100%;object-fit:cover}</style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
   <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
   <div class="cursor" id="cursor"></div>
   <div id="page-veil" aria-hidden="true"></div>
@@ -906,7 +914,8 @@
     </a>
   </div>
   <div class="hub-concept">
-    <div class="section-heading">The Concept</div>
+    <div class="case-frame" role="list" aria-label="Project summary"><div class="case-cell" role="listitem"><span class="case-k">Problem</span><span class="case-v">Show range across two distinct artist campaigns without imposing one house style on either.</span></div><div class="case-cell" role="listitem"><span class="case-k">Approach</span><span class="case-v">Build each identity around the artist — Zara Larsson and The Weeknd — letting the work flex while the craft stays consistent.</span></div><div class="case-cell" role="listitem"><span class="case-k">Outcome</span><span class="case-v">A paired case study that argues range with restraint: two worlds, one designer's hand.</span></div></div>
+        <h2 class="section-heading">The Concept</h2>
     <div class="body-text">
       <p>Special Editions is a two-volume series of editorial and advertising work built around music artists — treating their albums not as products to be marketed, but as worlds to be designed inside.</p>
       <p><strong>Vol. 01</strong> reimagines Zara Larsson's <em>So Good</em> as a full magazine editorial — six deliverables across typography, layout, photography direction, and packaging, published in NME / Best Music Mag format. <strong>Vol. 02</strong> builds three crowd culture campaigns around The Weeknd's <em>After Hours</em> — each targeting a distinct audience ideology drawn from the album's emotional terrain.</p>
