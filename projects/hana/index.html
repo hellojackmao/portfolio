@@ -14,10 +14,10 @@
   <meta name="twitter:title" content="Hana — Beginner Korean">
   <meta name="twitter:description" content="Learn Korean with warm daily practice, read-aloud, shadowing, and review.">
   <meta name="twitter:image" content="./icons/og-image.png">
-  <link rel="icon" href="./icons/favicon.svg" type="image/svg+xml">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='9' y='9' width='46' height='46' rx='14' fill='%23fff3df'/%3E%3Ctext x='32' y='32' text-anchor='middle' dominant-baseline='central' font-family='Apple SD Gothic Neo,Noto Sans KR,sans-serif' font-weight='800' font-size='33' fill='%2310a67a'%3E한%3C/text%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%23fff3df'/%3E%3Ctext x='90' y='90' text-anchor='middle' dominant-baseline='central' font-family='Apple SD Gothic Neo,Noto Sans KR,sans-serif' font-weight='800' font-size='96' fill='%2310a67a'%3E한%3C/text%3E%3C/svg%3E" />
   <link rel="icon" href="./icons/favicon-32.png" sizes="32x32" type="image/png">
-  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
-  <link rel="mask-icon" href="./icons/favicon.svg" color="#0f766e">
+  <link rel="mask-icon" href="./icons/favicon.svg" color="#10a67a">
   <meta name="msapplication-TileColor" content="#fff3df">
   <meta name="msapplication-TileImage" content="./icons/icon-192.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -892,16 +892,67 @@ function loadVoices() {
     sel.innerHTML = '<option value="">Automatic</option>' + list.map(v => `<option value="${esc(v.name)}" ${v.name === state.voice.name ? "selected" : ""}>${esc(v.name)}</option>`).join("");
   }
 }
+function voiceHint() {
+  if (voiceHint._shown) { toast("No Korean voice found on this device."); return; }
+  voiceHint._shown = true;
+  const ua = navigator.userAgent || "";
+  let how = "Add a Korean voice in your device's speech settings, then try again.";
+  if (/iPhone|iPad|iPod/i.test(ua)) how = "iOS: Settings \u203A Accessibility \u203A Spoken Content \u203A Voices \u203A Korean, then return and tap play.";
+  else if (/Macintosh|Mac OS X/i.test(ua)) how = "Mac: System Settings \u203A Accessibility \u203A Spoken Content \u203A manage voices \u203A add Korean (Yuna), then tap play.";
+  else if (/Android/i.test(ua)) how = "Android: Settings \u203A Accessibility \u203A Text-to-speech \u203A install Korean voice data, then tap play.";
+  else if (/Windows/i.test(ua)) how = "Windows: Settings \u203A Time & Language \u203A Speech \u203A add a Korean voice, then tap play.";
+  toast("No Korean voice installed \u2014 " + how);
+}
+
 function speak(text) {
   if (!("speechSynthesis" in window)) { toast("Speech isn't available in this browser."); return; }
+  if (!text) return;
+
+  const fire = () => {
+    try {
+      // Voices can load late (Chrome/Safari fire 'voiceschanged' after first paint).
+      // If we never resolved a Korean voice, try once more right before speaking.
+      if (!koVoice) loadVoices();
+
+      // No Korean voice installed at all → speech will be silent. Tell the user how to fix it.
+      const hasKorean = (speechSynthesis.getVoices() || []).some(v => /^ko/i.test(v.lang));
+      if (!hasKorean) { voiceHint(); return; }
+
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = "ko-KR";
+      if (koVoice) { u.voice = koVoice; u.lang = koVoice.lang || "ko-KR"; }
+      u.rate = state.voice.rate; u.pitch = state.voice.pitch;
+
+      // A voice that's listed but has no audio data "speaks" instantly and silently.
+      // If onend fires far faster than the text could possibly take, surface the hint.
+      const started = Date.now();
+      const minMs = Math.max(350, text.length * 90); // rough lower bound for real speech
+      u.onend = () => { if (Date.now() - started < minMs) voiceHint(); };
+      u.onerror = (ev) => {
+        if (ev && (ev.error === "interrupted" || ev.error === "canceled")) return;
+        toast("Couldn't play audio on this device.");
+      };
+
+      // Chrome can get stuck in a paused state; make sure we're running.
+      try { speechSynthesis.resume(); } catch (e) {}
+      speechSynthesis.speak(u);
+    } catch (e) {
+      toast("Couldn't play audio on this device.");
+    }
+  };
+
+  // cancel() + speak() back-to-back is a known Chrome race that silently drops
+  // the new utterance. Cancel, then speak on the next tick.
   try {
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = "ko-KR";
-    if (koVoice) { u.voice = koVoice; u.lang = koVoice.lang || "ko-KR"; }
-    u.rate = state.voice.rate; u.pitch = state.voice.pitch;
-    speechSynthesis.speak(u);
-  } catch (e) { }
+    if (speechSynthesis.speaking || speechSynthesis.pending) {
+      speechSynthesis.cancel();
+      setTimeout(fire, 60);
+    } else {
+      fire();
+    }
+  } catch (e) {
+    fire();
+  }
 }
 
 /* ---------- sheet ---------- */
