@@ -492,6 +492,62 @@
     @media (prefers-reduced-motion: reduce) {
       .atlas .contour-a, .atlas .contour-b, .atlas .route-1, .atlas .route-2, .atlas .compass, .atlas .wp { animation: none; }
     }
+
+
+  /* ---- Hana cross-link: "phrasebook" pop-out (lower-right, clears scroll arrows) ---- */
+  .hana-dock{ position:fixed; right:22px; bottom:20px; z-index:38;
+    font-family:'Inter Tight',sans-serif; display:flex; flex-direction:column; align-items:flex-end; gap:0; }
+  /* the resting pill */
+  .hd-toggle{ cursor:pointer; border:none; display:inline-flex; align-items:center; gap:.5rem;
+    background:#111; color:#fdfcfb; font-family:'Inter Tight',sans-serif; font-weight:800;
+    font-size:.78rem; letter-spacing:.02em; padding:.7rem 1rem .7rem .8rem; border-radius:100px;
+    box-shadow:0 8px 26px rgba(17,17,17,.28); transition:transform .2s ease, box-shadow .2s ease; }
+  .hd-toggle:hover,.hd-toggle:focus-visible{ transform:translateY(-2px);
+    box-shadow:0 12px 32px rgba(17,17,17,.34); outline:none; }
+  .hd-toggle .hd-seal{ display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:#10a67a;
+    font-family:'Apple SD Gothic Neo','Noto Sans CJK KR',sans-serif; font-weight:800;
+    font-size:.95rem; color:#fff3df; line-height:1; }
+  .hd-toggle .hd-caret{ font-size:.7rem; opacity:.55; transition:transform .3s ease; }
+  .hana-dock.is-open .hd-caret{ transform:rotate(180deg); }
+  /* attention pulse (one-shot, motion-safe) */
+  .hd-toggle.pulse{ animation:hdPulse 1.4s cubic-bezier(.16,1,.3,1) 2; }
+  @keyframes hdPulse{ 0%{ box-shadow:0 8px 26px rgba(17,17,17,.28),0 0 0 0 rgba(16,166,122,.55); }
+    70%{ box-shadow:0 8px 26px rgba(17,17,17,.28),0 0 0 16px rgba(16,166,122,0); }
+    100%{ box-shadow:0 8px 26px rgba(17,17,17,.28),0 0 0 0 rgba(16,166,122,0); } }
+  /* the card */
+  .hd-card{ width:300px; max-width:calc(100vw - 44px); margin-bottom:.7rem;
+    background:#fdfcfb; border:1px solid rgba(0,0,0,.07); border-radius:20px;
+    box-shadow:0 22px 60px rgba(17,17,17,.22); padding:1.4rem 1.35rem 1.45rem;
+    transform:translateY(14px) scale(.96); transform-origin:bottom right; opacity:0;
+    pointer-events:none; transition:transform .42s cubic-bezier(.16,1,.3,1), opacity .3s ease; position:relative; }
+  .hana-dock.is-open .hd-card{ transform:translateY(0) scale(1); opacity:1; pointer-events:auto; }
+  .hd-stamp{ display:flex; align-items:center; gap:.55rem; margin-bottom:.85rem; }
+  .hd-stamp .seal{ width:40px; height:40px; border-radius:11px; background:#fff3df;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Apple SD Gothic Neo','Noto Sans CJK KR',sans-serif; font-weight:800;
+    font-size:1.45rem; color:#10a67a; line-height:1; flex:none; }
+  .hd-stamp .lbl{ font-size:.64rem; font-weight:700; letter-spacing:.13em; text-transform:uppercase;
+    color:#4ECDC4; line-height:1.3; }
+  .hd-card h4{ font-family:'Inter Tight',sans-serif; font-weight:800; font-size:1.24rem; line-height:1.12;
+    margin:0 0 .55rem; color:#111; letter-spacing:-.01em; }
+  .hd-card p{ font-family:'Inter Tight',sans-serif; font-size:.85rem; line-height:1.55;
+    color:rgba(17,17,17,.6); margin:0 0 1.1rem; }
+  .hd-go{ display:inline-flex; align-items:center; gap:.45rem; font-family:'Inter Tight',sans-serif;
+    font-weight:700; font-size:.84rem; color:#fdfcfb; background:#111; text-decoration:none;
+    padding:.6rem 1.05rem; border-radius:100px; transition:background .2s ease, gap .2s ease; }
+  .hd-go:hover{ background:#10a67a; gap:.7rem; }
+  .hd-x{ position:absolute; top:.6rem; right:.7rem; border:none; background:none; cursor:pointer;
+    font-size:1rem; line-height:1; color:rgba(17,17,17,.35); padding:.2rem; }
+  .hd-x:hover{ color:#111; }
+  @media (max-width:760px){ .hana-dock{ display:none; } }
+  @media (prefers-reduced-motion:reduce){
+    .hd-card{ transition:opacity .2s ease; transform:none; }
+    .hana-dock.is-open .hd-card{ transform:none; }
+    .hd-toggle.pulse{ animation:none; } .hd-toggle,.hd-go{ transition:none; } }
+
+  body.hd-card-open .scroll-ind{ opacity:0; pointer-events:none; transition:opacity .25s ease; }
+  .scroll-ind{ transition:opacity .25s ease; }
 </style>
 </head>
 <body>
@@ -1347,8 +1403,8 @@ document.querySelector(".ring.r2").animate(
 /* ============================================================= *
  *  SCROLL INDICATOR BUTTONS                                      *
  * ============================================================= */
-document.getElementById("scrollUp").addEventListener("click", () => window.scrollBy({ top: -vh, behavior: "smooth" }));
-document.getElementById("scrollDown").addEventListener("click", () => window.scrollBy({ top: vh, behavior: "smooth" }));
+document.getElementById("scrollUp").addEventListener("click", () => window.scrollBy({ top: -window.innerHeight * 0.9, behavior: "smooth" }));
+document.getElementById("scrollDown").addEventListener("click", () => window.scrollBy({ top: window.innerHeight * 0.9, behavior: "smooth" }));
 
 /* ============================================================= *
  *  INTERSECTION-DRIVEN SECTION REVEALS                           *
@@ -1581,5 +1637,58 @@ if (document.readyState === "complete" || document.readyState === "interactive")
   else window.addEventListener("DOMContentLoaded", init);
 })();
 </script>
+
+
+  <!-- Hana cross-link: a little phrasebook that pops out near the Korea guide -->
+  <div class="hana-dock" id="hanaDock">
+    <div class="hd-card" id="hdCard" role="region" aria-label="Learn the language">
+      <button class="hd-x" type="button" aria-label="Dismiss">✕</button>
+      <div class="hd-stamp">
+        <span class="seal" aria-hidden="true">한</span>
+        <span class="lbl">Interactive concept<br>· phrasebook ·</span>
+      </div>
+      <h4>Pack a few words for the road.</h4>
+      <p>Every great trip starts before the airport. Hana slips you a handful of Korean each day — spoken aloud, fifteen unhurried minutes — so the place greets you back when you arrive.</p>
+      <a class="hd-go" href="../hana/index.html">Start with Hana →</a>
+    </div>
+    <button class="hd-toggle" type="button" aria-expanded="false" aria-controls="hdCard">
+      <span class="hd-seal" aria-hidden="true">한</span>
+      <span>Learn the language</span>
+      <span class="hd-caret" aria-hidden="true">▲</span>
+    </button>
+  </div>
+  <script>
+    (function(){
+      var dock=document.getElementById('hanaDock'); if(!dock) return;
+      var toggle=dock.querySelector('.hd-toggle'), card=dock.querySelector('.hd-card'), x=dock.querySelector('.hd-x');
+      function open(){ dock.classList.add('is-open'); document.body.classList.add('hd-card-open'); toggle.setAttribute('aria-expanded','true'); toggle.classList.remove('pulse'); }
+      function shut(){ dock.classList.remove('is-open'); document.body.classList.remove('hd-card-open'); toggle.setAttribute('aria-expanded','false'); }
+      toggle.addEventListener('click', function(){ dock.classList.contains('is-open')?shut():open(); });
+      x.addEventListener('click', shut);
+      document.addEventListener('keydown', function(e){ if(e.key==='Escape') shut(); });
+
+      /* One-shot pulse when the Korea (Seorak) guide scrolls into view */
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var pulsed = false;
+      function findKoreaCard(){
+        var h=[].slice.call(document.querySelectorAll('h3'));
+        for(var i=0;i<h.length;i++){ if(/seorak|korea/i.test(h[i].textContent)) return h[i].closest('article,div,a,section')||h[i]; }
+        return null;
+      }
+      var target=findKoreaCard();
+      if(target && !reduce && 'IntersectionObserver' in window){
+        var io=new IntersectionObserver(function(entries){
+          entries.forEach(function(en){
+            if(en.isIntersecting && !pulsed && !dock.classList.contains('is-open')){
+              pulsed=true; toggle.classList.add('pulse');
+              setTimeout(function(){ toggle.classList.remove('pulse'); }, 3200);
+              io.disconnect();
+            }
+          });
+        },{ threshold:0.45 });
+        io.observe(target);
+      }
+    })();
+  </script>
 </body>
 </html>
