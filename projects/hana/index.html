@@ -925,9 +925,14 @@ function speak(text) {
 
       // A voice that's listed but has no audio data "speaks" instantly and silently.
       // If onend fires far faster than the text could possibly take, surface the hint.
-      const started = Date.now();
-      const minMs = Math.max(350, text.length * 90); // rough lower bound for real speech
-      u.onend = () => { if (Date.now() - started < minMs) voiceHint(); };
+      // (Skip this heuristic on iOS, where onend timing is unreliable for real speech.)
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent || "") ||
+                    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+      if (!isIOS) {
+        const started = Date.now();
+        const minMs = Math.max(350, text.length * 90); // rough lower bound for real speech
+        u.onend = () => { if (Date.now() - started < minMs) voiceHint(); };
+      }
       u.onerror = (ev) => {
         if (ev && (ev.error === "interrupted" || ev.error === "canceled")) return;
         toast("Couldn't play audio on this device.");
@@ -941,10 +946,17 @@ function speak(text) {
     }
   };
 
-  // cancel() + speak() back-to-back is a known Chrome race that silently drops
-  // the new utterance. Cancel, then speak on the next tick.
+  // iOS Safari requires speak() to run synchronously inside the tap handler —
+  // any setTimeout defer breaks the user-gesture chain and the utterance is
+  // silently dropped. So on iOS we cancel and speak immediately, in the same tick.
+  // Other browsers hit a cancel()+speak() race, so there we defer one tick.
+  const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent || "") ||
+                (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   try {
-    if (speechSynthesis.speaking || speechSynthesis.pending) {
+    if (isIOS) {
+      try { speechSynthesis.cancel(); } catch (e) {}
+      fire();
+    } else if (speechSynthesis.speaking || speechSynthesis.pending) {
       speechSynthesis.cancel();
       setTimeout(fire, 60);
     } else {
