@@ -523,6 +523,7 @@
         width: calc(100% - 3rem);
         margin-top: 1.25rem;
       }
+      
 
       .outcome-callout {
         grid-template-columns: 1fr;
@@ -818,7 +819,12 @@
       .reveal, .reveal-stagger > *, .category-fade, .word { opacity: 1 !important; transform: none !important; }
     </style>
   </noscript>
-<style>::view-transition-group(project-hero){animation-duration:.5s;animation-timing-function:cubic-bezier(.16,1,.3,1)}::view-transition-old(project-hero),::view-transition-new(project-hero){height:100%;width:100%;object-fit:cover}</style>
+<style>::view-transition-group(project-hero){animation-duration:.5s;animation-timing-function:cubic-bezier(.16,1,.3,1)}::view-transition-old(project-hero),::view-transition-new(project-hero){height:100%;width:100%;object-fit:cover}
+@media (max-width: 768px){
+  .case-frame{ width: calc(100% - 3rem) !important; }
+  .outcome-callout{ width: calc(100% - 3rem) !important; margin-left:auto !important; margin-right:auto !important; }
+}
+</style>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
