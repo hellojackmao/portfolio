@@ -548,6 +548,35 @@
 
   body.hd-card-open .scroll-ind{ opacity:0; pointer-events:none; transition:opacity .25s ease; }
   .scroll-ind{ transition:opacity .25s ease; }
+
+  /* ---- Hana dock: mobile (compact pill + bottom sheet) ---- */
+  @media (max-width:760px){
+    .hana-dock{ display:flex !important; right:14px; bottom:14px;
+      bottom:calc(14px + env(safe-area-inset-bottom, 0px)); }
+    /* compact pill */
+    .hd-toggle{ font-size:.72rem; padding:.6rem .85rem .6rem .65rem; gap:.4rem; }
+    .hd-toggle .hd-seal{ width:22px; height:22px; font-size:.82rem; }
+    /* card becomes a bottom sheet */
+    .hd-card{ position:fixed; left:0; right:0; bottom:0; width:100%; max-width:100%;
+      margin:0; border-radius:22px 22px 0 0; padding:1.5rem 1.3rem calc(1.6rem + env(safe-area-inset-bottom,0px));
+      transform:translateY(102%); transform-origin:bottom center;
+      box-shadow:0 -16px 48px rgba(17,17,17,.26); z-index:60; }
+    .hana-dock.is-open .hd-card{ transform:translateY(0); }
+    /* grab handle */
+    .hd-card::before{ content:""; position:absolute; top:.6rem; left:50%; transform:translateX(-50%);
+      width:38px; height:4px; border-radius:100px; background:rgba(17,17,17,.16); }
+    .hd-card h4{ font-size:1.3rem; }
+    .hd-card p{ font-size:.9rem; }
+    .hd-x{ top:.85rem; right:1rem; font-size:1.15rem; }
+    /* dim backdrop behind the sheet */
+    .hd-scrim{ position:fixed; inset:0; background:rgba(17,17,17,.42); opacity:0; pointer-events:none;
+      transition:opacity .3s ease; z-index:55; }
+    .hana-dock.is-open ~ .hd-scrim,
+    body.hd-card-open .hd-scrim{ opacity:1; pointer-events:auto; }
+  }
+  @media (max-width:760px) and (prefers-reduced-motion:reduce){
+    .hd-card{ transition:opacity .2s ease; }
+  }
 </style>
 </head>
 <body>
@@ -1657,6 +1686,7 @@ if (document.readyState === "complete" || document.readyState === "interactive")
       <span class="hd-caret" aria-hidden="true">▲</span>
     </button>
   </div>
+  <div class="hd-scrim" aria-hidden="true"></div>
   <script>
     (function(){
       var dock=document.getElementById('hanaDock'); if(!dock) return;
@@ -1665,6 +1695,7 @@ if (document.readyState === "complete" || document.readyState === "interactive")
       function shut(){ dock.classList.remove('is-open'); document.body.classList.remove('hd-card-open'); toggle.setAttribute('aria-expanded','false'); }
       toggle.addEventListener('click', function(){ dock.classList.contains('is-open')?shut():open(); });
       x.addEventListener('click', shut);
+      var scrim=document.querySelector('.hd-scrim'); if(scrim) scrim.addEventListener('click', shut);
       document.addEventListener('keydown', function(e){ if(e.key==='Escape') shut(); });
 
       /* One-shot pulse when the Korea (Seorak) guide scrolls into view */
