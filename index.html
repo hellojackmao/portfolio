@@ -1861,6 +1861,7 @@
         btn.setAttribute('aria-expanded', 'false');
       }
 
+      btn.dataset.shareBound = '1';
       btn.addEventListener('click', e => {
         e.stopPropagation();
         if (popup.classList.contains('open')) { closePopup(); } else { openPopup(); }
@@ -1899,6 +1900,46 @@
     }
     if (document.readyState==='complete') setTimeout(showHero,1200);
     else window.addEventListener('load', function(){ setTimeout(showHero,1200); });
+  })();
+</script>
+<script>
+  /* Resilient floating-button wiring — runs independently of the main script block
+     so an error (or content blocker) elsewhere can never leave these buttons stuck hidden. */
+  (function(){
+    function wire(){
+      try {
+        var btt = document.getElementById('back-to-top');
+        var share = document.getElementById('share-btn');
+        function onScroll(){
+          var y = window.scrollY || document.documentElement.scrollTop || 0;
+          if (btt){ btt.classList.toggle('visible', y > 400); }
+          if (share){ share.classList.toggle('visible', y > 400); }
+        }
+        window.addEventListener('scroll', onScroll, { passive:true });
+        onScroll();
+        // Ensure back-to-top click always works even if its main handler never bound.
+        if (btt && !btt.dataset.bttBound){
+          btt.dataset.bttBound = '1';
+          btt.addEventListener('click', function(){
+            try { window.scrollTo({ top:0, behavior:'smooth' }); }
+            catch(e){ window.scrollTo(0,0); }
+          });
+        }
+        // Ensure the share button's QR popup opens even if its main handler never bound.
+        var wrap = document.getElementById('share-btn-wrap');
+        var popup = document.getElementById('shareQrPopup');
+        if (share && popup && wrap && !share.dataset.shareBound){
+          share.dataset.shareBound = '1';
+          var openP = function(){ popup.classList.add('open'); popup.setAttribute('aria-hidden','false'); popup.removeAttribute('inert'); share.setAttribute('aria-expanded','true'); };
+          var closeP = function(){ popup.classList.remove('open'); popup.setAttribute('aria-hidden','true'); popup.setAttribute('inert',''); share.setAttribute('aria-expanded','false'); };
+          share.addEventListener('click', function(e){ e.stopPropagation(); if (popup.classList.contains('open')) closeP(); else openP(); });
+          document.addEventListener('click', function(e){ if (!wrap.contains(e.target)) closeP(); });
+          document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeP(); });
+        }
+      } catch(e){ /* never throw */ }
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', wire);
+    else wire();
   })();
 </script>
 </body>
