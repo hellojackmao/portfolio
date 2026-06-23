@@ -878,7 +878,19 @@ function maybeFinishDay() {
 
 /* ---------- TTS ---------- */
 let koVoice = null;
-function loadVoices() {
+// iOS unlocks speechSynthesis only via a gesture-bound speak(). Changing the
+  // voice can re-lock it, so prime with an inaudible utterance inside the gesture.
+  let speechPrimed = false;
+  function primeSpeech() {
+    if (!("speechSynthesis" in window)) return;
+    try {
+      const u = new SpeechSynthesisUtterance(" ");
+      u.volume = 0; u.rate = 2;
+      speechSynthesis.speak(u);
+      speechPrimed = true;
+    } catch (e) {}
+  }
+  function loadVoices() {
   if (!("speechSynthesis" in window)) return;
   const all = speechSynthesis.getVoices() || [];
   const ko = all.filter(v => /^ko/i.test(v.lang));
@@ -1484,7 +1496,7 @@ function openSettings() {
   `);
   loadVoices();
   $$("[data-goal]").forEach(b => b.addEventListener("click", () => { state.goalMin = +b.dataset.goal; save(); openSettings(); }));
-  $("#voiceSel").addEventListener("change", e => { state.voice.name = e.target.value; save(); loadVoices(); });
+  $("#voiceSel").addEventListener("change", e => { state.voice.name = e.target.value; save(); loadVoices(); primeSpeech(); });
   $("#rateRange").addEventListener("input", e => { state.voice.rate = +e.target.value; $("#rateVal").textContent = state.voice.rate.toFixed(2) + "×"; save(); });
   $("#pitchRange").addEventListener("input", e => { state.voice.pitch = +e.target.value; $("#pitchVal").textContent = state.voice.pitch.toFixed(2); save(); });
   $("#voiceTest").addEventListener("click", () => speak("안녕하세요"));
@@ -1536,6 +1548,13 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => { navigator.serviceWorker.register("./sw.js").catch(() => { }); });
 }
 
-  </script>
+  
+  // One-time speech unlock on the very first user gesture (iOS safety net).
+  (function(){
+    function unlock(){ primeSpeech(); document.removeEventListener("pointerdown", unlock); document.removeEventListener("touchstart", unlock); }
+    document.addEventListener("pointerdown", unlock, { once:false, passive:true });
+    document.addEventListener("touchstart", unlock, { once:false, passive:true });
+  })();
+</script>
 </body>
 </html>
