@@ -955,7 +955,10 @@ function speak(text) {
         const minMs = Math.max(350, text.length * 90); // rough lower bound for real speech
         u.onend = () => { if (Date.now() - started < minMs) voiceHint(); };
       }
+      u.onstart = () => { if (window.__hanaDebug) toast("dbg EVT: onstart fired ✓"); };
+      u.onend = (window.__hanaDebug ? () => toast("dbg EVT: onend fired") : u.onend);
       u.onerror = (ev) => {
+        if (window.__hanaDebug) { toast("dbg EVT: onerror = " + (ev && ev.error ? ev.error : "unknown")); return; }
         if (ev && (ev.error === "interrupted" || ev.error === "canceled")) return;
         toast("Couldn't play audio on this device.");
       };
@@ -967,8 +970,7 @@ function speak(text) {
               " paused=" + speechSynthesis.paused + " primed=" + (typeof speechPrimed!=="undefined"?speechPrimed:"n/a")) : null;
       speechSynthesis.speak(u);
       if (window.__hanaDebug) {
-        toast("dbg: " + __dbgBefore + " | justCalled");
-        setTimeout(function(){ toast("dbg after: speaking=" + speechSynthesis.speaking + " pending=" + speechSynthesis.pending); }, 600);
+        setTimeout(function(){ toast("dbg @100ms: speaking=" + speechSynthesis.speaking + " pending=" + speechSynthesis.pending); }, 100);
       }
     } catch (e) {
       toast("Couldn't play audio on this device.");
