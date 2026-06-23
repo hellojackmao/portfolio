@@ -926,9 +926,13 @@ function speak(text) {
       // If we never resolved a Korean voice, try once more right before speaking.
       if (!koVoice) loadVoices();
 
-      // No Korean voice installed at all → speech will be silent. Tell the user how to fix it.
-      const hasKorean = (speechSynthesis.getVoices() || []).some(v => /^ko/i.test(v.lang));
-      if (!hasKorean) { voiceHint(); return; }
+      // iOS often returns an empty getVoices() list until speech runs once.
+      // Treat "empty list" as "unknown" (try anyway) — only show the hint when the
+      // list is actually populated but contains no Korean voice. Otherwise the
+      // empty-list quirk falsely blocks playback on iPhones that CAN speak Korean.
+      const voices = speechSynthesis.getVoices() || [];
+      const hasKorean = voices.some(v => /^ko/i.test(v.lang));
+      if (voices.length > 0 && !hasKorean) { voiceHint(); return; }
 
       const u = new SpeechSynthesisUtterance(text);
       u.lang = "ko-KR";
