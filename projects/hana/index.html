@@ -877,7 +877,8 @@ function maybeFinishDay() {
 }
 
 /* ---------- TTS ---------- */
-let koVoice = null;
+window.__hanaDebug = /[?&]debug\b/.test(location.search);
+  let koVoice = null;
 // iOS unlocks speechSynthesis only via a gesture-bound speak(). Changing the
   // voice can re-lock it, so prime with an inaudible utterance inside the gesture.
   let speechPrimed = false;
@@ -956,7 +957,15 @@ function speak(text) {
 
       // Chrome can get stuck in a paused state; make sure we're running.
       try { speechSynthesis.resume(); } catch (e) {}
+      if (window.__hanaDebug) {
+        toast("dbg: voices=" + voices.length + " ko=" + hasKorean +
+              " speaking=" + speechSynthesis.speaking + " paused=" + speechSynthesis.paused +
+              " primed=" + (typeof speechPrimed!=="undefined"?speechPrimed:"n/a"));
+      }
       speechSynthesis.speak(u);
+      if (window.__hanaDebug) {
+        setTimeout(function(){ toast("dbg after: speaking=" + speechSynthesis.speaking + " pending=" + speechSynthesis.pending); }, 600);
+      }
     } catch (e) {
       toast("Couldn't play audio on this device.");
     }
@@ -970,7 +979,9 @@ function speak(text) {
                 (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   try {
     if (isIOS) {
-      try { speechSynthesis.cancel(); } catch (e) {}
+      // iOS: do NOT cancel before speaking — cancel()+speak() in the same tick can
+      // leave the engine queued-but-silent. Only cancel if actually mid-utterance.
+      if (speechSynthesis.speaking) { try { speechSynthesis.cancel(); } catch (e) {} }
       fire();
     } else if (speechSynthesis.speaking || speechSynthesis.pending) {
       speechSynthesis.cancel();
