@@ -879,6 +879,9 @@ function maybeFinishDay() {
 /* ---------- TTS ---------- */
 window.__hanaDebug = /[?&]debug\b/.test(location.search);
   let koVoice = null;
+  // iOS WebKit can garbage-collect a SpeechSynthesisUtterance before it finishes,
+  // causing speech to silently never start. Keep recent utterances referenced.
+  window.__hanaUtterances = window.__hanaUtterances || [];
 // iOS unlocks speechSynthesis only via a gesture-bound speak(). Changing the
   // voice can re-lock it, so prime with an inaudible utterance inside the gesture.
   let speechPrimed = false;
@@ -936,6 +939,8 @@ function speak(text) {
       if (voices.length > 0 && !hasKorean) { voiceHint(); return; }
 
       const u = new SpeechSynthesisUtterance(text);
+      window.__hanaUtterances.push(u);
+      if (window.__hanaUtterances.length > 8) window.__hanaUtterances.shift();
       u.lang = "ko-KR";
       if (koVoice) { u.voice = koVoice; u.lang = koVoice.lang || "ko-KR"; }
       u.rate = state.voice.rate; u.pitch = state.voice.pitch;
@@ -956,14 +961,13 @@ function speak(text) {
       };
 
       // Chrome can get stuck in a paused state; make sure we're running.
+      // Nothing must run between the gesture and speak() on iOS — speak FIRST.
       try { speechSynthesis.resume(); } catch (e) {}
-      if (window.__hanaDebug) {
-        toast("dbg: voices=" + voices.length + " ko=" + hasKorean +
-              " speaking=" + speechSynthesis.speaking + " paused=" + speechSynthesis.paused +
-              " primed=" + (typeof speechPrimed!=="undefined"?speechPrimed:"n/a"));
-      }
+      const __dbgBefore = window.__hanaDebug ? ("voices=" + voices.length + " ko=" + hasKorean +
+              " paused=" + speechSynthesis.paused + " primed=" + (typeof speechPrimed!=="undefined"?speechPrimed:"n/a")) : null;
       speechSynthesis.speak(u);
       if (window.__hanaDebug) {
+        toast("dbg: " + __dbgBefore + " | justCalled");
         setTimeout(function(){ toast("dbg after: speaking=" + speechSynthesis.speaking + " pending=" + speechSynthesis.pending); }, 600);
       }
     } catch (e) {
