@@ -665,48 +665,18 @@
       will-change: opacity, transform;
     }
 #nav-up.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
-#nav-up::before {
-      content: '';
-      position: absolute; inset: 0;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.04);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      transition: border-color 0.3s, background 0.3s;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.06) inset;
-    }
-#nav-up:hover::before {
-      border-color: rgba(204,255,0,0.45);
-      background: rgba(204,255,0,0.06);
-    }
+
+
 .btt-ring {
       position: absolute; inset: 0;
-      width: 100%; height: 100%;
+      width: 100%; height: 100%; transform-origin: center; transform-box: fill-box;
       animation: btt-spin 10s linear infinite;
       animation-play-state: paused;
     }
 #nav-up:hover .btt-ring,
+    #nav-up:active .btt-ring,
     #nav-up.spinning .btt-ring { animation-play-state: running; }
-.btt-ring-text {
-      font-family: 'DM Mono', monospace;
-      font-size: 10.5px;
-      fill: rgba(255,255,255,0.35);
-      letter-spacing: 0.208em;
-      text-transform: uppercase;
-    }
-#nav-up:hover .btt-ring-text { fill: rgba(204,255,0,0.7); }
-.btt-arrow {
-      position: relative; z-index: 1;
-      width: 22px; height: 22px;
-      color: rgba(255,255,255,0.6);
-      transition: color 0.3s;
-      flex-shrink: 0;
-    }
-#nav-up:hover .btt-arrow {
-      color: var(--lime);
-      animation: float-idle 1.2s ease-in-out infinite;
-    }
+
 /* ======================================
        V1 DESKTOP (≥769px) — strip glass, flush nav
     ====================================== */
@@ -736,118 +706,35 @@
 #qr-trigger.visible {
       opacity: 1; transform: translateY(0); pointer-events: all;
     }
-#qr-trigger::before {
-      content: '';
-      position: absolute; inset: 0;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255,0.08);
-      background: rgba(255,255,255,0.04);
-      transition: border-color .3s, background .3s;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.35), 0 1px 4px rgba(0,0,0,0.2);
-    }
+
 #qr-trigger:hover::before,
     #qr-trigger[aria-expanded="true"]::before {
-      border-color: rgba(204,255,0,0.45);
-      background: rgba(204,255,0,0.06);
+      border-color: rgba(204,255,0,0.5);
+      background: rgba(15,14,26,0.6);
     }
 /* Spinning ring */
     .share-ring {
       position: absolute; inset: 0;
-      width: 100%; height: 100%;
+      width: 100%; height: 100%; transform-origin: center; transform-box: fill-box;
       animation: btt-spin 10s linear infinite;
       animation-play-state: paused;
     }
 #qr-trigger:hover .share-ring,
-    #qr-trigger[aria-expanded="true"] .share-ring {
+    #qr-trigger:active .share-ring {
       animation-play-state: running;
     }
-.share-ring-text {
-      font-family: 'DM Mono', monospace;
-      font-size: 10.5px;
-      fill: rgba(255,255,255,0.35);
-      letter-spacing: 0.154em;
-      text-transform: uppercase;
-    }
-#qr-trigger:hover .share-ring-text,
-    #qr-trigger[aria-expanded="true"] .share-ring-text {
-      fill: rgba(204,255,0,0.7);
-    }
-#qr-trigger:hover .share-icon,
-    #qr-trigger[aria-expanded="true"] .share-icon {
-      color: var(--lime);
-    }
-/* QR popup */
-    .share-qr-popup {
-      position: absolute;
-      bottom: calc(100% + .75rem);
-      left: 0;
-      transform: translateY(10px) scale(0.92);
-      transform-origin: bottom left;
-      background: var(--navy2);
-      border: 1px solid rgba(204,255,0,0.2);
-      border-radius: 20px;
-      padding: 1rem 1rem .85rem;
-      box-shadow:
-        0 24px 64px rgba(0,0,0,.7),
-        0 0 0 1px rgba(255,255,255,0.06),
-        0 0 32px rgba(204,255,0,0.08);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: .65rem;
-      width: 192px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity .25s cubic-bezier(.16,1,.3,1),
-                  transform .25s cubic-bezier(.16,1,.3,1);
-    }
-.share-qr-popup.open {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-      pointer-events: auto;
-    }
-.share-qr-popup svg,
-    .share-qr-popup img {
-      width: 100%; height: auto; display: block;
-      border-radius: 12px;
-      background: var(--cream);
-      padding: .6rem;
-    }
-.share-qr-label {
-      font-family: 'DM Mono', monospace;
-      font-size: .6rem;
-      letter-spacing: .1em;
-      color: rgba(255,255,255,0.55);
-      text-align: center;
-      width: 100%;
-    }
-.share-qr-title {
-      font-family: 'Syne', sans-serif;
-      font-size: .7rem;
-      font-weight: 700;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      color: var(--lime);
-      text-align: center;
-      width: 100%;
-    
-      text-decoration: none;
-    }
+
 @media (max-width: 768px) {
 
       #qr-wrap {
         bottom: calc(1.25rem + env(safe-area-inset-bottom));
         left: 1.25rem;
         width: 64px; height: 64px;
-      }
-
-      .share-qr-popup { width: 172px; }
-}
+      }}
 @media (prefers-reduced-motion: reduce) {
 
       .hero-scroll, .avail-dot, .btt-arrow,
-      #nav-up:hover .btt-arrow,
-      .marquee-inner, .gradient-divider, .dt-dot { animation: none; }
+      
 }
 @media (max-width: 768px) {
 
@@ -897,8 +784,7 @@
 @media (prefers-reduced-motion: reduce) {
 
       .hero-scroll, .avail-dot, .btt-arrow,
-      #nav-up:hover .btt-arrow,
-      .marquee-inner, .gradient-divider, .dt-dot { animation: none; }
+      
 }
 /* -- Page transition -- */
     #page-veil {
@@ -918,17 +804,115 @@
 /* share icon (recovered) */
 
 /* QR icon base (recovered verbatim) */
-.share-icon { position: relative; z-index: 1; width: 22px; height: 22px; color: rgba(255,255,255,0.6); transition: color .3s; flex-shrink: 0; }
+ { position: relative; z-index: 1; width: 22px; height: 22px; color: rgba(15,14,26,0.9); transition: color .3s; flex-shrink: 0; }
 
 /* Fallback: if backdrop-filter is unavailable (hardened/blocker browsers),
    give the floating buttons a solid fill so they stay clearly visible. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  #nav-up::before { background: rgba(22, 21, 43, 0.92); border-color: rgba(255,255,255,0.14); }
-  #qr-trigger::before { background: rgba(22, 21, 43, 0.92); border-color: rgba(255,255,255,0.14); }
-  .about-badge { background: rgba(22, 21, 43, 0.92); }
+  
+  
+  .about-badge { background: rgba(255,255,255,0.04); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
 }
 
-  </style>
+  
+
+/* Prevent ring guide-paths from painting (they live in <defs> and must never fill) */
+
+
+
+
+
+/* Ring-text base typography (restored) — identical across all 3 buttons */
+
+
+
+/* ===== Floating buttons — unified translucent design (all 3 identical) ===== */
+#nav-up::before, #qr-trigger::before, #askbot-launch::before {
+  content: ''; position: absolute; inset: 0; border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.04);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  transition: border-color 0.3s, background 0.3s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25), 0 1px 0 rgba(255,255,255,0.06) inset;
+}
+#nav-up:hover::before, #qr-trigger:hover::before,
+#askbot-launch:hover::before, #askbot-launch[aria-expanded="true"]::before {
+  border-color: rgba(204,255,0,0.45); background: rgba(204,255,0,0.06);
+}
+.btt-ring-text, .share-ring-text, .ask-ring-text {
+  font-family: 'DM Mono', monospace; font-size: 10.5px;
+  fill: rgba(255,255,255,0.35); letter-spacing: 0.22em; text-transform: uppercase;
+}
+#nav-up:hover .btt-ring-text, #qr-trigger:hover .share-ring-text,
+#askbot-launch:hover .ask-ring-text, #askbot-launch[aria-expanded="true"] .ask-ring-text {
+  fill: rgba(204,255,0,0.7);
+}
+.btt-arrow, .share-icon, .ask-icon {
+  position: relative; z-index: 1; width: 22px; height: 22px;
+  color: rgba(255,255,255,0.6); transition: color 0.3s; flex-shrink: 0;
+}
+#nav-up:hover .btt-arrow, #qr-trigger:hover .share-icon,
+#askbot-launch:hover .ask-icon, #askbot-launch[aria-expanded="true"] .ask-icon {
+  color: var(--lime);
+}
+
+
+/* Per-button ring letter-spacing tuned so text fills the circle naturally (even spacing, minimal stretch) */
+.btt-ring-text { letter-spacing: 0.231em; }
+.ask-ring-text { letter-spacing: 0.231em; }
+.share-ring-text { letter-spacing: 0.175em; }
+
+/* ===== Ask-about-my-work bot ===== */
+#askbot-launch {
+  position: fixed; bottom: calc(2rem + 88px); right: 2rem; width: 72px; height: 72px;
+  z-index: 500; border: 0; padding: 0; background: transparent; color: inherit; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transform: translateY(8px); pointer-events: none;
+  transition: opacity .4s cubic-bezier(.16,1,.3,1), transform .4s cubic-bezier(.16,1,.3,1);
+}
+#askbot-launch.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+
+.ask-ring { position: absolute; inset: 0; width: 100%; height: 100%; transform-origin: center; transform-box: fill-box; animation: btt-spin 10s linear infinite; animation-play-state: paused; }
+#askbot-launch:hover .ask-ring, #askbot-launch:active .ask-ring, #askbot-launch[aria-expanded="true"] .ask-ring { animation-play-state: running; }
+
+@supports not ((backdrop-filter: blur(12px)) or (-webkit-backdrop-filter: blur(12px))) {  }
+@media (max-width: 640px){
+  #askbot-launch { bottom: calc(1.25rem + 80px + env(safe-area-inset-bottom)); right: 1.25rem; width: 64px; height: 64px; z-index: 100001; }
+  
+}
+/* panel */
+#askbot-panel {
+  position: fixed; right: 2rem; bottom: calc(2rem + 88px); z-index: 100002;
+  width: min(380px, calc(100vw - 2rem)); height: min(520px, calc(100vh - 12rem));
+  display: flex; flex-direction: column; overflow: hidden;
+  background: var(--navy2); border: 1px solid rgba(255,255,255,.1); border-radius: 20px;
+  box-shadow: 0 24px 70px rgba(0,0,0,.5);
+  opacity: 0; transform: translateY(12px) scale(.98); pointer-events: none;
+  transition: opacity .26s cubic-bezier(.16,1,.3,1), transform .26s cubic-bezier(.16,1,.3,1);
+}
+#askbot-panel.open { opacity: 1; transform: none; pointer-events: auto; }
+@media (max-width: 640px){ #askbot-panel { right: 1.25rem; bottom: calc(1.25rem + 72px + env(safe-area-inset-bottom)); } }
+@media (prefers-reduced-motion: reduce){ #askbot-panel{ transition: opacity .15s; transform: none; }  }
+.askbot-head{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.1rem;border-bottom:1px solid rgba(255,255,255,.08);}
+.askbot-head .t{font-weight:800;font-size:.98rem;font-family:'Syne',sans-serif;color:var(--cream);}
+.askbot-head .s{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--lime);margin-top:.15rem;}
+.askbot-close{background:none;border:0;color:var(--muted);font-size:1.4rem;line-height:1;cursor:pointer;padding:.2rem .4rem;border-radius:8px;}
+.askbot-close:hover{color:var(--cream);background:rgba(255,255,255,.06);}
+.askbot-log{flex:1;overflow-y:auto;padding:1.1rem;display:flex;flex-direction:column;gap:.7rem;}
+.askbot-log .msg{max-width:85%;padding:.7rem .9rem;border-radius:14px;font-size:.88rem;line-height:1.55;font-family:'Syne',sans-serif;}
+.askbot-log .msg.bot{align-self:flex-start;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.07);border-bottom-left-radius:4px;color:var(--cream);}
+.askbot-log .msg.user{align-self:flex-end;background:var(--purple);color:#fff;border-bottom-right-radius:4px;}
+.askbot-log .msg a{color:var(--lime);text-decoration:underline;text-underline-offset:2px;}
+.askbot-chips{display:flex;flex-wrap:wrap;gap:.45rem;padding:.2rem 1.1rem .4rem;}
+.askbot-chips .chip{background:rgba(204,255,0,.08);border:1px solid rgba(204,255,0,.3);color:var(--lime);font-family:'DM Mono',monospace;font-size:.72rem;padding:.4rem .7rem;border-radius:999px;cursor:pointer;transition:background .15s;}
+.askbot-chips .chip:hover{background:rgba(204,255,0,.16);}
+.askbot-input{display:flex;gap:.5rem;padding:.8rem 1.1rem 1rem;border-top:1px solid rgba(255,255,255,.08);}
+.askbot-input input{flex:1;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:10px;color:var(--cream);font-family:'Syne',sans-serif;font-size:.88rem;padding:.6rem .8rem;outline:none;}
+.askbot-input input:focus{border-color:var(--purple-light);}
+.askbot-input button{background:var(--lime);border:0;border-radius:10px;color:var(--navy);font-weight:800;padding:0 .9rem;cursor:pointer;font-family:'Syne',sans-serif;}
+.askbot-foot{text-align:center;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;color:var(--muted);padding:0 0 .7rem;text-transform:uppercase;}
+.page-leaving #askbot-launch, .page-leaving #askbot-panel { opacity:0 !important; pointer-events:none !important; }
+
+</style>
   <link rel="canonical" href="/"/>
 
   <script type="application/ld+json">
@@ -1333,11 +1317,9 @@
   <a id="nav-up" href="#top" aria-label="Back to top">
     <svg class="btt-ring" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <path id="navup-circle-path" d="M 60,60 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/>
+        <path id="navup-circle-path" fill="none" stroke="none" d="M 60,60 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/>
       </defs>
-      <text class="btt-ring-text">
-        <textPath href="#navup-circle-path" startOffset="0%">BACK TO TOP · BACK TO TOP · </textPath>
-      </text>
+      <text class="btt-ring-text" fill="none"><textPath href="#navup-circle-path" startOffset="0%" textLength="238.8" lengthAdjust="spacing">BACK TO TOP · BACK TO TOP · </textPath></text>
     </svg>
     <svg class="btt-arrow" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <line x1="12" y1="19" x2="12" y2="5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
@@ -1347,33 +1329,19 @@
 
   <!-- Share / QR button -->
   <div id="qr-wrap">
-    <div class="share-qr-popup" id="qrPanel" aria-hidden="true" inert>
-      <div class="share-qr-inner" style="display:flex;flex-direction:column;align-items:center;gap:.65rem;width:100%;">
-        <a class="share-qr-title" href="share.html">Scan to visit</a>
-        <img src="images/qr-hellojackmao.svg" alt="QR code for hellojackmao.com" width="450" height="450" loading="lazy"/>
-        <span class="share-qr-label">hellojackmao.com</span>
-      </div>
-    </div>
-    <button id="qr-trigger" type="button" aria-label="Show QR code to share portfolio" aria-expanded="false">
-      <svg class="share-ring" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <a id="qr-trigger" href="share.html" aria-label="Go to share page">
+        <svg class="share-ring" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <path id="qr-circle-path" d="M 60,60 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/>
         </defs>
-        <text class="share-ring-text">
-          <textPath href="#qr-circle-path" startOffset="0%">SHARE · SCAN · SHARE · SCAN · </textPath>
-        </text>
+        <text class="share-ring-text" fill="none"><textPath href="#qr-circle-path" startOffset="0%" textLength="238.8" lengthAdjust="spacing">SHARE · SCAN · SHARE · SCAN · </textPath></text>
       </svg>
-      <svg class="share-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none">
-        <rect x="3"  y="3"  width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/>
-        <rect x="14" y="3"  width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/>
-        <rect x="3"  y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/>
-        <rect x="16" y="16" width="2" height="2" fill="currentColor"/>
-        <rect x="19" y="16" width="2" height="2" fill="currentColor"/>
-        <rect x="16" y="19" width="2" height="2" fill="currentColor"/>
-        <rect x="19" y="19" width="2" height="2" fill="currentColor"/>
+        <svg class="share-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+        <path d="M12 15V4M12 4L8 8M12 4l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5 13v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-    </button>
-  </div>
+      </a>
+    </div>
 
   <script>
     // ── Intent toggle (annotation layer) ──
@@ -1701,22 +1669,24 @@
     startRevealObserver();
     // -- Back to top --
     const btt = document.getElementById('nav-up');
-    function updateBackToTop() {
-      if (window.scrollY > 400) {
-        btt.classList.add('visible');
-      } else {
-        btt.classList.remove('visible');
-      }
+    if (btt) {
+      btt.dataset.bttBound = '1';
+      const updateBackToTop = () => {
+        if (window.scrollY > 400) { btt.classList.add('visible'); }
+        else { btt.classList.remove('visible'); }
+      };
+      window.addEventListener('scroll', updateBackToTop, { passive: true });
+      updateBackToTop();
+      btt.addEventListener('click', (e) => {
+        e.preventDefault();
+        btt.classList.add('spinning');
+        try { window.scrollTo({ top: 0, behavior: 'smooth' }); } catch (err) { window.scrollTo(0, 0); }
+        if (history.replaceState) { try { history.replaceState(null, '', location.pathname + location.search); } catch (err) {} }
+        setTimeout(() => btt.classList.remove('spinning'), 1200);
+      });
+      btt.addEventListener('mouseenter', () => { if (cursor) cursor.classList.add('hovering'); });
+      btt.addEventListener('mouseleave', () => { if (cursor) cursor.classList.remove('hovering'); });
     }
-    window.addEventListener('scroll', updateBackToTop, { passive: true });
-    updateBackToTop();
-    btt.addEventListener('click', () => {
-      btt.classList.add('spinning');
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setTimeout(() => btt.classList.remove('spinning'), 1200);
-    });
-    btt.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
-    btt.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
 
 
     // -- Haptic-style tap feedback --
@@ -1830,57 +1800,16 @@
       });
     })();
   
-    // ── Share / QR button ──
+    // ── Share button cursor hover (navigation handled by global link handler) ──
     (function() {
-      const wrap   = document.getElementById('qr-wrap');
-      const btn    = document.getElementById('qr-trigger');
-      const popup  = document.getElementById('qrPanel');
-      if (!btn || !popup) return;
-
-      // Show/hide with scroll (mirrors nav-up)
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 400) {
-          btn.classList.add('visible');
-        } else {
-          btn.classList.remove('visible');
-          closePopup();
-        }
-      }, { passive: true });
-
-      function openPopup() {
-        popup.classList.add('open');
-        popup.setAttribute('aria-hidden', 'false'); popup.removeAttribute('inert');
-        btn.setAttribute('aria-expanded', 'true');
-      }
-      function closePopup() {
-        popup.classList.remove('open');
-        popup.setAttribute('aria-hidden', 'true'); popup.setAttribute('inert', '');
-        btn.setAttribute('aria-expanded', 'false');
-      }
-
-      btn.dataset.shareBound = '1';
-      btn.addEventListener('click', e => {
-        e.stopPropagation();
-        if (popup.classList.contains('open')) { closePopup(); } else { openPopup(); }
-      });
-
-      // Close on outside click
-      document.addEventListener('click', e => {
-        if (!wrap.contains(e.target)) closePopup();
-      });
-
-      // Close on Escape
-      document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') closePopup();
-      });
-
-      // Cursor hover
-      btn.addEventListener('mouseenter', () => {
-        const cur = document.getElementById('cursor');
+      var btn = document.getElementById('qr-trigger');
+      if (!btn) return;
+      btn.addEventListener('mouseenter', function () {
+        var cur = document.getElementById('cursor');
         if (cur) cur.classList.add('hovering');
       });
-      btn.addEventListener('mouseleave', () => {
-        const cur = document.getElementById('cursor');
+      btn.addEventListener('mouseleave', function () {
+        var cur = document.getElementById('cursor');
         if (cur) cur.classList.remove('hovering');
       });
     })();
@@ -1917,21 +1846,7 @@
         // Ensure nav-up click always works even if its main handler never bound.
         if (btt && !btt.dataset.bttBound){
           btt.dataset.bttBound = '1';
-          btt.addEventListener('click', function(){
-            try { window.scrollTo({ top:0, behavior:'smooth' }); }
-            catch(e){ window.scrollTo(0,0); }
-          });
-        }
-        // Ensure the share button's QR popup opens even if its main handler never bound.
-        var wrap = document.getElementById('qr-wrap');
-        var popup = document.getElementById('qrPanel');
-        if (share && popup && wrap && !share.dataset.shareBound){
-          share.dataset.shareBound = '1';
-          var openP = function(){ popup.classList.add('open'); popup.setAttribute('aria-hidden','false'); popup.removeAttribute('inert'); share.setAttribute('aria-expanded','true'); };
-          var closeP = function(){ popup.classList.remove('open'); popup.setAttribute('aria-hidden','true'); popup.setAttribute('inert',''); share.setAttribute('aria-expanded','false'); };
-          share.addEventListener('click', function(e){ e.stopPropagation(); if (popup.classList.contains('open')) closeP(); else openP(); });
-          document.addEventListener('click', function(e){ if (!wrap.contains(e.target)) closeP(); });
-          document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeP(); });
+          btt.addEventListener('click', function(e){ e.preventDefault(); try { window.scrollTo({ top:0, behavior:'smooth' }); } catch(err){ window.scrollTo(0,0); } if(history.replaceState){ history.replaceState(null,'',location.pathname+location.search); } });
         }
       } catch(e){ /* never throw */ }
     }
@@ -1939,5 +1854,125 @@
     else wire();
   })();
 </script>
+
+<!-- Ask-about-my-work bot -->
+<button id="askbot-launch" type="button" aria-label="Ask about my work">
+      <svg class="ask-ring" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <path id="ask-circle-path" fill="none" stroke="none" d="M 60,60 m -38,0 a 38,38 0 1,1 76,0 a 38,38 0 1,1 -76,0"/>
+        </defs>
+        <text class="ask-ring-text" fill="none"><textPath href="#ask-circle-path" startOffset="0%" textLength="238.8" lengthAdjust="spacing">ASK · ABOUT · ASK · ABOUT · </textPath></text>
+      </svg>
+      <svg class="ask-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+        <path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.6-.8L3 21l1.9-5.4A8.38 8.38 0 0 1 4 11.5 8.5 8.5 0 0 1 12.5 3 8.38 8.38 0 0 1 21 11.5z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </button>
+<div id="askbot-panel" role="dialog" aria-label="Ask about Jack's work" aria-hidden="true">
+    <div class="askbot-head">
+      <div>
+        <div class="t">Ask about my work</div>
+        <div class="s">✦ Scripted · no AI, no tracking</div>
+      </div>
+      <button class="askbot-close" aria-label="Close">×</button>
+    </div>
+    <div class="askbot-log" id="askbot-log"></div>
+    <div class="askbot-chips" id="askbot-chips"></div>
+    <div class="askbot-input">
+      <input id="askbot-text" type="text" placeholder="Type a question…" aria-label="Type a question">
+      <button id="askbot-send" aria-label="Send">→</button>
+    </div>
+    <div class="askbot-foot">Answers are pre-written by Jack</div>
+  </div>
+<script>
+(function(){
+  // ----- knowledge base: [keywords], answer -----
+  // Order matters: specific intents first, generic identity last. Keywords are
+  // distinctive substrings only — no generic words like "you" that collide.
+  var KB = [
+    {k:["contact","hire","hiring","email","reach","available","job","role","work with","get in touch"], a:"Jack is open to designer, visual designer, and product design roles. Email <a href='mailto:jack.mao@torontomu.ca'>jack.mao@torontomu.ca</a>, or use the links in the footer."},
+    {k:["resume","cv","curriculum"], a:"The résumé link is in the top navigation — it opens Jack's full CV."},
+    {k:["game","elysium","chronicles"], a:"<a href='projects/chronicles-of-elysium.html'>Chronicles of Elysium</a> is a pitch-ready game concept — mechanics, a five-act narrative on the Hero's Journey, and an aesthetic system, produced end to end."},
+    {k:["build","code","coding","develop","engineer","engineering","technical","program","swiftui"], a:"Yes — the interactive projects here actually run. Coffee Nearby is a single-file app with no framework, Tend is a native SwiftUI iOS build, and Wayfarer is a multi-page site. All designed and coded by Jack."},
+    {k:["editorial","magazine","print","layout","publication"], a:"The editorial work includes <a href='projects/so-good.html'>So Good</a> (a full magazine reimagining of an album), <a href='projects/special-editions.html'>Special Editions</a>, and <a href='projects/light-and-form.html'>Light &amp; Form</a>."},
+    {k:["app","product","ux","ui","interactive","software","prototype"], a:"The interactive/product work: <a href='projects/coffee-nearby.html'>Coffee Nearby</a>, <a href='projects/tend-habit-tracker.html'>Tend</a> (iOS), and the Wayfarer travel site — each a working build, not just mockups."},
+    {k:["illustration","illustrate","drawing","sketch"], a:"Illustration runs throughout — most directly in <a href='projects/light-and-form.html'>Light &amp; Form</a>, which pairs an illustration series with photo editing under one formal system."},
+    {k:["best","strongest","favorite","favourite","recommend","where to start","highlight","standout","look at","should i see","what to see"], a:"A good place to start: <a href='projects/coffee-nearby.html'>Coffee Nearby</a> (a working wearable-display app), <a href='projects/tend-habit-tracker.html'>Tend</a> (native iOS), and <a href='projects/karina.html'>Karina</a> (longform editorial). They show the range."},
+    {k:["experience","background","study","studied","school","education","degree","university"], a:"Jack studied Creative Industries at Toronto Metropolitan University — a mix of design craft, business context, and cultural strategy."},
+    {k:["who","about jack","yourself","what does jack","designer"], a:"Jack is a Toronto-based multidisciplinary designer and illustrator — editorial, campaigns, and visual identity — who also builds the interactive side himself and ships it as working software."}
+  ];
+  var FALLBACK = "I only answer a few set questions about Jack's work — try one of the suggestions below, or email <a href='mailto:jack.mao@torontomu.ca'>jack.mao@torontomu.ca</a> directly.";
+  var GREETING = "Hi — I'm a little scripted guide to Jack's portfolio. Ask me something, or tap a suggestion:";
+  var CHIPS = [
+    {label:"Does he code?", q:"do you build / code"},
+    {label:"Best projects?", q:"best projects to start"},
+    {label:"Editorial work", q:"editorial work"},
+    {label:"How to contact?", q:"contact / hire"}
+  ];
+
+  var launch=document.getElementById('askbot-launch');
+  var panel=document.getElementById('askbot-panel');
+  if(!launch || !panel) return;
+  var closeBtn=panel.querySelector('.askbot-close');
+  var log=document.getElementById('askbot-log');
+  var chipsWrap=document.getElementById('askbot-chips');
+  var input=document.getElementById('askbot-text');
+  var send=document.getElementById('askbot-send');
+  var greeted=false;
+
+  function add(text, who){
+    if(!log) return;
+    var m=document.createElement('div');
+    m.className='msg '+who;
+    m.innerHTML=text;
+    log.appendChild(m);
+    log.scrollTop=log.scrollHeight;
+  }
+  function answer(q){
+    var s=q.toLowerCase();
+    for(var i=0;i<KB.length;i++){
+      for(var j=0;j<KB[i].k.length;j++){
+        if(s.indexOf(KB[i].k[j])>-1){ return KB[i].a; }
+      }
+    }
+    return FALLBACK;
+  }
+  function ask(q){
+    add(q.replace(/</g,'&lt;'),'user');
+    // tiny delay feels conversational
+    setTimeout(function(){ add(answer(q),'bot'); }, 260);
+  }
+  function renderChips(){
+    if(!chipsWrap) return;
+    chipsWrap.innerHTML='';
+    CHIPS.forEach(function(c){
+      var b=document.createElement('button');
+      b.className='chip'; b.textContent=c.label;
+      b.addEventListener('click',function(){ ask(c.q); });
+      chipsWrap.appendChild(b);
+    });
+  }
+  function open(){
+    panel.classList.add('open'); panel.setAttribute('aria-hidden','false');
+    launch.setAttribute('aria-expanded','true');
+    if(!greeted){ add(GREETING,'bot'); renderChips(); greeted=true; }
+    setTimeout(function(){ input.focus(); }, 120);
+  }
+  function close(){
+    panel.classList.remove('open'); panel.setAttribute('aria-hidden','true');
+    launch.setAttribute('aria-expanded','false');
+  }
+  launch.addEventListener('click',open);
+  if(closeBtn) closeBtn.addEventListener('click',close);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&panel.classList.contains('open')) close(); });
+  if(send) send.addEventListener('click',function(){ var v=input?input.value.trim():''; if(v){ ask(v); input.value=''; } });
+  if(input) input.addEventListener('keydown',function(e){ if(e.key==='Enter'){ var v=input.value.trim(); if(v){ ask(v); input.value=''; } } });
+
+  // Scroll-gate the launcher like the other floating buttons.
+  function gate(){ if(window.scrollY>400){ launch.classList.add('visible'); } else { launch.classList.remove('visible'); if(panel.classList.contains('open')) close(); } }
+  window.addEventListener('scroll', gate, {passive:true}); gate();
+})();
+</script>
+
+
 </body>
 </html>
