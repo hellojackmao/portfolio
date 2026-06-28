@@ -613,12 +613,15 @@ body.intent .row-desc { display: none; }
       .row-thumb.p-hana { background: #fff3df; display: flex; align-items: center; justify-content: center; font: 700 1.9rem 'Syne', sans-serif; color: #10a67a; }
       .row { grid-template-columns: 96px 1fr auto; grid-template-areas: "thumb title arrow" "thumb meta arrow"; row-gap: 0.3rem; }
 
-      /* Mobile: blurb gets its own full-width row below, with spacing (no overlap) */
+      /* Mobile: blurb sits full-width below; only the ACTIVE (cycling) row shows it */
       .row-desc {
         grid-area: auto; grid-column: 1 / -1; grid-row: auto;
-        max-width: none; max-height: none; overflow: visible;
-        opacity: 0.7; transform: none;
-        margin-top: 0.5rem;
+        max-width: none; overflow: hidden;
+        opacity: 0; max-height: 0; transform: none; margin-top: 0;
+        transition: opacity 0.45s ease, max-height 0.45s ease, margin-top 0.45s ease;
+      }
+      .row.active .row-desc {
+        opacity: 0.75; max-height: 4em; margin-top: 0.5rem;
       }
       .row-meta { max-width: none; }
       .row-thumb { grid-area: thumb; } .row-title { grid-area: title; } .row-arrow { grid-area: arrow; }
