@@ -615,8 +615,8 @@ body.intent .row-desc { display: none; }
 
 /* Light & Form mobile thumb: two mini portrait posters */
 .row-thumb.p-posters { position: relative; overflow: hidden; background: #14132a; }
-.row-thumb.p-posters img { position: absolute; height: 116%; width: auto; aspect-ratio: 683 / 1024; object-fit: cover; top: 50%; border-radius: 1px; box-shadow: 0 3px 8px rgba(0,0,0,0.5); }
-.row-thumb.p-posters img:first-child { left: 33%; transform: translate(-50%,-50%) rotate(-6deg); z-index: 1; }
+.row-thumb.p-posters img { position: absolute; height: 86%; width: auto; aspect-ratio: 683 / 1024; object-fit: cover; top: 50%; border-radius: 1.5px; box-shadow: 0 2px 6px rgba(0,0,0,0.45); }
+.row-thumb.p-posters img:first-child { left: 36%; transform: translate(-50%,-50%) rotate(-4deg); z-index: 1; }
 .row-thumb.p-posters img:last-child  { left: 64%; transform: translate(-50%,-50%) rotate(5deg); z-index: 2; }
 
 
@@ -1540,7 +1540,7 @@ body.intent .row-desc { display: none; }
           if (Date.now() - lastInteract < 5000) return;
           const next = (current + 1) % rows.length;
           activate(next, rows[next]);
-        }, 3200);
+        }, 4500);
       }
     })();
 
