@@ -535,6 +535,14 @@
       aspect-ratio: 1400 / 788; object-fit: cover; z-index: 1;
       border: 1px solid rgba(255,255,255,0.22); border-radius: 4px;
       box-shadow: 0 24px 55px rgba(0,0,0,0.55); transform: rotate(-2deg); }
+
+/* ---- p-posters: two portrait posters arranged like a designer's desk (Light & Form) ---- */
+.plate-img.p-posters { background: radial-gradient(120% 120% at 30% 20%, #1a1830 0%, #0f0e1a 70%); overflow: hidden; }
+.plate-img.p-posters::after { content: ""; position: absolute; inset: 0; background: linear-gradient(160deg, rgba(15,14,26,0) 45%, rgba(15,14,26,0.45)); z-index: 3; }
+.plate-img.p-posters img { position: absolute; height: 82%; width: auto; aspect-ratio: 683 / 1024; object-fit: cover; top: 50%; border-radius: 3px; box-shadow: 0 24px 55px rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.16); }
+.plate-img.p-posters img:first-child { left: 30%; transform: translate(-50%, -50%) rotate(-5deg); z-index: 1; }
+.plate-img.p-posters img:last-child  { left: 62%; transform: translate(-50%, -50%) rotate(4deg); z-index: 2; }
+
     .plate-img.p-cover-face img { object-fit: cover; object-position: 50% 50%; }
     .plate-img.p-cover img { object-fit: cover; }
 
@@ -604,6 +612,13 @@ body.intent .row-desc { display: none; }
     .row-thumb.p-stack img:last-child { position: absolute; right: 6%; bottom: 9%; width: 58%; height: auto;
       aspect-ratio: 1400 / 788; object-fit: cover; z-index: 2; border: 1px solid rgba(255,255,255,0.22);
       border-radius: 2px; box-shadow: 0 6px 16px rgba(0,0,0,0.5); transform: rotate(-2deg); }
+
+/* Light & Form mobile thumb: two mini portrait posters */
+.row-thumb.p-posters { position: relative; overflow: hidden; background: #14132a; }
+.row-thumb.p-posters img { position: absolute; height: 116%; width: auto; aspect-ratio: 683 / 1024; object-fit: cover; top: 50%; border-radius: 1px; box-shadow: 0 3px 8px rgba(0,0,0,0.5); }
+.row-thumb.p-posters img:first-child { left: 33%; transform: translate(-50%,-50%) rotate(-6deg); z-index: 1; }
+.row-thumb.p-posters img:last-child  { left: 64%; transform: translate(-50%,-50%) rotate(5deg); z-index: 2; }
+
 
       .row-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
       .row-thumb.p-tend { background: var(--cream); display: flex; align-items: center; justify-content: center; }
@@ -1036,7 +1051,7 @@ body.intent .row-desc { display: none; }
       <div class="work-grid">
         <div class="plate-sticky" aria-hidden="true">
           <div class="plate">
-            <div class="plate-img active" data-plate="0" aria-hidden="true"><img src="images/thumb-light-form.png" alt="" loading="lazy" decoding="async"/></div>
+            <div class="plate-img p-posters active" data-plate="0" aria-hidden="true"><img src="images/waves-02.png" alt="" loading="lazy" decoding="async"/><img src="images/waves-01.png" alt="" loading="lazy" decoding="async"/></div>
             <div class="plate-img p-stack" data-plate="1" aria-hidden="true"><img src="images/thumb-so-good.png" alt="" loading="lazy" decoding="async"/><img src="images/thumb-after-hours.png" alt="" loading="lazy" decoding="async"/></div>
             <div class="plate-img p-cover-face" data-plate="2" aria-hidden="true"><img src="images/karina-og-image.png" alt="" loading="lazy" decoding="async"/></div>
             <div class="plate-img p-cover" data-plate="3" aria-hidden="true"><img src="images/toronto-bloom-canopy.jpeg" alt="" loading="lazy" decoding="async"/></div>
@@ -1069,7 +1084,7 @@ body.intent .row-desc { display: none; }
           </div>
           <a class="row fade-up" href="projects/light-and-form.html" data-plate="0" data-cap="Light & Form · Illustration + Photo · 2021">
             <span class="row-folio" aria-hidden="true">01</span>
-            <span class="row-thumb" aria-hidden="true"><img src="images/thumb-light-form.png" alt="" loading="lazy"/></span>
+            <span class="row-thumb p-posters" aria-hidden="true"><img src="images/waves-02.png" alt="" loading="lazy"/><img src="images/waves-01.png" alt="" loading="lazy"/></span>
             <h3 class="row-title">Light &amp; Form</h3>
             <span class="row-meta">Illustration + Photo · 2021</span>
             <span class="row-arrow" aria-hidden="true">→</span>
