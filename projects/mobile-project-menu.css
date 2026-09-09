@@ -17,10 +17,22 @@
  #mobileWorkMenu :focus-visible{outline:2px solid #ccff00;outline-offset:2px}
  #mobileTabbar{transition:opacity 180ms ease,transform 220ms ease}
  #mobileTabbar.is-hidden{opacity:0;transform:translate(-50%,calc(110% + env(safe-area-inset-bottom)));pointer-events:none}
- #mobileTabbar:focus-within{opacity:1;transform:translateX(-50%);pointer-events:auto}
+ #mobileTabbar:has(:focus-visible){opacity:1;transform:translateX(-50%);pointer-events:auto}
 }
 @media(prefers-reduced-motion:reduce){#mobileWorkMenu,#mobileTabbar{transition:none}}
 
 
 
 
+
+@media(max-width:768px){
+ #mobileTabbar{left:auto;right:12px;top:auto;bottom:calc(12px + env(safe-area-inset-bottom));transform:none;display:flex;flex-direction:column;gap:4px;width:58px;max-width:58px;min-height:0;padding:6px;border-radius:32px;background:rgba(15,14,26,.68);border:1px solid #ffffff30;backdrop-filter:blur(22px) saturate(160%);-webkit-backdrop-filter:blur(22px) saturate(160%);opacity:0;pointer-events:none;box-shadow:0 8px 26px #0004}
+ #mobileTabbar.mpm-visible,#mobileTabbar:has(:focus-visible){opacity:1;transform:none;pointer-events:auto}
+ #mobileTabbar.is-hidden:not(:has(:focus-visible)){opacity:0;transform:translateY(10px);pointer-events:none}
+ #mobileTabbar a,#mobileTabbar button{flex:none;display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:44px;min-width:44px;height:44px;min-height:44px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.065);color:#f7f5ff;box-shadow:none;cursor:pointer}
+ #mobileTabbar button[aria-expanded=true]{background:rgba(204,255,0,.15);color:#ccff00}
+ #mobileTabbar :focus-visible{outline:2px solid #ccff00;outline-offset:2px}
+ #mobileWorkMenu{left:auto;right:80px;bottom:calc(12px + env(safe-area-inset-bottom));width:min(calc(100vw - 92px),360px);transform:translateY(10px)}
+ #mobileWorkMenu.is-open{transform:translateY(0)}
+ body>#back-to-top,body>.back-top,body>.portfolio-back-top-fallback{display:none!important}
+}

@@ -9,11 +9,19 @@
  let current=[...menu.querySelectorAll('a')].find(a=>new URL(a.href).pathname===location.pathname);
  if(!current){current=document.createElement('a');current.href=file;current.textContent=names[file]||document.title.split('|')[0].trim();const groups=[...menu.children].filter(e=>e.tagName==='SPAN');const group=groups.find(g=>g.textContent.includes(['chronicles-of-elysium.html','tend-habit-tracker.html','coffee-nearby.html'].includes(file)?'Design Systems':'Editorial'));(group||header).after(current)}
  current.setAttribute('aria-current','page');const badge=document.createElement('span');badge.textContent='You are here';current.querySelector('span')?.remove();current.append(badge);
- let idleTimer;const mobile=matchMedia('(max-width:768px)');
- const reveal=()=>{clearTimeout(idleTimer);bar.classList.remove('is-hidden')};
- addEventListener('scroll',()=>{clearTimeout(idleTimer);if(!mobile.matches||menu.classList.contains('is-open')||bar.contains(document.activeElement)||menu.contains(document.activeElement)){reveal();return}bar.classList.add('is-hidden');idleTimer=setTimeout(reveal,300)},{passive:true});
- bar.addEventListener('focusin',reveal);menu.addEventListener('focusin',reveal);
- mobile.addEventListener('change',reveal);addEventListener('pageshow',reveal);
+ const home=bar.querySelector('.mobile-home-btn');
+ trigger.querySelector('.mobile-tab-label')?.remove();trigger.setAttribute('aria-label','Projects');trigger.title='Projects';
+ trigger.innerHTML='<svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true"><rect x="4" y="4" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="4" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="4" y="14" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/><rect x="14" y="14" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>';
+ const top=document.createElement('button');top.type='button';top.className='mpm-top';top.setAttribute('aria-label','Back to top');top.title='Back to top';top.innerHTML='<svg viewBox="0 0 24 24" width="21" height="21" aria-hidden="true"><path d="M6 13l6-6 6 6M12 7v13M5 3h14" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';top.onclick=()=>window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+ bar.replaceChildren(trigger,home,top);
+ let idleTimer,hasScrolled=false,userIntent=false,lastY=scrollY;const mobile=matchMedia('(max-width:768px)');
+ const reveal=()=>{clearTimeout(idleTimer);bar.classList.add('mpm-visible');bar.classList.remove('is-hidden')};
+ const reset=()=>{clearTimeout(idleTimer);hasScrolled=false;userIntent=false;lastY=scrollY;bar.classList.remove('mpm-visible');bar.classList.add('is-hidden')};
+ ['wheel','touchmove','pointerdown'].forEach(type=>addEventListener(type,()=>{userIntent=true},{passive:true}));
+ addEventListener('keydown',e=>{if(['ArrowDown','ArrowUp','PageDown','PageUp','Home','End',' '].includes(e.key))userIntent=true});
+ addEventListener('scroll',()=>{const moved=Math.abs(scrollY-lastY)>2;lastY=scrollY;if(!mobile.matches||!moved||(!userIntent&&!hasScrolled))return;hasScrolled=true;clearTimeout(idleTimer);if(menu.classList.contains('is-open')||bar.querySelector(':focus-visible')||menu.querySelector(':focus-visible')){reveal();return}bar.classList.remove('mpm-visible');bar.classList.add('is-hidden');idleTimer=setTimeout(reveal,300)},{passive:true});
+ bar.addEventListener('focusin',()=>{if(bar.querySelector(':focus-visible'))reveal()});menu.addEventListener('focusin',reveal);
+ mobile.addEventListener('change',reset);addEventListener('pageshow',reset);reset();
  const close=(restore=false)=>{menu.classList.remove('is-open');bar.classList.remove('is-open');menu.inert=true;menu.setAttribute('aria-hidden','true');trigger.setAttribute('aria-expanded','false');if(restore)trigger.focus({preventScroll:true})};
  const open=()=>{reveal();menu.inert=false;menu.removeAttribute('aria-hidden');menu.classList.add('is-open');bar.classList.add('is-open');trigger.setAttribute('aria-expanded','true');menu.querySelector('button').focus({preventScroll:true})};
  trigger.addEventListener('click',()=>menu.classList.contains('is-open')?close(true):open());
