@@ -1,7 +1,12 @@
-const CACHE_NAME = "first-words-v12";
+const CACHE_NAME = "first-words-v13";
 const APP_ASSETS = [
   "./",
   "./index.html",
+  "./hub-fonts.css",
+  "../../fonts/first-words/manrope-hub-0.woff2",
+  "../../fonts/first-words/shippori-hub-0.woff2",
+  "../../fonts/first-words/shippori-hub-1.woff2",
+  "../../fonts/first-words/shippori-hub-2.woff2",
   "./korean.html",
   "./japanese.html",
   "./chinese.html",
@@ -72,3 +77,4 @@ self.addEventListener("fetch", (event) => {
     })
   );
 });
+
