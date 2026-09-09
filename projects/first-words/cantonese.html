@@ -380,7 +380,7 @@
     let languageVoice = null;
     function loadVoice() {
       if (!("speechSynthesis" in window)) return;
-      languageVoice = speechSynthesis.getVoices().find(voice => /^(zh-HK|yue(-.*)?)$/i.test(voice.lang)) || speechSynthesis.getVoices().find(voice => /Cantonese/i.test(voice.name)) || null;
+      languageVoice = speechSynthesis.getVoices().find(voice => /^yue(-|$)/i.test(voice.lang) || (/^zh-HK$/i.test(voice.lang) && /Cantonese/i.test(voice.name))) || null;
     }
     function speak(text) {
       if (!("speechSynthesis" in window)) { toast("Speech is not available in this browser."); return; }

@@ -1113,7 +1113,7 @@ const placePacks = {
     guideLabel: "Read Seoul, Between Stops",
     phrases: [
       ["서울", "seoul", "Seoul"],
-      ["지하철역이 어디예요?", "jihacheol-yeogi eodiyeyo?", "Where is the subway station?"],
+      ["지하철역이 어디예요?", "jihacheollyeogi eodiyeyo?", "Where is the subway station?"],
       ["여기에서 내려 주세요", "yeogieseo naeryeo juseyo", "Please let me off here"],
       ["카드 돼요?", "kadeu dwaeyo?", "Can I pay by card?"],
       ["추천해 주세요", "chucheonhae juseyo", "Please recommend something"],
@@ -1349,10 +1349,10 @@ let koVoice = null;
   /* default to a known female Korean voice when the person hasn't chosen one */
   const FEMALE = ['yuna', 'sunhi', 'sun-hi', 'heami', 'google \ud55c\uad6d\uc758', 'seoyeon', 'kyuri', 'jihun female'];
   const preferred = ko.find(v => FEMALE.some(f => v.name.toLowerCase().includes(f)));
-  koVoice = all.find(v => v.name === state.voice.name) || preferred || ko[0] || null;
+  koVoice = ko.find(v => v.name === state.voice.name) || preferred || ko[0] || null;
   const sel = $("#voiceSel");
   if (sel) {
-    const list = ko.length ? ko : all;
+    const list = ko;
     sel.innerHTML = '<option value="">Automatic</option>' + list.map(v => `<option value="${esc(v.name)}" ${v.name === state.voice.name ? "selected" : ""}>${esc(v.name)}</option>`).join("");
   }
 }

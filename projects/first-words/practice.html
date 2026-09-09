@@ -7,7 +7,7 @@
 <link rel="canonical" href="https://www.hellojackmao.com/projects/first-words/practice.html">
 <meta property="og:title" content="Destination Practice | First Words"><meta property="og:type" content="website">
 <meta property="og:url" content="https://www.hellojackmao.com/projects/first-words/practice.html">
-<meta property="og:description" content="Small exchanges for Taipei and Hong Kong, connected to Wayfarer.">
+<meta property="og:description" content="Everyday exchanges for Taipei, Hong Kong, Seoul and Tokyo, connected to Wayfarer.">
 <meta property="og:image" content="https://www.hellojackmao.com/images/og-portfolio-index-card.png">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://www.hellojackmao.com/images/og-portfolio-index-card.png">
 <link rel="icon" href="icons/favicon.svg"><link rel="stylesheet" href="../project-transitions.css?v=20260903-1">
@@ -19,7 +19,7 @@ nav{flex-wrap:wrap}nav button{flex:1 0 25%;padding:12px 8px}@media(max-width:400
 </style></head>
 <body><header><a href="index.html">First Words / Practice</a><span>With Wayfarer</span></header>
 <main><h1>Words for the way.</h1><nav aria-label="Destination"><button data-city="taipei" aria-pressed="true">Taipei</button><button data-city="hongkong" aria-pressed="false">Hong Kong</button><button data-city="seoul" aria-pressed="false">Seoul</button><button data-city="tokyo" aria-pressed="false">Tokyo</button></nav>
-<p id="session-note"></p><p class="eyebrow" id="progress"></p><section aria-labelledby="question"><h2 id="question" tabindex="-1"></h2><p id="context"></p><div id="answers"></div></section>
+<p id="session-note"></p><p class="eyebrow" id="pronunciation-note"></p><p class="eyebrow" id="progress"></p><section aria-labelledby="question"><h2 id="question" tabindex="-1"></h2><p id="context"></p><div id="answers"></div></section>
 <p id="feedback" role="status" aria-live="polite"></p><button id="next" hidden>Continue</button>
 <button type="button" id="listen" hidden>Listen to this phrase</button><p class="eyebrow" id="audio-status" role="status"></p>
 <button id="review" hidden>Review missed phrases</button>
@@ -32,7 +32,7 @@ const routes={
  hongkong:{name:'Hong Kong',language:'Cantonese',lang:'yue-Hant',file:'cantonese',guide:'hong-kong',phrases:[['唔該，地鐵站喺邊度','m4 goi1, dei6 tit3 zaam6 hai2 bin1 dou6','Excuse me, where is the MTR station?'],['我要呢個','ngo5 jiu3 ni1 go3','I would like this one'],['唔該晒','m4 goi1 saai3','Thank you very much']]}
 };
 routes.taipei.phrases.push(['多少錢','duōshao qián','How much is it?'],['請給我一杯水','qǐng gěi wǒ yì bēi shuǐ','A glass of water, please'],['請說慢一點','qǐng shuō màn yìdiǎn','Please speak more slowly']);
-Object.assign(routes,{"seoul":{"name":"Seoul","language":"Korean","lang":"ko-KR","file":"korean","guide":"seoul","phrases":[["지하철역이 어디예요?","jihacheol-yeogi eodiyeyo?","Where is the subway station?"],["이거 주세요","igeo juseyo","This one, please"],["감사합니다","gamsahamnida","Thank you"],["얼마예요?","eolmayeyo?","How much is it?"],["물 주세요","mul juseyo","Water, please"],["천천히 말해 주세요","cheoncheonhi malhae juseyo","Please speak slowly"]]},"tokyo":{"name":"Tokyo","language":"Japanese","lang":"ja-JP","file":"japanese","guide":"tokyo","phrases":[["すみません、駅はどこですか","sumimasen, eki wa doko desu ka","Excuse me, where is the station?"],["これをください","kore o kudasai","This one, please"],["ありがとうございます","arigatou gozaimasu","Thank you"],["いくらですか","ikura desu ka","How much is it?"],["みずをください","mizu o kudasai","Water, please"],["ゆっくりおねがいします","yukkuri onegaishimasu","Slowly, please"]]}});
+Object.assign(routes,{"seoul":{"name":"Seoul","language":"Korean","lang":"ko-KR","file":"korean","guide":"seoul","phrases":[["지하철역이 어디예요?","jihacheollyeogi eodiyeyo?","Where is the subway station?"],["이거 주세요","igeo juseyo","This one, please"],["감사합니다","gamsahamnida","Thank you"],["얼마예요?","eolmayeyo?","How much is it?"],["물 주세요","mul juseyo","Water, please"],["천천히 말해 주세요","cheoncheonhi malhae juseyo","Please speak slowly"]]},"tokyo":{"name":"Tokyo","language":"Japanese","lang":"ja-JP","file":"japanese","guide":"tokyo","phrases":[["すみません、駅はどこですか","sumimasen, eki wa doko desu ka","Excuse me, where is the station?"],["これをください","kore o kudasai","This one, please"],["ありがとうございます","arigatou gozaimasu","Thank you"],["いくらですか","ikura desu ka","How much is it?"],["みずをください","mizu o kudasai","Water, please"],["ゆっくりおねがいします","yukkuri onegaishimasu","Slowly, please"]]}});
 routes.hongkong.phrases.push(['幾多錢','gei2 do1 cin2','How much is it?'],['唔該畀杯水我','m4 goi1 bei2 bui1 seoi2 ngo5','A glass of water, please'],['唔該講慢啲','m4 goi1 gong2 maan6 di1','Please speak more slowly']);
 const explanations=['Ask where the station is before choosing your route.','Pointing makes “this one” clear to the person taking your order.','A simple thank-you closes this exchange politely.','Use this when you want to know the price before buying.','This is a polite request for water; it does not ask for the price.','Ask for a slower pace when you cannot follow the reply.'];
 const scenes=[['Find your way','You want to ask someone where the station is. Which phrase asks for directions?'],['At the counter','You point to the item you want on the menu. What could you say?'],['Before you go','Someone has helped you find your way. How would you thank them?']];
@@ -56,6 +56,7 @@ function persist(){try{localStorage.setItem(STORE,JSON.stringify({version:1,...s
 function render(focus=false){
  if("speechSynthesis" in window) speechSynthesis.cancel();
  const r=routes[city],s=states[city],step=s.queue[s.cursor],summary=s.mode==='summary';
+ get('pronunciation-note').textContent=({taipei:'Pinyin marks Mandarin tones; 謝謝 ends with a light, neutral-tone syllable. Romanization is a reading aid, not a pronunciation score.',hongkong:'Jyutping numbers mark Cantonese tones. 唔該 thanks someone for help or service; 多謝 is typically used for gifts. The audio needs a Cantonese voice.',seoul:'In 지하철역, 역 is pronounced 력: jihacheollyeok. The guide below reflects that sound change. Romanization is only a reading aid.',tokyo:'Keep doubled consonants distinct, as in yukkuri. Slowly, please is a short request whose meaning depends on the conversation.'})[city];
  document.querySelectorAll('[data-city]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.city===city)));
  get('guide').href='../wayfarer/'+r.guide+'.html'+'#language-title';get('guide').textContent='Return to the '+r.name+' guide';get('session-note').textContent=s.queue.length<6&&s.mode!=='review'?'Your saved three-question session is ready to finish. Practise all again opens the expanded six-question session.':'Six everyday exchanges, from finding a station to asking someone to slow down.';get('foundation').href=r.file+'.html?place='+city;
  get('progress').textContent=r.name+' / '+r.language+' / '+(summary?'Complete':(s.mode==='review'?'Review / ':'')+(s.cursor+1)+' of '+s.queue.length);
