@@ -1,19 +1,148 @@
-/* Country editions: layout, not a replacement for each city's typography. */
-.edition-index{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}.edition-index a{min-height:44px;display:flex;align-items:center;padding:8px 12px;border:1px solid currentColor;font:500 13px/1.5 var(--sans,Arial),sans-serif;text-decoration:none}.edition-index a:hover{background:#e7e6df;color:#202621}
-.edition-stop{scroll-margin-top:110px}
-/* Korea: a left-hand itinerary desk and a continuous route on the right. */
-.country-korea .edition-story{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:0 64px;align-items:start;width:min(1180px,calc(100% - 40px));margin:auto;padding:80px 0}
-.country-korea .edition-head{grid-column:1;grid-row:1 / span 6;display:block;padding:0;border:0;margin:0}.country-korea .edition-head h2{margin-top:24px;font-size:clamp(2.5rem,4vw,4rem)}
-.country-korea .edition-head .edition-index{display:grid}.country-korea .edition-story>.route-list{grid-column:2}
-.country-korea .edition-stop{grid-column:2;display:block;position:relative;margin:0 0 0 12px;padding:12px 0 40px 32px;border:0;border-left:2px solid #547468}.country-korea .edition-stop:before{content:'';position:absolute;left:-7px;top:18px;width:12px;height:12px;border-radius:50%;background:#314f43;border:2px solid #f6f4ee}.country-korea .edition-stop h3{margin:16px 0;font-size:clamp(2rem,3vw,3rem)}.country-korea .edition-stop p{max-width:52ch}.country-korea .edition-stop .time,.country-korea .edition-stop .route-time{color:#47584f}
-/* Japan: a broad title page followed by open, alternating reading chapters. */
-.country-japan .hero{display:block;min-height:0}.country-japan .hero-copy{min-height:0;display:block;text-align:center;padding:70px 24px 48px}.country-japan .hero h1{font-size:clamp(4rem,9vw,8rem);max-width:1000px;margin:24px auto}.country-japan .hero .deck{max-width:620px;margin:24px auto}.country-japan .hero .byline{justify-content:center}.country-japan .hero>.signal-map,.country-japan .hero>.street-field{min-height:280px;height:280px;overflow:hidden}.country-japan .edition-story{max-width:1100px;margin:auto;padding:80px 24px}.country-japan .edition-head{display:block;text-align:center;max-width:760px;margin:0 auto 64px}.country-japan .edition-head h2{margin-top:24px}.country-japan .edition-index{justify-content:center}.country-japan .edition-stop{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px 64px;padding:56px 0;border-top:1px solid #a6a29a}.country-japan .edition-stop .route-time{grid-column:1/-1}.country-japan .edition-stop h3{font-size:clamp(2.4rem,4vw,4rem)}.country-japan .edition-stop p{grid-column:2;max-width:48ch}.country-japan .edition-stop:nth-child(even) h3{grid-column:2;grid-row:2}.country-japan .edition-stop:nth-child(even) p{grid-column:1;grid-row:2}
-/* Taipei / Hong Kong: a compact lead and a two-column neighbourhood edition. */
-.edition-layers .hero{grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);min-height:560px}.edition-layers .hero-copy{min-height:560px;padding:40px}.edition-layers .edition-story{width:min(1180px,calc(100% - 40px));margin:auto;padding:64px 0}.edition-layers .edition-head{display:block;border-top:4px solid #343137;border-bottom:1px solid #343137;padding:24px 0;margin-bottom:32px}.edition-layers .edition-head h2{max-width:800px;margin-top:20px}.edition-layers .route-list{display:grid;grid-template-columns:1fr 1fr;gap:0 40px;counter-reset:district}.edition-layers .edition-stop{display:block;padding:28px 0 40px;border-bottom:1px solid #9d959e;counter-increment:district}.edition-layers .edition-stop:before{content:'0' counter(district);float:right;font:500 44px/1 var(--display,var(--serif,Georgia)),serif;color:#6c455b}.edition-layers .edition-stop h3{font-size:clamp(2rem,3.5vw,3rem);margin:22px 0}.edition-layers .edition-stop p{max-width:52ch}
-@media(max-width:760px){.country-korea .edition-story{display:block;padding:40px 0}.country-korea .edition-head{margin-bottom:36px}.country-korea .edition-head .edition-index{grid-template-columns:1fr 1fr}.country-korea .edition-stop{padding-left:24px}.country-japan .hero-copy{padding:40px 16px}.country-japan .hero>.signal-map,.country-japan .hero>.street-field{min-height:220px;height:220px}.country-japan .edition-story{padding:48px 20px}.country-japan .edition-stop{display:block;padding:36px 0;text-align:center}.country-japan .edition-stop h3{margin:20px 0}.country-japan .edition-stop p{margin:0 auto;text-align:left}.country-japan .edition-head{margin-bottom:36px}.edition-layers .hero{display:block;min-height:0}.edition-layers .hero-copy{min-height:0;padding:40px 20px}.edition-layers .route-list{display:block}.edition-layers .hero>.route-map{min-height:240px;height:240px;overflow:hidden}.edition-layers .edition-story{padding:40px 0}}
-@media(prefers-reduced-motion:reduce){.edition-stop{scroll-behavior:auto}}
-.edition-layers .route-time::before{content:none}
-
-.practical-guide{padding:56px 24px;width:min(1180px,100%);margin:auto;color:#242924}.practical-guide h2{font:500 clamp(2.4rem,5vw,4rem)/1.1 var(--display,var(--serif,Georgia)),serif;margin:16px 0 32px}.practical-kicker{font:600 12px/1.5 var(--sans,Arial),sans-serif;text-transform:uppercase;letter-spacing:.1em;color:#46544c}.practical-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;border-block:1px solid #a4aaa5;padding:24px 0}.practical-grid h3{font:600 18px/1.4 var(--sans,Arial),sans-serif;margin-bottom:12px}.practical-grid p,.practical-source{font:400 15px/1.7 var(--sans,Arial),sans-serif;color:#414b45}.practical-source{font-size:12px;margin-top:24px}.practical-source a{text-decoration:underline;text-underline-offset:3px}@media(max-width:760px){.practical-grid{grid-template-columns:1fr}.practical-guide{padding:40px 20px}}
-
-.country-korea .practical-guide h2{font-weight:400}
+/* Three editorial structures, with each city's original font families and palette. */
+body{--edition-accent:var(--green,#254d43);--edition-tint:#e4ebe4}
+body[data-city="busan"]{--edition-accent:#164b5a;--edition-tint:#dfedf0}
+body[data-city="jeju"]{--edition-accent:#3c503b;--edition-tint:#e6e8d8}
+body.country-japan{--edition-accent:var(--blue,#403d35);--edition-tint:#ebe8e0}
+body.edition-layers{--edition-accent:var(--green);--edition-tint:var(--mint)}
+.edition-label{font:600 11px/1.6 var(--sans,Arial),sans-serif;letter-spacing:.12em;text-transform:uppercase}
+.edition-index{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 0}
+.edition-index a{min-height:48px;display:flex;align-items:center;gap:12px;padding:12px 16px;border:1px solid currentColor;font:500 14px/1.5 var(--sans,Arial),sans-serif;text-decoration:none}
+.edition-index a:hover{background:var(--ink);color:var(--paper)}
+.index-number{font-size:11px;opacity:.85}
+.edition-stop{scroll-margin-top:100px;min-width:0}
+.edition-stop .route-time::before,.edition-stop .time::before{content:none}
+.chapter-number{display:block;font:400 clamp(4rem,7vw,7rem)/.85 var(--display,var(--serif,Georgia)),serif;color:var(--edition-accent)}
+.chapter-heading h3{font-weight:400!important}
+.edition-stop .chapter-copy p{max-width:52ch;font-size:1.2rem;line-height:1.65}
+.edition-head h2{font-weight:400;max-width:18ch}
+/* KOREA: an asymmetric field-guide cover, a route desk, alternating route cards. */
+.country-korea .hero{grid-template-columns:minmax(0,1.35fr) minmax(0,.8fr);min-height:640px}
+.country-korea .hero-copy{min-height:640px;padding:52px clamp(24px,5vw,80px)}
+.country-korea .hero h1{font-size:clamp(4.5rem,8.8vw,8rem);max-width:9ch}
+.country-korea .hero .deck{margin-top:32px;max-width:32ch}
+.country-korea .hero>:last-child{min-height:640px}
+.route-overview{padding:28px max(24px,calc((100% - 1180px)/2));background:var(--edition-accent);color:#fff}
+.route-overview .edition-index{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:18px}
+.route-overview .edition-index a{border:0;border-top:1px solid #ffffff70;align-items:flex-start;padding:16px 12px 8px 0;font-size:17px}
+.route-overview .edition-index a:hover{color:#fff;background:#ffffff18}
+.route-overview .index-number{padding-top:3px}
+.country-korea .edition-story{display:block;width:min(1180px,calc(100% - 48px));margin:auto;padding:88px 0}
+.country-korea .edition-head{display:grid;grid-template-columns:1fr 2fr;gap:24px;margin-bottom:48px;padding:0 0 32px;border-bottom:1px solid var(--ink)}
+.country-korea .edition-head h2{font-size:clamp(2.5rem,4.5vw,4.5rem);margin:0}
+.country-korea .edition-head>p{grid-column:2;font:400 16px/1.6 var(--sans)}
+.country-korea .route-list{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:32px 0}
+.country-korea .edition-stop{grid-column:1/11;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px 40px;position:relative;margin:0;padding:40px;background:var(--edition-tint);border:0;border-left:4px solid var(--edition-accent)}
+.country-korea .edition-stop:nth-child(even){grid-column:3/-1;background:transparent;border:1px solid var(--edition-accent);border-left-width:4px}
+.country-korea .edition-stop .time,.country-korea .edition-stop .route-time{grid-column:1/-1;color:var(--edition-accent);font:600 12px/1.5 var(--sans);letter-spacing:.05em}
+.country-korea .chapter-heading{display:flex;align-items:flex-start;gap:24px}
+.country-korea .chapter-number{font-size:54px}
+.country-korea .edition-stop h3{margin:0;font-size:clamp(2rem,3vw,3rem)}
+.country-korea .chapter-copy{align-self:center}
+.country-korea .edition-practical{border-top:4px solid var(--edition-accent)}
+/* JAPAN: a magazine cover with a vertical art insert; chapters alternate scale. */
+.country-japan .hero{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,.7fr);gap:0 48px;width:min(1320px,calc(100% - 64px));margin:32px auto 0;padding-bottom:48px;min-height:0;border-bottom:3px solid var(--ink)}
+.country-japan .issue-line{grid-column:1/-1;padding-bottom:20px;border-bottom:1px solid var(--ink);margin-bottom:32px}
+.country-japan .hero-copy{min-height:0;padding:32px 0;display:flex;text-align:left}
+.country-japan .hero h1{font-size:clamp(4rem,8.5vw,8.5rem);max-width:10ch;line-height:.9;margin:24px 0}
+.country-japan .hero h1 .jp{font-size:.27em;letter-spacing:.14em;margin-top:28px}
+.country-japan .hero .deck{margin:32px 0 0;max-width:33ch;font-size:clamp(1.35rem,2.3vw,2rem)}
+.country-japan .hero>.signal-map,.country-japan .hero>.street-field{min-height:540px;height:auto;overflow:hidden}
+.country-japan .edition-story{width:min(1180px,calc(100% - 64px));margin:auto;padding:80px 0}
+.country-japan .edition-head{display:block;border:0;max-width:900px;margin:0 auto 64px;text-align:center;padding:0}
+.country-japan .edition-head h2{font-size:clamp(3rem,6vw,5.7rem);margin:24px auto;max-width:17ch}
+.country-japan .edition-index{justify-content:center;gap:0;border-block:1px solid var(--ink)}
+.country-japan .edition-index a{border:0;padding:16px 20px}
+.country-japan .route-list{display:grid;grid-template-columns:1fr 1fr;gap:0 64px}
+.country-japan .edition-stop{display:block;padding:48px 0;border-top:1px solid var(--ink);border-bottom:0}
+.country-japan .edition-stop:first-child,.country-japan .edition-stop:last-child{grid-column:1/-1;display:grid;grid-template-columns:1.15fr 1fr;gap:24px 80px;padding:64px 0}
+.country-japan .edition-stop:last-child{border-bottom:3px solid var(--ink)}
+.country-japan .edition-stop .route-time{font:600 11px/1.5 var(--sans);letter-spacing:.06em;grid-column:1/-1}
+.country-japan .chapter-heading{margin:24px 0}
+.country-japan .chapter-number{font-size:80px;margin-bottom:24px}
+.country-japan .edition-stop h3{font-size:clamp(2.5rem,4vw,4rem)}
+.country-japan .edition-stop:first-child h3,.country-japan .edition-stop:last-child h3{font-size:clamp(3rem,5.5vw,5rem)}
+.country-japan .chapter-copy{align-self:end;padding-bottom:24px}
+.country-japan .edition-practical{width:min(1180px,calc(100% - 64px));margin:64px auto;border-block:3px solid var(--ink);background:transparent;padding:40px 0}
+.country-japan .edition-practical .field-inner{width:100%;padding:0}
+/* TAIPEI / HONG KONG: a newspaper lead, neighbourhood mosaic and service column. */
+.edition-layers .hero{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);width:min(1320px,calc(100% - 48px));margin:32px auto;min-height:0;border:0;gap:32px}
+.edition-layers .hero-copy{min-height:0;padding:24px 0;display:block;border-block:4px solid var(--edition-accent)}
+.edition-layers .hero h1{max-width:12ch;font-size:clamp(4rem,7vw,7rem);margin-top:24px;line-height:.93}
+.edition-layers .hero h1 .ko{font-size:.28em;letter-spacing:.12em;margin:24px 0}
+.edition-layers .hero .deck{max-width:42ch;margin-top:24px;font-size:clamp(1.25rem,2vw,1.7rem)}
+.edition-layers .hero>.route-map{min-height:480px;height:auto}
+.neighbourhood-spread{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:48px;width:min(1320px,calc(100% - 48px));margin:64px auto;align-items:start}
+.edition-layers .edition-story{width:100%;padding:0;margin:0}
+.edition-layers .edition-head{display:block;padding:24px 0 32px;margin:0;border-top:1px solid var(--ink);border-bottom:0}
+.edition-layers .edition-head h2{font-size:clamp(2.5rem,4vw,4rem);margin-top:20px}
+.edition-layers .edition-index{gap:0;border-block:1px solid var(--ink)}
+.edition-layers .edition-index a{border:0;padding:12px;flex:1 1 40%;font-size:13px}
+.edition-layers .route-list{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.edition-layers .edition-stop{display:block;padding:28px;background:#fff;border:1px solid var(--line);border-top:5px solid var(--edition-accent)}
+.edition-layers .edition-stop:first-child{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:24px;background:var(--edition-tint)}
+.edition-layers .edition-stop:last-child{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.edition-layers .edition-stop .route-time{grid-column:1/-1;color:var(--ink)}
+.edition-layers .chapter-heading{margin:24px 0}
+.edition-layers .chapter-number{font-size:48px;color:var(--ink);margin-bottom:24px}
+.edition-layers .edition-stop h3{font-size:clamp(2rem,3vw,3rem);color:var(--ink)}
+.edition-layers .edition-stop h3 span{color:var(--edition-accent)}
+.edition-layers .chapter-copy{align-self:center}
+.edition-layers .edition-stop .chapter-copy p{color:#343137;font-size:1.1rem}
+.edition-layers .edition-practical{background:transparent;border:0;border-top:5px solid var(--edition-accent);padding:24px 0}
+.edition-layers .edition-practical .field-inner{width:100%;padding:0}
+.edition-layers .edition-practical h2{font-size:2.7rem;margin-top:16px}
+.edition-layers .edition-practical .notes-grid{display:block;margin-top:24px}
+.edition-layers .edition-practical .note,.edition-layers .edition-practical .note+.note{border:0;border-bottom:1px solid var(--line);padding:24px 0}
+/* Practical notes retain source links and each city's signature type. */
+.practical-guide{padding:56px 24px;width:min(1180px,100%);margin:auto;color:#242924}
+.practical-guide h2{font:400 clamp(2.4rem,5vw,4rem)/1.1 var(--display,var(--serif,Georgia)),serif;margin:16px 0 32px}
+.practical-kicker{font:600 12px/1.5 var(--sans,Arial),sans-serif;text-transform:uppercase;letter-spacing:.1em;color:#46544c}
+.practical-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;border-block:1px solid #a4aaa5;padding:24px 0}
+.practical-grid h3{font:600 18px/1.4 var(--sans,Arial),sans-serif;margin-bottom:12px}
+.practical-grid p,.practical-source{font:400 15px/1.7 var(--sans,Arial),sans-serif;color:#414b45}
+.practical-source{font-size:12px;margin-top:24px}.practical-source a{text-decoration:underline;text-underline-offset:3px}
+@media(max-width:1000px){
+ .neighbourhood-spread{grid-template-columns:minmax(0,1fr) 240px;gap:24px}
+ .edition-layers .route-list{display:block}.edition-layers .edition-stop{margin-bottom:24px}
+ .edition-layers .edition-stop:first-child,.edition-layers .edition-stop:last-child{display:block}
+ .country-korea .edition-stop{grid-column:1/12}.country-korea .edition-stop:nth-child(even){grid-column:2/-1}
+ .country-japan .hero{gap:0 24px}.country-japan .hero h1{font-size:clamp(4rem,9vw,7rem)}
+}
+@media(max-width:760px){
+ .country-korea .hero{display:block;min-height:0}.country-korea .hero-copy{min-height:0;padding:36px 24px}
+ .country-korea .hero h1{font-size:clamp(4rem,16vw,6rem)}
+ .country-korea .hero>:last-child{min-height:300px;height:300px;overflow:hidden}
+ .route-overview{padding:24px}.route-overview .edition-index{grid-template-columns:1fr 1fr;gap:8px 16px}
+ .route-overview .edition-index a{font-size:15px}
+ .country-korea .edition-story{padding:48px 0}.country-korea .edition-head{display:block}.country-korea .edition-head h2{margin:20px 0}.country-korea .edition-head>p{margin-top:20px}
+ .country-korea .route-list{display:block}.country-korea .edition-stop{display:block;padding:24px;margin:0 16px 24px 0}.country-korea .edition-stop:nth-child(even){margin:0 0 24px 16px}
+ .country-korea .chapter-heading{gap:16px;margin:24px 0}.country-korea .chapter-number{font-size:42px}.country-korea .edition-stop h3{font-size:2rem}
+ .country-japan .hero{width:calc(100% - 40px);display:block;margin-top:24px;padding-bottom:24px}
+ .country-japan .issue-line{margin-bottom:0}.country-japan .hero-copy{padding:24px 0}
+ .country-japan .hero h1{font-size:clamp(4rem,16vw,6.5rem)}
+ .country-japan .hero>.signal-map,.country-japan .hero>.street-field{min-height:260px;height:260px}
+ .country-japan .edition-story{width:calc(100% - 40px);padding:48px 0}
+ .country-japan .edition-head{margin-bottom:32px}.country-japan .edition-head h2{font-size:2.8rem}
+ .country-japan .edition-index a{flex:1 1 45%;padding:12px 8px;font-size:13px}
+ .country-japan .route-list{display:block}.country-japan .edition-stop,.country-japan .edition-stop:first-child,.country-japan .edition-stop:last-child{display:block;padding:36px 0}
+ .country-japan .chapter-number{font-size:64px;margin-bottom:16px}.country-japan .edition-stop h3{font-size:2.6rem}
+ .country-japan .edition-stop:first-child h3,.country-japan .edition-stop:last-child h3{font-size:3.3rem}
+ .country-japan .edition-stop:nth-child(2),.country-japan .edition-stop:nth-child(3){margin-left:32px;border-left:1px solid var(--ink);padding-left:24px}
+ .country-japan .edition-practical{width:calc(100% - 40px);margin:40px auto}
+ .edition-layers .hero{display:block;width:calc(100% - 40px);margin:24px auto}.edition-layers .hero-copy{padding:24px 0}
+ .edition-layers .hero h1{font-size:clamp(3.8rem,15vw,5.5rem)}
+ .edition-layers .hero>.route-map{min-height:280px;height:280px;margin-top:24px;overflow:hidden}
+ .neighbourhood-spread{display:block;width:calc(100% - 40px);margin:40px auto}
+ .edition-layers .edition-story{padding:0}.edition-layers .edition-head h2{font-size:2.7rem}
+ .edition-layers .edition-stop{padding:24px}.edition-layers .edition-stop:first-child,.edition-layers .edition-stop:last-child{display:block}
+ .edition-layers .chapter-heading{display:flex;gap:24px}.edition-layers .chapter-number{font-size:40px;margin:0}.edition-layers .edition-stop h3{font-size:2.2rem}
+ .edition-layers .edition-practical{margin-top:40px}
+ .practical-grid{grid-template-columns:1fr}.practical-guide{padding:40px 24px}
+ .edition-stop .chapter-copy p{font-size:1.12rem}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+.country-korea .edition-stop .chapter-copy p{color:#424d46}
+.country-korea .edition-stop h3 span{color:var(--edition-accent);font-size:max(14px,.4em)}
+.country-japan .hero .map-caption,.country-japan .hero .field-caption{color:#fff!important;background:#23262a;padding:10px;max-width:84%;z-index:4}
+.edition-layers .edition-practical .field-inner>.eyebrow{color:#59534e!important}
+.country-korea .hero .harbour-type{color:#cce9e6}
