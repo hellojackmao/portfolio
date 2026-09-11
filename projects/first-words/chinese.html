@@ -74,7 +74,8 @@
 #mandarinProgress{color:rgb(105,102,96)!important;opacity:1}
 #cantoneseProgress{color:rgb(105,102,96)!important;opacity:1}
 </style>
-</head>
+<link rel="stylesheet" href="hub-fonts.css">
+<style id="destination-cta-style">.destination-cta{margin:32px 0 0}.destination-cta a{display:inline-flex;align-items:center;justify-content:space-between;gap:20px;min-height:48px;padding:16px 22px;border-radius:12px;background:var(--blue);color:#fff;text-decoration:none;font:700 16px/1.5 var(--sans);max-width:100%;box-shadow:0 6px 18px rgba(49,87,143,.12)}.destination-cta a:hover{background:#254571}.destination-cta a:focus-visible{outline:3px solid var(--blue);outline-offset:4px}.destination-cta span{flex-shrink:0}@media(max-width:440px){.destination-cta a{width:100%;font-size:15px;padding:16px 18px}}</style></head>
 <body>
   <a class="skip" href="#main">Skip to Chinese language tracks</a>
   <header class="top"><a class="back" href="index.html">←&nbsp; First Words</a><span class="edition">Chinese · two spoken foundations</span></header>
@@ -91,7 +92,7 @@
       </div>
     </section>
     <div class="note"><span class="note-mark" aria-hidden="true">分</span><div><b>Shared family does not mean interchangeable speech.</b><p>The interface keeps Traditional Mandarin and Cantonese separate, while making their visual and cultural relationship easy to understand.</p></div></div>
-    <p class="note"><a href="practice.html">Practise in Taipei and Hong Kong</a></p>
+    <p class="destination-cta"><a href="practice.html">Practise in Taipei and Hong Kong <span aria-hidden="true">→</span></a></p>
   </main>
   <script>
     (()=>{const progress=(key,total)=>{try{const state=JSON.parse(localStorage.getItem(key));const count=Array.isArray(state?.done)?state.done.filter(Boolean).length:0;return count?`${count}/${total} complete`:`${total} lessons`}catch(error){return `${total} lessons`}};document.querySelector("#mandarinProgress").textContent=progress("hana.mandarin-tw.v1",15);document.querySelector("#cantoneseProgress").textContent=progress("hana.cantonese.v1",15);if("serviceWorker" in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));})();
