@@ -192,10 +192,12 @@
     const b = document.createElement("button");
     b.className = "chip" + (m === "All" ? " on" : "");
     b.textContent = m;
+    b.setAttribute("aria-pressed", String(m === "All"));
     b.onclick = function(){
       activeMood = m;
-      Array.from(moodWrap.children).forEach(function(c){ c.classList.remove("on"); });
+      Array.from(moodWrap.children).forEach(function(c){ c.classList.remove("on"); c.setAttribute("aria-pressed", "false"); });
       b.classList.add("on");
+      b.setAttribute("aria-pressed", "true");
       render();
     };
     moodWrap.appendChild(b);

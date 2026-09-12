@@ -173,7 +173,7 @@
   <div class="hero">
     <span class="pill">Phase 2 · Now in preview</span>
     <h1>Know a place this well? Write its guide.</h1>
-    <p>Try the Wayfarer contributor concept: draft a guide and preview its card. Nothing is submitted, published, or added to a waitlist. Your draft stays in this browser session.</p>
+    <p>Try the Wayfarer contributor concept: draft a guide and preview its card. Nothing is submitted, published, or added to a waitlist. Saved drafts stay in this browser on this device until you clear this site’s data. They are not sent to a server or synced across devices.</p>
   </div>
 
   <div class="layout">
@@ -263,7 +263,7 @@
             <label for="f-email">Email (optional demo field; not submitted)</label>
             <input type="email" id="f-email" placeholder="name@example.com" />
           </div>
-          <div class="note">This is a preview. Your draft is saved for this browsing session only — in the full Wayfarer, this would create an account and a real, editable guide.</div>
+          <div class="note">This is a preview. Saved drafts are stored in this browser until you clear this site’s data. This demo does not create an account or publish a guide.</div>
         </div>
 
         <!-- Success -->
@@ -421,7 +421,7 @@
     if (s === 0) return draft.title.trim() && draft.place.trim();
     if (s === 1) return !!draft.mood;
     if (s === 2) return draft.blurb.trim() && draft.body.trim();
-    if (s === 3) return draft.name.trim() && draft.handle.trim() && /\S+@\S+\.\S+/.test(draft.email);
+    if (s === 3) return draft.name.trim() && draft.handle.trim() && (!draft.email.trim() || document.getElementById("f-email").checkValidity());
     return true;
   }
 
