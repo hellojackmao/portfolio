@@ -251,12 +251,14 @@
       if (live) {
         const btn = document.createElement("button");
         btn.className = "card-save";
-        btn.setAttribute("aria-label", "Save guide");
+        btn.setAttribute("aria-label", "Save " + g.title);
+        btn.setAttribute("aria-pressed", String(W.Saved.has(g.id)));
         btn.innerHTML = saveIcon(W.Saved.has(g.id));
         btn.onclick = function(e){
           e.preventDefault(); e.stopPropagation();
           const nowSaved = W.Saved.toggle(g.id);
           btn.innerHTML = saveIcon(nowSaved);
+          btn.setAttribute("aria-pressed", String(nowSaved));
         };
         card.querySelector(".card-art").appendChild(btn);
       }
