@@ -893,7 +893,7 @@ const lessons = [
       {
         title: "Hangul consonants",
         tag: "Alphabet",
-        focus: "Read common starting consonants.",
+        focus: "Read common starting consonants. Device audio may say a letter’s name rather than its sound in a word.",
         phrases: [
           ["ㄱ", "g/k", "soft g or k"],
           ["ㄴ", "n", "n sound"],
@@ -907,10 +907,10 @@ const lessons = [
       {
         title: "Greetings",
         tag: "Speaking",
-        focus: "Open a conversation politely.",
+        focus: "Open politely. Say 안녕히 가세요 to someone leaving; use 안녕히 계세요 when you leave someone who is staying.",
         phrases: [
           ["안녕하세요", "annyeonghaseyo", "Hello"],
-          ["안녕히 가세요", "annyeonghi gaseyo", "Goodbye"],
+          ["안녕히 가세요", "annyeonghi gaseyo", "Goodbye (to someone leaving)"],
           ["만나서 반가워요", "mannaseo bangawoyo", "Nice to meet you"],
           ["잘 지냈어요?", "jal jinaesseoyo?", "Have you been well?"]
         ],
@@ -937,7 +937,7 @@ const lessons = [
         tag: "Identity",
         focus: "Say your name and what you study.",
         phrases: [
-          ["저는 잭이에요", "jeoneun Jack-ieyo", "I am Jack"],
+          ["저는 잭이에요", "jeoneun jaegieyo", "I am Jack"],
           ["저는 학생이에요", "jeoneun haksaeng-ieyo", "I am a student"],
           ["한국어를 배워요", "hangugeoreul baewoyo", "I learn Korean"],
           ["반가워요", "bangawoyo", "Nice to meet you"]
@@ -1150,7 +1150,7 @@ const placePacks = {
       ["버스 정류장이 어디예요?", "beoseu jeongnyujangi eodiyeyo?", "Where is the bus stop?"],
       ["여기에서 얼마나 걸려요?", "yeogieseo eolmana geollyeoyo?", "How long does it take from here?"],
       ["추천해 주세요", "chucheonhae juseyo", "Please recommend something"],
-      ["잘 먹겠습니다", "jal meokgetseumnida", "Thank you for the meal"]
+      ["잘 먹겠습니다", "jal meokgetseumnida", "Thank you for the meal (before eating)"]
     ]
   }
 };
@@ -1563,7 +1563,7 @@ function renderToday() {
       </div>
       <div class="pod">
         <button type="button" class="speak" data-say="${esc(pod[0])}" aria-label="Listen to the phrase of the day">▶</button>
-        <span><span class="pod-ko">${esc(pod[0])}</span><span class="pod-en">${esc(pod[1])} · ${esc(pod[2])}</span></span>
+        <span><span class="pod-ko" lang="ko">${esc(pod[0])}</span><span class="pod-en">${esc(pod[1])} · ${esc(pod[2])}</span></span>
         <span class="pod-tag">phrase of the day</span>
       </div>
     </section>`;
@@ -1748,7 +1748,7 @@ function phraseRow(li, piIdx) {
   const hasNote = state.notes[id] ? "✎" : "";
       return `<button type="button" class="ph" data-ph="${id}">
     <span class="ph-dot ${statusDot(id)}"></span>
-    <span><span class="ph-ko">${esc(ph[0])}</span><span class="ph-en" style="display:block">${esc(ph[1])} · ${esc(ph[2])}</span></span>
+    <span><span class="ph-ko" lang="ko">${esc(ph[0])}</span><span class="ph-en" style="display:block">${esc(ph[1])} · ${esc(ph[2])}</span></span>
     <span class="ph-note-flag">${hasNote}</span>
     <span class="speak" data-say="${esc(ph[0])}" role="button" aria-label="Listen">▶</span>
   </button>`;
@@ -1773,7 +1773,7 @@ function renderLibBody() {
     const ids = Object.keys(state.notes).filter(id => state.notes[id] && phraseOf(id));
     html = ids.map(id => {
       const ph = phraseOf(id);
-      return `<div class="note-entry"><span class="ph-ko">${esc(ph[0])}</span><p>${esc(state.notes[id])}</p></div>`;
+      return `<div class="note-entry"><span class="ph-ko" lang="ko">${esc(ph[0])}</span><p>${esc(state.notes[id])}</p></div>`;
     }).join("");
     if (state.legacyNote) html += `<div class="note-entry"><span class="ph-ko">Imported note</span><p>${esc(state.legacyNote)}</p></div>`;
     if (!html) html = `<div class="empty">No notes yet — add one from any phrase.</div>`;
@@ -1793,7 +1793,7 @@ function openPlacePack(key) {
   const rows = pack.phrases.map(ph => `
     <div class="place-phrase">
       <span>
-        <span class="place-phrase-ko">${esc(ph[0])}</span>
+        <span class="place-phrase-ko" lang="ko">${esc(ph[0])}</span>
         <span class="place-phrase-en">${esc(ph[1])} · ${esc(ph[2])}</span>
       </span>
       <button type="button" class="speak" data-place-say="${esc(ph[0])}" aria-label="Listen to ${esc(ph[2])}">▶</button>
@@ -1837,7 +1837,7 @@ function renderPlaces() {
         <p>First Words place packs turn useful Korean into a companion for a real destination, while Wayfarer supplies the story and cultural context around it.</p>
       </div>
       <div class="place-mark" aria-hidden="true">
-        <span class="place-mark-ko">길</span>
+        <span class="place-mark-ko" lang="ko">길</span>
         <span class="place-mark-en">gil · a way or route</span>
       </div>
     </section>
@@ -1855,7 +1855,7 @@ function openPhraseSheet(id) {
   const c = state.srs[id];
   const status = !c ? "not learned yet" : c.box >= 3 ? "settled — box " + (c.box + 1) : c.box >= 1 ? "warming up — box " + (c.box + 1) : "fresh — reviewing soon";
   openSheet(lessons[li].title, `
-    <div class="bigko">${esc(ph[0])}<small>${esc(ph[1])} — ${esc(ph[2])}</small></div>
+    <div class="bigko"><span lang="ko">${esc(ph[0])}</span><small>${esc(ph[1])} — ${esc(ph[2])}</small></div>
     <p class="center muted" style="font-size:0.78rem;margin-bottom:0.9rem;">${esc(status)}${c && c.lapses ? " · " + c.lapses + " stumble" + (c.lapses > 1 ? "s" : "") : ""}</p>
     <div class="runner-foot" style="margin-bottom:1rem;"><button type="button" class="btn" id="phSay">▶ Listen</button></div>
     <label for="phNote" style="font-weight:800;font-size:0.78rem;display:block;margin-bottom:0.4rem;">Your note</label>
@@ -1881,7 +1881,7 @@ function runReview() {
   const draw = () => {
     const id = cards[i], ph = phraseOf(id);
     $("#sheetBody").innerHTML = progressHtml() + `
-      <div class="bigko">${esc(ph[0])}</div>
+      <div class="bigko"><span lang="ko">${esc(ph[0])}</span></div>
       <div class="reveal-zone" id="rev"></div>
       <div class="runner-foot" id="revBtns">
       <button type="button" class="btn ghost" id="revSay">▶ Listen</button>
@@ -1937,7 +1937,7 @@ function runLesson(li, fromToday) {
     else if (stage === "phrases") body(
       L.phrases.map((p, piIdx) => `
         <div class="phrase-line">
-          <span><span class="ko">${esc(p[0])}</span><span class="en" style="display:block">${esc(p[1])} · ${esc(p[2])}</span></span>
+          <span><span class="ko" lang="ko">${esc(p[0])}</span><span class="en" style="display:block">${esc(p[1])} · ${esc(p[2])}</span></span>
           <button type="button" class="notebtn" data-note="${pid(li, piIdx)}" aria-label="Add note">✎</button>
           <button type="button" class="speak" data-say="${esc(p[0])}" aria-label="Listen">▶</button>
         </div>`).join("") +
@@ -1951,7 +1951,7 @@ function runLesson(li, fromToday) {
       body(`
         <p class="muted center" style="font-size:0.8rem;margin-bottom:0.7rem;">Tap the words into order:</p>
         <div class="build-line" id="bLine" aria-live="polite"></div>
-      <div class="build-pool" id="bPool">${order.map(w => `<button type="button" class="chip-ko" data-w="${esc(w)}">${esc(w)}</button>`).join("")}</div>
+      <div class="build-pool" id="bPool">${order.map(w => `<button type="button" class="chip-ko" lang="ko" data-w="${esc(w)}">${esc(w)}</button>`).join("")}</div>
         <div class="runner-foot">
         <button type="button" class="btn ghost" id="bHear">▶ Hear it</button>
         <button type="button" class="btn" id="bCheck">Check</button>
@@ -1968,7 +1968,7 @@ function runLesson(li, fromToday) {
     }
     else if (stage === "shadow") {
       body(`
-        <div class="bigko">${esc(L.sentence)}</div>
+        <div class="bigko"><span lang="ko">${esc(L.sentence)}</span></div>
       <button type="button" class="playbig" id="shPlay" aria-label="Play sentence">▶</button>
         <div class="micbars" id="micBars" aria-hidden="true">${"<i></i>".repeat(9)}</div>
         <p class="muted center" style="font-size:0.74rem;margin-bottom:0.9rem;">Play it, then say it out loud — twice is better.</p>
@@ -2049,7 +2049,7 @@ function runSpeak() {
   const pick = state.today.learn && learnedIdx.length ? learnedIdx[learnedIdx.length - 1] : (li === -1 ? learnedIdx[Math.floor(Math.random() * learnedIdx.length)] || 0 : li);
   const L = lessons[pick];
   openSheet("Speak", `
-    <div class="bigko">${esc(L.sentence)}<small>${esc(L.title)}</small></div>
+    <div class="bigko"><span lang="ko">${esc(L.sentence)}</span><small>${esc(L.title)}</small></div>
       <button type="button" class="playbig" id="spPlay" aria-label="Play sentence">▶</button>
     <p class="muted center" style="font-size:0.76rem;margin-bottom:1rem;">Out loud. The wall doesn't judge.</p>
       <div class="runner-foot"><button type="button" class="btn" id="spDone">I said it ✓</button></div>`);

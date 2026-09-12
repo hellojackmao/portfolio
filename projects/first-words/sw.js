@@ -1,4 +1,4 @@
-const CACHE_NAME = "first-words-v21";
+const CACHE_NAME = "first-words-v22";
 const APP_ASSETS = [
   "./",
   "./index.html",

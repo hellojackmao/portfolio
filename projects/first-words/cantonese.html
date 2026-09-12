@@ -307,7 +307,7 @@
       { title: "Ordering", chapter: "Daily life", focus: "Ask, choose, and order with confidence.", phrases: [["我要呢個","ngo5 jiu3 ni1 go3","I would like this one"],["唔該畀杯水我","m4 goi1 bei2 bui1 seoi2 ngo5","A glass of water, please"],["有咩好介紹","jau5 me1 hou2 gaai3 siu6","What do you recommend?"],["唔該埋單","m4 goi1 maai4 daan1","The bill, please"]] },
       { title: "Preferences and needs", chapter: "Daily life", focus: "Communicate a dietary need and ask for clarity.", phrases: [["我唔食肉","ngo5 m4 sik6 juk6","I do not eat meat"],["我食素","ngo5 sik6 sou3","I am vegetarian"],["有冇英文餐牌","jau5 mou5 Jing1 man4 caan1 paai2","Is there an English menu?"],["唔該講慢啲","m4 goi1 gong2 maan6 di1","Please speak more slowly"]] },
       { title: "Finding your way", chapter: "In place", focus: "Orient yourself with a few clear directions.", phrases: [["地鐵站喺邊度","dei6 tit3 zaam6 hai2 bin1 dou6","Where is the MTR station?"],["右邊","jau6 bin1","Right"],["左邊","zo2 bin1","Left"],["直行","zik6 haang4","Go straight"],["近唔近","gan6 m4 gan6","Is it nearby?"]] },
-      { title: "Taking the MTR", chapter: "In place", focus: "Confirm the route before you board.", phrases: [["搭邊條綫","daap3 bin1 tiu4 sin3","Which line should I take?"],["呢班車去香港站嗎","ni1 baan1 ce1 heoi3 Hoeng1 Gong2 zaam6 maa3","Does this train go to Hong Kong Station?"],["下一站喺邊度","haa6 jat1 zaam6 hai2 bin1 dou6","What is the next station?"],["一張飛","jat1 zoeng1 fei1","One ticket"]] },
+      { title: "Taking the MTR", chapter: "In place", focus: "Confirm the route before you board.", phrases: [["搭邊條綫","daap3 bin1 tiu4 sin3","Which line should I take?"],["呢班車去唔去香港站","ni1 baan1 ce1 heoi3 m4 heoi3 Hoeng1 Gong2 zaam6","Does this train go to Hong Kong Station?"],["下一站喺邊度","haa6 jat1 zaam6 hai2 bin1 dou6","What is the next station?"],["一張飛","jat1 zoeng1 fei1","One ticket"]] },
       { title: "Staying overnight", chapter: "In place", focus: "Handle arrival and one practical request.", phrases: [["我有訂房","ngo5 jau5 deng6 fong2","I have a reservation"],["我想辦理入住","ngo5 soeng2 baan6 lei5 jap6 zyu6","I would like to check in"],["可唔可以寄存行李","ho2 m4 ho2 ji5 gei3 cyun4 hang4 lei5","May I leave my luggage?"],["有冇 Wi-Fi","jau5 mou5 Wi-Fi","Is there Wi-Fi?"]] },
       { title: "A first conversation", chapter: "Capstone", focus: "Join familiar phrases into one calm exchange.", phrases: [["唔該，地鐵站喺邊度","m4 goi1, dei6 tit3 zaam6 hai2 bin1 dou6","Excuse me, where is the MTR station?"],["直行，喺右邊","zik6 haang4, hai2 jau6 bin1","Go straight; it is on the right"],["明白","ming4 baak6","I understand"],["唔該晒","m4 goi1 saai3","Thank you very much"]] }
     ];
@@ -318,7 +318,7 @@
         intro: "A practical route through an MTR interchange, a neighbourhood café, and the harbour edge.",
         guideUrl: "../wayfarer/hong-kong.html", guideLabel: "Open the Hong Kong guide",
         groups: [
-          { title: "Arrive", note: "Find the MTR and make the first transfer clearly.", phrases: [["香港站喺邊度","Hoeng1 Gong2 zaam6 hai2 bin1 dou6","Where is Hong Kong Station?"],["喺邊度買八達通","hai2 bin1 dou6 maai5 Baat3 Daat6 Tung1","Where can I buy an Octopus card?"],["呢班車去中環嗎","ni1 baan1 ce1 heoi3 Zung1 Waan4 maa3","Does this train go to Central?"]] },
+          { title: "Arrive", note: "Find the MTR and make the first transfer clearly.", phrases: [["香港站喺邊度","Hoeng1 Gong2 zaam6 hai2 bin1 dou6","Where is Hong Kong Station?"],["喺邊度買八達通","hai2 bin1 dou6 maai5 Baat3 Daat6 Tung1","Where can I buy an Octopus card?"],["呢班車去唔去中環","ni1 baan1 ce1 heoi3 m4 heoi3 Zung1 Waan4","Does this train go to Central?"]] },
           { title: "Order", note: "Choose simply at a cha chaan teng counter.", phrases: [["有咩好介紹","jau5 me1 hou2 gaai3 siu6","What do you recommend?"],["我要杯凍奶茶","ngo5 jiu3 bui1 dung3 naai5 caa4","I would like an iced milk tea"],["少甜","siu2 tim4","Less sweet"]] },
           { title: "Continue", note: "Find the exit and close the exchange with care.", phrases: [["出口喺邊度","ceot1 hau2 hai2 bin1 dou6","Where is the exit?"],["可唔可以拍卡","ho2 m4 ho2 ji5 paak3 kaa1","Can I pay by card?"],["唔該晒","m4 goi1 saai3","Thank you very much"]] }
         ]
@@ -389,7 +389,7 @@
       if (!languageVoice) { toast("No Cantonese voice is available on this device. You can still use the written pronunciation."); return; }
       try {
         const utterance = new SpeechSynthesisUtterance(text);
-        utterance.lang = "zh-HK";
+        utterance.lang = languageVoice.lang;
         utterance.rate = 0.82;
         utterance.onerror = () => toast("Could not play this phrase. Check your device's speech settings.");
         if (languageVoice) utterance.voice = languageVoice;
@@ -399,7 +399,7 @@
     }
 
     function phraseMarkup(phrases) {
-      return `<div class="phrase-list">${phrases.map(([text,reading,en]) => `<div class="phrase"><span><span class="phrase-jp" lang="zh-Hant">${esc(text)}</span><span class="phrase-reading">${esc(reading)}</span><span class="phrase-en">${esc(en)}</span></span><button type="button" class="listen" data-say="${esc(text)}" aria-label="Listen to ${esc(text)}">▶</button></div>`).join("")}</div>`;
+      return `<div class="phrase-list">${phrases.map(([text,reading,en]) => `<div class="phrase"><span><span class="phrase-jp" lang="yue-Hant-HK">${esc(text)}</span><span class="phrase-reading">${esc(reading)}</span><span class="phrase-en">${esc(en)}</span></span><button type="button" class="listen" data-say="${esc(text)}" aria-label="Listen to ${esc(text)}">▶</button></div>`).join("")}</div>`;
     }
     function bindListen(root = document) { $$('[data-say]', root).forEach(button => button.addEventListener("click", () => speak(button.dataset.say))); }
 
@@ -413,7 +413,7 @@
         .sort((a, b) => stringScore(a + seed + "a") - stringScore(b + seed + "a"));
     }
     function checkMarkup(phrase, choices, label = "Check understanding") {
-      return `<section class="check-card"><div class="kicker">${esc(label)}</div><h3>Which Cantonese phrase means “${esc(phrase[2])}”?</h3><div class="check-options">${choices.map(choice => `<button type="button" class="check-option" data-check-choice="${esc(choice)}" lang="zh-Hant">${esc(choice)}</button>`).join("")}</div><p class="check-feedback" id="checkFeedback" role="status" aria-live="polite">Choose one answer.</p></section>`;
+      return `<section class="check-card"><div class="kicker">${esc(label)}</div><h3>Which Cantonese phrase means “${esc(phrase[2])}”?</h3><div class="check-options">${choices.map(choice => `<button type="button" class="check-option" data-check-choice="${esc(choice)}" lang="yue-Hant-HK">${esc(choice)}</button>`).join("")}</div><p class="check-feedback" id="checkFeedback" role="status" aria-live="polite">Choose one answer.</p></section>`;
     }
     function bindCheck(root, correct, onCorrect) {
       const feedback = $("#checkFeedback", root);
@@ -542,8 +542,8 @@
       bindListen($("#view-library"));
     }
     function renderPlaces() {
-      const cards = Object.entries(placeRoutes).map(([key,route], index) => `<article class="place-card"><div><span class="place-mark-small" lang="zh-Hant">${route.mark}</span><div class="kicker">Route ${String(index + 1).padStart(2,"0")}</div><h2>${esc(route.title)}</h2><p>${esc(route.label)}. ${esc(route.intro)}</p></div><button type="button" class="btn small" data-place="${key}">Open route</button></article>`).join("");
-      $("#view-places").innerHTML = `<div class="place-intro"><div><div class="kicker">Language in place</div><h1>One city, many quick exchanges.</h1><p>Hong Kong turns the foundation into movement: changing lines, ordering at a counter, finding the right exit, and continuing with care.</p></div><div class="place-kanji" lang="zh-Hant">香港</div></div><div class="place-grid">${cards}</div>`;
+      const cards = Object.entries(placeRoutes).map(([key,route], index) => `<article class="place-card"><div><span class="place-mark-small" lang="yue-Hant-HK">${route.mark}</span><div class="kicker">Route ${String(index + 1).padStart(2,"0")}</div><h2>${esc(route.title)}</h2><p>${esc(route.label)}. ${esc(route.intro)}</p></div><button type="button" class="btn small" data-place="${key}">Open route</button></article>`).join("");
+      $("#view-places").innerHTML = `<div class="place-intro"><div><div class="kicker">Language in place</div><h1>One city, many quick exchanges.</h1><p>Hong Kong turns the foundation into movement: changing lines, ordering at a counter, finding the right exit, and continuing with care.</p></div><div class="place-kanji" lang="yue-Hant-HK">香港</div></div><div class="place-grid">${cards}</div>`;
       $$('[data-place]', $("#view-places")).forEach(button => button.addEventListener("click", () => openPlaceRoute(button.dataset.place)));
     }
     function renderTop() { $("#doneCount").textContent = state.done.filter(Boolean).length; }
