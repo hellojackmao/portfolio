@@ -246,7 +246,7 @@ body::before { content:""; position: fixed; inset: 0; z-index: -2; pointer-event
     .btn:active, .step:active, .lsn:active { transform: scale(0.985); }
     .btn.ghost { background: rgba(255,255,255,0.65); color: var(--ink); border: 1px solid var(--line); box-shadow: none; }
     .btn.ghost:hover { border-color: var(--muted); }
-    .btn.rose { background: var(--rose); box-shadow: 0 10px 24px rgba(255, 90, 122, 0.3); }
+    .btn.rose { color: var(--ink); background: var(--rose); box-shadow: 0 10px 24px rgba(255, 90, 122, 0.3); }
     .btn.small { padding: 0.5rem 0.9rem; font-size: 0.74rem; }
     .btn:disabled { opacity: 0.45; cursor: default; transform: none; }
 
@@ -309,7 +309,7 @@ body::before { content:""; position: fixed; inset: 0; z-index: -2; pointer-event
     .search:focus { outline: none; border-color: var(--accent); }
     .seg { display: flex; gap: 0.25rem; background: rgba(255,255,255,0.55); border: 1px solid var(--line); border-radius: 999px; padding: 0.2rem; }
     .seg button { border: 0; background: transparent; cursor: pointer; font-weight: 800; font-size: 0.72rem; color: var(--muted); padding: 0.4rem 0.8rem; border-radius: 999px; }
-    .seg button[aria-selected="true"] { background: var(--ink); color: #fff; }
+    .seg button[aria-pressed="true"] { background: var(--ink); color: #fff; }
     .lib-group { font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 1.1rem 0 0.5rem; }
     .ph {
       display: grid; grid-template-columns: 10px 1fr auto auto; align-items: center; gap: 0.8rem;
@@ -1455,7 +1455,23 @@ function speak(text) {
 
 /* ---------- sheet ---------- */
 let sheetCleanup = null;
+let sheetOrigin = null;
+let sheetOriginSelector = null;
+let sheetScroll = 0;
+let sheetTrigger = null;
+document.addEventListener("click", event => {
+  const trigger = event.target.closest("button, a[href]");
+  if (trigger && !$("#sheet").contains(trigger)) sheetTrigger = trigger;
+}, true);
 function openSheet(title, html, cleanup) {
+  if (!$("#sheet").classList.contains("open")) {
+    sheetOrigin = sheetTrigger || document.activeElement;
+    sheetTrigger = null;
+    sheetScroll = window.scrollY;
+    const attrs = [...sheetOrigin.attributes].filter(a => a.name.startsWith("data-"));
+    sheetOriginSelector = sheetOrigin.id ? "#" + CSS.escape(sheetOrigin.id) : attrs.length ? sheetOrigin.tagName + attrs.map(a => "[" + a.name + "=" + JSON.stringify(a.value) + "]").join("") : null;
+  }
+  document.querySelectorAll("body > header, body > main, body > nav, body > .skip").forEach(e => e.inert = true);
   if (sheetCleanup) { try { sheetCleanup(); } catch (e) { } }
   sheetCleanup = cleanup || null;
   $("#sheetTitle").textContent = title;
@@ -1466,7 +1482,11 @@ function openSheet(title, html, cleanup) {
 function closeSheet() {
   if (sheetCleanup) { try { sheetCleanup(); } catch (e) { } sheetCleanup = null; }
   $("#sheet").classList.remove("open");
+  document.querySelectorAll("body > header, body > main, body > nav, body > .skip").forEach(e => e.inert = false);
   renderAll();
+  const origin = sheetOriginSelector ? document.querySelector(sheetOriginSelector) : sheetOrigin;
+  (origin?.isConnected ? origin : $("#languageBtn")).focus({ preventScroll: true });
+  window.scrollTo({ top: sheetScroll, behavior: "instant" });
 }
 
 function openLanguageSwitcher() {
@@ -2065,7 +2085,7 @@ function openSettings() {
   openSheet("Settings", `
     <div class="set-row">
       <span id="dailyGoalLabel">Daily goal<span class="hint">sizes your review batch</span></span>
-      <div class="seg" role="group" aria-labelledby="dailyGoalLabel">${[5, 15, 30].map(g => `<button type="button" data-goal="${g}" aria-selected="${state.goalMin === g}">${g} min</button>`).join("")}</div>
+      <div class="seg" role="group" aria-labelledby="dailyGoalLabel">${[5, 15, 30].map(g => `<button type="button" data-goal="${g}" aria-pressed="${state.goalMin === g}">${g} min</button>`).join("")}</div>
     </div>
     <div class="set-row">
       <label for="voiceSel">Voice<span class="hint">Korean voices on this device</span></label>
@@ -2133,7 +2153,16 @@ $("#gearBtn").addEventListener("click", openSettings);
 $("#languageBtn").addEventListener("click", openLanguageSwitcher);
 $("#sheetClose").addEventListener("click", closeSheet);
 $("#sheetBackdrop").addEventListener("click", closeSheet);
-document.addEventListener("keydown", e => { if (e.key === "Escape" && $("#sheet").classList.contains("open")) closeSheet(); });
+document.addEventListener("keydown", e => {
+  const sheet = $("#sheet");
+  if (!sheet.classList.contains("open")) return;
+  if (e.key === "Escape") { e.preventDefault(); closeSheet(); return; }
+  if (e.key !== "Tab") return;
+  const controls = [...sheet.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex="0"]')].filter(el => el.getClientRects().length);
+  const first = controls[0], last = controls[controls.length - 1];
+  if (e.shiftKey && (document.activeElement === first || !sheet.contains(document.activeElement))) { e.preventDefault(); last?.focus(); }
+  else if (!e.shiftKey && (document.activeElement === last || !sheet.contains(document.activeElement))) { e.preventDefault(); first?.focus(); }
+});
 
 if ("speechSynthesis" in window) {
   loadVoices();

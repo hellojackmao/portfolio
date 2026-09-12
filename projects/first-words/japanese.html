@@ -362,13 +362,19 @@
     let sheetCleanup = null;
     let sheetOrigin = null;
     let sheetScroll = 0;
+    let sheetTrigger = null;
+    document.addEventListener("click", event => {
+      const trigger = event.target.closest("button, a[href]");
+      if (trigger && !$("#sheet").contains(trigger)) sheetTrigger = trigger;
+    }, true);
     function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (error) {} }
     function nextLesson() { const next = state.done.findIndex(item => !item); return next < 0 ? lessons.length - 1 : next; }
     function toast(message) { const el = $("#toast"); el.textContent = message; el.classList.add("show"); clearTimeout(toast.timer); toast.timer = setTimeout(() => el.classList.remove("show"), 1800); }
 
     function openSheet(title, html, cleanup) {
       if (!$("#sheet").classList.contains("open")) {
-        sheetOrigin = document.activeElement;
+        sheetOrigin = sheetTrigger || document.activeElement;
+        sheetTrigger = null;
         sheetScroll = window.scrollY;
       }
       if (sheetCleanup) sheetCleanup();
