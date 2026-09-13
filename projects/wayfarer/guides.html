@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" data-back-top="none">
 <head>
+<link rel="preload" href="../../fonts/performance/inter-tight-6.woff2" as="font" type="font/woff2" crossorigin>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="description" content="Browse Wayfarer’s long-form travel guides by place, author, and mood." />
@@ -15,10 +16,10 @@
 <meta name="twitter:description" content="Browse Wayfarer’s long-form travel guides by place, author, and mood." />
 <title>Browse all guides — Wayfarer</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23111111'/%3E%3Cpath d='M16 3 L19 16 L16 29 L13 16 Z' fill='%234ECDC4'/%3E%3Cpath d='M3 16 L16 13 L29 16 L16 19 Z' fill='%234ECDC4' opacity='0.6'/%3E%3Ccircle cx='16' cy='16' r='2.4' fill='%23ffffff'/%3E%3C/svg%3E" />
-<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="ui-fonts.css">
 <style>
   :root { --ink:#111; --teal:#2aa89f; --muted:#6b6b6b; --line:rgba(0,0,0,0.1);
-    --ui:"Inter Tight",sans-serif; --smooth:cubic-bezier(0.22,1,0.36,1); }
+    --ui:"Inter Tight","Wayfarer UI Fallback",sans-serif; --smooth:cubic-bezier(0.22,1,0.36,1); }
   * { box-sizing:border-box; margin:0; padding:0; }
   body { font-family:var(--ui); color:var(--ink); background:#fdfcfb; -webkit-font-smoothing:antialiased; overflow-x:hidden;
     background-image:
@@ -130,7 +131,7 @@
 :where(a,button,input,select,textarea,[tabindex]):focus-visible{outline:3px solid var(--teal,#4ECDC4);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){.skip-link{transition:none}}
 </style>
-<style>.skip-link{font-family:inherit}button,input,select,textarea{font-family:inherit}</style></head>
+<style>.skip-link{font-family:inherit}button,input,select,textarea{font-family:inherit}</style><style>#grid[aria-busy="true"]{min-height:70vh}</style></head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
   <nav class="wf-nav">
@@ -161,11 +162,11 @@
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       <input type="text" id="searchInput" aria-label="Search guides, places, and authors" placeholder="Search guides, places, authors…" />
     </div>
-    <div class="filters" id="moodFilters"></div>
+    <div class="filters" id="moodFilters" aria-hidden="true"><span class="chip on">All</span><span class="chip">Slow journeys</span><span class="chip">City stories</span><span class="chip">Coastal routes</span><span class="chip">Island routes</span><span class="chip">Far north</span><span class="chip">Far horizons</span></div>
   </div>
 
-  <div class="count" id="resultCount"></div>
-  <div class="grid" id="grid"></div>
+  <div class="count" id="resultCount" role="status">Loading guides…</div>
+  <div class="grid" id="grid" aria-busy="true"></div>
   <div class="empty" id="empty" style="display:none;">No guides match that yet — try a different place or mood.</div>
 
   <section class="page-close" aria-label="Library purpose">
@@ -188,6 +189,8 @@
 
   // Build mood filter chips
   const moodWrap = document.getElementById("moodFilters");
+  moodWrap.replaceChildren();
+  moodWrap.removeAttribute("aria-hidden");
   ["All"].concat(W.moods()).forEach(function(m){
     const b = document.createElement("button");
     b.className = "chip" + (m === "All" ? " on" : "");
@@ -222,6 +225,7 @@
     const grid = document.getElementById("grid");
     const results = W.guides.filter(matches);
     grid.innerHTML = "";
+    grid.removeAttribute("aria-busy");
     document.getElementById("empty").style.display = results.length ? "none" : "block";
     document.getElementById("resultCount").textContent =
       results.length + (results.length === 1 ? " guide" : " guides");
