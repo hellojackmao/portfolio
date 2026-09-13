@@ -1,0 +1,65 @@
+/* Same typefaces; optimized download. See fonts/PERFORMANCE-FONTS.md. */
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(../../fonts/performance/japanese-0.woff2) format('woff2');
+  unicode-range: U+a, U+20-59, U+5b, U+5d-7d, U+b7, U+c1, U+c9, U+cd, U+d3, U+d7, U+da, U+dd, U+e1, U+e9, U+ed, U+f3, U+fa, U+fd, U+106-107, U+139-13a, U+143-144, U+154-155, U+15a-15b, U+17a, U+1f4-1f5, U+301, U+1112, U+1161, U+11ab, U+1e30-1e31, U+1e3e-1e3f, U+1e54-1e55, U+1e82-1e83, U+2014, U+201c-201d, U+2190, U+2192, U+2304, U+25b6, U+2713, U+3001, U+3042, U+3044, U+3046, U+3048, U+304a-305c, U+305f-306b, U+306d-307f, U+3081-3083, U+3086-308a, U+308c-308d, U+308f, U+3092-3094, U+3099-309a, U+30a2, U+30a4, U+30a7, U+30ab-30ac, U+30af-30b0, U+30b7-30b8, U+30bf-30c3, U+30c8-30cb, U+30d5-30da, U+30e1, U+30e3, U+30e5, U+30ea, U+30f3, U+30fc, U+4e00, U+4e88, U+4e8c, U+4eac, U+4eba, U+4f1a, U+4f55, U+4f7f, U+5165, U+5199, U+51fa, U+5206-5207, U+53e3, U+5927, U+64ae, U+65e5, U+6642, U+672c, U+6765, U+6771, U+679a, U+6b21, U+6c17, U+6e0b, U+7269, U+771f, U+7b26, U+7d04, U+8089, U+82f1, U+8336, U+8377, U+83ef, U+884c, U+8a08, U+8a9e, U+8c37, U+8eca, U+8fd1, U+90fd, U+958b, U+962a, U+96fb, U+9759, U+9810, U+98df, U+99c5, U+d558, U+d55c;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(../../fonts/performance/japanese-0.woff2) format('woff2');
+  unicode-range: U+a, U+20-59, U+5b, U+5d-7d, U+b7, U+c1, U+c9, U+cd, U+d3, U+d7, U+da, U+dd, U+e1, U+e9, U+ed, U+f3, U+fa, U+fd, U+106-107, U+139-13a, U+143-144, U+154-155, U+15a-15b, U+17a, U+1f4-1f5, U+301, U+1112, U+1161, U+11ab, U+1e30-1e31, U+1e3e-1e3f, U+1e54-1e55, U+1e82-1e83, U+2014, U+201c-201d, U+2190, U+2192, U+2304, U+25b6, U+2713, U+3001, U+3042, U+3044, U+3046, U+3048, U+304a-305c, U+305f-306b, U+306d-307f, U+3081-3083, U+3086-308a, U+308c-308d, U+308f, U+3092-3094, U+3099-309a, U+30a2, U+30a4, U+30a7, U+30ab-30ac, U+30af-30b0, U+30b7-30b8, U+30bf-30c3, U+30c8-30cb, U+30d5-30da, U+30e1, U+30e3, U+30e5, U+30ea, U+30f3, U+30fc, U+4e00, U+4e88, U+4e8c, U+4eac, U+4eba, U+4f1a, U+4f55, U+4f7f, U+5165, U+5199, U+51fa, U+5206-5207, U+53e3, U+5927, U+64ae, U+65e5, U+6642, U+672c, U+6765, U+6771, U+679a, U+6b21, U+6c17, U+6e0b, U+7269, U+771f, U+7b26, U+7d04, U+8089, U+82f1, U+8336, U+8377, U+83ef, U+884c, U+8a08, U+8a9e, U+8c37, U+8eca, U+8fd1, U+90fd, U+958b, U+962a, U+96fb, U+9759, U+9810, U+98df, U+99c5, U+d558, U+d55c;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(../../fonts/performance/japanese-0.woff2) format('woff2');
+  unicode-range: U+a, U+20-59, U+5b, U+5d-7d, U+b7, U+c1, U+c9, U+cd, U+d3, U+d7, U+da, U+dd, U+e1, U+e9, U+ed, U+f3, U+fa, U+fd, U+106-107, U+139-13a, U+143-144, U+154-155, U+15a-15b, U+17a, U+1f4-1f5, U+301, U+1112, U+1161, U+11ab, U+1e30-1e31, U+1e3e-1e3f, U+1e54-1e55, U+1e82-1e83, U+2014, U+201c-201d, U+2190, U+2192, U+2304, U+25b6, U+2713, U+3001, U+3042, U+3044, U+3046, U+3048, U+304a-305c, U+305f-306b, U+306d-307f, U+3081-3083, U+3086-308a, U+308c-308d, U+308f, U+3092-3094, U+3099-309a, U+30a2, U+30a4, U+30a7, U+30ab-30ac, U+30af-30b0, U+30b7-30b8, U+30bf-30c3, U+30c8-30cb, U+30d5-30da, U+30e1, U+30e3, U+30e5, U+30ea, U+30f3, U+30fc, U+4e00, U+4e88, U+4e8c, U+4eac, U+4eba, U+4f1a, U+4f55, U+4f7f, U+5165, U+5199, U+51fa, U+5206-5207, U+53e3, U+5927, U+64ae, U+65e5, U+6642, U+672c, U+6765, U+6771, U+679a, U+6b21, U+6c17, U+6e0b, U+7269, U+771f, U+7b26, U+7d04, U+8089, U+82f1, U+8336, U+8377, U+83ef, U+884c, U+8a08, U+8a9e, U+8c37, U+8eca, U+8fd1, U+90fd, U+958b, U+962a, U+96fb, U+9759, U+9810, U+98df, U+99c5, U+d558, U+d55c;
+}
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(../../fonts/performance/japanese-0.woff2) format('woff2');
+  unicode-range: U+a, U+20-59, U+5b, U+5d-7d, U+b7, U+c1, U+c9, U+cd, U+d3, U+d7, U+da, U+dd, U+e1, U+e9, U+ed, U+f3, U+fa, U+fd, U+106-107, U+139-13a, U+143-144, U+154-155, U+15a-15b, U+17a, U+1f4-1f5, U+301, U+1112, U+1161, U+11ab, U+1e30-1e31, U+1e3e-1e3f, U+1e54-1e55, U+1e82-1e83, U+2014, U+201c-201d, U+2190, U+2192, U+2304, U+25b6, U+2713, U+3001, U+3042, U+3044, U+3046, U+3048, U+304a-305c, U+305f-306b, U+306d-307f, U+3081-3083, U+3086-308a, U+308c-308d, U+308f, U+3092-3094, U+3099-309a, U+30a2, U+30a4, U+30a7, U+30ab-30ac, U+30af-30b0, U+30b7-30b8, U+30bf-30c3, U+30c8-30cb, U+30d5-30da, U+30e1, U+30e3, U+30e5, U+30ea, U+30f3, U+30fc, U+4e00, U+4e88, U+4e8c, U+4eac, U+4eba, U+4f1a, U+4f55, U+4f7f, U+5165, U+5199, U+51fa, U+5206-5207, U+53e3, U+5927, U+64ae, U+65e5, U+6642, U+672c, U+6765, U+6771, U+679a, U+6b21, U+6c17, U+6e0b, U+7269, U+771f, U+7b26, U+7d04, U+8089, U+82f1, U+8336, U+8377, U+83ef, U+884c, U+8a08, U+8a9e, U+8c37, U+8eca, U+8fd1, U+90fd, U+958b, U+962a, U+96fb, U+9759, U+9810, U+98df, U+99c5, U+d558, U+d55c;
+}
+@font-face {
+  font-family: 'Shippori Mincho';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(../../fonts/performance/japanese-1.woff2) format('woff2');
+  unicode-range: U+a, U+20-59, U+5b, U+5d-7d, U+b7, U+c1, U+c9, U+cd, U+d3, U+d7, U+da, U+dd, U+e1, U+e9, U+ed, U+f3, U+fa, U+fd, U+106-107, U+139-13a, U+143-144, U+154-155, U+15a-15b, U+17a, U+1f4-1f5, U+301, U+1112, U+1161, U+11ab, U+1e30-1e31, U+1e3e-1e3f, U+1e54-1e55, U+1e82-1e83, U+2014, U+201c-201d, U+2190, U+2192, U+2304, U+25b6, U+2713, U+3001, U+3042, U+3044, U+3046, U+3048, U+304a-305c, U+305f-306b, U+306d-307f, U+3081-3083, U+3086-308a, U+308c-308d, U+308f, U+3092-3094, U+3099-309a, U+30a2, U+30a4, U+30a7, U+30ab-30ac, U+30af-30b0, U+30b7-30b8, U+30bf-30c3, U+30c8-30cb, U+30d5-30da, U+30e1, U+30e3, U+30e5, U+30ea, U+30f3, U+30fc, U+4e00, U+4e88, U+4e8c, U+4eac, U+4eba, U+4f1a, U+4f55, U+4f7f, U+5165, U+5199, U+51fa, U+5206-5207, U+53e3, U+5927, U+64ae, U+65e5, U+6642, U+672c, U+6765, U+6771, U+679a, U+6b21, U+6c17, U+6e0b, U+7269, U+771f, U+7b26, U+7d04, U+8089, U+82f1, U+8336, U+8377, U+83ef, U+884c, U+8a08, U+8a9e, U+8c37, U+8eca, U+8fd1, U+90fd, U+958b, U+962a, U+96fb, U+9759, U+9810, U+98df, U+99c5, U+d558, U+d55c;
+}
+@font-face {
+  font-family: 'Shippori Mincho';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(../../fonts/performance/japanese-2.woff2) format('woff2');
+  unicode-range: U+a, U+20-59, U+5b, U+5d-7d, U+b7, U+c1, U+c9, U+cd, U+d3, U+d7, U+da, U+dd, U+e1, U+e9, U+ed, U+f3, U+fa, U+fd, U+106-107, U+139-13a, U+143-144, U+154-155, U+15a-15b, U+17a, U+1f4-1f5, U+301, U+1112, U+1161, U+11ab, U+1e30-1e31, U+1e3e-1e3f, U+1e54-1e55, U+1e82-1e83, U+2014, U+201c-201d, U+2190, U+2192, U+2304, U+25b6, U+2713, U+3001, U+3042, U+3044, U+3046, U+3048, U+304a-305c, U+305f-306b, U+306d-307f, U+3081-3083, U+3086-308a, U+308c-308d, U+308f, U+3092-3094, U+3099-309a, U+30a2, U+30a4, U+30a7, U+30ab-30ac, U+30af-30b0, U+30b7-30b8, U+30bf-30c3, U+30c8-30cb, U+30d5-30da, U+30e1, U+30e3, U+30e5, U+30ea, U+30f3, U+30fc, U+4e00, U+4e88, U+4e8c, U+4eac, U+4eba, U+4f1a, U+4f55, U+4f7f, U+5165, U+5199, U+51fa, U+5206-5207, U+53e3, U+5927, U+64ae, U+65e5, U+6642, U+672c, U+6765, U+6771, U+679a, U+6b21, U+6c17, U+6e0b, U+7269, U+771f, U+7b26, U+7d04, U+8089, U+82f1, U+8336, U+8377, U+83ef, U+884c, U+8a08, U+8a9e, U+8c37, U+8eca, U+8fd1, U+90fd, U+958b, U+962a, U+96fb, U+9759, U+9810, U+98df, U+99c5, U+d558, U+d55c;
+}
+@font-face {
+  font-family: 'Shippori Mincho';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(../../fonts/performance/japanese-3.woff2) format('woff2');
+  unicode-range: U+a, U+20-59, U+5b, U+5d-7d, U+b7, U+c1, U+c9, U+cd, U+d3, U+d7, U+da, U+dd, U+e1, U+e9, U+ed, U+f3, U+fa, U+fd, U+106-107, U+139-13a, U+143-144, U+154-155, U+15a-15b, U+17a, U+1f4-1f5, U+301, U+1112, U+1161, U+11ab, U+1e30-1e31, U+1e3e-1e3f, U+1e54-1e55, U+1e82-1e83, U+2014, U+201c-201d, U+2190, U+2192, U+2304, U+25b6, U+2713, U+3001, U+3042, U+3044, U+3046, U+3048, U+304a-305c, U+305f-306b, U+306d-307f, U+3081-3083, U+3086-308a, U+308c-308d, U+308f, U+3092-3094, U+3099-309a, U+30a2, U+30a4, U+30a7, U+30ab-30ac, U+30af-30b0, U+30b7-30b8, U+30bf-30c3, U+30c8-30cb, U+30d5-30da, U+30e1, U+30e3, U+30e5, U+30ea, U+30f3, U+30fc, U+4e00, U+4e88, U+4e8c, U+4eac, U+4eba, U+4f1a, U+4f55, U+4f7f, U+5165, U+5199, U+51fa, U+5206-5207, U+53e3, U+5927, U+64ae, U+65e5, U+6642, U+672c, U+6765, U+6771, U+679a, U+6b21, U+6c17, U+6e0b, U+7269, U+771f, U+7b26, U+7d04, U+8089, U+82f1, U+8336, U+8377, U+83ef, U+884c, U+8a08, U+8a9e, U+8c37, U+8eca, U+8fd1, U+90fd, U+958b, U+962a, U+96fb, U+9759, U+9810, U+98df, U+99c5, U+d558, U+d55c;
+}
+@font-face {
+  font-family: 'Shippori Mincho';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(../../fonts/performance/japanese-4.woff2) format('woff2');
+  unicode-range: U+a, U+20-59, U+5b, U+5d-7d, U+b7, U+c1, U+c9, U+cd, U+d3, U+d7, U+da, U+dd, U+e1, U+e9, U+ed, U+f3, U+fa, U+fd, U+106-107, U+139-13a, U+143-144, U+154-155, U+15a-15b, U+17a, U+1f4-1f5, U+301, U+1112, U+1161, U+11ab, U+1e30-1e31, U+1e3e-1e3f, U+1e54-1e55, U+1e82-1e83, U+2014, U+201c-201d, U+2190, U+2192, U+2304, U+25b6, U+2713, U+3001, U+3042, U+3044, U+3046, U+3048, U+304a-305c, U+305f-306b, U+306d-307f, U+3081-3083, U+3086-308a, U+308c-308d, U+308f, U+3092-3094, U+3099-309a, U+30a2, U+30a4, U+30a7, U+30ab-30ac, U+30af-30b0, U+30b7-30b8, U+30bf-30c3, U+30c8-30cb, U+30d5-30da, U+30e1, U+30e3, U+30e5, U+30ea, U+30f3, U+30fc, U+4e00, U+4e88, U+4e8c, U+4eac, U+4eba, U+4f1a, U+4f55, U+4f7f, U+5165, U+5199, U+51fa, U+5206-5207, U+53e3, U+5927, U+64ae, U+65e5, U+6642, U+672c, U+6765, U+6771, U+679a, U+6b21, U+6c17, U+6e0b, U+7269, U+771f, U+7b26, U+7d04, U+8089, U+82f1, U+8336, U+8377, U+83ef, U+884c, U+8a08, U+8a9e, U+8c37, U+8eca, U+8fd1, U+90fd, U+958b, U+962a, U+96fb, U+9759, U+9810, U+98df, U+99c5, U+d558, U+d55c;
+}

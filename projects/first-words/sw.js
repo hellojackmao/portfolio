@@ -1,8 +1,20 @@
-const CACHE_NAME = "first-words-v23";
+const CACHE_NAME = "first-words-v24";
 const APP_ASSETS = [
   "./",
   "./index.html",
   "./hub-fonts.css",
+  "./practice-fonts.css",
+  "./japanese-fonts.css",
+  "../../fonts/performance/japanese-0.woff2",
+  "../../fonts/performance/japanese-1.woff2",
+  "../../fonts/performance/japanese-2.woff2",
+  "../../fonts/performance/japanese-3.woff2",
+  "../../fonts/performance/japanese-4.woff2",
+  "../../fonts/performance/practice-0.woff2",
+  "../../fonts/performance/practice-1.woff2",
+  "../../fonts/performance/practice-2.woff2",
+  "../../fonts/performance/practice-3.woff2",
+  "../../fonts/performance/practice-4.woff2",
   "../../fonts/first-words/manrope-hub-0.woff2",
   "../../fonts/first-words/shippori-hub-0.woff2",
   "../../fonts/first-words/shippori-hub-1.woff2",
