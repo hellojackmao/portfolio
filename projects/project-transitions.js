@@ -14,7 +14,7 @@
   root.classList.add('jm-transitions');
 
   const createIgcTransitionProxy = (source, arriving = false) => {
-    if (!source || reducedMotion.matches || !document.body) {
+    if (!source || !source.includes("/in-good-company/sunpark/") || reducedMotion.matches || !document.body) {
       return null;
     }
 
@@ -50,22 +50,20 @@
       if (direction === 'to-editorial' && isEditorial && !compactViewport.matches) {
         const leadSource = window.sessionStorage.getItem('igc-lead-source');
         const heroImage = document.querySelector('.hero-placeholder img');
-        if (leadSource && heroImage) {
+        if (leadSource && leadSource.includes("/in-good-company/sunpark/") && heroImage) {
           const compactSource = leadSource.replace(/\.webp(?:\?.*)?$/i, '-360.webp').replace('-360-360.webp', '-360.webp');
           const fullSource = leadSource.replace('-360.webp', '.webp');
           heroImage.src = compactSource;
           heroImage.srcset = `${compactSource} 360w, ${fullSource} 2400w`;
 
-          const frameMatch = leadSource.match(/\/(sunpark|richelle)\/[^/]*-(\d{2})-/i);
+          const frameMatch = leadSource.match(/\/(sunpark)\/[^/]*-(\d{2})-/i);
           if (frameMatch) {
-            const person = frameMatch[1].toLowerCase();
             const frameNumber = frameMatch[2];
-            const isRichelleFrame = person === 'richelle';
             const kicker = document.querySelector('.hero-kicker');
             const meta = document.querySelector('.hero-meta');
 
             if (kicker) {
-              kicker.textContent = `Portrait journal / Roll ${isRichelleFrame ? '002' : '001'} / Toronto`;
+              kicker.textContent = `Portrait journal / Roll 001 / Toronto`;
             }
             if (meta) {
               meta.textContent = `Frame ${frameNumber} of 09 / Selected edit`;
