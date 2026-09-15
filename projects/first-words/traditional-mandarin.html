@@ -249,7 +249,7 @@
   {"@context":"https://schema.org","@type":"LearningResource","name":"First Words — Traditional Mandarin Foundation","creator":{"@type":"Person","name":"Jack Mao","url":"https://www.hellojackmao.com"},"description":"A 15-lesson Traditional Mandarin foundation with an applied Taipei language route.","dateCreated":"2026","url":"https://www.hellojackmao.com/projects/first-words/traditional-mandarin.html"}
   </script>
 <link rel="stylesheet" href="hub-fonts.css">
-</head>
+<style id="ordering-pilot">#orderingNext,#orderingReveal{background:#31578f;color:#fff;transition:none}.ordering-heading{font-family:var(--serif);font-size:1.6rem;line-height:1.25;margin:12px 0}.ordering-summary{padding-left:20px;line-height:1.8}.ordering-hint summary{padding:12px 0;cursor:pointer;min-height:44px}.ordering-hint{margin-bottom:16px}.ordering-heading:focus{outline:none}.ordering-heading:focus-visible{outline:2px solid var(--accent);outline-offset:4px}</style><script src="learning-return.js"></script></head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header class="top">
@@ -439,6 +439,8 @@
     }
 
     function openLesson(index) {
+      state.activeLesson=index;save();
+      if(index===9){openOrderingPilot();return;}
       const lesson = lessons[index];
       const checkPhrase = lesson.phrases[(index + 1) % lesson.phrases.length];
       const choices = choiceSet(checkPhrase[0], lesson.phrases.map(phrase => phrase[0]), index);
@@ -448,6 +450,42 @@
       $("#completeLesson").addEventListener("click", () => {
         state.done[index] = true; state.lastLesson = index; save(); closeSheet(); toast("Lesson complete.");
       });
+    }
+
+    const orderingFlow=[['learn',0],['check',0],['learn',2],['check',2],['recall',0],['pause',0],['learn',1],['check',1],['learn',3],['connect',1],['connect',3]];
+    function openOrderingPilot(){
+      const saved=state.orderingPilot;
+      if(!saved||!Number.isInteger(saved.step)||saved.step<0||saved.step>orderingFlow.length||['passed','revealed','paused'].some(k=>typeof saved[k]!=='boolean'))state.orderingPilot={step:0,passed:false,revealed:false,paused:false};
+      const progress=state.orderingPilot,phrases=lessons[9].phrases;
+      function draw(focus=false){
+        const finish=progress.step===orderingFlow.length;
+        const [kind,index]=orderingFlow[progress.step]||['finish',0],phrase=phrases[index];
+        const group=progress.step<5?'Choose and ask':progress.step===5?'A natural pause':'Settle in and finish';
+        let body='<p class="kicker">Ordering / '+group+'</p>';
+        let action='Continue';
+        if(finish){body+='<h3 class="ordering-heading" tabindex="-1">One cafe visit, four useful phrases.</h3><p class="sheet-lede">You have met, used and revisited the phrases. Finish here, or return whenever you want another practice.</p><ul class="ordering-summary">'+phrases.map(p=>'<li>'+esc(p[2])+'</li>').join('')+'</ul>';action=state.done[9]?'Finish practice':'Complete lesson';}
+        else if(kind==='pause'){body+='<h3 class="ordering-heading" tabindex="-1">'+(progress.paused?'Your place is saved.':'A good place to pause.')+'</h3><p class="sheet-lede">You have ordered and asked for a recommendation. Next, request water and close the visit.</p>';action=progress.paused?'Resume lesson':'Continue the visit';if(!progress.paused)body+='<button class="btn ghost" type="button" id="orderingPause">Pause here</button>';}
+        else{
+          const context=['Point to the item you want on the menu.','You have taken a seat and would like water.','You are unsure what to choose. Ask for a recommendation.','Your visit is ending. Ask for the bill.'][index];
+          body+='<h3 class="ordering-heading" tabindex="-1">'+(kind==='learn'?'Meet the phrase.':kind==='recall'?'Bring an earlier phrase back.':kind==='connect'?'Your turn in the exchange.':'Try it with support.')+'</h3><p class="sheet-lede">'+(kind==='recall'?'After hearing a recommendation, you point to your choice. Recall how to order it.':context)+'</p>';
+          if(kind==='learn'){body+=phraseMarkup([phrase]);action='Try this phrase';}
+          else if(kind==='recall'){
+            if(!progress.revealed&&!progress.passed)body+='<button class="btn" type="button" id="orderingReveal">Reveal the phrase</button>';
+            else{body+=phraseMarkup([phrase]);if(!progress.passed)body+='<p class="data-note">Say it aloud or silently, then compare with the phrase.</p><button class="btn ghost" type="button" id="orderingRecall">Ready to continue</button>';}
+          }else if(progress.passed){body+=phraseMarkup([phrase])+'<p class="data-note">That fits this moment.</p>';}
+          else{if(kind==='check')body+='<details class="ordering-hint"><summary>Look at the phrase again</summary>'+phraseMarkup([phrase])+'</details>';body+=checkMarkup(phrase,choiceSet(phrase[0],phrases.map(p=>p[0]),progress.step),kind==='connect'?'Use it in context':'Try the phrase');}
+        }
+        const canContinue=finish||['learn','pause'].includes(kind)||progress.passed;
+        body+='<div class="sheet-actions"><button type="button" class="btn" id="orderingNext" '+(canContinue?'':'disabled')+'>'+action+'</button></div><p class="data-note">Your place is saved when you close this lesson.</p>';
+        openSheet('Lesson 10 · Ordering',body,()=>{if('speechSynthesis'in window)speechSynthesis.cancel();});bindListen($('#sheetBody'));
+        if(!finish&&['check','connect'].includes(kind)&&!progress.passed)bindCheck($('#sheetBody'),phrase[0],()=>{progress.passed=true;save();draw(true);});
+        $('#orderingReveal')?.addEventListener('click',()=>{progress.revealed=true;save();draw();$('#orderingRecall').focus();});
+        $('#orderingRecall')?.addEventListener('click',()=>{progress.passed=true;save();draw(true);});
+        $('#orderingPause')?.addEventListener('click',()=>{progress.paused=true;save();draw(true);});
+        $('#orderingNext').addEventListener('click',()=>{if(!canContinue)return;if(finish){state.done[9]=true;state.lastLesson=9;state.orderingPilot={step:0,passed:false,revealed:false,paused:false};save();closeSheet();toast('Lesson complete.');return;}progress.step++;progress.passed=false;progress.revealed=false;progress.paused=false;save();draw(true);});
+        save();if(focus)$('#sheetBody .ordering-heading').focus();
+      }
+      draw();
     }
 
     function reviewPhrases() {
@@ -577,6 +615,14 @@
     });
     if ("speechSynthesis" in window) { loadVoice(); speechSynthesis.addEventListener("voiceschanged", loadVoice); }
     renderAll();
+    if(new URLSearchParams(location.search).get('resume')==='1' && !new URLSearchParams(location.search).has('place')){
+      const returning=FirstWordsReturn.info('hana.mandarin-tw.v1',9);
+      setView('path');
+      if(returning.started && returning.index>=0)requestAnimationFrame(()=>{
+        const row=document.querySelector('[data-lesson="'+returning.index+'"]');
+        if(row){row.focus();row.click();}
+      });
+    }
     const requestedPlace = new URLSearchParams(location.search).get("place");
     if (requestedPlace && placeRoutes[requestedPlace]) { setView("places"); requestAnimationFrame(() => openPlaceRoute(requestedPlace)); }
     if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
