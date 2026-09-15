@@ -1,4 +1,4 @@
-const CACHE_NAME = "first-words-v34";
+const CACHE_NAME = "first-words-v37";
 const APP_ASSETS = [
   "./",
   "./index.html",
@@ -6,6 +6,8 @@ const APP_ASSETS = [
   "./language-entry.css",
   "./directions-practice.css",
   "./directions-practice.js",
+  "./exchange-practice.css",
+  "./exchange-practice.js",
   "./hub-fonts.css",
   "./practice-fonts.css",
   "./japanese-fonts.css",
