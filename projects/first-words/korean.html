@@ -820,13 +820,19 @@ main { max-width: 1080px; padding-top: clamp(1.25rem, 3vw, 2rem); }
   <meta property="og:image:alt" content="Jack Mao portfolio index card for editorial, storytelling, and product design.">
   <meta name="twitter:image" content="https://www.hellojackmao.com/images/og-portfolio-index-card.png">
   <meta name="twitter:image:alt" content="Jack Mao portfolio index card for editorial, storytelling, and product design."><link rel="stylesheet" href="hub-fonts.css">
-<style id="ordering-pilot">#orderingNext,#orderingReveal{background:#226147;color:#fff;transition:none}.ordering-heading{font-family:var(--font-display, "Fraunces", serif);font-size:1.6rem;line-height:1.25;margin:12px 0}.ordering-summary{padding-left:20px;line-height:1.8}.ordering-hint summary{padding:12px 0;cursor:pointer;min-height:44px}.ordering-hint{margin-bottom:16px}.ordering-heading:focus{outline:none}.ordering-heading:focus-visible{outline:2px solid var(--accent);outline-offset:4px}</style><style>.ordering-heading{font-size:1.6rem}.sheet-lede,.data-note{font-size:.9rem;line-height:1.7}.ordering-hint{margin:16px 0}.sheet-actions{margin-top:20px}</style><script src="learning-return.js"></script></head>
-<body>
+<style id="ordering-pilot">#orderingNext,#orderingReveal{background:#226147;color:#fff;transition:none}.ordering-heading{font-family:var(--font-display, "Fraunces", serif);font-size:1.6rem;line-height:1.25;margin:12px 0}.ordering-summary{padding-left:20px;line-height:1.8}.ordering-hint summary{padding:12px 0;cursor:pointer;min-height:44px}.ordering-hint{margin-bottom:16px}.ordering-heading:focus{outline:none}.ordering-heading:focus-visible{outline:2px solid var(--accent);outline-offset:4px}</style><style>.ordering-heading{font-size:1.6rem}.sheet-lede,.data-note{font-size:.9rem;line-height:1.7}.ordering-hint{margin:16px 0}.sheet-actions{margin-top:20px}</style><script src="learning-return.js"></script><link rel="stylesheet" href="language-entry.css"><link rel="stylesheet" href="directions-practice.css"><script src="directions-practice.js"></script></head>
+<body class="entry-mode">
   <a class="skip" href="#main">Skip to content</a>
 
+  <main id="language-entry" style="--entry-color:#9ed3bb;--entry-ink:#226147">
+    <a class="entry-back" href="index.html">← First Words</a>
+    <section class="entry-intro" aria-labelledby="entry-title"><div><div class="entry-kicker">Language in place</div><h1 id="entry-title">Korean</h1><p>Begin with Hangul and everyday exchanges, then practice in places across Korea.</p></div><div class="entry-art" aria-hidden="true"><span>한</span></div></section>
+    <section class="entry-foundation" aria-labelledby="entry-foundation-title"><div class="entry-kicker" id="entry-progress">15 lessons</div><h2 id="entry-foundation-title">A foundation to build on.</h2><p>Start with the sounds, learn useful phrases, and return at your own pace. Your progress stays in this browser.</p><a class="entry-action" id="entry-start" href="korean.html?learn=1">Start learning →</a></section>
+    <section class="entry-places" aria-labelledby="entry-places-title"><div class="entry-kicker">Practice by place</div><h2 id="entry-places-title">Take the language with you.</h2><p>Choose a place when you want to put familiar phrases into context.</p><div class="entry-routes"><a href="korean.html?place=seoraksan">Seoraksan →</a><a href="korean.html?place=seoul">Seoul →</a><a href="korean.html?place=busan">Busan →</a><a href="korean.html?place=jeju">Jeju →</a></div></section>
+  </main>
   <header class="top">
     <div class="top-left">
-      <a class="back" href="/" aria-label="Back to Jack Mao portfolio">←<span>&nbsp;Portfolio</span></a>
+      <a class="back" href="korean.html" aria-label="Back to Korean introduction">←<span>&nbsp;Korean</span></a>
       <button type="button" class="brand" id="languageBtn" aria-label="Choose a First Words language" aria-haspopup="dialog">
         <span class="brand-tile" aria-hidden="true">한</span>
         <span class="brand-copy"><b>First Words</b><small>Korean · foundation complete</small></span>
@@ -1938,7 +1944,7 @@ function runReview() {
 
 
 function phraseMarkup(phrases){return phrases.map(p=>`<div class="phrase-line"><span><span class="ko" lang="ko">${esc(p[0])}</span><span class="en" style="display:block">${esc(p[1])} · ${esc(p[2])}</span></span><button type="button" class="notebtn" data-order-note="${esc(p[0])}" aria-label="Add note">✎</button><button type="button" class="speak" data-say="${esc(p[0])}" aria-label="Listen">▶</button></div>`).join('');}
-function bindListen(root){$$('[data-say]',root).forEach(b=>b.addEventListener('click',()=>speak(b.dataset.say)));$$('[data-order-note]',root).forEach(b=>b.addEventListener('click',()=>{const li=lessons.findIndex(l=>l.title==='Ordering'),pi=lessons[li].phrases.findIndex(p=>p[0]===b.dataset.orderNote),id=pid(li,pi);const note=prompt('Note for '+b.dataset.orderNote,state.notes[id]||'');if(note!==null){if(note.trim())state.notes[id]=note.trim();else delete state.notes[id];save();toast('Noted.');}}));}
+function bindListen(root){$$('[data-say]',root).forEach(b=>b.addEventListener('click',()=>speak(b.dataset.say)));$$('[data-order-note]',root).forEach(b=>b.addEventListener('click',()=>{const li=state.activeLesson,pi=lessons[li].phrases.findIndex(p=>p[0]===b.dataset.orderNote),id=pid(li,pi);const note=prompt('Note for '+b.dataset.orderNote,state.notes[id]||'');if(note!==null){if(note.trim())state.notes[id]=note.trim();else delete state.notes[id];save();toast('Noted.');}}));}
 function choiceSet(correct,pool,seed){return [...pool.slice(seed%pool.length),...pool.slice(0,seed%pool.length)];}
 function checkMarkup(phrase,choices,label){return `<div class="qc-q">${esc(label)}: ${esc(phrase[2])}</div><div class="quiz-opts">${choices.map(c=>`<button type="button" lang="ko" data-check-choice="${esc(c)}">${esc(c)}</button>`).join('')}</div><p id="checkFeedback" role="status">Choose one answer.</p>`;}
 function bindCheck(root,correct,onCorrect){$$('[data-check-choice]',root).forEach(b=>b.addEventListener('click',()=>{if(b.dataset.checkChoice===correct)onCorrect();else $('#checkFeedback').textContent='Not quite. Try another phrase.';}));}
@@ -1980,8 +1986,10 @@ function bindCheck(root,correct,onCorrect){$$('[data-check-choice]',root).forEac
     }
 
 /* lesson runner: intro → phrases → quiz → build → shadow → done */
+function openDirections(fromToday){FirstWordsDirections.open({state,lesson:lessons[7],index:7,lang:'ko',korean:true,save,openSheet,closeSheet,phraseMarkup,bindListen,esc,complete:()=>{runLesson(7,fromToday,true);}});}
 function runLesson(li, fromToday, afterOrdering = false) {
   state.activeLesson=li;save();
+  if(li===7&&!afterOrdering){openDirections(fromToday);return;}
   if(lessons[li].title === "Ordering" && !afterOrdering){openOrderingPilot(fromToday);return;}
   const L = lessons[li];
   const stages = ["intro", "phrases", "quiz", "build", "shadow", "done"];
@@ -2064,6 +2072,7 @@ function runLesson(li, fromToday, afterOrdering = false) {
       stopMic();
       const wasNew = !state.done[li];
       state.done[li] = true;
+      if(li===7)delete state.directionsPractice;
       if(L.title === "Ordering")state.orderingPilot={step:0,passed:false,revealed:false,paused:false};
       seedLesson(li, 1, 1);
       const ni = nextLessonIndex(); state.lesson = ni === -1 ? lessons.length - 1 : ni;
@@ -2225,6 +2234,14 @@ if(new URLSearchParams(location.search).get('resume')==='1' && !new URLSearchPar
         if(row){row.focus();row.click();}
       });
     }
+    const entryParams=new URLSearchParams(location.search);
+    const inPractice=entryParams.has('resume')||entryParams.has('place')||entryParams.has('learn');
+    document.body.classList.toggle('entry-mode',!inPractice);
+    document.querySelector('.skip').href=inPractice?'#main':'#language-entry';
+    const entryInfo=FirstWordsReturn.info('hana.v2',6);
+    document.querySelector('#entry-progress').textContent=entryInfo.count?entryInfo.count+'/15 complete':'15 lessons';
+    if(entryInfo.started){document.querySelector('#entry-start').href='korean.html?resume=1';document.querySelector('#entry-start').textContent=entryInfo.count===15?'Review lessons →':'Continue learning →';}
+    if(entryParams.has('learn')&&!entryParams.has('resume')&&!entryParams.has('place')){setView('path');requestAnimationFrame(()=>{const row=document.querySelector('[data-lsn="0"]');row?.focus();row?.click();});}
     const requestedPlace = new URLSearchParams(window.location.search).get("place");
 if (requestedPlace && placePacks[requestedPlace]) {
   setView("places");

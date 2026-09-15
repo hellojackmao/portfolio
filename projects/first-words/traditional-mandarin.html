@@ -249,7 +249,7 @@
   {"@context":"https://schema.org","@type":"LearningResource","name":"First Words — Traditional Mandarin Foundation","creator":{"@type":"Person","name":"Jack Mao","url":"https://www.hellojackmao.com"},"description":"A 15-lesson Traditional Mandarin foundation with an applied Taipei language route.","dateCreated":"2026","url":"https://www.hellojackmao.com/projects/first-words/traditional-mandarin.html"}
   </script>
 <link rel="stylesheet" href="hub-fonts.css">
-<style id="ordering-pilot">#orderingNext,#orderingReveal{background:#31578f;color:#fff;transition:none}.ordering-heading{font-family:var(--serif);font-size:1.6rem;line-height:1.25;margin:12px 0}.ordering-summary{padding-left:20px;line-height:1.8}.ordering-hint summary{padding:12px 0;cursor:pointer;min-height:44px}.ordering-hint{margin-bottom:16px}.ordering-heading:focus{outline:none}.ordering-heading:focus-visible{outline:2px solid var(--accent);outline-offset:4px}</style><script src="learning-return.js"></script></head>
+<style id="ordering-pilot">#orderingNext,#orderingReveal{background:#31578f;color:#fff;transition:none}.ordering-heading{font-family:var(--serif);font-size:1.6rem;line-height:1.25;margin:12px 0}.ordering-summary{padding-left:20px;line-height:1.8}.ordering-hint summary{padding:12px 0;cursor:pointer;min-height:44px}.ordering-hint{margin-bottom:16px}.ordering-heading:focus{outline:none}.ordering-heading:focus-visible{outline:2px solid var(--accent);outline-offset:4px}</style><script src="learning-return.js"></script><link rel="stylesheet" href="directions-practice.css"><script src="directions-practice.js"></script></head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header class="top">
@@ -438,8 +438,10 @@
       }));
     }
 
+function openDirections(){FirstWordsDirections.open({state,lesson:lessons[11],index:11,lang:'zh-TW',korean:false,save,openSheet,closeSheet,phraseMarkup,bindListen,esc,complete:()=>{state.done[11]=true;state.lastLesson=11;delete state.directionsPractice;save();closeSheet();toast('Lesson complete.');}});}
     function openLesson(index) {
       state.activeLesson=index;save();
+      if(index===11){openDirections();return;}
       if(index===9){openOrderingPilot();return;}
       const lesson = lessons[index];
       const checkPhrase = lesson.phrases[(index + 1) % lesson.phrases.length];

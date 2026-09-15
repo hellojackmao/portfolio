@@ -249,12 +249,18 @@
   {"@context":"https://schema.org","@type":"LearningResource","name":"First Words — Japanese Foundation","creator":{"@type":"Person","name":"Jack Mao","url":"https://www.hellojackmao.com"},"description":"A 15-lesson Japanese foundation with applied Kyoto, Tokyo, and Osaka language routes.","dateCreated":"2026","url":"https://www.hellojackmao.com/projects/first-words/japanese.html"}
   </script>
 <link rel="stylesheet" href="hub-fonts.css">
-<style id="ordering-pilot">#orderingNext,#orderingReveal{background:#a53f30;color:#fff;transition:none}.ordering-heading{font-family:var(--display);font-size:1.6rem;line-height:1.25;margin:12px 0}.ordering-summary{padding-left:20px;line-height:1.8}.ordering-hint summary{padding:12px 0;cursor:pointer;min-height:44px}.ordering-hint{margin-bottom:16px}.ordering-heading:focus{outline:none}.ordering-heading:focus-visible{outline:2px solid var(--accent);outline-offset:4px}</style><script src="learning-return.js"></script></head>
-<body>
+<style id="ordering-pilot">#orderingNext,#orderingReveal{background:#a53f30;color:#fff;transition:none}.ordering-heading{font-family:var(--display);font-size:1.6rem;line-height:1.25;margin:12px 0}.ordering-summary{padding-left:20px;line-height:1.8}.ordering-hint summary{padding:12px 0;cursor:pointer;min-height:44px}.ordering-hint{margin-bottom:16px}.ordering-heading:focus{outline:none}.ordering-heading:focus-visible{outline:2px solid var(--accent);outline-offset:4px}</style><script src="learning-return.js"></script><link rel="stylesheet" href="language-entry.css"><link rel="stylesheet" href="directions-practice.css"><script src="directions-practice.js"></script></head>
+<body class="entry-mode">
   <a class="skip" href="#main">Skip to content</a>
+  <main id="language-entry" style="--entry-color:#f5af96;--entry-ink:#a53f30">
+    <a class="entry-back" href="index.html">← First Words</a>
+    <section class="entry-intro" aria-labelledby="entry-title"><div><div class="entry-kicker">Language in place</div><h1 id="entry-title">Japanese</h1><p>Build a small foundation in Japanese, then bring it into everyday moments in Kyoto, Tokyo and Osaka.</p></div><div class="entry-art" aria-hidden="true"><span>日</span></div></section>
+    <section class="entry-foundation" aria-labelledby="entry-foundation-title"><div class="entry-kicker" id="entry-progress">15 lessons</div><h2 id="entry-foundation-title">A foundation to build on.</h2><p>Start with the sounds, learn useful phrases, and return at your own pace. Your progress stays in this browser.</p><a class="entry-action" id="entry-start" href="japanese.html?learn=1">Start learning →</a></section>
+    <section class="entry-places" aria-labelledby="entry-places-title"><div class="entry-kicker">Practice by place</div><h2 id="entry-places-title">Take the language with you.</h2><p>Choose a place when you want to put familiar phrases into context.</p><div class="entry-routes"><a href="japanese.html?place=kyoto">Kyoto →</a><a href="japanese.html?place=tokyo">Tokyo →</a><a href="japanese.html?place=osaka">Osaka →</a></div></section>
+  </main>
   <header class="top">
     <div class="top-left">
-      <a class="back" href="/" aria-label="Back to Jack Mao portfolio">← <span>Portfolio</span></a>
+      <a class="back" href="japanese.html" aria-label="Back to Japanese introduction">← <span>Japanese</span></a>
       <button type="button" class="brand" id="languageBtn" aria-label="Choose a First Words language" aria-haspopup="dialog">
         <span class="brand-tile" aria-hidden="true">あ</span>
         <span class="brand-copy"><b>First Words</b><small>Japanese · foundation</small></span>
@@ -457,8 +463,10 @@
       }));
     }
 
+function openDirections(){FirstWordsDirections.open({state,lesson:lessons[11],index:11,lang:'ja',korean:false,save,openSheet,closeSheet,phraseMarkup,bindListen,esc,complete:()=>{state.done[11]=true;state.lastLesson=11;delete state.directionsPractice;save();closeSheet();toast('Lesson complete.');}});}
     function openLesson(index) {
       state.activeLesson=index;save();
+      if(index===11){openDirections();return;}
       if(index===9){openOrderingPilot();return;}
       const lesson = lessons[index];
       const checkPhrase = lesson.phrases[(index + 1) % lesson.phrases.length];
@@ -643,6 +651,14 @@
         if(row){row.focus();row.click();}
       });
     }
+    const entryParams=new URLSearchParams(location.search);
+    const inPractice=entryParams.has('resume')||entryParams.has('place')||entryParams.has('learn');
+    document.body.classList.toggle('entry-mode',!inPractice);
+    document.querySelector('.skip').href=inPractice?'#main':'#language-entry';
+    const entryInfo=FirstWordsReturn.info('hana.japanese.v1',9);
+    document.querySelector('#entry-progress').textContent=entryInfo.count?entryInfo.count+'/15 complete':'15 lessons';
+    if(entryInfo.started){document.querySelector('#entry-start').href='japanese.html?resume=1';document.querySelector('#entry-start').textContent=entryInfo.count===15?'Review lessons →':'Continue learning →';}
+    if(entryParams.has('learn')&&!entryParams.has('resume')&&!entryParams.has('place')){setView('path');requestAnimationFrame(()=>{const row=document.querySelector('[data-lesson="0"]');row?.focus();row?.click();});}
     const requestedPlace = new URLSearchParams(location.search).get("place");
     if (requestedPlace && placeRoutes[requestedPlace]) { setView("places"); requestAnimationFrame(() => openPlaceRoute(requestedPlace)); }
     if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));

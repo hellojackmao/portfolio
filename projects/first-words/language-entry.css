@@ -1,0 +1,17 @@
+
+#language-entry{display:none}.entry-mode #language-entry{display:block}.entry-mode>.top,.entry-mode>#main,.entry-mode>.tabbar{display:none}
+#language-entry{width:min(1120px,100%);margin:auto;padding:26px clamp(20px,5vw,48px) 64px;color:var(--ink);font-family:var(--sans,var(--font-body))}
+.entry-back{display:inline-flex;padding:10px 0;font-size:.85rem;color:inherit;text-decoration:none}
+.entry-intro{display:grid;grid-template-columns:1fr 220px;align-items:center;gap:40px;margin:48px 0}
+.entry-kicker{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--entry-ink)}
+.entry-intro h1{font-family:var(--serif,var(--font-display));font-size:clamp(3rem,8vw,5.5rem);line-height:1.05;margin:16px 0;max-width:none}
+.entry-intro p{max-width:48ch;font-size:1rem;line-height:1.8;color:#575d56}
+.entry-art{height:200px;display:grid;place-items:center;border-radius:22px;background:var(--entry-color);font:500 5.5rem/1 var(--serif,var(--font-ko-display));color:#252924}
+.entry-art span{display:grid;place-items:center;width:130px;height:140px;transform:rotate(-7deg);border-radius:22px 22px 6px 22px;background:#fff9e9ad;box-shadow:8px 8px 0 #20201d18}
+.entry-foundation{padding:28px;border:1px solid var(--line);background:var(--surface,#fffdf9);border-radius:16px}
+.entry-foundation h2,.entry-places h2{font-family:var(--serif,var(--font-display));font-size:1.8rem;line-height:1.3;margin:8px 0 12px}
+.entry-foundation p,.entry-places p{font-size:.95rem;line-height:1.75;color:#575d56;max-width:65ch}
+.entry-action{display:inline-flex;align-items:center;min-height:46px;padding:12px 20px;border-radius:99px;background:var(--entry-ink);color:white;text-decoration:none;font-size:.9rem;font-weight:700;margin-top:8px}
+.entry-places{margin-top:38px}.entry-routes{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}.entry-routes a{padding:14px 20px;border:1px solid var(--line);border-radius:12px;background:var(--surface,#fffdf9);text-decoration:none;color:inherit;font-size:.9rem;min-height:48px}
+.entry-routes a:hover{background:var(--entry-color)}#language-entry a:focus-visible{outline:3px solid var(--entry-ink);outline-offset:4px}
+@media(max-width:600px){.entry-intro{grid-template-columns:1fr;gap:22px;margin:30px 0}.entry-art{height:140px;grid-row:1;font-size:4rem}.entry-art span{height:110px;width:112px}.entry-foundation{padding:22px}.entry-routes a{flex:1 1 40%;text-align:center}.entry-intro p{margin-bottom:0}}
