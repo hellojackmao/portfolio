@@ -1,9 +1,10 @@
-const CACHE_NAME = "first-words-v37";
+const CACHE_NAME = "first-words-v38";
 const APP_ASSETS = [
   "./",
   "./index.html",
   "./learning-return.js",
   "./language-entry.css",
+  "./language-entry.css?v=20260919-1",
   "./directions-practice.css",
   "./directions-practice.js",
   "./exchange-practice.css",
