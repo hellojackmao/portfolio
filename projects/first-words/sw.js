@@ -1,7 +1,8 @@
-const CACHE_NAME = "first-words-v44";
+const CACHE_NAME = "first-words-v45";
 const APP_ASSETS = [
-  "./learning-tools.js?v=20260920-4",
-  "./learning-tools.css?v=20260920-4",
+  "./destination-moment.js?v=20260920-1",
+  "./learning-tools.js?v=20260920-5",
+  "./learning-tools.css?v=20260920-5",
   "./directions-practice.js?v=20260920-1",
   "./exchange-practice.js?v=20260920-1",
   "../../fonts/performance/kana-reference.ttf",

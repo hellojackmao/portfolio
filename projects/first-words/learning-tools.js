@@ -64,7 +64,9 @@ window.FirstWordsTools = (() => {
   }
   function finishLesson(index, onFinish){
     const next=config.lessons.findIndex((l,i)=>i>index&&!config.isDone(i));
-    config.openSheet('A good place to pause','<div class="learning-finish"><p class="learning-progress">'+esc(config.lessons[index].title)+' · Complete</p><h3 tabindex="-1" id="finishTitle">Enough for today, if you like.</h3><p>Your lesson completion is saved in this browser. You can stop here and return when you are ready.</p><div class="reference-actions"><button type="button" class="btn" id="finishNow">Finish for now</button>'+(next>=0?'<button type="button" class="btn ghost" id="continueLesson">Next: '+esc(config.lessons[next].title)+'</button>':'')+'</div></div>');
+    const moment=config.track==='traditional-mandarin'?({4:['greeting','Greet someone in Taipei'],9:['ordering','Order at a Taipei counter'],11:['directions','Find the metro in Taipei']})[index]:null;
+    const destination=moment?'<div class="destination-next"><p class="learning-progress">Optional · One moment in Taipei</p><a class="btn ghost" href="practice.html?place=taipei&amp;moment='+moment[0]+'">'+moment[1]+'</a><p class="reference-note">Use a familiar phrase in a short activity. The full outing can wait.</p></div>':'';
+    config.openSheet('A good place to pause','<div class="learning-finish"><p class="learning-progress">'+esc(config.lessons[index].title)+' · Complete</p><h3 tabindex="-1" id="finishTitle">Enough for today, if you like.</h3><p>Your lesson completion is saved in this browser. You can stop here and return when you are ready.</p><div class="reference-actions"><button type="button" class="btn" id="finishNow">Finish for now</button>'+(next>=0?'<button type="button" class="btn ghost" id="continueLesson">Next: '+esc(config.lessons[next].title)+'</button>':'')+'</div>'+destination+'</div>');
     document.getElementById('finishNow').onclick=onFinish||config.closeSheet;
     document.getElementById('continueLesson')?.addEventListener('click',()=>config.startLesson(next));
     document.getElementById('finishTitle').focus();

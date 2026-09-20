@@ -18,3 +18,5 @@
 .recognition .bridge-phrase[lang=ja]{font-family:var(--serif)}
 .bridge-phrase mark{color:inherit;background:transparent;text-decoration:underline;text-decoration-color:var(--accent,#226147);text-underline-offset:6px;text-decoration-thickness:2px}
 .learning-finish{font:400 .95rem/1.7 var(--sans,var(--font-body))}.learning-finish h3{font:500 1.5rem/1.4 var(--serif,var(--font-display,var(--display)));margin:16px 0}.learning-finish .btn,.recognition .reference-actions .btn{white-space:normal;text-align:center}
+
+.destination-next{margin-top:20px;padding-top:16px;border-top:1px solid var(--line,#d5cabb)}.destination-next a{text-decoration:none;display:inline-flex}
