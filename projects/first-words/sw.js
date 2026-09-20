@@ -1,5 +1,6 @@
-const CACHE_NAME = "first-words-v47";
+const CACHE_NAME = "first-words-v48";
 const APP_ASSETS = [
+  "./practice-backup.js?v=20260920-1",
   "../../fonts/performance/hongkong-moment.ttf",
   "../../fonts/performance/seoul-moment.ttf",
   "../../fonts/performance/tokyo-moment.ttf",
@@ -63,7 +64,7 @@ const APP_ASSETS = [
 ];
 
 self.addEventListener("install", (event) => {
-  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_ASSETS)));
+  event.waitUntil(caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_ASSETS.map(url => new Request(url, { cache: "reload" })))));
   self.skipWaiting();
 });
 
@@ -71,9 +72,8 @@ self.addEventListener("activate", (event) => {
   event.waitUntil(
     caches.keys().then((keys) =>
       Promise.all(keys.filter((key) => /^(first-words-|hana-)/.test(key) && key !== CACHE_NAME).map((key) => caches.delete(key)))
-    )
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
 self.addEventListener("fetch", (event) => {
@@ -99,7 +99,7 @@ self.addEventListener("fetch", (event) => {
   }
 
   event.respondWith(
-    caches.match(event.request).then((cached) => {
+    caches.open(CACHE_NAME).then(cache => cache.match(event.request)).then((cached) => {
       if (cached) return cached;
       return fetch(event.request)
         .then((response) => {

@@ -249,7 +249,7 @@
   {"@context":"https://schema.org","@type":"LearningResource","name":"First Words — Cantonese Foundation","creator":{"@type":"Person","name":"Jack Mao","url":"https://www.hellojackmao.com"},"description":"A 15-lesson Cantonese foundation with an applied Hong Kong language route.","dateCreated":"2026","url":"https://www.hellojackmao.com/projects/first-words/cantonese.html"}
   </script>
 <link rel="stylesheet" href="hub-fonts.css">
-<style id="ordering-pilot">#orderingNext,#orderingReveal{background:#31578f;color:#fff;transition:none}.ordering-heading{font-family:var(--serif);font-size:1.6rem;line-height:1.25;margin:12px 0}.ordering-summary{padding-left:20px;line-height:1.8}.ordering-hint summary{padding:12px 0;cursor:pointer;min-height:44px}.ordering-hint{margin-bottom:16px}.ordering-heading:focus{outline:none}.ordering-heading:focus-visible{outline:2px solid var(--accent);outline-offset:4px}</style><script src="learning-return.js?v=20260919-2"></script><link rel="stylesheet" href="directions-practice.css"><script src="directions-practice.js?v=20260920-1"></script><link rel="stylesheet" href="exchange-practice.css"><script src="exchange-practice.js?v=20260920-1"></script><style>.return-recap{font-size:1rem;line-height:1.7}.return-recap h3{font-family:var(--serif,var(--font-display,var(--display)));font-size:1.6rem;line-height:1.3}.return-recap summary{cursor:pointer;min-height:44px;padding:10px 0}.return-phrase{font-size:1.5rem;font-family:var(--serif,var(--font-ko,var(--display)))}.return-recap .sheet-actions{margin-top:20px}</style><link rel="stylesheet" href="learning-tools.css?v=20260920-6"><script defer src="learning-tools.js?v=20260920-6"></script></head>
+<style id="ordering-pilot">#orderingNext,#orderingReveal{background:#31578f;color:#fff;transition:none}.ordering-heading{font-family:var(--serif);font-size:1.6rem;line-height:1.25;margin:12px 0}.ordering-summary{padding-left:20px;line-height:1.8}.ordering-hint summary{padding:12px 0;cursor:pointer;min-height:44px}.ordering-hint{margin-bottom:16px}.ordering-heading:focus{outline:none}.ordering-heading:focus-visible{outline:2px solid var(--accent);outline-offset:4px}</style><script src="learning-return.js?v=20260919-2"></script><link rel="stylesheet" href="directions-practice.css"><script src="directions-practice.js?v=20260920-1"></script><link rel="stylesheet" href="exchange-practice.css"><script src="exchange-practice.js?v=20260920-1"></script><style>.return-recap{font-size:1rem;line-height:1.7}.return-recap h3{font-family:var(--serif,var(--font-display,var(--display)));font-size:1.6rem;line-height:1.3}.return-recap summary{cursor:pointer;min-height:44px;padding:10px 0}.return-phrase{font-size:1.5rem;font-family:var(--serif,var(--font-ko,var(--display)))}.return-recap .sheet-actions{margin-top:20px}</style><link rel="stylesheet" href="learning-tools.css?v=20260920-6"><script defer src="learning-tools.js?v=20260920-6"></script><script src="practice-backup.js?v=20260920-1"></script></head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header class="top">
@@ -525,10 +525,10 @@ function openExchange(index){FirstWordsExchange.open({state,lesson:lessons[index
     }
 
     function openPracticeData() {
-      openSheet("Practice data", `<p class="sheet-lede">Your Cantonese progress stays in this browser. Export a small backup before changing devices or clearing browser data.</p><p class="data-note"><strong>${state.done.filter(Boolean).length} of ${lessons.length} lessons complete</strong><br>Only progress is saved. No account or personal information is collected.</p><div class="sheet-actions"><button type="button" class="btn ghost" id="exportPractice">Export</button><button type="button" class="btn ghost" id="importPractice">Import</button><button type="button" class="btn" id="resetPractice">Reset</button></div>`);
+      openSheet("Practice data", `<p class="sheet-lede">Your Cantonese progress stays in this browser. Your backup includes these lessons, the destination outing and short activities. Export before changing devices or clearing browser data.</p><p class="data-note"><strong>${state.done.filter(Boolean).length} of ${lessons.length} lessons complete</strong><br>Only progress is saved. No account or personal information is collected.</p><div class="sheet-actions"><button type="button" class="btn ghost" id="exportPractice">Export</button><button type="button" class="btn ghost" id="importPractice">Import</button><button type="button" class="btn" id="resetPractice">Reset</button></div>`);
       $("#exportPractice").addEventListener("click", () => {
         try {
-          const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+          const blob = new Blob([JSON.stringify(FirstWordsBackup.create(state,'cantonese'), null, 2)], { type: "application/json" });
           const url = URL.createObjectURL(blob);
           const link = document.createElement("a");
           link.href = url; link.download = "first-words-cantonese-practice.json"; link.click();
@@ -541,7 +541,7 @@ function openExchange(index){FirstWordsExchange.open({state,lesson:lessons[index
         input.type = "file"; input.accept = "application/json,.json";
         input.addEventListener("change", async () => {
           try {
-            const parsed = JSON.parse(await input.files[0].text());
+            const parsed = FirstWordsBackup.restore(JSON.parse(await input.files[0].text()),'cantonese');
             if (!parsed || !Array.isArray(parsed.done)) throw new Error("Invalid practice file");
             state = { ...defaultState(), ...parsed, v: 1, done: lessons.map((_, index) => Boolean(parsed.done[index])), lastLesson: Math.max(0, Math.min(lessons.length - 1, Number(parsed.lastLesson) || 0)) };
             save(); closeSheet(); toast("Practice restored.");
@@ -550,7 +550,8 @@ function openExchange(index){FirstWordsExchange.open({state,lesson:lessons[index
         input.click();
       });
       $("#resetPractice").addEventListener("click", () => {
-        if (!confirm("Reset all Cantonese progress on this device?")) return;
+        if (!confirm("Reset all Cantonese lessons, the destination outing and short activities on this device?")) return;
+        try { FirstWordsBackup.reset('cantonese'); } catch(error) { toast('Reset could not be saved.'); return; }
         state = defaultState(); save(); closeSheet(); toast("Cantonese progress reset.");
       });
     }
