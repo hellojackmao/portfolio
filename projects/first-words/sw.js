@@ -1,5 +1,11 @@
-const CACHE_NAME = "first-words-v39";
+const CACHE_NAME = "first-words-v41";
 const APP_ASSETS = [
+  "./learning-tools.js?v=20260920-1",
+  "./learning-tools.css?v=20260920-1",
+  "./directions-practice.js?v=20260920-1",
+  "./exchange-practice.js?v=20260920-1",
+  "../../fonts/performance/kana-reference.ttf",
+  "../../fonts/performance/hangul-reference.ttf",
   "./",
   "./index.html",
   "./learning-return.js",

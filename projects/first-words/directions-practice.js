@@ -14,6 +14,7 @@ window.FirstWordsDirections={
       const phrase=lesson.phrases[typeof value==='number'?value:0];
       let html='<div class="kicker">Directions / '+(progress.step<3?'Ask':kind==='pause'?'A natural pause':'Find your way')+'</div>';
       let title=kind==='learn'?'Meet the words.':kind==='pause'?'A good place to pause.':kind==='recall'?'Bring it back.':kind==='finish'?'Ready for a small exchange.':'Your turn.';
+      html+='<p class="learning-progress">'+(finished?'Practice complete':'Step '+(progress.step+1)+' of '+stages.length)+'</p>';
       html+='<h3 class="directions-heading" tabindex="-1">'+title+'</h3>';
       if(finished)html+='<p>You have practiced asking and recognizing directions. '+(korean?'Now build your question and practice saying it.':'Return whenever you want another practice.')+'</p>';
       else if(kind==='pause')html+='<p>'+(progress.paused?'Your place is saved.':'You have met the question and both directions. Take a pause, or continue with a short exchange.')+'</p>'+(progress.paused?'':'<button type="button" class="btn ghost" id="directionPause">Pause here</button>');
@@ -43,7 +44,7 @@ window.FirstWordsDirections={
       const ready=finished||kind==='learn'||kind==='pause'||kind==='recall'&&progress.revealed||progress.passed;
       html+='<div class="sheet-actions"><button class="btn" type="button" id="directionNext" '+(ready?'':'disabled')+'>'+(finished?(korean?'Build the question':state.done[index]?'Finish practice':'Complete lesson'):progress.paused?'Resume lesson':'Continue')+'</button></div><p class="direction-note">Your place is saved when you close this lesson.</p>';
       openSheet('Lesson '+(index+1)+' · '+lesson.title,'<div class="directions-activity">'+html+'</div>',()=>{if('speechSynthesis'in window)speechSynthesis.cancel();});bindListen($('#sheetBody'));
-      document.querySelectorAll('[data-direction-choice]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.directionChoice===phrase[0]){progress.passed=true;save();draw(true);}else $('#directionFeedback').textContent='Not quite. Look again and try another.';}));
+      document.querySelectorAll('[data-direction-choice]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.directionChoice===phrase[0]){progress.passed=true;save();draw(true);}else { const picked=lesson.phrases.find(p=>p[0]===b.dataset.directionChoice); $('#directionFeedback').textContent='That phrase means “'+picked[2]+'”. Check the hint and try again.'; }}));
       document.querySelectorAll('[data-direction-meaning]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.directionMeaning===phrase[2]){progress.passed=true;save();draw(true);}else $('#directionFeedback').textContent='Try listening or reading once more, then choose again.';}));
       $('#directionReveal')?.addEventListener('click',()=>{progress.revealed=true;save();draw(true);});
       $('#directionPause')?.addEventListener('click',()=>{progress.paused=true;save();draw(true);});

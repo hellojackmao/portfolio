@@ -50,7 +50,7 @@ window.FirstWordsExchange={
       }
       html+='<div class="exchange-actions">'+(!finished?'<button type="button" class="btn ghost" id="exchangePause">'+(progress.paused?'Resume exchange':'Pause here')+'</button>':'')+'<button type="button" class="btn" id="exchangeNext" '+(!finished&&(!progress.answered||progress.paused)?'disabled':'')+'>'+(finished?(korean?'Build the sentence':state.done[index]?'Finish practice':'Complete lesson'):'Next exchange')+'</button></div>';
       openSheet('Lesson '+(index+1)+' · '+lesson.title,'<div class="exchange-activity">'+html+'</div>',()=>{if('speechSynthesis'in window)speechSynthesis.cancel();});bindListen($('#sheetBody'));
-      document.querySelectorAll('[data-exchange-choice]').forEach(b=>b.addEventListener('click',()=>{if(Number(b.dataset.exchangeChoice)===round.reply){progress.answered=true;save();draw(true);}else $('#exchangeFeedback').textContent='Try another reply. You can open the hint and listen again.';}));
+      document.querySelectorAll('[data-exchange-choice]').forEach(b=>b.addEventListener('click',()=>{if(Number(b.dataset.exchangeChoice)===round.reply){progress.answered=true;save();draw(true);}else $('#exchangeFeedback').textContent='That reply means “'+lesson.phrases[Number(b.dataset.exchangeChoice)][2]+'”. Open the hint if you need another look.';}));
       $('#exchangePause')?.addEventListener('click',()=>{progress.paused=!progress.paused;save();draw(true);});
       $('#exchangeNext').addEventListener('click',()=>{if(finished){o.complete();return;}if(!progress.answered||progress.paused)return;progress.round++;progress.answered=false;save();draw(true);});
       save();if(focus)document.querySelector('.exchange-heading').focus();
