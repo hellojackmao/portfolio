@@ -1,5 +1,7 @@
-const CACHE_NAME = "first-words-v45";
+const CACHE_NAME = "first-words-v46";
 const APP_ASSETS = [
+  "./practice-fonts.css?v=20260920-1",
+  "../../fonts/performance/taipei-moment-tc.ttf",
   "./destination-moment.js?v=20260920-1",
   "./learning-tools.js?v=20260920-5",
   "./learning-tools.css?v=20260920-5",
