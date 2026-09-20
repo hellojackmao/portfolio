@@ -12,22 +12,59 @@ window.FirstWordsTools = (() => {
       config.openSheet('Hangul, at a glance','<div class="reference-actions"><button class="btn ghost" data-recognition="consonants">Practice consonants</button><button class="btn ghost" data-recognition="vowels">Practice vowels</button></div>'+document.getElementById('hangulReference').innerHTML);
     }else{
       config.script=script;
-      config.openSheet('Kana, at a glance','<div class="kana-reference"><p>Hiragana and katakana share the same basic readings. Start with one row; there is no need to memorize the whole chart at once.</p><div class="reference-actions" role="group" aria-label="Choose script"><button class="btn ghost" data-kana-script="Hiragana" aria-pressed="'+(script==='Hiragana')+'">Hiragana</button><button class="btn ghost" data-kana-script="Katakana" aria-pressed="'+(script==='Katakana')+'">Katakana</button></div><button class="btn" data-recognition="'+script+'">Try five letters</button><h3>46 basic '+script.toLowerCase()+' characters</h3>'+kanaTable(kanaRows,script)+'<p class="reference-note">を is shown as wo to identify the character; as a particle it is pronounced o. は and へ are pronounced wa and e when used as particles. ん has its own sound and is not part of the five vowel columns.</p><details><summary>Voiced sounds and small kana</summary><h3>Voiced and p sounds</h3>'+kanaTable(voicedRows,script)+'<p>Small ゃ / ャ, ゅ / ュ and ょ / ョ combine with an i-row character: きゃ / キャ (kya), しゅ / シュ (shu), ちょ / チョ (cho). Small っ / ッ marks a consonant pause, as in きって (kitte). The katakana mark ー lengthens the vowel.</p></details><p class="reference-note">Romanization is a reading aid. Listening and context will help you move beyond it.</p><a href="https://a1.marugotoweb.jp/en/hiragana.php" target="_blank" rel="noopener noreferrer">Japan Foundation · Kana reference ↗</a></div>');
+      config.openSheet('Kana, at a glance','<div class="kana-reference"><p>Hiragana and katakana share the same basic readings. Start with one row; there is no need to memorize the whole chart at once.</p><div class="reference-actions" role="group" aria-label="Choose script"><button class="btn ghost" data-kana-script="Hiragana" aria-pressed="'+(script==='Hiragana')+'">Hiragana</button><button class="btn ghost" data-kana-script="Katakana" aria-pressed="'+(script==='Katakana')+'">Katakana</button></div><button class="btn" data-recognition="'+script+'">Choose a practice set</button><h3>46 basic '+script.toLowerCase()+' characters</h3>'+kanaTable(kanaRows,script)+'<p class="reference-note">を is shown as wo to identify the character; as a particle it is pronounced o. は and へ are pronounced wa and e when used as particles. ん has its own sound and is not part of the five vowel columns.</p><details><summary>Voiced sounds and small kana</summary><h3>Voiced and p sounds</h3>'+kanaTable(voicedRows,script)+'<p>Small ゃ / ャ, ゅ / ュ and ょ / ョ combine with an i-row character: きゃ / キャ (kya), しゅ / シュ (shu), ちょ / チョ (cho). Small っ / ッ marks a consonant pause, as in きって (kitte). The katakana mark ー lengthens the vowel.</p></details><p class="reference-note">Romanization is a reading aid. Listening and context will help you move beyond it.</p><a href="https://a1.marugotoweb.jp/en/hiragana.php" target="_blank" rel="noopener noreferrer">Japan Foundation · Kana reference ↗</a></div>');
     }
   }
-  function recognition(group){
+  function recognitionPool(group){
+    if(config.track==='korean'){
+      const table=document.getElementById('hangulReference').content.querySelectorAll('.hangul-grid')[group==='vowels'?1:0];
+      return [...table.children].map(el=>[el.querySelector('dt').textContent,el.querySelector('dd').textContent]);
+    }
+    return pairs(kanaRows).map(([c,r])=>[group==='Katakana'?katakana(c):c,r]);
+  }
+  function focusedSets(group){
+    const pool=recognitionPool(group);
+    const subset=(id,label,letters)=>({id,label,pool:pool.filter(p=>letters.includes(p[0]))});
+    if(config.track==='korean')return group==='vowels'?[
+      subset('first','Start with six vowels','ㅏㅓㅗㅜㅡㅣ'),
+      subset('vertical','Compare vertical shapes','ㅏㅑㅓㅕ'),
+      subset('horizontal','Compare horizontal shapes','ㅗㅛㅜㅠ'),
+      {id:'mixed',label:'Mix all basic vowels',pool}
+    ]:[
+      subset('first','Five familiar consonants','ㄱㄴㄷㅁㅅ'),
+      subset('shapes','Compare added strokes','ㄱㅋㄷㅌ'),
+      {id:'mixed',label:'Mix all basic consonants',pool}
+    ];
+    const rows=kanaRows.slice(0,9).map(([letters],i)=>subset('row-'+i,i===0?'Start with vowels':['','K row','S row','T row','N row','H row','M row','Y row','R row'][i],group==='Katakana'?katakana(letters):letters));
+    rows.push(subset('last','W row and n',group==='Katakana'?'ワヲン':'わをん'));
+    rows.splice(1,0,subset('shapes','Compare similar shapes',group==='Katakana'?'シツソン':'ぬめねれわ'));
+    rows.push({id:'mixed',label:'Mix the whole basic chart',pool});
+    return rows;
+  }
+  function chooseSet(group){
+    const sets=focusedSets(group),ko=config.track==='korean';
+    const button=set=>'<button type="button" class="focus-set" data-focus-set="'+set.id+'"><strong>'+set.label+'</strong><span lang="'+(ko?'ko':'ja')+'">'+set.pool.map(p=>p[0]).slice(0,6).join(' ')+(set.pool.length>6?' …':'')+'</span><small>'+Math.min(5,set.pool.length)+' letters this round</small></button>';
+    const primary=ko?sets:sets.filter(x=>['row-0','shapes','mixed'].includes(x.id));
+    const more=ko?[]:sets.filter(x=>!primary.includes(x));
+    config.openSheet('Choose a small set','<div class="focus-picker" data-script="'+(ko?'ko':'ja')+'"><p class="learning-progress">'+esc(group)+' · Optional recognition</p><h3>One group at a time.</h3><p>Choose what you want to recognize. Answers and hints stay within that set; there is no score or timer.</p><div class="focus-sets">'+primary.map(button).join('')+'</div>'+(more.length?'<details class="focus-more"><summary>Choose a particular kana row</summary><div class="focus-sets">'+more.map(button).join('')+'</div></details>':'')+'<button type="button" class="btn ghost" id="focusBack">Back to chart</button></div>');
+    document.querySelectorAll('[data-focus-set]').forEach(b=>b.onclick=()=>recognition(group,b.dataset.focusSet));
+    document.getElementById('focusBack').onclick=()=>chart(config.script);
+  }
+  function recognition(group,setId='mixed'){
     const korean=config.track==='korean';
-    const tables=korean?document.getElementById('hangulReference').content.querySelectorAll('.hangul-grid'):null;
-    const pool=korean?[...tables[group==='vowels'?1:0].children].map(el=>[el.querySelector('dt').textContent,el.querySelector('dd').textContent]):pairs(kanaRows).map(([c,r])=>[group==='Katakana'?katakana(c):c,r]);
+    const set=focusedSets(group).find(x=>x.id===setId);
+    if(!set){chooseSet(group);return;}
+    const pool=set.pool;
     const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
     const cards=shuffle(pool).slice(0,5);let index=0,answered=false,options=[];
     function draw(){
       const done=index===cards.length,card=cards[index];
       if(!done)options=shuffle([card[1],...shuffle([...new Set(pool.map(x=>x[1]))].filter(x=>x!==card[1])).slice(0,3)]);
-      config.openSheet('A little letter practice','<div class="recognition" data-script="'+(korean?'ko':'ja')+'"><p class="learning-progress">'+(done?'Five letters revisited':'Letter '+(index+1)+' of 5')+' · Optional practice</p><h3 tabindex="-1" id="recognitionTitle">'+(done?'A good place to stop.':'Which reading matches?')+'</h3>'+(done?'<p>Return to the chart or try another small set. This practice does not change lesson completion.</p>':'<div class="recognition-glyph" lang="'+(korean?'ko':'ja')+'">'+card[0]+'</div><details><summary>A little help</summary><p>The chart pairs <span lang="'+(korean?'ko':'ja')+'">'+card[0]+'</span> with <strong>'+card[1]+'</strong>.</p></details><div class="recognition-options">'+options.map(x=>'<button type="button" class="btn ghost" data-letter-answer="'+esc(x)+'">'+esc(x)+'</button>').join('')+'</div><p role="status" id="letterFeedback">Take your time. You can check the hint.</p>')+'<div class="reference-actions"><button class="btn ghost" id="returnChart">Back to chart</button><button class="btn" id="letterNext" '+(!done?'disabled':'')+'>'+(done?'Try another five':'Continue')+'</button></div></div>');
+      config.openSheet('A little letter practice','<div class="recognition" data-script="'+(korean?'ko':'ja')+'"><p class="learning-progress">'+(done?cards.length+' letters revisited':'Letter '+(index+1)+' of '+cards.length)+' · '+esc(set.label)+'</p><h3 tabindex="-1" id="recognitionTitle">'+(done?'A good place to stop.':'Which reading matches?')+'</h3>'+(done?'<p>Return to the chart or try another small set. This practice does not change lesson completion.</p>':'<div class="recognition-glyph" lang="'+(korean?'ko':'ja')+'">'+card[0]+'</div><details><summary>A little help</summary><p>The chart pairs <span lang="'+(korean?'ko':'ja')+'">'+card[0]+'</span> with <strong>'+card[1]+'</strong>.</p></details><div class="recognition-options">'+options.map(x=>'<button type="button" class="btn ghost" data-letter-answer="'+esc(x)+'">'+esc(x)+'</button>').join('')+'</div><p role="status" id="letterFeedback">Take your time. You can check the hint.</p>')+'<div class="reference-actions"><button class="btn ghost" id="returnChart">Back to chart</button><button class="btn ghost" id="changeSet">Choose another set</button><button class="btn" id="letterNext" '+(!done?'disabled':'')+'>'+(done?'Practice this set again':'Continue')+'</button></div></div>');
       document.querySelectorAll('[data-letter-answer]').forEach(btn=>btn.onclick=()=>{if(answered)return;if(btn.dataset.letterAnswer===card[1]){answered=true;document.getElementById('letterFeedback').textContent='That matches. Notice the shape once more before continuing.';document.getElementById('letterNext').disabled=false;document.querySelectorAll('[data-letter-answer]').forEach(b=>b.disabled=true);document.getElementById('letterNext').focus();}else{document.getElementById('letterFeedback').textContent='Look at the shape again, or open the hint. There is no penalty for another try.';}});
       document.getElementById('returnChart').onclick=()=>chart(config.script);
-      document.getElementById('letterNext').onclick=()=>{if(done){recognition(group);return;}if(!answered)return;index++;answered=false;draw();document.getElementById('recognitionTitle').focus();};
+      document.getElementById('changeSet').onclick=()=>chooseSet(group);
+      document.getElementById('letterNext').onclick=()=>{if(done){recognition(group,setId);return;}if(!answered)return;index++;answered=false;draw();document.getElementById('recognitionTitle').focus();};
     }
     draw();
   }
@@ -57,7 +94,7 @@ window.FirstWordsTools = (() => {
   function resetAudio(){lastPhrase='';audioMessage='';document.querySelectorAll('[data-replay]').forEach(x=>x.disabled=true);notice(voiceText());}
   function init(o){
     config=o;
-    document.addEventListener('click',e=>{const chartButton=e.target.closest('[data-hangul-chart],[data-kana-chart]');if(chartButton)chart();const script=e.target.closest('[data-kana-script]');if(script){chart(script.dataset.kanaScript);document.querySelector('[data-kana-script="'+script.dataset.kanaScript+'"]').focus();}const quiz=e.target.closest('[data-recognition]');if(quiz)recognition(quiz.dataset.recognition);});
+    document.addEventListener('click',e=>{const chartButton=e.target.closest('[data-hangul-chart],[data-kana-chart]');if(chartButton)chart();const script=e.target.closest('[data-kana-script]');if(script){chart(script.dataset.kanaScript);document.querySelector('[data-kana-script="'+script.dataset.kanaScript+'"]').focus();}const quiz=e.target.closest('[data-recognition]');if(quiz)chooseSet(quiz.dataset.recognition);});
     new MutationObserver(panels).observe(document.querySelector('body'),{childList:true,subtree:true});panels();
     if('speechSynthesis'in window)speechSynthesis.addEventListener('voiceschanged',()=>{audioMessage='';notice(voiceText());});
     addEventListener('pagehide',()=>{if('speechSynthesis'in window)speechSynthesis.cancel();config.stop?.();});
