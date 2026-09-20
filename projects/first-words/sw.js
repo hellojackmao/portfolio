@@ -1,10 +1,14 @@
-const CACHE_NAME = "first-words-v46";
+const CACHE_NAME = "first-words-v47";
 const APP_ASSETS = [
-  "./practice-fonts.css?v=20260920-1",
+  "../../fonts/performance/hongkong-moment.ttf",
+  "../../fonts/performance/seoul-moment.ttf",
+  "../../fonts/performance/tokyo-moment.ttf",
+
+  "./practice-fonts.css?v=20260920-2",
   "../../fonts/performance/taipei-moment-tc.ttf",
-  "./destination-moment.js?v=20260920-1",
-  "./learning-tools.js?v=20260920-5",
-  "./learning-tools.css?v=20260920-5",
+  "./destination-moment.js?v=20260920-2",
+  "./learning-tools.js?v=20260920-6",
+  "./learning-tools.css?v=20260920-6",
   "./directions-practice.js?v=20260920-1",
   "./exchange-practice.js?v=20260920-1",
   "../../fonts/performance/kana-reference.ttf",
