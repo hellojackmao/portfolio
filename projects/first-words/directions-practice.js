@@ -2,7 +2,7 @@ window.FirstWordsDirections={
   open(o){
     const {state,lesson,index,save,openSheet,closeSheet,phraseMarkup,bindListen,esc}=o;
     const korean=o.korean;
-    const stages=korean?[['learn',[1]],['learn',[0]],['check',0],['learn',[2,3]],['check',2],['check',3],['pause'],['recall',1],['connect',0],['connect',3]]:[['learn',[0]],['check',0],['learn',[2,1]],['check',2],['check',1],['pause'],['learn',[3,4]],['check',3],['recall',0],['connect',4],['connect',1]];
+    const stages=korean?[['learn',[1]],['learn',[0]],['check',0],['learn',[2,3]],['check',2],['check',3],['pause'],['recall',1],['connect',2],['connect',3]]:[['learn',[0]],['check',0],['learn',[2,1]],['check',2],['check',1],['pause'],['learn',[3,4]],['check',3],['recall',0],['connect',3],['connect',1]];
     const prior=state.directionsPractice;
     if(!prior||!Number.isInteger(prior.step)||prior.step<0||prior.step>stages.length||['passed','revealed','paused'].some(k=>typeof prior[k]!=='boolean'))state.directionsPractice={step:0,passed:false,revealed:false,paused:false};
     const progress=state.directionsPractice;
@@ -21,6 +21,13 @@ window.FirstWordsDirections={
       else if(kind==='recall'){
         html+='<p>'+esc(korean?'Recall the word for restroom.':'Recall how to ask where the station is.')+'</p>';
         html+=progress.revealed?phraseMarkup([phrase])+'<p>Say it aloud or silently, then compare.</p>':'<button class="btn" type="button" id="directionReveal">Reveal the phrase</button>';
+      }else if(kind==='connect'){
+        html+='<p>Read or listen to the other person. What do they mean?</p>'+phraseMarkup([[phrase[0],phrase[1],progress.passed?phrase[2]:'']]);
+        if(progress.passed)html+='<p role="status">That is what they mean. Take a moment to connect the words with the meaning.</p>';
+        else{
+          const choices=lesson.phrases.map(p=>p[2]);const offset=progress.step%choices.length;
+          html+='<div class="direction-options">'+choices.slice(offset).concat(choices.slice(0,offset)).map(text=>'<button type="button" data-direction-meaning="'+esc(text)+'">'+esc(text)+'</button>').join('')+'</div><p id="directionFeedback" role="status">Choose the meaning of their words.</p>';
+        }
       }else{
         const direction=value===left?'left':value===right?'right':!korean&&value===3?'straight ahead':null;
         const prompt=direction?'Someone points '+direction+'. Which phrase fits?':value===0?'Ask where to go.':korean?'Recognize the place.':'Ask whether it is nearby.';
@@ -37,6 +44,7 @@ window.FirstWordsDirections={
       html+='<div class="sheet-actions"><button class="btn" type="button" id="directionNext" '+(ready?'':'disabled')+'>'+(finished?(korean?'Build the question':state.done[index]?'Finish practice':'Complete lesson'):progress.paused?'Resume lesson':'Continue')+'</button></div><p class="direction-note">Your place is saved when you close this lesson.</p>';
       openSheet('Lesson '+(index+1)+' · '+lesson.title,'<div class="directions-activity">'+html+'</div>',()=>{if('speechSynthesis'in window)speechSynthesis.cancel();});bindListen($('#sheetBody'));
       document.querySelectorAll('[data-direction-choice]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.directionChoice===phrase[0]){progress.passed=true;save();draw(true);}else $('#directionFeedback').textContent='Not quite. Look again and try another.';}));
+      document.querySelectorAll('[data-direction-meaning]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.directionMeaning===phrase[2]){progress.passed=true;save();draw(true);}else $('#directionFeedback').textContent='Try listening or reading once more, then choose again.';}));
       $('#directionReveal')?.addEventListener('click',()=>{progress.revealed=true;save();draw(true);});
       $('#directionPause')?.addEventListener('click',()=>{progress.paused=true;save();draw(true);});
       $('#directionNext').addEventListener('click',()=>{if(!ready)return;if(finished){o.complete();return;}progress.step++;progress.passed=false;progress.revealed=false;progress.paused=false;save();draw(true);});

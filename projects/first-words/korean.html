@@ -820,7 +820,7 @@ main { max-width: 1080px; padding-top: clamp(1.25rem, 3vw, 2rem); }
   <meta property="og:image:alt" content="Jack Mao portfolio index card for editorial, storytelling, and product design.">
   <meta name="twitter:image" content="https://www.hellojackmao.com/images/og-portfolio-index-card.png">
   <meta name="twitter:image:alt" content="Jack Mao portfolio index card for editorial, storytelling, and product design."><link rel="stylesheet" href="hub-fonts.css">
-<style id="ordering-pilot">#orderingNext,#orderingReveal{background:#226147;color:#fff;transition:none}.ordering-heading{font-family:var(--font-display, "Fraunces", serif);font-size:1.6rem;line-height:1.25;margin:12px 0}.ordering-summary{padding-left:20px;line-height:1.8}.ordering-hint summary{padding:12px 0;cursor:pointer;min-height:44px}.ordering-hint{margin-bottom:16px}.ordering-heading:focus{outline:none}.ordering-heading:focus-visible{outline:2px solid var(--accent);outline-offset:4px}</style><style>.ordering-heading{font-size:1.6rem}.sheet-lede,.data-note{font-size:.9rem;line-height:1.7}.ordering-hint{margin:16px 0}.sheet-actions{margin-top:20px}</style><script src="learning-return.js"></script><link rel="stylesheet" href="language-entry.css?v=20260919-1"><link rel="stylesheet" href="directions-practice.css"><script src="directions-practice.js"></script><link rel="stylesheet" href="exchange-practice.css"><script src="exchange-practice.js"></script></head>
+<style id="ordering-pilot">#orderingNext,#orderingReveal{background:#226147;color:#fff;transition:none}.ordering-heading{font-family:var(--font-display, "Fraunces", serif);font-size:1.6rem;line-height:1.25;margin:12px 0}.ordering-summary{padding-left:20px;line-height:1.8}.ordering-hint summary{padding:12px 0;cursor:pointer;min-height:44px}.ordering-hint{margin-bottom:16px}.ordering-heading:focus{outline:none}.ordering-heading:focus-visible{outline:2px solid var(--accent);outline-offset:4px}</style><style>.ordering-heading{font-size:1.6rem}.sheet-lede,.data-note{font-size:.9rem;line-height:1.7}.ordering-hint{margin:16px 0}.sheet-actions{margin-top:20px}</style><script src="learning-return.js?v=20260919-2"></script><link rel="stylesheet" href="language-entry.css?v=20260919-1"><link rel="stylesheet" href="directions-practice.css"><script src="directions-practice.js?v=20260919-2"></script><link rel="stylesheet" href="exchange-practice.css"><script src="exchange-practice.js"></script><style>.return-recap{font-size:1rem;line-height:1.7}.return-recap h3{font-family:var(--serif,var(--font-display,var(--display)));font-size:1.6rem;line-height:1.3}.return-recap summary{cursor:pointer;min-height:44px;padding:10px 0}.return-phrase{font-size:1.5rem;font-family:var(--serif,var(--font-ko,var(--display)))}.return-recap .sheet-actions{margin-top:20px}</style></head>
 <body class="entry-mode">
   <a class="skip" href="#main">Skip to content</a>
 
@@ -958,7 +958,7 @@ const lessons = [
         sentence: "저는 한국어를 배워요."
       },
       {
-        title: "Numbers one to ten",
+        title: "First numbers",
         tag: "Numbers",
         focus: "Count with native Korean numbers.",
         phrases: [
@@ -2239,7 +2239,7 @@ if(new URLSearchParams(location.search).get('resume')==='1' && !new URLSearchPar
       setView('path');
       if(returning.started && returning.index>=0)requestAnimationFrame(()=>{
         const row=document.querySelector('[data-lsn="'+returning.index+'"]');
-        if(row){row.focus();row.click();}
+        if(row){row.focus();FirstWordsReturn.offer({state,lessons,openSheet,esc,lang:'ko',proceed:()=>row.click()});}
       });
     }
     const entryParams=new URLSearchParams(location.search);

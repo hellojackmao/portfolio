@@ -20,3 +20,14 @@ window.FirstWordsReturn = {
     card.querySelector('.track-foot span:last-child').textContent = info.count===15 ? 'Review lessons →' : 'Continue learning →';
   }
 };
+
+/* A skippable recall moment on a deliberate return; never alters lesson progress. */
+window.FirstWordsReturn.offer = function(o) {
+  const {state,lessons,openSheet,esc,proceed,lang}=o;
+  let index=Number.isInteger(state.lastLesson)&&state.done[state.lastLesson]?state.lastLesson:-1;
+  if(index<0) index=lessons.findLastIndex((_,i)=>state.done[i]);
+  if(index<0){proceed();return;}
+  const phrase=lessons[index].phrases[0];
+  openSheet('Welcome back', '<div class="return-recap"><p class="kicker">A small reminder · Optional</p><h3>Bring one phrase back.</h3><p>From '+esc(lessons[index].title)+': can you recall the sound or phrase for “'+esc(phrase[2])+'”?</p><details><summary>Reveal the phrase</summary><p lang="'+lang+'" class="return-phrase">'+esc(phrase[0])+'</p><p>'+esc(phrase[1])+'</p></details><p>Say it aloud or silently. There is no score, and you can go straight to your lesson.</p><div class="sheet-actions"><button type="button" class="btn" id="returnContinue">Continue to my lesson</button></div></div>');
+  document.querySelector('#returnContinue').addEventListener('click',proceed,{once:true});
+};
