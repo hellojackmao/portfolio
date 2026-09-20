@@ -50,6 +50,25 @@ window.FirstWordsTools = (() => {
     document.querySelectorAll('[data-focus-set]').forEach(b=>b.onclick=()=>recognition(group,b.dataset.focusSet));
     document.getElementById('focusBack').onclick=()=>chart(config.script);
   }
+  function greetingIndex(){return config.lessons.findIndex(l=>/greetings/i.test(l.title));}
+  function phraseBridge(group, practiced){
+    const index=greetingIndex(), lesson=config.lessons[index];
+    if(!lesson)return '';
+    const ko=config.track==='korean', katakana=group==='Katakana';
+    const phrases=katakana?config.lessons.flatMap(l=>l.phrases).filter(p=>/[ァ-ヶ]/.test(p[0])):lesson.phrases;
+    const matches=c=>practiced.some(letter=>c.normalize('NFKD').includes(letter.normalize('NFKD')));
+    const score=p=>[...p[0]].filter(matches).length;
+    const phrase=[...phrases].sort((a,b)=>score(b)-score(a))[0]||lesson.phrases[0];
+    const found=score(phrase)>0;
+    return '<div class="phrase-bridge"><p class="learning-progress">'+(katakana?'From letters to words':'From letters to a greeting')+'</p><p class="bridge-phrase" lang="'+(ko?'ko':'ja')+'">'+[...phrase[0]].map(c=>found&&matches(c)?'<mark>'+esc(c)+'</mark>':esc(c)).join('')+'</p><p>'+esc(phrase[1])+' · '+esc(phrase[2])+'</p><p class="reference-note">'+(found?(ko?'The highlighted syllables contain letters from this round. Letters combine into blocks; their sounds depend on the word.':'The highlighted characters appeared in this round. Readings can change in a phrase.'):'This phrase is already in the lessons. You do not need to recognize every character before trying a conversation.')+(katakana?' Japanese uses scripts together; Greetings will also introduce hiragana.':'')+'</p></div>';
+  }
+  function finishLesson(index, onFinish){
+    const next=config.lessons.findIndex((l,i)=>i>index&&!config.isDone(i));
+    config.openSheet('A good place to pause','<div class="learning-finish"><p class="learning-progress">'+esc(config.lessons[index].title)+' · Complete</p><h3 tabindex="-1" id="finishTitle">Enough for today, if you like.</h3><p>Your lesson completion is saved in this browser. You can stop here and return when you are ready.</p><div class="reference-actions"><button type="button" class="btn" id="finishNow">Finish for now</button>'+(next>=0?'<button type="button" class="btn ghost" id="continueLesson">Next: '+esc(config.lessons[next].title)+'</button>':'')+'</div></div>');
+    document.getElementById('finishNow').onclick=onFinish||config.closeSheet;
+    document.getElementById('continueLesson')?.addEventListener('click',()=>config.startLesson(next));
+    document.getElementById('finishTitle').focus();
+  }
   function recognition(group,setId='mixed'){
     const korean=config.track==='korean';
     const set=focusedSets(group).find(x=>x.id===setId);
@@ -61,10 +80,12 @@ window.FirstWordsTools = (() => {
     function draw(){
       const done=index===cards.length,card=cards[index];
       if(!done)options=shuffle([card[1],...shuffle([...new Set(pool.map(x=>x[1]))].filter(x=>x!==card[1])).slice(0,3)]);
-      config.openSheet('A little letter practice','<div class="recognition" data-script="'+(korean?'ko':'ja')+'"><p class="learning-progress">'+(done?cards.length+' '+(cards.length===1?'letter':'letters')+' revisited':'Letter '+(index+1)+' of '+cards.length)+' · '+(review?'Tricky-letter review · ':'')+esc(set.label)+'</p><h3 tabindex="-1" id="recognitionTitle">'+(done?(review?'A little more familiar.':'A good place to stop.'):'Which reading matches?')+'</h3>'+(done?'<p>'+(review?'You have revisited the letters you checked or tried again. Stop here, or return to the chart.':'Return to the chart or try another small set. This practice does not change lesson completion.')+'</p>'+(!review&&tricky.size?'<div class="tricky-invitation"><p>'+tricky.size+' '+(tricky.size===1?'letter could':'letters could')+' use another look. This is optional.</p><button type="button" class="btn" id="reviewTricky">Revisit tricky letters</button></div>':''):'<div class="recognition-glyph" lang="'+(korean?'ko':'ja')+'">'+card[0]+'</div><details id="letterHint"><summary>A little help</summary><p>The chart pairs <span lang="'+(korean?'ko':'ja')+'">'+card[0]+'</span> with <strong>'+card[1]+'</strong>.</p></details><div class="recognition-options">'+options.map(x=>'<button type="button" class="btn ghost" data-letter-answer="'+esc(x)+'">'+esc(x)+'</button>').join('')+'</div><p role="status" id="letterFeedback">Take your time. You can check the hint.</p>')+'<div class="reference-actions"><button class="btn ghost" id="returnChart">Back to chart</button><button class="btn ghost" id="changeSet">Choose another set</button><button class="btn" id="letterNext" '+(!done?'disabled':'')+'>'+(done?'Practice this set again':'Continue')+'</button></div></div>');
+      config.openSheet('A little letter practice','<div class="recognition" data-script="'+(korean?'ko':'ja')+'"><p class="learning-progress">'+(done?cards.length+' '+(cards.length===1?'letter':'letters')+' revisited':'Letter '+(index+1)+' of '+cards.length)+' · '+(review?'Tricky-letter review · ':'')+esc(set.label)+'</p><h3 tabindex="-1" id="recognitionTitle">'+(done?(review?'A little more familiar.':'A good place to stop.'):'Which reading matches?')+'</h3>'+(done?'<p>'+(review?'You have revisited the letters you checked or tried again. There is no need for another round.':'This round is complete. Stop here, revisit a difficult letter, or try a greeting. Letter practice does not mark a lesson complete.')+'</p>'+(!review&&tricky.size?'<div class="tricky-invitation"><p>'+tricky.size+' '+(tricky.size===1?'letter could':'letters could')+' use another look. This is optional.</p><button type="button" class="btn" id="reviewTricky">Revisit tricky letters</button></div>':''):'<div class="recognition-glyph" lang="'+(korean?'ko':'ja')+'">'+card[0]+'</div><details id="letterHint"><summary>A little help</summary><p>The chart pairs <span lang="'+(korean?'ko':'ja')+'">'+card[0]+'</span> with <strong>'+card[1]+'</strong>.</p></details><div class="recognition-options">'+options.map(x=>'<button type="button" class="btn ghost" data-letter-answer="'+esc(x)+'">'+esc(x)+'</button>').join('')+'</div><p role="status" id="letterFeedback">Take your time. You can check the hint.</p>')+(done?phraseBridge(group,cards.map(p=>p[0]))+'<div class="reference-actions"><button type="button" class="btn" id="recognitionStop">Finish for now</button><button type="button" class="btn ghost" id="recognitionGreetings">Try Greetings</button></div><p class="reference-note">Your lesson progress stays as it is. This letter round is not saved.</p><details class="practice-again"><summary>More letter practice</summary>':'')+'<div class="reference-actions"><button class="btn ghost" id="returnChart">Back to chart</button><button class="btn ghost" id="changeSet">Choose another set</button><button class="btn" id="letterNext" '+(!done?'disabled':'')+'>'+(done?'Practice this set again':'Continue')+'</button></div>'+(done?'</details>':'')+'</div>');
       document.querySelectorAll('[data-letter-answer]').forEach(btn=>btn.onclick=()=>{if(answered)return;if(btn.dataset.letterAnswer===card[1]){answered=true;document.getElementById('letterFeedback').textContent='That matches. Notice the shape once more before continuing.';document.getElementById('letterNext').disabled=false;document.querySelectorAll('[data-letter-answer]').forEach(b=>b.disabled=true);document.getElementById('letterNext').focus();}else{if(!review)tricky.add(card[0]);document.getElementById('letterFeedback').textContent='Look at the shape again, or open the hint. There is no penalty for another try.';}});
       document.getElementById('letterHint')?.addEventListener('toggle',event=>{if(event.target.open&&!review)tricky.add(card[0]);});
       document.getElementById('reviewTricky')?.addEventListener('click',()=>{cards=cards.filter(p=>tricky.has(p[0]));index=0;answered=false;review=true;draw();document.getElementById('recognitionTitle').focus();});
+      document.getElementById('recognitionStop')?.addEventListener('click',config.closeSheet);
+      document.getElementById('recognitionGreetings')?.addEventListener('click',()=>config.startLesson(greetingIndex()));
       document.getElementById('returnChart').onclick=()=>chart(config.script);
       document.getElementById('changeSet').onclick=()=>chooseSet(group);
       document.getElementById('letterNext').onclick=()=>{if(done){recognition(group,setId);return;}if(!answered)return;if(!review&&document.getElementById('letterHint')?.open)tricky.add(card[0]);index++;answered=false;draw();document.getElementById('recognitionTitle').focus();};
@@ -102,5 +123,5 @@ window.FirstWordsTools = (() => {
     if('speechSynthesis'in window)speechSynthesis.addEventListener('voiceschanged',()=>{audioMessage='';notice(voiceText());});
     addEventListener('pagehide',()=>{if('speechSynthesis'in window)speechSynthesis.cancel();config.stop?.();});
   }
-  return {init,notice,remember,voiceText,chart,resetAudio};
+  return {init,notice,remember,voiceText,chart,resetAudio,finishLesson};
 })();

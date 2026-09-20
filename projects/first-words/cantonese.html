@@ -249,7 +249,7 @@
   {"@context":"https://schema.org","@type":"LearningResource","name":"First Words — Cantonese Foundation","creator":{"@type":"Person","name":"Jack Mao","url":"https://www.hellojackmao.com"},"description":"A 15-lesson Cantonese foundation with an applied Hong Kong language route.","dateCreated":"2026","url":"https://www.hellojackmao.com/projects/first-words/cantonese.html"}
   </script>
 <link rel="stylesheet" href="hub-fonts.css">
-<style id="ordering-pilot">#orderingNext,#orderingReveal{background:#31578f;color:#fff;transition:none}.ordering-heading{font-family:var(--serif);font-size:1.6rem;line-height:1.25;margin:12px 0}.ordering-summary{padding-left:20px;line-height:1.8}.ordering-hint summary{padding:12px 0;cursor:pointer;min-height:44px}.ordering-hint{margin-bottom:16px}.ordering-heading:focus{outline:none}.ordering-heading:focus-visible{outline:2px solid var(--accent);outline-offset:4px}</style><script src="learning-return.js?v=20260919-2"></script><link rel="stylesheet" href="directions-practice.css"><script src="directions-practice.js?v=20260920-1"></script><link rel="stylesheet" href="exchange-practice.css"><script src="exchange-practice.js?v=20260920-1"></script><style>.return-recap{font-size:1rem;line-height:1.7}.return-recap h3{font-family:var(--serif,var(--font-display,var(--display)));font-size:1.6rem;line-height:1.3}.return-recap summary{cursor:pointer;min-height:44px;padding:10px 0}.return-phrase{font-size:1.5rem;font-family:var(--serif,var(--font-ko,var(--display)))}.return-recap .sheet-actions{margin-top:20px}</style><link rel="stylesheet" href="learning-tools.css?v=20260920-3"><script defer src="learning-tools.js?v=20260920-3"></script></head>
+<style id="ordering-pilot">#orderingNext,#orderingReveal{background:#31578f;color:#fff;transition:none}.ordering-heading{font-family:var(--serif);font-size:1.6rem;line-height:1.25;margin:12px 0}.ordering-summary{padding-left:20px;line-height:1.8}.ordering-hint summary{padding:12px 0;cursor:pointer;min-height:44px}.ordering-hint{margin-bottom:16px}.ordering-heading:focus{outline:none}.ordering-heading:focus-visible{outline:2px solid var(--accent);outline-offset:4px}</style><script src="learning-return.js?v=20260919-2"></script><link rel="stylesheet" href="directions-practice.css"><script src="directions-practice.js?v=20260920-1"></script><link rel="stylesheet" href="exchange-practice.css"><script src="exchange-practice.js?v=20260920-1"></script><style>.return-recap{font-size:1rem;line-height:1.7}.return-recap h3{font-family:var(--serif,var(--font-display,var(--display)));font-size:1.6rem;line-height:1.3}.return-recap summary{cursor:pointer;min-height:44px;padding:10px 0}.return-phrase{font-size:1.5rem;font-family:var(--serif,var(--font-ko,var(--display)))}.return-recap .sheet-actions{margin-top:20px}</style><link rel="stylesheet" href="learning-tools.css?v=20260920-4"><script defer src="learning-tools.js?v=20260920-4"></script></head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header class="top">
@@ -438,8 +438,8 @@
       }));
     }
 
-function openDirections(){FirstWordsDirections.open({state,lesson:lessons[11],index:11,lang:'zh-HK',korean:false,save,openSheet,closeSheet,phraseMarkup,bindListen,esc,complete:()=>{state.done[11]=true;state.lastLesson=11;delete state.directionsPractice;save();closeSheet();toast('Lesson complete.');}});}
-function openExchange(index){FirstWordsExchange.open({state,lesson:lessons[index],index,track:'cantonese',lang:'zh-HK',greeting:index===4,save,openSheet,phraseMarkup,bindListen,esc,complete:()=>{state.done[index]=true;state.lastLesson=index;delete state.exchangePractice[index];save();closeSheet();toast('Lesson complete.');}});}
+function openDirections(){FirstWordsDirections.open({state,lesson:lessons[11],index:11,lang:'zh-HK',korean:false,save,openSheet,closeSheet,phraseMarkup,bindListen,esc,complete:()=>{state.done[11]=true;state.lastLesson=11;delete state.directionsPractice;save();FirstWordsTools.finishLesson(11);}});}
+function openExchange(index){FirstWordsExchange.open({state,lesson:lessons[index],index,track:'cantonese',lang:'zh-HK',greeting:index===4,save,openSheet,phraseMarkup,bindListen,esc,complete:()=>{state.done[index]=true;state.lastLesson=index;delete state.exchangePractice[index];save();FirstWordsTools.finishLesson(index);}});}
     function openLesson(index) {
       state.activeLesson=index;save();
       if(index===4||index===6){openExchange(index);return;}
@@ -452,7 +452,7 @@ function openExchange(index){FirstWordsExchange.open({state,lesson:lessons[index
       bindListen($("#sheetBody"));
       bindCheck($("#sheetBody"), checkPhrase[0], () => { $("#completeLesson").disabled = false; });
       $("#completeLesson").addEventListener("click", () => {
-        state.done[index] = true; state.lastLesson = index; save(); closeSheet(); toast("Lesson complete.");
+        state.done[index] = true; state.lastLesson = index; save(); FirstWordsTools.finishLesson(index);
       });
     }
 
@@ -487,7 +487,7 @@ function openExchange(index){FirstWordsExchange.open({state,lesson:lessons[index
         $('#orderingReveal')?.addEventListener('click',()=>{progress.revealed=true;save();draw();$('#orderingRecall').focus();});
         $('#orderingRecall')?.addEventListener('click',()=>{progress.passed=true;save();draw(true);});
         $('#orderingPause')?.addEventListener('click',()=>{progress.paused=true;save();draw(true);});
-        $('#orderingNext').addEventListener('click',()=>{if(!canContinue)return;if(finish){state.done[9]=true;state.lastLesson=9;state.orderingPilot={step:0,passed:false,revealed:false,paused:false};save();closeSheet();toast('Lesson complete.');return;}progress.step++;progress.passed=false;progress.revealed=false;progress.paused=false;save();draw(true);});
+        $('#orderingNext').addEventListener('click',()=>{if(!canContinue)return;if(finish){state.done[9]=true;state.lastLesson=9;state.orderingPilot={step:0,passed:false,revealed:false,paused:false};save();FirstWordsTools.finishLesson(9);return;}progress.step++;progress.passed=false;progress.revealed=false;progress.paused=false;save();draw(true);});
         save();if(focus)$('#sheetBody .ordering-heading').focus();
       }
       draw();
@@ -633,5 +633,5 @@ function openExchange(index){FirstWordsExchange.open({state,lesson:lessons[index
     if ("serviceWorker" in navigator) window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {}));
   </script>
   <script defer src="../../analytics.js"></script>
-<script>window.addEventListener('DOMContentLoaded',()=>FirstWordsTools.init({track:'cantonese',openSheet,speak,getRate:()=>[.65,.82,1].includes(state.audioRate)?state.audioRate:.82,setRate:rate=>{state.audioRate=rate;save();}}));</script></body>
+<script>window.addEventListener('DOMContentLoaded',()=>FirstWordsTools.init({track:'cantonese',lessons,closeSheet,startLesson:openLesson,isDone:index=>Boolean(state.done[index]),openSheet,speak,getRate:()=>[.65,.82,1].includes(state.audioRate)?state.audioRate:.82,setRate:rate=>{state.audioRate=rate;save();}}));</script></body>
 </html>
