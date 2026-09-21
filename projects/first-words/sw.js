@@ -1,5 +1,26 @@
-const CACHE_NAME = "first-words-v48";
+const CACHE_NAME = "first-words-v50";
 const APP_ASSETS = [
+  "../../fonts/first-words/offline/pronunciation-400.woff2",
+  "./offline-fonts.css?v=20260920-1",
+  "../../fonts/first-words/offline/gowun-dodum.woff2",
+  "../../fonts/first-words/offline/gowun-batang-400.woff2",
+  "../../fonts/first-words/offline/gowun-batang-700.woff2",
+  "../../fonts/first-words/offline/shippori-400.woff2",
+  "../../fonts/first-words/offline/shippori-500.woff2",
+  "../../fonts/first-words/offline/shippori-600.woff2",
+  "../../fonts/first-words/offline/shippori-700.woff2",
+  "../../fonts/first-words/offline/manrope-400.woff2",
+  "../../fonts/first-words/offline/manrope-600.woff2",
+  "../../fonts/first-words/offline/manrope-700.woff2",
+  "../../fonts/first-words/offline/manrope-800.woff2",
+  "../../fonts/first-words/offline/fraunces-500.woff2",
+  "../../fonts/first-words/offline/fraunces-600.woff2",
+  "../../fonts/first-words/offline/fraunces-700.woff2",
+  "../../fonts/first-words/offline/noto-serif-tc-400.woff2",
+  "../../fonts/first-words/offline/noto-serif-tc-500.woff2",
+  "../../fonts/first-words/offline/noto-serif-tc-600.woff2",
+  "../../fonts/first-words/offline/noto-serif-tc-700.woff2",
+
   "./practice-backup.js?v=20260920-1",
   "../../fonts/performance/hongkong-moment.ttf",
   "../../fonts/performance/seoul-moment.ttf",
