@@ -292,7 +292,20 @@
     has: function (id) { return saved.has(id); },
     toggle: function (id) { if (saved.has(id)) saved.delete(id); else saved.add(id); persist(); return saved.has(id); },
     list: function () { return Array.from(saved); },
-    count: function () { return saved.size; }
+    count: function () { return saved.size; },
+    merge: function (ids) {
+      if (!Array.isArray(ids) || ids.some(id => typeof id !== 'string' || !GUIDES.some(g => g.id === id))) throw new Error('Invalid guide IDs');
+      const merged = new Set([...saved, ...ids]);
+      const added = merged.size - saved.size;
+      if (!added) return 0;
+      const nextStore = Object.assign({}, _store, { saved: Array.from(merged) });
+      // Commit once before changing memory; a failed import leaves the collection intact.
+      localStorage.setItem(STORE_KEY, JSON.stringify(nextStore));
+      _store = nextStore;
+      saved = merged;
+      document.dispatchEvent(new CustomEvent("wf:saved-changed", { detail: { count: saved.size } }));
+      return added;
+    }
   };
 
   /* ---- Drafts (contributor flow, session-persistent) -------------------- */
