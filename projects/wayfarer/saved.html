@@ -54,7 +54,7 @@
   .grid { max-width:1200px; margin:0 auto; padding:0 32px 80px; display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; }
   @media (max-width:900px){ .grid { grid-template-columns:1fr; } }
 
-  .card { border-radius:16px; overflow:hidden; background:#fff; border:1px solid var(--line);
+  .card { position:relative; border-radius:16px; overflow:hidden; background:#fff; border:1px solid var(--line);
     display:flex; flex-direction:column; text-decoration:none; color:inherit; transition:transform .5s var(--smooth), box-shadow .5s var(--smooth); }
   .card:hover { transform:translateY(-5px); box-shadow:0 22px 46px rgba(0,0,0,0.12); }
   .card-art { height:180px; position:relative; overflow:hidden; }
@@ -62,7 +62,7 @@
   .card:hover .card-art > svg { transform:scale(1.05); }
   .card-handle { position:absolute; left:14px; bottom:14px; z-index:2; background:rgba(255,255,255,0.92);
     color:#111; font-size:12px; font-weight:600; padding:5px 11px; border-radius:9999px; text-decoration:none; }
-  .card-save { position:absolute; top:12px; left:12px; z-index:3; width:34px; height:34px; border-radius:50%;
+  .card-save { position:absolute; top:12px; left:12px; z-index:3; width:44px; height:44px; border-radius:50%;
     background:rgba(255,255,255,0.92); border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;
     transition:transform .3s var(--smooth); }
   .card-save:hover { transform:scale(1.1); }
@@ -95,6 +95,16 @@
   @media (max-width:640px){ .page-close-inner{ grid-template-columns:1fr; gap:10px; } }
 
   footer { border-top:1px solid var(--line); padding:32px; text-align:center; font-size:0.8rem; color:var(--muted); }
+
+  .card-link{display:flex;flex:1;flex-direction:column;text-decoration:none;color:inherit}
+  .card-link:focus-visible{outline-offset:-4px}
+  .save-feedback{position:fixed;z-index:100;bottom:max(16px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:max-content;max-width:calc(100% - 32px);display:flex;align-items:center;gap:12px;padding:12px 16px;background:#142d2b;color:#fff;border:1px solid #42605c;border-radius:16px;box-shadow:0 8px 32px #0002;font-size:.9rem}
+  .save-feedback[hidden]{display:none}
+  .save-feedback p{max-width:42ch;line-height:1.4;overflow-wrap:anywhere}
+  .save-feedback button{flex-shrink:0;min-height:44px;padding:8px 14px;border-radius:999px;border:1px solid #ffffff80;color:#fff;background:transparent;font:600 .9rem var(--ui);cursor:pointer}
+  .save-feedback #undoSave{background:#c3eee7;color:#142d2b;border-color:transparent}
+  body.has-save-feedback{padding-bottom:120px}
+  @media(max-width:480px){.save-feedback{flex-wrap:wrap;width:calc(100% - 32px)}.save-feedback p{flex-basis:100%}}
 </style>
   <style>
     @media (prefers-reduced-motion: reduce) {
@@ -165,6 +175,11 @@
 
   </main>
 
+  <aside class="save-feedback" id="saveFeedback" aria-label="Saved guide action" hidden>
+    <p id="saveMessage" role="status" aria-live="polite" aria-atomic="true"></p>
+    <button type="button" id="undoSave">Undo</button>
+    <button type="button" id="dismissSave">Dismiss</button>
+  </aside>
   <footer>© 2026 Wayfarer · A place to get lost reading about places.</footer>
 
 <script src="wayfarer-shared.js?v=20260910-fonts"></script>
@@ -176,6 +191,38 @@
   const emptyWrap = document.getElementById("emptyWrap");
   const noteWrap = document.getElementById("noteWrap");
 
+  const removedGuides = [];
+  const collectionOrder = W.Saved.list();
+  const feedback = document.getElementById("saveFeedback");
+  const undoButton = document.getElementById("undoSave");
+  let focusId = null;
+  function focusCollection(id){
+    const button = [...grid.querySelectorAll('.card-save')].find(el=>el.dataset.guide===id);
+    (button || grid.querySelector('.card-save') || emptyWrap.querySelector('a') || document.querySelector('.head h1')).focus({preventScroll:true});
+  }
+  function updateFeedback(message){
+    feedback.hidden=false;
+    document.body.classList.add('has-save-feedback');
+    document.getElementById('saveMessage').textContent=message;
+    undoButton.hidden=removedGuides.length===0;
+  }
+  undoButton.addEventListener('click',()=>{
+    const guide=removedGuides.pop();
+    if(!guide)return;
+    if(!W.Saved.has(guide.id))W.Saved.toggle(guide.id);
+    render();
+    focusId=guide.id;
+    updateFeedback(guide.title+' restored.'+(removedGuides.length?' Undo again to restore the previous removal.':''));
+    focusCollection(guide.id);
+    grid.querySelector('[data-guide="'+guide.id+'"]').scrollIntoView({block:'nearest'});
+  });
+  document.getElementById('dismissSave').addEventListener('click',()=>{
+    feedback.hidden=true;
+    document.body.classList.remove('has-save-feedback');
+    removedGuides.length=0;
+    focusCollection(focusId);
+  });
+
   function saveIcon(filled){
     return filled
       ? '<svg viewBox="0 0 24 24" fill="#2aa89f" stroke="#2aa89f" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>'
@@ -183,7 +230,7 @@
   }
 
   function render(){
-    const ids = W.Saved.list();
+    const ids = W.Saved.list().sort((a,b)=>collectionOrder.indexOf(a)-collectionOrder.indexOf(b));
     const saved = ids.map(function(id){ return W.guideById(id); }).filter(Boolean);
     grid.innerHTML = "";
     emptyWrap.innerHTML = "";
@@ -204,10 +251,12 @@
     countLine.textContent = saved.length + (saved.length === 1 ? " guide saved" : " guides saved");
 
     saved.forEach(function(g){
-      const card = document.createElement("a");
+      const card = document.createElement("article");
       card.className = "card";
-      card.href = g.file;
-      card.innerHTML =
+      const link = document.createElement("a");
+      link.className="card-link";
+      link.href=g.file;
+      link.innerHTML =
         '<div class="card-art">' + W.cardArt(g, 400, 180) +
           '<span class="card-handle">@' + g.author + '</span>' +
         '</div>' +
@@ -223,14 +272,22 @@
 
       const btn = document.createElement("button");
       btn.className = "card-save";
-      btn.setAttribute("aria-label", "Remove from saved");
+      btn.type="button";
+      btn.dataset.guide=g.id;
+      btn.setAttribute("aria-label", "Remove "+g.title+" from saved");
       btn.innerHTML = saveIcon(true);
       btn.onclick = function(e){
         e.preventDefault(); e.stopPropagation();
+        if(!W.Saved.has(g.id))return;
+        removedGuides.push(g);
         W.Saved.toggle(g.id);
+        focusId=saved[saved.indexOf(g)+1]?.id || saved[saved.indexOf(g)-1]?.id;
         render();
+        updateFeedback(g.title+' removed from saved.');
+        undoButton.focus({preventScroll:true});
       };
-      card.querySelector(".card-art").appendChild(btn);
+      card.appendChild(link);
+      card.appendChild(btn);
       grid.appendChild(card);
     });
 
