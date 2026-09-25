@@ -1970,7 +1970,7 @@ body.scroll-calm #mobile-utility.open #mobile-utility-trigger { opacity:1; }
       const num = document.getElementById('plate-num');
       const cap = document.getElementById('plate-cap-text');
       if (!rows.length || !plates.length) return;
-      let current = 0;
+      let current = -1;
       function activate(i, row) {
         if (i === current) { mark(row); return; }
         current = i;
@@ -1988,15 +1988,25 @@ body.scroll-calm #mobile-utility.open #mobile-utility-trigger { opacity:1; }
         r.addEventListener('mouseenter', () => { lastInteract = Date.now(); activate(i, r); });
         r.addEventListener('focusin',  () => { lastInteract = Date.now(); activate(i, r); });
       });
-      activate(0, rows[0]);
+      function resetPreview() {
+        lastInteract = Date.now();
+        activate(0, rows[0]);
+        document.querySelectorAll('.plate-img, .row-thumb').forEach(el => { el.style.viewTransitionName = ''; });
+      }
+      resetPreview();
+      window.addEventListener('pageshow', resetPreview);
 
       // idle cycle: the proof sheet leafs through itself until you reach for it
       const plateEl = document.querySelector('.plate-sticky');
       if (plateEl) plateEl.addEventListener('pointermove', () => { lastInteract = Date.now(); });
       let workInView = false;
-      const workSec = document.getElementById('work');
+      const workSec = document.querySelector('.plate');
       if ('IntersectionObserver' in window && workSec) {
-        new IntersectionObserver(es => es.forEach(e => { workInView = e.isIntersecting; }), { threshold: 0.18 }).observe(workSec);
+        new IntersectionObserver(es => es.forEach(e => {
+          const visible = e.isIntersecting && e.intersectionRatio >= 0.18;
+          if (visible && !workInView) lastInteract = Date.now();
+          workInView = visible;
+        }), { threshold: 0.18 }).observe(workSec);
       }
       const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (!reduce) {
@@ -2030,17 +2040,9 @@ body.scroll-calm #mobile-utility.open #mobile-utility-trigger { opacity:1; }
           var i = +r.dataset.plate;
           r.dispatchEvent(new Event('mouseenter'));   // ensure this plate is the active one
           nameSource(i, r);
-          try { sessionStorage.setItem('jm-plate', String(i)); } catch (e) {}
         });
       });
-      // return trip: land on the plate you left from, named so the project hero morphs back into it
-      var saved = null;
-      try { saved = sessionStorage.getItem('jm-plate'); } catch (e) {}
-      if (saved !== null && rows[+saved]) {
-        var r0 = rows[+saved];
-        r0.dispatchEvent(new Event('mouseenter'));
-        nameSource(+saved, r0);
-      }
+
     })();
 
     // ── Nav unstick safety: never let a stale exit-class transform the page ──
