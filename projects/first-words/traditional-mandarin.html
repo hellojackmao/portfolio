@@ -304,7 +304,7 @@
       { title: "Courtesy", chapter: "Exchange", focus: "Move gently through everyday interactions.", phrases: [["謝謝","xièxie","Thank you"],["不好意思","bù hǎoyìsi","Excuse me / sorry"],["請","qǐng","Please"],["沒關係","méi guānxi","It is okay"]] },
       { title: "Numbers and prices", chapter: "Daily life", focus: "Count a few things and ask what something costs.", phrases: [["一個","yí ge","One item"],["兩個","liǎng ge","Two items"],["多少錢","duōshao qián","How much is it?"],["我要這個","wǒ yào zhège","I would like this one"]] },
       { title: "Time and plans", chapter: "Daily life", focus: "Ask when something begins and name a simple day.", phrases: [["現在幾點","xiànzài jǐ diǎn","What time is it now?"],["幾點開門","jǐ diǎn kāimén","What time does it open?"],["今天","jīntiān","Today"],["明天","míngtiān","Tomorrow"]] },
-      { title: "Ordering", chapter: "Daily life", focus: "Ask, choose, and order with confidence.", phrases: [["我要這個","wǒ yào zhège","I would like this one"],["請給我一杯水","qǐng gěi wǒ yì bēi shuǐ","A glass of water, please"],["你推薦什麼","nǐ tuījiàn shénme","What do you recommend?"],["買單","mǎidān","The bill, please"]] },
+      { title: "Ordering", chapter: "Daily life", focus: "Ask, choose, and order with confidence.", phrases: [["我要這個","wǒ yào zhège","I would like this one"],["請給我一杯水","qǐng gěi wǒ yì bēi shuǐ","A glass of water, please"],["你推薦什麼","nǐ tuījiàn shénme","What do you recommend?"],["不好意思，買單","bù hǎoyìsi, mǎidān","Excuse me, the bill, please"]] },
       { title: "Preferences and needs", chapter: "Daily life", focus: "Communicate a dietary need and ask for clarity.", phrases: [["我不吃肉","wǒ bù chī ròu","I do not eat meat"],["我吃素","wǒ chī sù","I am vegetarian"],["有英文菜單嗎","yǒu Yīngwén càidān ma","Is there an English menu?"],["請說慢一點","qǐng shuō màn yìdiǎn","Please speak more slowly"]] },
       { title: "Finding your way", chapter: "In place", focus: "Orient yourself with a few clear directions.", phrases: [["捷運站在哪裡","jiéyùn zhàn zài nǎlǐ","Where is the metro station?"],["右邊","yòubiān","Right"],["左邊","zuǒbiān","Left"],["直走","zhí zǒu","Go straight"],["很近嗎","hěn jìn ma","Is it nearby?"]] },
       { title: "Taking the metro", chapter: "In place", focus: "Confirm the route before you board.", phrases: [["要搭哪一班車","yào dā nǎ yì bān chē","Which train should I take?"],["這班車到台北車站嗎","zhè bān chē dào Táiběi Chēzhàn ma","Does this train go to Taipei Main Station?"],["下一站是哪裡","xià yí zhàn shì nǎlǐ","What is the next station?"],["一張票","yì zhāng piào","One ticket"]] },
@@ -320,7 +320,7 @@
         groups: [
           { title: "Arrive", note: "Find the metro and make the first transfer clearly.", phrases: [["台北車站在哪裡","Táiběi Chēzhàn zài nǎlǐ","Where is Taipei Main Station?"],["悠遊卡在哪裡買","Yōuyóukǎ zài nǎlǐ mǎi","Where can I buy an EasyCard?"],["這班捷運到中山站嗎","zhè bān jiéyùn dào Zhōngshān Zhàn ma","Does this metro go to Zhongshan Station?"]] },
           { title: "Order", note: "Choose simply and adjust one detail.", phrases: [["你推薦什麼","nǐ tuījiàn shénme","What do you recommend?"],["我要一杯珍珠奶茶","wǒ yào yì bēi zhēnzhū nǎichá","I would like a bubble tea"],["不要太甜","bú yào tài tián","Not too sweet"]] },
-          { title: "Continue", note: "Find the exit and close the exchange with care.", phrases: [["出口在哪裡","chūkǒu zài nǎlǐ","Where is the exit?"],["可以刷卡嗎","kěyǐ shuākǎ ma","Can I pay by card?"],["謝謝你的幫忙","xièxie nǐ de bāngmáng","Thank you for your help"]] }
+          { title: "Continue", note: "Find the exit, then ask about card payment at the counter. Card here means a bank card; ask separately about EasyCard.", phrases: [["出口在哪裡","chūkǒu zài nǎlǐ","Where is the exit?"],["可以刷卡嗎","kěyǐ shuākǎ ma","Can I pay by card?"],["謝謝你的幫忙","xièxie nǐ de bāngmáng","Thank you for your help"]] }
         ]
       }
     };
@@ -441,6 +441,8 @@
 
 function openDirections(){FirstWordsDirections.open({state,lesson:lessons[11],index:11,lang:'zh-TW',korean:false,save,openSheet,closeSheet,phraseMarkup,bindListen,esc,complete:()=>{state.done[11]=true;state.lastLesson=11;delete state.directionsPractice;save();FirstWordsTools.finishLesson(11);}});}
 function openExchange(index){FirstWordsExchange.open({state,lesson:lessons[index],index,track:'traditional-mandarin',lang:'zh-TW',greeting:index===4,save,openSheet,phraseMarkup,bindListen,esc,complete:()=>{state.done[index]=true;state.lastLesson=index;delete state.exchangePractice[index];save();FirstWordsTools.finishLesson(index);}});}
+    const travelContextNotes = {"9": "These are short counter requests. Use the excuse-me phrase from Courtesy to get attention, then make your request. The bill phrase includes that opener.", "12": "Name your destination when asking which train to take. One ticket is a quantity, not a complete ticket purchase; show or say the destination too.", "13": "Use the reservation phrase when you have already booked a room. Ask about leaving luggage at reception; the answer may depend on the hotel."};
+    function travelContextNote(index){const note=travelContextNotes[index];return note?`<details class="ordering-hint data-note"><summary>Using this in person</summary><p>${esc(note)}</p></details>`:"";}
     function openLesson(index) {
       state.activeLesson=index;save();
       if(index===4||index===6){openExchange(index);return;}
@@ -449,7 +451,7 @@ function openExchange(index){FirstWordsExchange.open({state,lesson:lessons[index
       const lesson = lessons[index];
       const checkPhrase = lesson.phrases[(index + 1) % lesson.phrases.length];
       const choices = choiceSet(checkPhrase[0], lesson.phrases.map(phrase => phrase[0]), index);
-      openSheet(`Lesson ${index + 1} · ${lesson.title}`, `<p class="sheet-lede">${esc(lesson.focus)} Listen first, then repeat each phrase out loud.</p>${phraseMarkup(lesson.phrases)}${checkMarkup(checkPhrase, choices)}<div class="sheet-actions"><button type="button" class="btn" id="completeLesson" ${state.done[index] ? "" : "disabled"}>${state.done[index] ? "Practice complete" : "Complete lesson"}</button></div>`);
+      openSheet(`Lesson ${index + 1} · ${lesson.title}`, `<p class="sheet-lede">${esc(lesson.focus)} Listen first, then repeat each phrase out loud.</p>${phraseMarkup(lesson.phrases)}${travelContextNote(index)}${checkMarkup(checkPhrase, choices)}<div class="sheet-actions"><button type="button" class="btn" id="completeLesson" ${state.done[index] ? "" : "disabled"}>${state.done[index] ? "Practice complete" : "Complete lesson"}</button></div>`);
       bindListen($("#sheetBody"));
       bindCheck($("#sheetBody"), checkPhrase[0], () => { $("#completeLesson").disabled = false; });
       $("#completeLesson").addEventListener("click", () => {
@@ -474,7 +476,7 @@ function openExchange(index){FirstWordsExchange.open({state,lesson:lessons[index
         else{
           const context=['Point to the item you want on the menu.','You have taken a seat and would like water.','You are unsure what to choose. Ask for a recommendation.','Your visit is ending. Ask for the bill.'][index];
           body+='<h3 class="ordering-heading" tabindex="-1">'+(kind==='learn'?'Meet the phrase.':kind==='recall'?'Bring an earlier phrase back.':kind==='connect'?'Your turn in the exchange.':'Try it with support.')+'</h3><p class="sheet-lede">'+(kind==='recall'?'After hearing a recommendation, you point to your choice. Recall how to order it.':context)+'</p>';
-          if(kind==='learn'){body+=phraseMarkup([phrase]);action='Try this phrase';}
+          if(kind==='learn'){body+=phraseMarkup([phrase]);if(index===0)body+=travelContextNote(9);action='Try this phrase';}
           else if(kind==='recall'){
             if(!progress.revealed&&!progress.passed)body+='<button class="btn" type="button" id="orderingReveal">Reveal the phrase</button>';
             else{body+=phraseMarkup([phrase]);if(!progress.passed)body+='<p class="data-note">Say it aloud or silently, then compare with the phrase.</p><button class="btn ghost" type="button" id="orderingRecall">Ready to continue</button>';}

@@ -1,5 +1,6 @@
-const CACHE_NAME = "first-words-v52";
+const CACHE_NAME = "first-words-v53";
 const APP_ASSETS = [
+  "../../fonts/first-words/offline/noto-serif-tc-booking.woff2",
   "../../fonts/first-words/offline/pronunciation-400.woff2",
   "./offline-fonts.css?v=20260920-1",
   "../../fonts/first-words/offline/gowun-dodum.woff2",
