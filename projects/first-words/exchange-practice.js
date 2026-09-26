@@ -18,7 +18,7 @@ window.FirstWordsExchange={
     }else{
       const apology=korean||o.track==='cantonese'?2:1;
       rounds=[
-        {scene:o.track==='cantonese'?'Someone has helped you with a service. Thank them.':'Someone has helped you. Say thank you.',reply:0,exclude:korean?[1]:o.track==='cantonese'?[1]:[]},
+        {scene:o.track==='cantonese'?'Someone has helped you with a service. Thank them.':'Someone has helped you. Say thank you.',reply:0,exclude:korean||o.track==='cantonese'||o.track==='japanese'?[1]:[]},
         {scene:'You accidentally bump into someone. Apologize, then notice their response.',reply:apology,follow:3},
         {scene:'Now switch roles: someone apologizes to you. Reassure them.',incoming:apology,reply:3},
         korean?{scene:'A friend helps you. Use the shorter thanks from this lesson.',reply:1,exclude:[0]}:
