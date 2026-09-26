@@ -643,6 +643,8 @@
     margin-top: 0;
   }
 
+  [hidden] { display: none !important; }
+
   /* Error */
   .error-content {
     flex: 1;
@@ -986,6 +988,8 @@
       <span>RETRY</span>
       <span aria-hidden="true">↻</span>
     </button>
+    <button class="focusable" id="btn-error-filters" type="button" hidden>CHANGE SEARCH RADIUS <span aria-hidden="true">→</span></button>
+    <button class="focusable" id="btn-error-back" type="button">BACK TO START <span aria-hidden="true">←</span></button>
   </div>
 </div>
 
@@ -1033,6 +1037,7 @@ const state = {
   favorites: new Set(),
   // Auto-refresh tracking
   watchId: null,
+  fetchedRadius: 0,
   fetchAnchor: null,        // { lat, lon } where we last queried Overpass
   lastFetchTime: 0,         // ms timestamp
 };
@@ -1122,7 +1127,7 @@ function showScreen(name) {
   state.screen = name;
   // Focus the first focusable on the new screen (next frame, after layout)
   requestAnimationFrame(() => {
-    const focusables = target.querySelectorAll('.focusable:not([disabled])');
+    const focusables = target.querySelectorAll('.focusable:not([disabled]):not([hidden])');
     if (focusables.length) focusables[0].focus();
   });
 }
@@ -1228,7 +1233,7 @@ function getLocation() {
       let sub = 'Please try again.';
       if (err.code === 1) {
         msg = 'PERMISSION DENIED';
-        sub = 'Enable location access for the glasses to scan for coffee.';
+        sub = 'Enable location access for this browser or the glasses to scan for coffee.';
       } else if (err.code === 2) {
         msg = 'POSITION UNAVAILABLE';
         sub = 'Check that your companion phone is connected.';
@@ -1242,12 +1247,32 @@ function getLocation() {
   );
 }
 
+// Each endpoint has a browser deadline, including reading its response body.
+async function requestCoffeeData(url, query) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 18000);
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'data=' + encodeURIComponent(query),
+      signal: controller.signal,
+    });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    if (!data || !Array.isArray(data.elements) || data.remark) {
+      throw new Error('Coffee service returned an incomplete response');
+    }
+    return data;
+  } finally { clearTimeout(timer); }
+}
+
 // ─── Overpass query ────────────────────────────────────────────────────────
 async function fetchCoffeeShops() {
   const navAtStart = state.navGen;
   setProgress(50, 'QUERYING DATABASE...');
   document.getElementById('loading-sub').innerHTML =
-    'SCANNING 1.5KM RADIUS<span class="cursor"></span>';
+    'SCANNING ' + formatRadius(state.filters.radius).toUpperCase() + ' RADIUS<span class="cursor"></span>';
   animateProgress(50, 90, 8000);
 
   const { lat, lon } = state.userPos;
@@ -1266,32 +1291,21 @@ async function fetchCoffeeShops() {
   ];
 
   let data = null;
-  let lastErr = null;
   for (const url of endpoints) {
     try {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'data=' + encodeURIComponent(query),
-      });
+      const response = await requestCoffeeData(url, query);
       if (state.navGen !== navAtStart) return;
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      data = await res.json();
+      data = response;
       if (state.navGen !== navAtStart) return;
       break;
     } catch (e) {
-      lastErr = e;
+      if (state.navGen !== navAtStart) return;
     }
   }
 
+  if (state.navGen !== navAtStart) return;
   if (!data) {
     showError('NETWORK ERROR', 'Could not reach the coffee database. Check connection.');
-    return;
-  }
-
-  // Overpass may return a "remark" field on rate-limit / quota issues
-  if (!Array.isArray(data.elements)) {
-    showError('SERVICE BUSY', data.remark || 'Coffee database temporarily unavailable.');
     return;
   }
 
@@ -1300,7 +1314,9 @@ async function fetchCoffeeShops() {
   const seen = new Set();
   const shops = [];
   for (const el of data.elements) {
-    if (!el.tags || !el.tags.name || el.lat == null || el.lon == null) continue;
+    if (!el || !el.tags || typeof el.tags.name !== 'string' || !el.tags.name.trim() ||
+        !Number.isFinite(el.lat) || !Number.isFinite(el.lon) ||
+        Math.abs(el.lat) > 90 || Math.abs(el.lon) > 180) continue;
     const key = el.tags.name.toLowerCase() + '|' +
                 el.lat.toFixed(4) + '|' + el.lon.toFixed(4);
     if (seen.has(key)) continue;
@@ -1333,6 +1349,7 @@ async function fetchCoffeeShops() {
   state.shops = applyFilters(state.allShops);
 
   // Remember where we fetched, so we know when to refetch later
+  state.fetchedRadius = radius;
   state.fetchAnchor = { lat: lat, lon: lon };
   state.lastFetchTime = Date.now();
 
@@ -1564,14 +1581,8 @@ function resetFilters() {
 }
 
 function applyAndClose() {
-  // If radius changed, we need to re-fetch. Otherwise just re-filter locally.
-  const currentMaxDist = state.allShops.length
-    ? state.allShops[state.allShops.length - 1].distance
-    : 0;
-  // We re-fetch if the new radius is larger than what we have data for,
-  // OR if it's much smaller (saves bandwidth on next ops, but functionally
-  // we could just filter — for simplicity, only re-fetch on grow).
-  if (state.filters.radius > 1500 && state.filters.radius > currentMaxDist + 100) {
+  // Growing beyond the successfully queried area needs new results.
+  if (!state.fetchedRadius || state.filters.radius > state.fetchedRadius) {
     getLocation(); // full re-scan
     return;
   }
@@ -1800,6 +1811,7 @@ function onPositionUpdate(lat, lon) {
 
 async function silentRefetch() {
   if (!state.userPos) return;
+  const navAtStart = state.navGen;
   state.lastFetchTime = Date.now(); // claim the slot now to prevent overlap
 
   const { lat, lon } = state.userPos;
@@ -1816,22 +1828,21 @@ async function silentRefetch() {
   for (const url of ['https://overpass-api.de/api/interpreter',
                      'https://overpass.kumi.systems/api/interpreter']) {
     try {
-      const res = await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: 'data=' + encodeURIComponent(query),
-      });
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      data = await res.json();
+      const response = await requestCoffeeData(url, query);
+      data = response;
       break;
     } catch (e) { /* try next */ }
+    if (state.navGen !== navAtStart) return;
   }
-  if (!data || !Array.isArray(data.elements)) return; // give up silently
+  if (state.navGen !== navAtStart || state.filters.radius !== radius ||
+      !data || !Array.isArray(data.elements)) return; // preserve current results
 
   const seen = new Set();
   const shops = [];
   for (const el of data.elements) {
-    if (!el.tags || !el.tags.name || el.lat == null || el.lon == null) continue;
+    if (!el || !el.tags || typeof el.tags.name !== 'string' || !el.tags.name.trim() ||
+        !Number.isFinite(el.lat) || !Number.isFinite(el.lon) ||
+        Math.abs(el.lat) > 90 || Math.abs(el.lon) > 180) continue;
     const key = el.tags.name.toLowerCase() + '|' +
                 el.lat.toFixed(4) + '|' + el.lon.toFixed(4);
     if (seen.has(key)) continue;
@@ -1854,6 +1865,7 @@ async function silentRefetch() {
   shops.sort((a, b) => a.distance - b.distance);
   state.allShops = shops.slice(0, 50);
   state.shops = applyFilters(state.allShops);
+  state.fetchedRadius = radius;
   state.fetchAnchor = { lat, lon };
 
   // Update visible UI without yanking focus
@@ -2009,6 +2021,7 @@ function radarSelect() {
 function showError(msg, sub) {
   document.getElementById('error-text').textContent = '! ' + msg;
   document.getElementById('error-sub').textContent = sub || '';
+  document.getElementById('btn-error-filters').hidden = msg !== 'NO RESULTS';
   showScreen('error');
 }
 
@@ -2017,7 +2030,7 @@ function moveFocus(direction) {
   const screenEl = document.querySelector('.screen.active');
   if (!screenEl) return;
   const focusables = Array.from(
-    screenEl.querySelectorAll('.focusable:not([disabled])')
+    screenEl.querySelectorAll('.focusable:not([disabled]):not([hidden])')
   );
   if (!focusables.length) return;
 
@@ -2098,6 +2111,11 @@ document.getElementById('btn-start').addEventListener('click', () => {
   getLocation();
 });
 document.getElementById('btn-retry').addEventListener('click', getLocation);
+document.getElementById('btn-error-back').addEventListener('click', () => showScreen('welcome'));
+document.getElementById('btn-error-filters').addEventListener('click', () => {
+  renderFilters();
+  showScreen('filters');
+});
 document.getElementById('btn-back').addEventListener('click', () => showScreen('list'));
 document.getElementById('btn-favorite').addEventListener('click', () => {
   if (!state.selectedShop) return;
