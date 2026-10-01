@@ -1368,7 +1368,7 @@
 body .hero-folio,.compact-project .hero-folio{font-size:max(12px,.75rem);color:rgba(255,255,255,.66);letter-spacing:.1em}
 .plate-fig-cap,.img-caption{font-size:max(13px,.8125rem);line-height:1.65;color:rgba(255,255,255,.72)}
 @media(max-width:640px){.plate-fig-cap{flex-wrap:wrap;gap:.35rem .75rem}}
-</style></head>
+</style><style id="coffee-editorial-polish">.coffee-build-notes{margin:28px 0 40px;border-block:1px solid #ffb00040}.coffee-build-notes summary{padding:18px 0;min-height:56px;cursor:pointer;font:500 13px/1.6 'DM Mono',monospace;color:#ffd060}.coffee-build-notes .body-text{padding:0 0 22px}.coffee-build-notes .body-text strong{color:#ffd060}.coffee-build-notes summary:focus-visible{outline:2px solid #ffd060;outline-offset:4px}.plate-fig-cap{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:start;gap:12px;font:400 13px/1.65 'DM Mono',monospace;letter-spacing:.02em;text-align:left}.plate-fig-cap b{white-space:nowrap}.plate-fig-cap span{min-width:0;overflow-wrap:normal}.hero-meta{line-height:1.65}.coffee-journey{margin-bottom:24px}</style></head>
 <body class="compact-project">
 <a class="skip-link" href="#main">Skip to content</a>
   <div id="scroll-progress" role="progressbar" aria-hidden="true"></div>
@@ -1402,10 +1402,10 @@ body .hero-folio,.compact-project .hero-folio{font-size:max(12px,.75rem);color:r
       <div>
         <div class="edition-tag">Interactive - UI/UX Prototype</div>
         <h1 class="project-title">Coffee<br><em>Nearby</em></h1>
-        <div class="hero-subtitle">Wearable Web App - 2026</div>
+        <div class="hero-subtitle">Wearable interface prototype · 2026</div>
         <div class="hero-meta">
           <div>Category - <span>UI/UX Design</span></div>
-          <div>Platform - <span>Meta Ray-Ban Display</span></div>
+          <div>Design target - <span>Meta Ray-Ban Display</span></div>
           <div>Input - <span>D-pad + Enter</span></div>
           <div>Stack - <span>Vanilla JS, HTML, CSS</span></div>
         </div>
@@ -1426,21 +1426,21 @@ body .hero-folio,.compact-project .hero-folio{font-size:max(12px,.75rem);color:r
       <p class="ai-disclaimer"><strong>Design authorship note:</strong> The product concept, interaction model, visual direction, interface decisions, and final presentation choices are mine. Parts of the build and prototype were vibe-coded with AI as a development collaborator.</p>
 
       
-      <aside class="visible-decision" aria-label="Key design decision"><strong>The design decision</strong><p>Rebuild the interaction model from scratch — spatial-first navigation, high-contrast glanceable UI, and flows that never need a tap.</p></aside><details class="project-details"><summary>Project decisions &amp; details</summary><div class="case-paragraphs"><div class="case-paragraph"><h3>Challenge</h3><p>Design for Meta Ray-Ban Display glasses, where a 600×600 viewport, waveguide display, and D-pad-only input break every standard web assumption.</p></div><div class="case-paragraph"><h3>Outcome</h3><p>A working single-file prototype that proves the interaction model under emerging wearable constraints.</p></div></div><dl class="case-evidence" aria-label="Project evidence">
+      <aside class="visible-decision" aria-label="Key design decision"><strong>The design decision</strong><p>Rebuild the interaction model from scratch — spatial-first navigation, high-contrast glanceable UI, and flows that never need a tap.</p></aside><details class="project-details"><summary>Project decisions &amp; details</summary><div class="case-paragraphs"><div class="case-paragraph"><h3>Challenge</h3><p>Design for Meta Ray-Ban Display glasses, where a 600×600 viewport, waveguide display, and D-pad-only input break every standard web assumption.</p></div><div class="case-paragraph"><h3>Outcome</h3><p>A working browser prototype demonstrating directional navigation within a simulated wearable viewport.</p></div></div><dl class="case-evidence" aria-label="Project evidence">
         <div><dt>Audience</dt><dd>Wearable users who need nearby coffee without taking out a phone</dd></div>
         <div><dt>Constraints</dt><dd>600 × 600 waveguide display; D-pad + Enter; no touch, hover, or scrolling</dd></div>
         <div><dt>Deliverables</dt><dd>Seven core flows: boot, location, radar, results, filters, details, and walking estimates</dd></div>
         <div><dt>Build proof</dt><dd>One HTML browser prototype using live OpenStreetMap/Overpass data and geolocation</dd></div>
       </dl></details></div>
-        <div class="sec-head"><span class="sec-folio" aria-hidden="true">01</span><h2 class="section-heading">Working Product</h2></div>
+        <div class="sec-head"><span class="sec-folio" aria-hidden="true">01</span><h2 class="section-heading">Try the interaction</h2></div>
       <div class="body-text">
-        <p>The prototype below is the actual working HTML product. It is best understood as a constrained 600 × 600 wearable interface: no scrolling assumptions, no mouse-first behaviour, and no decorative glass effects that would fail on an additive waveguide display.</p>
+        <p>Find nearby cafés, compare them, and choose a stop within a 600 × 600 interface. Use arrow keys to move and Enter to select in the browser prototype.</p>
       </div>
       <figure class="plate-fig"><div class="coffee-demo-frame" aria-label="Coffee Nearby working product preview"><div class="cropmarks" aria-hidden="true"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i></div>
         <div class="coffee-demo-screen">
           <iframe src="coffee-finder-amber.html" title="Coffee Nearby working prototype" loading="lazy" tabindex="-1"></iframe>
         </div>
-      </div><figcaption class="plate-fig-cap"><b>PL.&nbsp;01</b><span>Working prototype — amber waveguide build</span></figcaption></figure>
+      </div><figcaption class="plate-fig-cap"><b>PL.&nbsp;01</b><span>Browser prototype — 600 × 600 amber interface</span></figcaption></figure>
 
       <div class="sec-head"><span class="sec-folio" aria-hidden="true">02</span><h2 class="section-heading">Constraint System</h2></div>
       <div class="coffee-stack">
@@ -1458,39 +1458,28 @@ body .hero-folio,.compact-project .hero-folio{font-size:max(12px,.75rem);color:r
         </div>
       </div>
 
-      <div class="sec-head"><span class="sec-folio" aria-hidden="true">03</span><h2 class="section-heading">What It Does</h2></div>
-      <div class="body-text">
-        <p>The app starts with a boot-style welcome screen, requests location, scans nearby OpenStreetMap cafe data through the Overpass API, then presents a list view, filter screen, detail view, and radar mode. Shops are sorted by distance with walking ETAs, compass direction, favourites, and live position updates.</p>
-        <p>The radar view plots shops as dots on a circular display that rotates with the user's heading. D-pad controls cycle through shops, while the focused item pulses so the wearer always knows what is selected.</p>
+      <div class="sec-head"><span class="sec-folio" aria-hidden="true">03</span><h2 class="section-heading">Find. Compare. Choose.</h2></div>
+      <div class="coffee-stack coffee-journey">
+        <div class="system-panel"><div class="snapshot-label">01 / Find</div><p>Start with your location to find nearby cafés using OpenStreetMap data.</p></div>
+        <div class="system-panel"><div class="snapshot-label">02 / Compare</div><p>Browse by distance, narrow the results with filters, or use radar to see their direction.</p></div>
+        <div class="system-panel"><div class="snapshot-label">03 / Choose</div><p>Open a café for details and a walking estimate. Save a favourite for later.</p></div>
       </div>
+      <div class="body-text"><p>A visible focus state shows which control is selected. Arrow keys move between choices; Enter confirms. In radar mode, the same directional controls cycle between cafés.</p></div>
+      <details class="coffee-build-notes"><summary>How the browser prototype works</summary><div class="body-text">
+        <p><strong>Data and filters.</strong> OpenStreetMap supplies café information through Overpass. Missing attributes are treated as unknown rather than automatically excluding a café; opening-hours data may be incomplete.</p>
+        <p><strong>Location updates.</strong> Position changes update distances and estimates. New searches are spaced out to avoid unnecessary requests, and compass changes take the shorter rotation path.</p>
+        <p><strong>Implementation.</strong> A single HTML file uses JavaScript, CSS, browser location and orientation APIs, and local storage. Arrow keys and Enter simulate directional input; this browser demonstration is not evidence of on-device validation.</p>
+      </div></details>
 
-      <div class="sec-head"><span class="sec-folio" aria-hidden="true">04</span><h2 class="section-heading">Technical Decisions</h2></div>
-      <div class="body-text">
-        <p>The project uses vanilla JavaScript, HTML, and CSS with no framework, no build step, no npm dependencies, and no API keys. It combines <code>navigator.geolocation</code>, <code>watchPosition</code>, <code>DeviceOrientationEvent</code>, localStorage, haversine distance, great-circle bearing, and a defensive generation-counter pattern for stale async work.</p>
-        <p>Filters are intentionally forgiving because OpenStreetMap data can be sparse. Unknown values pass unless the data explicitly says no. The opening-hours parser handles the common 80 percent of OSM strings and fails open rather than hiding useful results.</p>
-      </div>
-
-      <div class="sec-head"><span class="sec-folio" aria-hidden="true">05</span><h2 class="section-heading">Interaction Model</h2></div>
-      <div class="body-text">
-        <p>Every interactive list item is a native button because there is no cursor. The D-pad handler gathers the focusable controls on the active screen and moves focus through them with arrow keys, while Enter becomes the primary selection action.</p>
-        <p>The radar intentionally steps outside the general focus system. SVG targets are awkward focus surfaces, so radar mode tracks a dedicated selected-shop index and uses directional controls to cycle through shops instead of fighting browser focus mechanics.</p>
-      </div>
-
-      <div class="sec-head"><span class="sec-folio" aria-hidden="true">06</span><h2 class="section-heading">Location Logic</h2></div>
-      <div class="body-text">
-        <p>Auto-refresh uses two tiers. Cheap updates run whenever the user moves enough to affect distance, bearing, or walking ETA. Expensive updates only re-query Overpass when the wearer has moved meaningfully away from the last fetch anchor and enough time has passed to avoid hammering the API.</p>
-        <p>The compass arrow uses shortest-path rotation, so moving from 350 degrees to 10 degrees rotates forward 20 degrees instead of snapping backward across the full circle. It is a small detail, but on a head-worn display small motion mistakes become very visible.</p>
-      </div>
-
-      <div class="sec-head"><span class="sec-folio" aria-hidden="true">07</span><h2 class="section-heading">Visual System</h2></div>
+      <div class="sec-head"><span class="sec-folio" aria-hidden="true">04</span><h2 class="section-heading">Visual System</h2></div>
       <div class="body-text">
         <p>The orange-to-brown direction is named <em>Amber</em>. It is a physics-informed theme: a dark base for transparency on additive display hardware, amber phosphor for legibility, and brown warmth to keep the interface from feeling purely technical.</p>
         <p><span class="terminal-chip">Amber phosphor</span><span class="terminal-chip">Brown base</span><span class="terminal-chip">No glass blur</span><span class="terminal-chip">D-pad focus</span></p>
       </div>
 
-      <div class="pull-quote">The interface works because it respects the hardware instead of pretending it is a phone.</div>
+      <div class="pull-quote">A small display needs clear choices, one screen at a time.</div>
 
-      <div class="sec-head"><span class="sec-folio" aria-hidden="true">08</span><h2 class="section-heading">Reflection</h2></div>
+      <div class="sec-head"><span class="sec-folio" aria-hidden="true">05</span><h2 class="section-heading">Reflection</h2></div>
       <div class="body-text">
         <p>This project became a study in designing against instinct. Most web patterns assume scroll, touch, pointers, modals, hover states, and full-color surfaces. Coffee Nearby strips those assumptions down to a state machine of visible screens and focusable actions.</p>
         <p>The strongest lesson was that constraints can create identity. Amber Waveguide is not just an aesthetic wrapper; it is a response to display physics, input limits, data uncertainty, and the need for quick decisions while moving through the world.</p>
