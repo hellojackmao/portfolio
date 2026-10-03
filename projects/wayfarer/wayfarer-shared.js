@@ -227,23 +227,26 @@
       default:        return '';
     }
   }
+  let cardArtInstance = 0;
   function cardArt(g, w, h, layout) {
+    const instance = ++cardArtInstance;
+    const cover = COVER_ART[g.id] && COVER_ART[g.id].replace(/cover-([a-z-]+)-gradient/g, function(id) { return id + '-' + instance; });
     w = w || 400; h = h || 220;
     if (COVER_ART[g.id]) {
       if (layout === "portrait") {
         return '<svg viewBox="0 0 400 560" preserveAspectRatio="xMidYMin meet" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" data-cover-id="' + g.id + '">'
           + '<rect width="400" height="560" fill="' + g.art.hill + '"/>'
           + '<rect width="400" height="45" fill="' + g.art.sky[0] + '"/>'
-          + '<g transform="translate(0 44)">' + COVER_ART[g.id] + '</g></svg>';
+          + '<g transform="translate(0 44)">' + cover + '</g></svg>';
       }
       return '<svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">'
-        + COVER_ART[g.id]
+        + cover
         + '</svg>';
     }
     const a = g.art;
     return '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">'
-      + '<defs><linearGradient id="g' + g.id + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="' + a.sky[0] + '"/><stop offset="100%" stop-color="' + a.sky[1] + '"/></linearGradient></defs>'
-      + '<rect width="' + w + '" height="' + h + '" fill="url(#g' + g.id + ')"/>'
+      + '<defs><linearGradient id="g' + g.id + '-' + instance + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="' + a.sky[0] + '"/><stop offset="100%" stop-color="' + a.sky[1] + '"/></linearGradient></defs>'
+      + '<rect width="' + w + '" height="' + h + '" fill="url(#g' + g.id + '-' + instance + ')"/>'
       + '<circle cx="' + (w*0.74) + '" cy="' + (h*0.32) + '" r="' + (h*0.22) + '" fill="' + a.sun + '" opacity="0.85"/>'
       + '<g transform="translate(0,' + (h-200) + ')">' + landmark(a.lm, a.hill) + '</g>'
       + '<path d="M0 ' + (h*0.82) + ' Q' + (w*0.25) + ' ' + (h*0.76) + ' ' + (w*0.5) + ' ' + (h*0.82) + ' T' + w + ' ' + (h*0.82) + ' L' + w + ' ' + h + ' L0 ' + h + ' Z" fill="' + a.hill + '" opacity="0.9"/>'
